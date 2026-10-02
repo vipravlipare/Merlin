@@ -24,7 +24,7 @@ Consistency numbers:
 - Sprint net: S0 7.50; S1 21.05; S2 21.55; S3 21.05; S4 21.55; S5 12.20.
 - Component likely ledger total 104.90; low 72.50; high 173.50.
 
-Rule Card: R1 Learn→Return everywhere; R2 official links only, verify uncertain URLs; R3 learner writes all application code/config/DDL/tests; R4 explain-back, acceptance test, whiteboard, re-quiz; R5 honest hours and swap-not-add; R6 security in stories; R7 public-source parity/ADRs; R8 Jira-native ≤90-min tasks; R9 stop-anywhere; R10 terse chat; R11 files truth + STATE; R12 scratch before frameworks; R13 ≥20-case golden set, baseline, metric, latency and cost for AI.
+Rule Card: R1 Learn→Return everywhere; R2 official links only, verify uncertain URLs; R3 learner owns feature code; latest request permits assistant setup edits; R4 explain-back, acceptance test, whiteboard, re-quiz; R5 honest hours and swap-not-add; R6 security in stories; R7 public-source parity/ADRs; R8 Jira-native ≤90-min tasks; R9 stop-anywhere; R10 terse chat; R11 files truth + STATE; R12 scratch before frameworks; R13 ≥20-case golden set, baseline, metric, latency and cost for AI.
 
 Open questions / verify:
 - Q-01 OS/RAM/GPU resolved: Windows, 16 GB RAM, RTX 3050 4 GB VRAM. Disk space, NVIDIA driver, WSL GPU pass-through and admin rights remain open.
@@ -35,11 +35,11 @@ Open questions / verify:
 - VFY-03 model quality/memory/latency; VFY-04 AES-256/TLS 1.3 coverage.
 - VFY-05 Kaggle quota/verification; VFY-06 Jira/GitHub account limits.
 - VFY-07 cloud topology and live eval gate; VFY-08 deferred installers/APIs.
-- Context7 MCP unavailable; official docs/release pages used. Web checks dated 2026-10-01.
+- Context7 unavailable. Relevant Docker/Postgres/Redis/Atlassian/AWS docs opened 2026-10-02; account-specific eligibility unverified; target image manifests verified October 2.
 
-Last Part: Part 25 — D14 Portfolio and Share Pack: public-safe README, architecture story, demo script, evidence index, interview framing, release checklist and rollback notes.
-NEXT: Prompt complete. Use Parts 1–25 and this file as the planning handoff during implementation; update STATE.md with the next concrete implementation/evidence checkpoint rather than opening another planning Part.
+Last Part: Corrected Ubuntu setup and separate Parts 04/17 reviewed for authorized GitHub publication to setup/E0-US01-environment. Private .env/tools excluded; original docs archive checked for private password absence. Section 8/Day 4 proof passes; services stopped/storage retained. User expects GitHub/Jira access; specific security settings/time/mastery remain unknown.
+NEXT: Commit/push reviewed setup and docs, verify clean-clone configuration and remote equality. Full Sprint 0 still requires implemented doctor/CI/public docs and isolated clone runtime proof; current Day 4 scope requests specifications only. No new scripts/workflows, no main merge or visibility change. DSA/AWS deferred. Preserve Ubuntu checkout and cluster 7691749973399031842.
 
-Delivery status: Parts 1–25 are written under docs/planning/. Parts 6–25 are compact scoped packets with their IDs, Learn/Return blocks, acceptance/evidence expectations, and official-resource pointers; the files are the source of truth for later implementation work. No application code, configuration, schema, CI, or deployment files were created.
+Delivery: planning plus explicitly authorized setup-only Compose/ignore/client/shortcut changes; no application features.
 
-Resources: Part 1 indexes R01–R76 and V01–V16; Part 2 indexes P2-01–P2-24; Part 3 indexes W01–W11; Part 4 lists D13 resources; Part 5 lists D11 resources; Parts 6–25 include packet-local resource indexes and links. Verified unless marked 🔎 verify. Kaggle full-page/account quota, Jira automation, account eligibility, runtime compatibility, disk/driver/GPU pass-through, source-level dataset terms and security coverage remain 🔎 verify.
+Resources: Parts 1–25 retain resource indexes. October 2 Docker/Postgres/Redis/Atlassian/AWS documentation access verified; Context7 unavailable. Host authentication, storage recreation and target pins pass. Account eligibility, optional licenses and remaining hardware/security facts require verification. See consolidated dated evidence.
