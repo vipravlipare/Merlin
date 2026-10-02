@@ -109,12 +109,12 @@ Doctor inputs: intended OS, declared versions/locks, service endpoints and requi
 
 CI skeleton: proposed pull-request and manual triggers; read-only repository permissions; explicit runner/version selection; pinned full action commit digests verified when authored; no paid runner assumption. Steps: checkout, declared tools, locked dependency checks where metadata exists, documentation/whitespace/secret-boundary checks, quiet Compose validation using **synthetic CI-only** inputs. Runtime test is a separately selected job with disposable isolated project/volumes, health/positive-negative auth/PONG checks and guaranteed teardown of its own resources. No AWS/deploy step, production secret, real dump, privileged pull-request execution or learner-volume access. Logs/artifacts sanitized. No application tests invented. CI acceptance requires an actual passing run later; workflow not created by this specification.
 
-### D4-CLONE — Execution blocker and safe test
+### D4-CLONE — Original blocker and safe test (tracking gate now resolved)
 
 📚 Learn first: [Git recording changes][git], tracked versus untracked files; stop before committing examples.
 ↩ Return: inside Day 4 check/documentation capacity, review/stage only intended safe files, then learner commits them; fresh-clone proof follows. Do not commit/push automatically or treat specifications as execution.
 
-Observed `git ls-files`: `docker-compose.yml`, `.gitignore`, `pyproject.toml`, `uv.lock`, `package.json`, `pnpm-lock.yaml` are untracked. HEAD has AGENTS.md, docs and tools; a fresh clone cannot contain the current working setup. No fresh-clone success is claimed. Missing doctor/workflow/public setup documentation also remain explicit execution gates.
+Before publication, observed `git ls-files`: `docker-compose.yml`, `.gitignore`, `pyproject.toml`, `uv.lock`, `package.json`, `pnpm-lock.yaml` are untracked. HEAD has AGENTS.md, docs and tools; a fresh clone cannot contain the current working setup. That original tracking blocker is resolved by the publication update below. Clone configuration now passes; missing doctor/workflow/public setup documentation and isolated runtime reproduction remain explicit execution gates.
 
 Fresh-clone checklist: (1) clone a reviewed commit into a disposable directory; (2) confirm all required setup files are tracked, while `.env`/`.tools` are absent; (3) follow documented prerequisites and at most five setup commands; (4) create new synthetic private credentials locally; (5) use a distinct Compose project, container names, network and free loopback ports—current fixed Merlin identities must not collide; (6) run doctor and health/auth/PONG checks; (7) test only implemented acceptance cases, with no invented seed/eval; (8) stop/remove only that clone’s disposable resources, never `merlin_postgres_data`; (9) record commit, commands, time, first failure/fix and no-secret result. Until isolation and tracked instructions exist, stop before runtime creation.
 
@@ -153,8 +153,8 @@ This audit compares the current guide with the earlier revised execution plan. T
 | Actual learner time, explain-back, whiteboard/re-quiz | Pending learner evidence; estimates not invented |
 | README v0 and SETUP publication | Outlines delivered, public files absent; overall environment reproducibility remains open |
 | Doctor and CI | Specifications delivered; no doctor implementation, workflow or actual green CI run; overall Sprint 0 completion remains open |
-| Tracked reproducible setup | `git ls-files` returns none of Compose, ignore rules, Python/Node metadata/locks; working files untracked |
-| Fresh clone | BLOCKED before runtime: current commit lacks setup; no clone success/command-count/time claimed |
+| Tracked setup | RESOLVED: reviewed inputs committed in `db05acb`; clean clone contains them |
+| Fresh clone | Partial PASS: clean committed clone and quiet configuration; doctor/isolated runtime not tested |
 | Review and S1 go/no-go | Review delivered below; NO-GO for declaring full Sprint 0 complete; setup remediation may continue |
 
 `.env` is ignored and not tracked; `.tools/ubuntu-clients` is ignored; whitespace check passes. This secret-boundary evidence does not prove all future staged files are safe. Full resolved Compose configuration and private backup contents were not printed.
@@ -208,3 +208,11 @@ Resource index: README, Compose down, Git clone and GitHub Actions docs accessed
 ↩ Return: the learner explicitly requests committing and uploading the corrected Ubuntu version. Review exact files, exclude private configuration/tools, commit to existing `setup/E0-US01-environment` branch and verify remote commit equality. No main-branch merge or visibility change is requested.
 
 The learner states GitHub/Jira should work; this is not a confirmation of specific security settings. Existing Atlassian facts retain their earlier learner confirmation. GitHub browser MFA/visibility and Jira team-managed type remain unknown, not reasons to create new accounts. Actual minutes/learning answers are unknown rather than fabricated. Publication closes the untracked-input gate once the reviewed setup is committed. Fresh-clone configuration validation is separate from isolated runtime/doctor/CI proof; no automatic claim of full Sprint 0 completion.
+
+### Publication and clean-clone proof
+
+Reviewed setup commit: `db05acb306f4ac7d03cfca65d39803c4313b671a`, branch `setup/E0-US01-environment`. This includes corrected Compose, ignored-secret boundary, Python/Node metadata and locks, separate Parts 04/17, verified original-doc archive and installed Caveman skill assets. Existing third-party skill assets were recorded, not authored as Merlin feature code.
+
+A clean local Git clone of this commit contained all selected setup/planning files; `.env` and `.tools` were absent. `docker compose config --quiet` passed with separately supplied synthetic environment values. Whitespace check passed. No clone runtime was created, no learner volume touched, and no app/doctor/CI success inferred. This resolves the earlier untracked-input/configuration gate, not the full runtime reproducibility gate. Account settings and actual learner time/mastery remain unknown; user expectation of access is recorded without demanding another signup.
+
+The upload target is the existing GitHub setup branch. The final remote verification is performed after the evidence commit; no main merge or default-branch change is implied. Follow-up completion scope is now public documentation, implemented doctor/CI with a real passing run, isolated clone runtime and learning/time disposition. Day 4 requested specifications are complete; wider Sprint 0 remains honestly open.
