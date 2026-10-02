@@ -37,8 +37,8 @@ Open questions / verify:
 - VFY-07 cloud topology and live eval gate; VFY-08 deferred installers/APIs.
 - Context7 unavailable. Relevant Docker/Postgres/Redis/Atlassian/AWS docs opened 2026-10-02; account-specific eligibility unverified; target image manifests verified October 2.
 
-Last Part: Corrected Ubuntu setup and separate Parts 04/17 reviewed for authorized GitHub publication to setup/E0-US01-environment. Private .env/tools excluded; original docs archive checked for private password absence. Section 8/Day 4 proof passes; services stopped/storage retained. User expects GitHub/Jira access; specific security settings/time/mastery remain unknown.
-NEXT: Commit/push reviewed setup and docs, verify clean-clone configuration and remote equality. Full Sprint 0 still requires implemented doctor/CI/public docs and isolated clone runtime proof; current Day 4 scope requests specifications only. No new scripts/workflows, no main merge or visibility change. DSA/AWS deferred. Preserve Ubuntu checkout and cluster 7691749973399031842.
+Last Part: Ubuntu commit db05acb306f4ac7d03cfca65d39803c4313b671a on setup/E0-US01-environment. Compose, metadata/locks, Parts 04/17, archive and Caveman assets committed; .env/tools excluded. Clean committed clone contains setup and passes quiet Compose validation with synthetic inputs. No clone runtime/doctor/CI claim. Section 8/Day 4 proof retained; original services stopped, volumes preserved.
+NEXT: Verify evidence commit push/remote equality. Wider Sprint 0 remains open: learner public docs/doctor/CI, actual green run, isolated clone runtime, learning/time disposition. Current Day 4 scope is specifications; no new application scripts/workflows. No main merge or visibility change. Account access expected; security facts unknown. DSA/AWS deferred; preserve Ubuntu checkout and cluster 7691749973399031842.
 
 Delivery: planning plus explicitly authorized setup-only Compose/ignore/client/shortcut changes; no application features.
 
