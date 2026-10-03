@@ -37,8 +37,8 @@ Open questions / verify:
 - VFY-07 cloud topology and live eval gate; VFY-08 deferred installers/APIs.
 - Context7 unavailable. Relevant Docker/Postgres/Redis/Atlassian/AWS docs opened 2026-10-02; account-specific eligibility unverified; target image manifests verified October 2.
 
-Last Part: October 3: ten answers assessed; feedback inside Quizzes/sprint-0-quiz.html, not disclosed in chat. Requested 35-question HTML quiz covers Sprint 0; post-submit explanations, earlier-answer review, local progress/retries/print. Ubuntu and old Windows guides read; Windows draft stale/inactive. Quiz syntax/scoring/harness checks pass; visual proof unavailable. Requested HTML permitted.
-NEXT: Open Quizzes/sprint-0-quiz.html in a browser; learner submits and shares score or corrected explain-back; grade mastery separately from MCQ results. Quiz published on setup branch. Full Sprint 0 still lacks public docs/doctor/CI/actual green run and documented unmodified clone reproduction. No new app code/CI scripts; DSA/AWS deferred. Preserve Ubuntu checkout and cluster 7691749973399031842; gateway not configured.
+Last Part: October 3: learner reports MCQ result 34/35; critical miss/explain-back unknown. Quizzes/sprint-0-quiz.html now includes separate System Design reading: tool rationales, Ubuntu/native Windows, storage models/layers, caching, Redis/PostgreSQL, volumes and loopback. Official source links verified. Existing 35 questions/JavaScript/storage key unchanged; quiz harness checks pass. No additional questions or live-runtime changes.
+NEXT: Learner reloads quiz and opens System Design; practice reason plus trade-off and share missed concept if desired. Publish reading/evidence on setup branch. MCQ result remains learner-reported, not full mastery. Full Sprint 0 still lacks implemented doctor/CI/green run and documented unmodified setup reproduction; DSA/AWS deferred. Preserve cluster 7691749973399031842; no gateway configuration.
 
 Delivery: planning plus explicitly authorized setup-only Compose/ignore/client/shortcut changes; no application features.
 
