@@ -216,3 +216,23 @@ Reviewed setup commit: `db05acb306f4ac7d03cfca65d39803c4313b671a`, branch `setup
 A clean local Git clone of this commit contained all selected setup/planning files; `.env` and `.tools` were absent. `docker compose config --quiet` passed with separately supplied synthetic environment values. Whitespace check passed. No clone runtime was created, no learner volume touched, and no app/doctor/CI success inferred. This resolves the earlier untracked-input/configuration gate, not the full runtime reproducibility gate. Account settings and actual learner time/mastery remain unknown; user expectation of access is recorded without demanding another signup.
 
 The upload target is the existing GitHub setup branch. The final remote verification is performed after the evidence commit; no main merge or default-branch change is implied. Follow-up completion scope is now public documentation, implemented doctor/CI with a real passing run, isolated clone runtime and learning/time disposition. Day 4 requested specifications are complete; wider Sprint 0 remains honestly open.
+
+## Runtime clone and quick quiz update — October 2
+
+📚 Learn first: [Part 04](part-04-environment-setup.md), authentication/storage; [OmniRoute source skills](https://github.com/diegosouzapw/OmniRoute/tree/23a11484862b3bb589a55e85b00e4ac53ffeb234/skills), catalog only; stop before gateway configuration or provider signup.
+↩ Return: use this observed proof and answer the five questions within existing learning/ritual time; no new feature or paid service. The assistant grades understanding rather than asserting it beforehand.
+
+Installed 46 upstream skills at source commit `23a11484862b3bb589a55e85b00e4ac53ffeb234`, repository `diegosouzapw/OmniRoute`, release/v3.8.52. All installed entries contain SKILL.md name/description metadata; provenance/hash recorded in skills-lock.json. Skill instructions are available next turn; no OmniRoute server, provider credentials, routing changes or measured token savings claimed. Installation was explicitly requested and is distinct from the deferred application tools.
+
+A clean clone of the committed setup was started as a unique disposable Compose project with synthetic credentials. Verification adaptation removed fixed container names and host ports and assigned unique network/volume names in memory; no permanent Compose change. Both services became healthy; PostgreSQL correct-password access passed and deliberately wrong password was rejected; Redis returned PONG. Test project resources/volumes were removed; original `merlin_postgres_data` and `merlin_redis_data` were confirmed present. This proves isolated container runtime behavior; it does not prove host-port access in that clone, a published five-command README, doctor implementation or green hosted CI. Those wider gates remain visible.
+
+Quick quiz (one sentence each):
+1. Why must `.env` stay out of GitHub?
+2. Can a healthy PostgreSQL container still accept a wrong password, and why must we test that?
+3. What remains unchanged after PostgreSQL recreation to prove storage retention?
+4. Why can local setup work while a fresh clone fails?
+5. Does GitHub SSH login also protect Jira browser login?
+
+Grading: each question gets 0 incorrect/missing, 1 partially correct, 2 correct with the essential reason; total 10. Explain each correction and retest missed concepts. A short-quiz pass requires at least 8/10 and no remaining misconception about secret publication, password rejection or storage deletion. Quiz result remains pending. A quiz alone is not full mastery: retain whiteboard/acceptance/re-quiz evidence and unknown actual minutes honestly. No DSA questions while deferred.
+
+Current closure: local Section 8 operational proof, requested Day 4 planning deliverables, GitHub publication, configuration clone and adapted isolated runtime pass. Wider Sprint 0 still lacks implemented doctor/CI, public README/SETUP reproducibility and learner evidence. Existing AGENTS.md explicitly forbids agent-created scripts/CI; no script/workflow was written under the specification-only Day 4 scope. Do not mark full Sprint 0 complete solely because skills or quiz were added.
