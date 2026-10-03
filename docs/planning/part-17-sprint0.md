@@ -236,3 +236,87 @@ Quick quiz (one sentence each):
 Grading: each question gets 0 incorrect/missing, 1 partially correct, 2 correct with the essential reason; total 10. Explain each correction and retest missed concepts. A short-quiz pass requires at least 8/10 and no remaining misconception about secret publication, password rejection or storage deletion. Quiz result remains pending. A quiz alone is not full mastery: retain whiteboard/acceptance/re-quiz evidence and unknown actual minutes honestly. No DSA questions while deferred.
 
 Current closure: local Section 8 operational proof, requested Day 4 planning deliverables, GitHub publication, configuration clone and adapted isolated runtime pass. Wider Sprint 0 still lacks implemented doctor/CI, public README/SETUP reproducibility and learner evidence. Existing AGENTS.md explicitly forbids agent-created scripts/CI; no script/workflow was written under the specification-only Day 4 scope. Do not mark full Sprint 0 complete solely because skills or quiz were added.
+
+## Beginner lesson — PostgreSQL and Sprint 0 foundations
+
+Quiz feedback: Q1 (.env private information) 2/2; Q5 (GitHub SSH does not protect Jira browser login) 2/2. Q2–Q4 are pending teaching/retry, not answered incorrectly. Score so far: 4/4 on answered questions; no full-quiz pass or mastery claim.
+
+### What PostgreSQL does
+
+📚 Learn first: [PostgreSQL concepts](https://www.postgresql.org/docs/17/tutorial-concepts.html), tables/databases; [architecture](https://www.postgresql.org/docs/17/tutorial-arch.html), client/server; stop before installation (inside existing learning time).
+↩ Return: explain server versus client and describe one planned note record; done when the learner can identify where data lives without claiming the application exists. No SQL or feature code required.
+
+PostgreSQL, often called Postgres, is software that manages stored information. Merlin is planned to use it for records such as users, notes and tasks. Those application features/tables are not built merely because the database service is installed. PostgreSQL organizes records in tables. A table is like a structured spreadsheet: a column describes a field, and a row describes one record. Columns have data types so a date, number and text value are distinguished.
+
+Example of a future notes table, for explanation only:
+
+| id | owner_id | title |
+|---|---|---|
+| 101 | 7 | Study PostgreSQL |
+| 102 | 7 | Prepare interview |
+
+An ID identifies a record. A primary key is a table's chosen unique identifier. An owner_id can refer to a user's identifier; a foreign-key rule can ensure the referenced user exists. That relationship does not automatically prevent another person reading the note: the application must enforce ownership/authorization. Constraints enforce rules such as required fields or uniqueness. Indexes can speed lookups but cost space and work when records change. Design/query/security details belong to later sprints, not Sprint 0 mastery.
+
+A database groups tables and other objects. A PostgreSQL cluster here means the databases managed by one initialized server instance; it does not mean multiple cloud machines. Your current cluster includes merlin_db plus PostgreSQL's maintenance/template databases. The PostgreSQL server is the running program that handles requests and manages its data files. `psql` is a client program used to communicate with it; installing a client does not itself create a server.
+
+### How a future save request works
+
+📚 Learn first: [PostgreSQL architecture](https://www.postgresql.org/docs/17/tutorial-arch.html), cooperating processes; [transactions](https://www.postgresql.org/docs/17/tutorial-transactions.html), all-or-nothing; stop before savepoint examples.
+↩ Return: narrate a future save/read request and why related changes may need one transaction; conceptual preview only, inside existing learning capacity.
+
+When the future user clicks Save, the browser sends a request to Merlin's backend. The backend checks the signed-in user's identity and ownership, then uses a database client library to connect to PostgreSQL. The connection identifies an address, port, database and role; the role is the database identity, separate from a Merlin browser user. The backend asks for an operation in SQL, the language for requesting reads/changes. PostgreSQL checks database permissions, executes the operation, and returns a result. The backend then responds to the browser. A browser should not receive the database password to connect directly.
+
+A transaction groups related changes into an operation that can succeed together or be canceled together. Commit finalizes the transaction; rollback cancels its changes. This matters when a partial change would leave inconsistent records. Transactions and their safeguards do not replace backups or correct application permissions. Later study will cover concurrency, isolation, indexes, migrations and backup restoration; trying to master every database topic during setup would exceed Sprint 0's hours.
+
+### Your Docker setup and data
+
+📚 Learn first: [Docker volumes](https://docs.docker.com/engine/storage/volumes/), persistence; [official Postgres image](https://hub.docker.com/_/postgres), initialization variables; stop before custom image examples.
+↩ Return: identify image/container/volume in the actual setup; explain what survives recreation and why editing .env is not password rotation. Do not run destructive commands for this lesson.
+
+The image is the packaged PostgreSQL software at a pinned version/digest. A container is an instance running that software. Compose is the description Docker uses to start the services with their settings. Your container is merlin-db; the Compose service is postgres. Its data directory is mounted from the named volume merlin_postgres_data. A mount makes that separately managed storage accessible inside the container. Recreating the container can reuse the volume, keeping the cluster instead of initializing an empty replacement.
+
+We checked two storage identifiers: the named volume and PostgreSQL's cluster ID, 7691749973399031842. Both remained unchanged after recreation. That proves the existing setup cluster was reused; it is not proof of a production backup restore or every application's future data correctness. Containers may get new IDs while retained storage stays the same. Stopping services preserves volumes. Deleting a volume can remove data, so never delete it to repair login problems.
+
+The private .env provides setup inputs. The official image uses initialization variables when creating an empty data directory. An existing cluster already has stored roles/passwords; changing POSTGRES_PASSWORD in .env alone does not update those stored credentials. A password change requires a deliberate database operation with appropriate privileges. Keep real credentials out of history/logs/screenshots/Git, even in a private repository.
+
+### Health, authentication and addresses
+
+📚 Learn first: [pg_isready](https://www.postgresql.org/docs/17/app-pg-isready.html), status and notes; [authentication rules](https://www.postgresql.org/docs/17/auth-pg-hba-conf.html), matching records; stop before advanced methods.
+↩ Return: explain the three independent tests: ready, correct-password success/wrong-password rejection, and unchanged storage identity. Done when those are not treated as interchangeable.
+
+A health check asks whether the server is accepting connections. It does not certify passwords, ownership rules or retained data. Depending on its authentication configuration, a local connection may be trusted without checking a password. That is why an appropriate password-protected endpoint must succeed with the correct password and reject a deliberately wrong one. Your recorded host/container password checks passed; PostgreSQL's own database roles are separate from Linux process ownership and browser-account MFA.
+
+A host address identifies where to connect; a port identifies a service endpoint there. Your Ubuntu host client uses 127.0.0.1:5432. A different container on the Compose network can use postgres:5432. Inside a container, localhost means that container itself, not automatically the Ubuntu host or another service. Loopback bindings restrict ordinary remote access; they do not protect against every local process. Non-root service processes and RAM/CPU limits constrain privileges/resources but are not a complete security guarantee.
+
+### Why a fresh clone can fail
+
+📚 Learn first: [Git clone](https://git-scm.com/docs/git-clone), repository checkout; [README guidance](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes), getting started; stop before advanced options.
+↩ Return: name three things present locally but absent from a clone, then explain the safe documented replacement for each. No copying private secrets or preserved learner volumes into a test clone.
+
+A commit is a recorded snapshot of selected project files; a push uploads commits to the GitHub branch; a clone obtains repository history and checks out a recorded version. It does not copy your entire computer. Locally you may have installed Python/Docker/psql, an ignored .env, ignored .tools clients, uncommitted changes or an already initialized database. Another clone lacks those machine-specific dependencies, secrets and database state. Even on your machine, a clean clone does not acquire ignored files or uncommitted changes from the original folder.
+
+Example: your current directory starts successfully because .env already exists. A clone has Compose but no password input, so configuration fails. The fix is instructions to create a new private environment with the required names, not committing the real password. Likewise, a clone cannot run a missing psql executable; prerequisites must describe how to obtain a supported client. An image pin records exact container software; a lockfile records dependency resolution, but neither installs dependencies by merely existing. README/SETUP instructions, declared versions/locks and observed clean-environment checks make these hidden prerequisites explicit.
+
+Our committed clone passed configuration. An isolated runtime also passed after temporary verification adjustments for names/network/volumes and host ports. That is useful proof, but it is not yet proof that a new user can follow a published five-command setup without adjustments. A new clone must not collide with or delete your original containers/volumes.
+
+### What you should know after Sprint 0
+
+📚 Learn first: [Part 04](part-04-environment-setup.md), actual setup boundaries; this lesson's official links; stop before optional frameworks.
+↩ Return: explain each row in plain language; quiz/whiteboard/re-quiz happen inside learning/ritual capacity. DSA stays deferred. Understanding and implementation completion are distinct gates.
+
+| Topic | Minimum understanding |
+|---|---|
+| Windows and Ubuntu/WSL | Windows hosts the machine; development runs in Ubuntu; Windows shortcut/views open the same Ubuntu checkout |
+| Git/GitHub | Git records versions locally; GitHub hosts pushed history; branch/commit identifies the uploaded version |
+| SSH/MFA/Jira | SSH key authenticates Git transport; browser MFA adds another factor for that account; Jira tracks work, it does not secure your database |
+| Python/uv and Node/pnpm | Runtimes execute programs; managers create/install project environments; declared versions/locks support repeatability |
+| Docker/Compose | Image packages software; container runs it; Compose defines services/settings; volume retains data separately |
+| PostgreSQL/psql | Server manages durable records; psql is one client; health, credential checking and retention need separate proof |
+| Redis | Separate fast data service; PONG tests responsiveness; this project's Redis is disposable with persistence disabled, not a built cache feature |
+| Secrets/ports/limits/logging | Keep credentials private; bind local ports; bound CPU/RAM and logs; never claim those alone are production security |
+| Doctor/CI/fresh clone | Doctor reports prerequisites/checks; CI automates checks on recorded code; a fresh clone tests whether instructions omit hidden local setup |
+| Evidence and scope | Observed test results support specific claims; setup passing does not mean features or learner mastery are complete |
+
+Resource index: PostgreSQL concepts/architecture/transactions/pg_isready/authentication, official Postgres image, Docker volumes and Git clone opened successfully October 2, 2026. Explanation is grounded in those sources and attributed project evidence; no new installation/runtime test this lesson.
+
+Re-quiz after reading: (1) What is the difference between PostgreSQL and psql? (2) Why does healthy not prove wrong passwords are rejected? (3) What must survive container recreation? (4) Give two reasons a fresh clone could fail and a safe fix for each. Answer in your own words; no need to memorize every term at once.

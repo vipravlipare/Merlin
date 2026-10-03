@@ -37,8 +37,8 @@ Open questions / verify:
 - VFY-07 cloud topology and live eval gate; VFY-08 deferred installers/APIs.
 - Context7 unavailable. Relevant Docker/Postgres/Redis/Atlassian/AWS docs opened 2026-10-02; account-specific eligibility unverified; target image manifests verified October 2.
 
-Last Part: GitHub setup/evidence publication verified at 490d3bee3c87545f86880499e479a32dab5ba2f1. Installed 46 OmniRoute skills from pinned source 23a11484862b3bb589a55e85b00e4ac53ffeb234; provenance in skills-lock.json, available next turn. Isolated committed-clone health/auth/password rejection/PONG pass; temporary adaptation removes fixed names/host ports. Test resources removed, original volumes retained. Five-question quiz requested; grading pending.
-NEXT: Grade learner quiz 0–2 each (8/10 threshold plus security corrections); record quiz separately from mastery. Publish skills/evidence. Wider Sprint 0 remains open: public README/SETUP, implemented doctor/CI/green run, documented unmodified clone reproduction, learner time/re-quiz. Scope remains setup specifications, no app code/new CI scripts. Gateway not configured, no routing/savings claim. DSA/AWS deferred; preserve cluster 7691749973399031842.
+Last Part: OmniRoute skills/evidence published at 62665bb61872c44b8c30eb1dcc161dfd59a6a847. Learner quiz Q1 secrets and Q5 SSH/Jira correct (2/2 each); Q2–4 pending teaching/retry, no full-quiz pass. Part 17 now explains PostgreSQL server/client/tables/transactions, Docker storage/authentication, fresh clones and Sprint 0 tool boundaries for beginners. Official learning sources opened October 2; no new runtime changes.
+NEXT: Learner reads Part 17 beginner lesson and answers four re-quiz questions; grade with reasons, retain learning/time unknowns honestly. Publish lesson/evidence. Wider Sprint 0 remains open: public docs/doctor/CI/green run and documented unmodified clone reproduction. No app code/new CI scripts. DSA/AWS deferred; preserve cluster 7691749973399031842. Skills installed, gateway not configured.
 
 Delivery: planning plus explicitly authorized setup-only Compose/ignore/client/shortcut changes; no application features.
 
