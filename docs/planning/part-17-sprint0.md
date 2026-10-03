@@ -320,3 +320,16 @@ Our committed clone passed configuration. An isolated runtime also passed after 
 Resource index: PostgreSQL concepts/architecture/transactions/pg_isready/authentication, official Postgres image, Docker volumes and Git clone opened successfully October 2, 2026. Explanation is grounded in those sources and attributed project evidence; no new installation/runtime test this lesson.
 
 Re-quiz after reading: (1) What is the difference between PostgreSQL and psql? (2) Why does healthy not prove wrong passwords are rejected? (3) What must survive container recreation? (4) Give two reasons a fresh clone could fail and a safe fix for each. Answer in your own words; no need to memorize every term at once.
+
+## Interactive Sprint 0 quiz — October 3
+
+📚 Learn first: [beginner lesson above](#beginner-lesson--postgresql-and-sprint-0-foundations), review only the concepts you need; stop before answer memorization.
+↩ Return: open [Sprint 0 MCQ quiz](../../Docs/Quizzes/sprint-0-quiz.html), answer all 35 questions, submit for corrections, retry missed concepts and explain corrections in your own words. Use existing learning/ritual capacity, not extra invisible hours.
+
+The learner explicitly requested an HTML learning artifact in Docs/Quizzes; this scoped exception permits that file outside the planning directory and does not authorize application features. The quiz covers all ten October 3 explain-back topics plus service/storage/security/reproducibility/resource/account/planning/skill boundaries. The learner's original ten answers were assessed; detailed feedback is embedded in the post-submission review rather than disclosed in chat. No full understanding pass is claimed before the learner completes and explains the quiz.
+
+Both Ubuntu and C:\Users\vipra\Merlin\docs\planning\part-17-sprint0.md were read. Windows is an inactive older 768-word draft; Ubuntu has later evidence/corrections. Historical differences are explained in the quiz; old Windows files were not changed or synchronized. Windows may open the active quiz through \\wsl$\Ubuntu\home\vipra\Merlin\Docs\Quizzes\sprint-0-quiz.html.
+
+One self-contained HTML file, with no external libraries, fonts, network requests or services. Choices shuffle, explanations remain hidden before submission, browser-local progress is optional with graceful fallback, missed-question retries are labeled practice, and print/PDF uses the browser. Scoring threshold is 80% without missed critical secret/authentication/storage questions; that is a knowledge check, not full Sprint 0 completion. Browser-local results are not automatically visible to the assistant: share the result or follow-up explain-back to record learning evidence.
+
+Verification: JavaScript syntax passes. A Node DOM harness checks question-bank uniqueness, score/critical gates, shuffle permutations, invalid-answer handling, unanswered submission, hidden prior feedback, rendering/scoring, saved-result restoration, missed retries and full reset. No real-browser visual test was available, so no screenshot/cross-browser proof is claimed. Source documents and their existing official resources ground the questions; this task did not perform a new runtime audit or change database services.

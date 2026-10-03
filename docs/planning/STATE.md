@@ -37,8 +37,8 @@ Open questions / verify:
 - VFY-07 cloud topology and live eval gate; VFY-08 deferred installers/APIs.
 - Context7 unavailable. Relevant Docker/Postgres/Redis/Atlassian/AWS docs opened 2026-10-02; account-specific eligibility unverified; target image manifests verified October 2.
 
-Last Part: OmniRoute skills/evidence published at 62665bb61872c44b8c30eb1dcc161dfd59a6a847. Learner quiz Q1 secrets and Q5 SSH/Jira correct (2/2 each); Q2–4 pending teaching/retry, no full-quiz pass. Part 17 now explains PostgreSQL server/client/tables/transactions, Docker storage/authentication, fresh clones and Sprint 0 tool boundaries for beginners. Official learning sources opened October 2; no new runtime changes.
-NEXT: Learner reads Part 17 beginner lesson and answers four re-quiz questions; grade with reasons, retain learning/time unknowns honestly. Publish lesson/evidence. Wider Sprint 0 remains open: public docs/doctor/CI/green run and documented unmodified clone reproduction. No app code/new CI scripts. DSA/AWS deferred; preserve cluster 7691749973399031842. Skills installed, gateway not configured.
+Last Part: October 3: learner answered ten explain-back questions; assessed feedback is inside Docs/Quizzes/sprint-0-quiz.html, not disclosed in chat. Explicitly requested standalone 35-question HTML quiz covers current Sprint 0 evidence; post-submit explanations, earlier-answer review, local progress/retries/print. Ubuntu and old Windows guides read; Windows draft stale/inactive. Syntax/scoring/DOM-harness checks pass; no real-browser visual proof. HTML learning artifact is a scoped exception to planning-only paths.
+NEXT: Learner opens quiz, submits and shares score or corrected explain-back; grade mastery separately from MCQ results. Publish quiz/evidence on existing setup branch. Full Sprint 0 still lacks public docs/doctor/CI/actual green run and documented unmodified clone reproduction. No new app code/CI scripts; DSA/AWS deferred. Preserve Ubuntu checkout and cluster 7691749973399031842; gateway not configured.
 
 Delivery: planning plus explicitly authorized setup-only Compose/ignore/client/shortcut changes; no application features.
 
