@@ -41,3 +41,22 @@ C-07 notes: folder tree, markdown safety, tags, backlinks, export, owner tests. 
 Resource index checked 2026-10-01: OWASP Authorization, PostgreSQL row security, FastAPI tutorial, GitHub Actions, pgvector, Ollama API — verified.
 NEXT: Part 7.
 
+
+## Day 6 expanded entry tasks — October 6
+
+### C-04.01 — Explain transaction and ownership boundaries | 45 minutes | L
+
+📚 Learn first: [PostgreSQL transactions](https://www.postgresql.org/docs/17/tutorial-transactions.html), all-or-nothing and commit/rollback; [row security](https://www.postgresql.org/docs/17/ddl-rowsecurity.html), default deny and privileged-role exceptions; stop before savepoints and policy examples. Pages retrieved October 6, 2026.
+↩ Return: explain what survives a failed second write, where authenticated owner identity comes from, and why an administrative connection cannot prove RLS denial. Done when the learner supplies the explanations and draws client → backend identity → database. Stop at 45 minutes; record uncertainty instead of claiming mastery.
+
+### C-04.02 — Specify the first users/notes slice | 60 minutes | D
+
+📚 Learn first: [Part 11 starter contract](part-11-schema-ai-architecture.md#day-6-usersnotes-starter-contract), keys, ownership and test matrix; stop before future AI schemas.
+↩ Return: adapt the plain-table contract and explain each constraint/index. Done when success, failure, rollback and two-user denial expectations are explicit; time box 60 minutes. Tasks, sources and audit remain future expansion of C-04.02, so the whole item is not Done today.
+
+Hint ladder: 1—one note belongs to one user. 2—write the absent-owner and wrong-owner cases before indexes. 3—after a redacted attempt, request a focused design hint; no assistant-authored migration is supplied.
+
+### C-04.03 — First learner-written migration/connectivity attempt | 60 minutes | I, conditional
+
+📚 Learn first: [uv locking/syncing](https://docs.astral.sh/uv/concepts/projects/sync/), exact versus locked installation; [PostgreSQL transactions](https://www.postgresql.org/docs/17/tutorial-transactions.html), rollback; stop before advanced examples.
+↩ Return: select and verify compatible first-use database driver, migration and test dependencies; record exact versions and locked imports before writing migration code. Use synthetic data in an isolated test database/project with distinct storage; never migrate/reset the preserved setup cluster as a learning experiment. Done only after personally written code passes Part 11 cases. Sixty minutes is an attempt cap, not a promise of completion; dependency setup consumes the same block. If prerequisites fail, stop implementation and record the first failing gate. Protected API authorization and C-04.04 require later identity work; no security completion claim today.

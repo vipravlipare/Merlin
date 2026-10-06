@@ -6,6 +6,8 @@ Status: planning specification. Components are boundaries for later checklists, 
 
 C-01 Repo/tooling → C-02 Environment/Compose → C-03 CI/quality → C-04 Data → C-05 Identity/security → C-06 API → C-07 Notes and C-08 Tasks → C-09 Gateway/Ollama → C-10 Ingestion → C-11 Embeddings/vector → C-12 RAG/evals → C-13 Tools/agents → C-14 MCP/approvals → C-15 UI/chat → C-20 Observability → C-21 Deploy → C-23 QA/hardening → C-22 Portfolio.
 
+The graph is an integration/release order, not a prohibition on learning or designing independent components. C-04.01/.02 need the verified C-02 environment, not completed CI. C-03 remains a merge/release gate and spills within existing capacity. Break the C-05/C-06 cycle explicitly: unprotected local health/API foundation can be specified first; identity uses that boundary; protected vertical routes require identity plus data ownership checks. No protected route is accepted merely because health works.
+
 C-16 Frameworks, C-17 n8n, C-18 fine-tuning, C-19 Mongo/Spring and C-24 optional modules branch only after their scratch/core gates and an explicit swap.
 
 📚 Learn first: [OWASP Threat Modeling](https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html), read system modeling; stop before threat tools; why: boundaries precede components (~10 min).
@@ -20,7 +22,7 @@ C-16 Frameworks, C-17 n8n, C-18 fine-tuning, C-19 Mongo/Spring and C-24 optional
 | C-03 CI/CD & quality | lint/types/tests/build/scan/eval gate specs. MVP: green CI skeleton. | C-01/02; SK-19/20; A | 2/3; hosted runner cannot run Ollama; show checks and fixture gate. |
 | C-04 Data layer | owner-scoped tables, migrations, transactions, restore. MVP: users/notes/tasks/source records. | C-02; SK-4/18; A | 2/3; migration mistakes; explain rollback/EXPLAIN. |
 | C-05 Identity/security | password hashing, short JWT, roles, owner checks, validation/rate limits. MVP: login and isolation. | C-04/06; SK-21; A | 1.5/2.5; security gaps; demonstrate denial cases. |
-| C-06 API foundation | FastAPI routes, dependency boundary, errors, health, SSE contract. MVP: health + one typed route. | C-02/04/05; SK-4; A | 1.5/2.5; beginner async; API docs/test table. |
+| C-06 API foundation | FastAPI routes, dependency boundary, errors, health, SSE contract. MVP: health + one typed route. | C-02/04 for health foundation; add C-05 for protected routes; SK-4; A | 1.5/2.5; beginner async; API docs/test table. |
 | C-07 Notes | folders, markdown, tags, backlinks, safe save/export. MVP: CRUD + owner filter. | C-04/05/06; SK-2/3; A | 2/3; editor scope; save/search demo. |
 | C-08 Tasks | deadlines, heap order, recurrence placeholder. MVP: create/list/prioritize. | C-04/05/06; SK-3; A | 1.5/2.5; recurrence cut; ordered task demo. |
 | C-09 LLM gateway/Ollama | provider interface, streaming, structured output, retries, usage. MVP: local Qwen smoke route. | C-02/06; SK-5/6; A | 4/5; hardware/model quality; TTFT demo. |

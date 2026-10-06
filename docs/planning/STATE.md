@@ -1,6 +1,6 @@
 # STATE.md — handoff capsule
 
-Timeline: 37 days, Thu Oct 1–Fri Nov 6, 2026. S0 chill Days 1–5 (10 h); S1–S4 Tue→Mon (34 h each); S5 Days 34–37 (20 h). Original rung checkpoints: MVP-0 Day 11, MVP-1 Day 19, MVP-2 Day 26, MVP-3 Day 33, v1.0 Day 37. Part 1 revises honest targets: Knowledge Core about Day 26; Agentic Core about Day 33; framework rung is unfunded unless swapped.
+Timeline: Oct 1–Nov 6, 2026, 37 days. S0 10 h; S1–S4 34 h each; S5 20 h. Part 1 honest targets: Knowledge Core around Day 26, Agentic Core Day 33; frameworks unfunded unless swapped.
 
 Decisions:
 - Stack: Python/FastAPI modular monolith; PostgreSQL + pgvector; React/TypeScript; Ollama local-first; Docker Compose; MCP after scratch tools/agent loop.
@@ -27,7 +27,7 @@ Consistency numbers:
 Rule Card: R1 Learn→Return everywhere; R2 official links only, verify uncertain URLs; R3 learner owns feature code; latest request permits assistant setup edits; R4 explain-back, acceptance test, whiteboard, re-quiz; R5 honest hours and swap-not-add; R6 security in stories; R7 public-source parity/ADRs; R8 Jira-native ≤90-min tasks; R9 stop-anywhere; R10 terse chat; R11 files truth + STATE; R12 scratch before frameworks; R13 ≥20-case golden set, baseline, metric, latency and cost for AI.
 
 Open questions / verify:
-- Q-01 OS/RAM/GPU resolved: Windows, 16 GB RAM, RTX 3050 4 GB VRAM. Disk space, NVIDIA driver, WSL GPU pass-through and admin rights remain open.
+- Q-01 Windows, 16 GB RAM, RTX 3050 4 GB; remaining host hardware facts unverified.
 - Q-02 AWS/account/card/credit eligibility, hosted API grant, repo visibility.
 - Q-03 corpus/dataset licenses and model/package digests.
 - VFY-01 dependency compatibility, uv binary, lockfiles, image/action/model digests.
@@ -37,9 +37,9 @@ Open questions / verify:
 - VFY-07 cloud topology and live eval gate; VFY-08 deferred installers/APIs.
 - Context7 unavailable. Relevant Docker/Postgres/Redis/Atlassian/AWS docs opened 2026-10-02; account-specific eligibility unverified; target image manifests verified October 2.
 
-Last Part: October 3: learner reports MCQ result 34/35; critical miss/explain-back unknown. Quizzes/sprint-0-quiz.html now includes separate System Design reading: tool rationales, Ubuntu/native Windows, storage models/layers, caching, Redis/PostgreSQL, volumes and loopback. Official source links verified. Existing 35 questions/JavaScript/storage key unchanged; quiz harness checks pass. No additional questions or live-runtime changes.
-NEXT: Learner reloads quiz and opens System Design; practice reason plus trade-off and share missed concept if desired. Publish reading/evidence on setup branch. MCQ result remains learner-reported, not full mastery. Full Sprint 0 still lacks implemented doctor/CI/green run and documented unmodified setup reproduction; DSA/AWS deferred. Preserve cluster 7691749973399031842; no gateway configuration.
+Last Part: October 6 infrastructure audit passes Python 3.12.14 and healthy PostgreSQL/Redis, host/container positive-negative authentication, loopback, resources/logs, UID999 and retained cluster. Planning budgets/dependencies corrected; Day6/users-notes contract supplied. Global Caveman/46 OmniRoute skills installed in Ubuntu/Windows; defaults loaded. OmniRoute3.8.51 user service enabled/healthy/localhost-only; stacked compression saved. Nine providers listed; DuckDuckGo chat/streaming pass, forced tool call absent. OpenAI credential check passes; OpenCode external free tier blocked; Cloudflare browser absent. Codex routing/savings unproved. ChatGPT plugin absent; personalization manual. Part17 has activation steps.
+NEXT: Merlin Part18 Day6 C-04.01/.02 now; C-04.03 requires compatible locked packages and isolated synthetic storage. Day6 cap360: net249/uncommittedDSA30/ritual45/reserve36; setup spill replaces feature time, CI deadlineDay7. FullS0 doctor/CI/public reproduction and learner facts remain open; latest audit edits uncommitted. Existing runtime proofs retained; both services healthy. New session: codex -C /home/vipra/Merlin. Caveman global defaults installed; both Ubuntu/Windows Codex providers remain default, not OmniRoute. Gateway integration optional: persistent client key/tool-compatible model needed before switching. Adapted isolated clone passed; preserve cluster7691749973399031842. Quiz34/35 learner-reported; minutes/mastery unknown; AWS/DSA deferred.
 
 Delivery: planning plus explicitly authorized setup-only Compose/ignore/client/shortcut changes; no application features.
 
-Resources: Parts 1–25 retain resource indexes. October 2 Docker/Postgres/Redis/Atlassian/AWS documentation access verified; Context7 unavailable. Host authentication, storage recreation and target pins pass. Account eligibility, optional licenses and remaining hardware/security facts require verification. See consolidated dated evidence.
+Resources: October 6 transaction/row-security/uv docs retrieved; package compatibility remains first-use verification. Account eligibility and personal learning facts remain unverified.
