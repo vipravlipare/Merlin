@@ -44,8 +44,14 @@ jobs:
         run: uv run --locked python tools/setup_local.py
       - name: Static and runtime acceptance
         run: |
-          uv run --locked python tools/doctor.py --static
-          uv run --locked python tools/doctor.py
+          for mode in --static --runtime; do
+            if ! uv run --locked python tools/doctor.py "$mode" > "$RUNNER_TEMP/doctor-safe.log"; then
+              cat "$RUNNER_TEMP/doctor-safe.log"
+              awk '/ FAIL:/ {print "::error::" $0}' "$RUNNER_TEMP/doctor-safe.log"
+              exit 1
+            fi
+            cat "$RUNNER_TEMP/doctor-safe.log"
+          done
           git diff --check
       - name: Remove only runner-owned disposable resources
         if: always()
