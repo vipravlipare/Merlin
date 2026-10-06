@@ -44,6 +44,8 @@ jobs:
         run: uv run --locked python tools/setup_local.py
       - name: Static and runtime acceptance
         run: |
+          printf '::notice::pnpm command path %s\n' "$(command -v pnpm)"
+          pnpm --version | sed 's/^/::notice::pnpm version output /'
           for mode in --static --runtime; do
             if ! uv run --locked python tools/doctor.py "$mode" > "$RUNNER_TEMP/doctor-safe.log"; then
               cat "$RUNNER_TEMP/doctor-safe.log"
