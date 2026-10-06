@@ -14,7 +14,6 @@ ID registry:
 - Epics E0–E10 reserved; story pattern E2-US04; checklist pattern C-07.3.
 - ADR-01–ADR-06 delivered; ADR-07–ADR-12 reserved conditional.
 - RDY-01–RDY-04 and DONE-01–DONE-08 defined.
-- Part 1 has no Jira stories/tasks issued.
 
 Consistency numbers:
 - Floor 166.00 h; exact 10% reserve 16.60; committed ceiling 149.40.
@@ -28,18 +27,18 @@ Rule Card: R1 Learn→Return everywhere; R2 official links only, verify uncertai
 
 Open questions / verify:
 - Q-01 Windows, 16 GB RAM, RTX 3050 4 GB; remaining host hardware facts unverified.
-- Q-02 AWS/account/card/credit eligibility, hosted API grant, repo visibility.
+- Q-02 AWS/account/card/credit eligibility; hosted API grant.
 - Q-03 corpus/dataset licenses and model/package digests.
 - VFY-01 dependency compatibility, uv binary, lockfiles, image/action/model digests.
 - VFY-02 MCP/framework APIs and changelogs before every framework session.
 - VFY-03 model quality/memory/latency; VFY-04 AES-256/TLS 1.3 coverage.
 - VFY-05 Kaggle quota/verification; VFY-06 Jira/GitHub account limits.
 - VFY-07 cloud topology and live eval gate; VFY-08 deferred installers/APIs.
-- Context7 unavailable. Relevant Docker/Postgres/Redis/Atlassian/AWS docs opened 2026-10-02; account-specific eligibility unverified; target image manifests verified October 2.
+- Docker/Postgres/Redis/Atlassian/AWS docs and image manifests inspected October 2; personal eligibility unverified.
 
-Last Part: October 6 infrastructure audit passes Python 3.12.14 and healthy PostgreSQL/Redis, host/container positive-negative authentication, loopback, resources/logs, UID999 and retained cluster. Planning budgets/dependencies corrected; Day6/users-notes contract supplied. Global Caveman/46 OmniRoute skills installed in Ubuntu/Windows; defaults loaded. OmniRoute3.8.51 user service enabled/healthy/localhost-only; stacked compression saved. Nine providers listed; DuckDuckGo chat/streaming pass, forced tool call absent. OpenAI credential check passes; OpenCode external free tier blocked; Cloudflare browser absent. Codex routing/savings unproved. ChatGPT plugin absent; personalization manual. Part17 has activation steps.
-NEXT: Merlin Part18 Day6 C-04.01/.02 now; C-04.03 requires compatible locked packages and isolated synthetic storage. Day6 cap360: net249/uncommittedDSA30/ritual45/reserve36; setup spill replaces feature time, CI deadlineDay7. FullS0 doctor/CI/public reproduction and learner facts remain open; latest audit edits uncommitted. Existing runtime proofs retained; both services healthy. New session: codex -C /home/vipra/Merlin. Caveman global defaults installed; both Ubuntu/Windows Codex providers remain default, not OmniRoute. Gateway integration optional: persistent client key/tool-compatible model needed before switching. Adapted isolated clone passed; preserve cluster7691749973399031842. Quiz34/35 learner-reported; minutes/mastery unknown; AWS/DSA deferred.
+Last Part: October6 Sprint0 operational setup PASS; Sprint1 foundation GO. README/SETUP, terminal reference, visual learning guide, doctor/helper and CI published under prior explicit setup authorization. Eight doctor tests and hosted CI run37534267500 pass at3b7d3ed46d97bfeeb0711c55dc14926a18ea0d30. Unchanged public clone of that commit passes all required checks; independent cluster7693673063843803175. Earlier clone retention passes cluster7693668956165697574 throughdown/up. Test resources removed; original cluster7691749973399031842 preserved, original services healthy/running. No app features built.
+NEXT: Part18 Day6 C-04.01/.02; conditional C-04.03 requires compatible locked packages and isolated synthetic storage. Day6 cap360: net249/uncommittedDSA30/ritual45/reserve36; measured setup spill replaces feature time. Learner confirms minutes unknown, GitHub configured, JiraMER team-managedScrum. BrowserGitHubMFA not explicitly confirmed; publicrepo observed. Quiz34/35 learner-reported; secret/health-auth explanations partly demonstrated. CI unfamiliar: expanded visual guide teaches all setup/tools/skills. Finish five explain-backs, 60-second boundary drawing and later re-quiz; do not invent mastery. AWS/DSA deferred. New session: codex -C /home/vipra/Merlin. Explorer: \\wsl.localhost\Ubuntu\home\vipra\Merlin. Daily commands inTERMINAL_COMMANDS.md.
 
-Delivery: planning plus explicitly authorized setup-only Compose/ignore/client/shortcut changes; no application features.
+Delivery: prior explicitly authorized setup infrastructure plus planning; application code remains learner-owned. Future writing remains planning-only unless explicitly requested otherwise. Final evidence and expanded visual teaching guide prepared for publication.
 
-Resources: October 6 transaction/row-security/uv docs retrieved; package compatibility remains first-use verification. Account eligibility and personal learning facts remain unverified.
+Resources: October6 official WSL/Compose/GitHubActions/uv/pnpm/Node/Redis/PostgreSQL pages and action pins inspected; Context7 unavailable. Global Caveman/OmniRoute skills installed; Codex default providers unchanged, gateway routing/savings unproved. Account facts and learner mastery remain independently attributed.

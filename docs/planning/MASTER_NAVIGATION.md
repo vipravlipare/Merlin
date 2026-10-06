@@ -2,6 +2,10 @@
 
 This guide is the working map for the project. Repo rules require planning files under `docs/planning/`; this is the closest allowed location to a repo-level master guide.
 
+## Daily commands and learning
+
+Open [Terminal commands and Ubuntu Explorer access](TERMINAL_COMMANDS.md) for daily commands, including `codex -C /home/vipra/Merlin`. Public [README](../../README.md) and [SETUP](../SETUP.md) describe the actual setup. [Sprint 0 learning](SPRINT0_LEARNING.md) explains each design choice and the remaining short explain-back. Current acceptance evidence is at the top of [Part 17](part-17-sprint0.md); dated historical blockers below are superseded there.
+
 ## Current working location
 
 Use **VS Code connected to `WSL: Ubuntu`**. Open `/home/vipra/Merlin`. Run Linux commands in the VS Code WSL terminal. Keep the repository in the Linux filesystem. Do not use `C:\Users\vipra\Merlin` as the active implementation checkout.
@@ -39,7 +43,7 @@ Read [final Day 3 evidence](part-04-environment-setup.md). October 6: corrected 
 
 ### B. Accounts and next-day boundary
 
-Atlassian MER access/email/MFA/sign-in/Free plan/Scrum/recovery status are learner-confirmed; AWS remains deferred. GitHub web MFA/visibility and team-managed type remain separately unverified; no personal account setting was changed by the mentor. DSA is learner-deferred. Actual minutes, mastery/re-quiz and whiteboard remain unreported. Requested Day 4 documentation and doctor/CI specifications are delivered in [Part 17](part-17-sprint0.md). Learner learning/time and fresh-clone execution remain open; no workflow/script implementation is claimed.
+Atlassian MER access/email/MFA/sign-in/Free plan/Scrum/recovery status are learner-confirmed; AWS remains deferred. Jira team-managed type is learner-confirmed; repository public visibility was observed through GitHub. GitHub browser MFA remains unconfirmed; no personal account setting was changed by the mentor. DSA is learner-deferred. Actual minutes, mastery/re-quiz and whiteboard remain unreported. Requested Day 4 documentation and doctor/CI specifications are delivered in [Part 17](part-17-sprint0.md). Learner learning/time and fresh-clone execution remain open; no workflow/script implementation is claimed.
 
 ### C. Keep Section 9 deferred
 
@@ -95,9 +99,9 @@ Stop and record a blocker when: a secret would enter Git; a service would bind p
 
 Section 8 is complete only after S8-01 through S8-05 pass with dated sanitized evidence. Part 4 is complete only after Sections 1–9 gates are either passed or honestly marked deferred with an owner and next action. The project is not built because planning documents exist; implementation evidence must come from learner-authored code, configuration, tests, PRs, benchmarks, and releases.
 
-Historical Day 4 update: retention passed and services were stopped. Setup inputs were later committed and an isolated adapted clone passed. October 6 services are running; public unmodified reproduction, doctor/CI and learner ritual evidence remain open. Continue at STATE NEXT.
+Historical Day 4 update: retention passed and services were stopped. Setup inputs were later committed and an isolated adapted clone passed. October 6 services are running; public unmodified clone, doctor and hosted setup CI now pass. Learner explain-back/whiteboard/re-quiz remain separate. Continue at STATE NEXT.
 
-Sprint 0 audit: [Part 17 S0-CLOSE](part-17-sprint0.md#s0-close--concrete-route-to-full-completion) defines remaining implementation/clone/personal gates. Section 8 passes; full-S0 NO-GO until reproduction/CI proof exists. Day 5 audit is delivered, learner ritual evidence pending.
+Sprint 0 audit: [Part 17 S0-CLOSE](part-17-sprint0.md#s0-close--concrete-route-to-full-completion) defines remaining implementation/clone/personal gates. Operational Sprint0 PASS: Section8, unmodified reproduction and hosted CI proof now exist in the current Part17 closure table. Day5 review delivered; learner learning evidence remains qualified.
 
 ## Start coding — October 6
 

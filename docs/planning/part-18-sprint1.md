@@ -7,11 +7,11 @@ Goal: learner-owned database/API foundation, followed by the local provider boun
 Budget: **360 minutes floor**. Net work 249 + former DSA uncommitted 30 + rituals 45 + reserve 36 = 360. No stretch committed; actual learner minutes unknown. Local checklist IDs are not issued Jira keys. At most two active outcomes. The original broad database/auth/API/CI/provider forecast is narrowed; no promise to finish all of it today.
 
 📚 Learn first: [current setup audit](part-04-environment-setup.md#current-coding-readiness-audit--october-6-2026), actual checks; [C-04 entry tasks](part-06-checklists-first-half.md#day-6-expanded-entry-tasks--october-6), prerequisite gates; stop before optional models/frameworks.
-↩ Return: start C-04.01 then the first users/notes portion of C-04.02. Conditional C-04.03 is the first learner coding attempt, after dependency/isolation checks. Stop at the cap and record the next failed gate. CI/public reproduction remains a completion gap, not a reason to postpone all database learning.
+↩ Return: start C-04.01 then the first users/notes portion of C-04.02. Conditional C-04.03 is the first learner coding attempt, after dependency/isolation checks. Stop at the cap and record the next failed gate. Read current Part 17 for observed CI/public-clone acceptance; earlier completion gaps are historical once its closure table passes. Learner learning evidence remains separate.
 
 | Block | Minutes | Outcome / stop boundary |
 |---|---:|---|
-| Existing setup spill / closure | 45 | Review remaining README/SETUP/doctor/CI gates against Part 17. Learner chooses one closure outcome; unfinished work displaces equal feature minutes, not extra hours. Record time. |
+| Existing setup spill / closure | 45 | Review completed README/SETUP/doctor/CI evidence against Part 17; complete learner explain-back and prerequisite checks. Do not silently reclaim the allocation for features; record actual time and any remaining spill. |
 | C-04.01 learn/explain-back | 45 | Transaction rollback, server-derived ownership, privileged-role exceptions. |
 | C-04.02 first slice design | 60 | Two 30-minute steps: adapt users/notes fields and constraints, then write acceptance/rollback/ownership cases. No all-table rewrite. |
 | C-04.03 conditional coding | 60 | Dependency/isolation gate, 15 minutes; learner migration/connectivity attempt, 45 minutes. If prerequisites fail, stop before database changes; unfinished dependency work displaces coding. |

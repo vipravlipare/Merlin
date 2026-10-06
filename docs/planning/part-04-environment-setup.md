@@ -1,5 +1,13 @@
 # Part 04 — Environment setup and Section 8
 
+## Published setup update — October 6, 2026
+
+📚 Learn first: [SETUP](../SETUP.md), prerequisites, isolation and the five commands; stop before optional tools.
+↩ Return: use [the command reference](TERMINAL_COMMANDS.md), run the committed doctor, and inspect [current Part 17 evidence](part-17-sprint0.md). Older audits describe their original observation dates.
+
+Public README/SETUP and setup-only doctor/CI now exist under the earlier explicit request. The unchanged published clone passed quiet validation and full runtime checks with its own private configuration and named volumes. The original cluster remains `7691749973399031842`. Compose generates container names and supports isolated project/network/loopback ports while retaining defaults `merlin`, `merlin-network`, `5432`, `6379` and original named volumes. Native host clients are documented prerequisites, not hidden clone contents. Hosted CI status and precise tested commits are recorded in Part 17; application code and tests remain unbuilt.
+
+
 ## Current coding-readiness audit — October 6, 2026
 
 **GO for learner-owned local database foundation work; not a claim of a runnable application or completed Sprint 0.** The Ubuntu checkout is canonical. All requested planning files, including the entire Part 17, were read; architecture, schema, skill and Sprint 1 references were also reviewed.
@@ -50,7 +58,7 @@ One environment guide consolidates the setup documents; [Part 17](part-17-sprint
 | Still unverified | GitHub browser MFA/repository visibility; Jira team-managed type/invitations; learner actual minutes, explain-back, whiteboard and re-quiz |
 | Explicit deferrals | AWS signup/payment/CLI/deployment; DSA, independently at learner discretion; optional tools |
 
-These unverified facts prevent an unqualified claim that **every learning/account item** is complete. They do not invalidate the observed local runtime proof. [Day 4 results and remaining learning/reproducibility gates](part-17-sprint0.md#day-4-closure-checklist) are recorded separately.
+These unverified facts prevent an unqualified claim that **every learning/account item** is complete. They do not invalidate the observed local runtime proof. [Day 4 results and remaining learning/reproducibility gates](part-17-sprint0.md#historical-day-4-closure-checklist) are recorded separately.
 
 ## One Ubuntu checkout
 
@@ -80,7 +88,7 @@ Alternative macOS/native Ubuntu routes use official Git/SSH, uv, Node/pnpm and [
 📚 Learn first: [Atlassian signup][signup], verification; [two-step verification][mfa], enrollment/recovery; [Jira space creation][jira], Free/team-managed Scrum selection; stop before organization administration or workflow customization (15 minutes).
 ↩ Return: Day 2, use existing accounts; allow 10 minutes verification, 10 MFA/private recovery, 10 space/sign-in/plan check; done when each fact is evidenced or explicitly pending; never select a paid trial to unblock setup.
 
-Safe evidence: site `https://vipravlipare.atlassian.net`; space key `MER`; Scrum, Free, verified email, personal MFA and recovery storage **learner-confirmed**. Browser sign-in with MFA works. Team-managed type remains separately unconfirmed. Keep default workflow, written WIP limit two active items; skip imports, automation, invitations and extra products. Do not recreate the existing GitHub remote or change visibility.
+Safe evidence: site `https://vipravlipare.atlassian.net`; space key `MER`; Scrum, Free, verified email, personal MFA and recovery storage **learner-confirmed**. Browser sign-in with MFA works. Team-managed Scrum type was subsequently learner-confirmed October 6. Keep default workflow, written WIP limit two active items; skip imports, automation, invitations and extra products. Do not recreate the existing GitHub remote or change visibility.
 
 MFA resists use of a stolen password by requiring another factor; it does not prevent every attack. GitHub SSH authenticates Git operations with a key; it does not secure Atlassian browser login or establish GitHub web MFA. Recover using privately stored recovery material through the account recovery flow; publish only its storage status. Never record recovery codes, tokens, private keys or passwords in commits, screenshots, Jira, logs or shell history.
 
@@ -111,7 +119,7 @@ docker buildx imagetools inspect redis:8.10.2-trixie
 
 | Field | Required and observed |
 |---|---|
-| Project/services | `merlin`; only `postgres`, `redis`; containers `merlin-db`, `merlin-cache`; network `merlin-network`; no API placeholder |
+| Project/services | Default project `merlin`; only `postgres`, `redis`; Compose-generated container names; default network `merlin-network`; isolated checkouts override project/network/host ports; no API placeholder |
 | PostgreSQL pin | `postgres:17.11-bookworm@sha256:91eb910c44c7ed13f7f1a4ccadaa9ca72ef14cddc04cacb6e070e48eb44731a3` |
 | Redis pin | `redis:8.10.2-trixie@sha256:7ef5b5cec96495a04ca7feff88a9492efeab8053fb284d24bdd73344c9245a48` |
 | Private inputs | Required `POSTGRES_USER`, `POSTGRES_DB`, `POSTGRES_PASSWORD`; root `.env` mode 0600, ignored/untracked; no literal password |
