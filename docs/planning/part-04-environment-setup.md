@@ -1,5 +1,38 @@
 # Part 04 — Environment setup and Section 8
 
+## Current coding-readiness audit — October 6, 2026
+
+**GO for learner-owned local database foundation work; not a claim of a runnable application or completed Sprint 0.** The Ubuntu checkout is canonical. All requested planning files, including the entire Part 17, were read; architecture, schema, skill and Sprint 1 references were also reviewed.
+
+📚 Learn first: [uv locking and syncing](https://docs.astral.sh/uv/concepts/projects/sync/), locked checks; [PostgreSQL transactions](https://www.postgresql.org/docs/17/tutorial-transactions.html), commit/rollback; stop before savepoints. Pages retrieved October 6, 2026.
+↩ Return: follow [Day 6](part-18-sprint1.md#day-6--tuesday-october-6--first-database-foundation); start learning/design now, then cross the dependency and isolation gates before implementation. Never count an installed service as an implemented feature.
+
+| Current observed check | Result / meaning |
+|---|---|
+| Python environment | `.venv/bin/python` is Python 3.12.14; `uv python find 3.12` selects it; `uv lock --check --offline` passes. Preserve this working version rather than upgrading to the old planning candidate 3.12.15. |
+| Compose / running services | Quiet validation passes; PostgreSQL and Redis started for coding and both healthy. They are left running. Historical stopped-state entries below describe October 2, not current state. |
+| Password authentication | Correct credentials pass and deliberately wrong credentials are rejected, both through container service DNS and the Ubuntu host client. No credentials recorded. |
+| PostgreSQL storage | Existing volume `merlin_postgres_data` and cluster `7691749973399031842` retained. No recreation, reset, schema change or volume removal performed today. |
+| Redis | `PONG`; snapshots off, AOF off, 128 MiB data ceiling, noeviction. This proves a disposable local service, not implemented application caching. |
+| Boundaries / resources | Both ports bind only to 127.0.0.1; PostgreSQL 1 GiB/1 CPU, Redis 256 MiB/0.5 CPU; bounded 10m × 3 logs; both main processes run as UID 999. |
+| Secret handling / Git | Private `.env` mode 0600, ignored and untracked; ignored rootless clients retained. Repository was clean at the start of this audit. |
+| Application dependencies | `pyproject.toml` deliberately declares no feature dependencies. FastAPI, SQLAlchemy, Psycopg, Alembic and pytest compatibility/locks are **not proved**. Resolve only first-use packages before the migration/API task, then verify a locked installation and imports. |
+| Application / completion gaps | No learner API, migration, login or owner-isolation tests yet. Public README/SETUP, doctor implementation and actual green CI remain outstanding. Prior isolated/adapted runtime clone proof is not unmodified published five-command reproduction. |
+
+The initial process-owner check used Docker top without the required PID column and could not parse daemon output. Direct `/proc/1/status` checks showed UID 999 for both service processes; this was a verifier error, not a root-owned database. Existing retention proof is reused rather than destructively repeated. The ignored rootless host clients are local prerequisites and are not supplied by cloning Git.
+
+To resume from VS Code WSL:
+
+```bash
+cd /home/vipra/Merlin
+uv run --locked --offline python --version
+docker compose config --quiet
+docker compose ps
+```
+
+Stop safely when finished: `docker compose stop --timeout 30 postgres redis`. Do not use `down --volumes`, delete the working database, expose ports publicly, or test authorization as an administrative database role. No installation of optional models, pgvector, AWS or gateway services is required for the first users/notes slice.
+
+
 One environment guide consolidates the setup documents; [Part 17](part-17-sprint0.md) separately owns the Sprint 0 calendar and Day 4 deliverables. Original details are recoverable in [the verified archive](archive/setup-sprint0-originals-2026-10-02.tar.gz). Canonical calendar: October 1–5, 2026; Days 1–5, **no separate Day 0**. Latest learner authorization permits assistant setup changes; application features remain learner-owned.
 
 ## Acceptance through Day 3

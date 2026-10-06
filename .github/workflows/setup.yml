@@ -1,0 +1,57 @@
+name: Sprint 0 setup
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: setup-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  setup:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      UV_CACHE_DIR: ${{ runner.temp }}/uv
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6
+        with:
+          version: '0.12.21'
+          python-version: '3.12.14'
+          enable-cache: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24.21.0'
+      - name: Host clients and pinned package manager
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq postgresql-client redis-tools
+          cd "$RUNNER_TEMP"
+          npm install --global pnpm@12.8.1 --ignore-scripts
+      - name: Locked environments
+        run: |
+          uv sync --locked
+          pnpm install --frozen-lockfile --ignore-scripts
+      - name: Doctor regression tests
+        run: uv run --locked python -m unittest discover -s tools -p 'test_*.py'
+      - name: Isolated services from committed inputs
+        run: uv run --locked python tools/setup_local.py
+      - name: Static and runtime acceptance
+        run: |
+          uv run --locked python tools/doctor.py --static
+          uv run --locked python tools/doctor.py
+          git diff --check
+      - name: Remove only runner-owned disposable resources
+        if: always()
+        run: |
+          if test -f .env; then
+            docker compose down --volumes --remove-orphans
+          fi

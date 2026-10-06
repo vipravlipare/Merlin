@@ -35,7 +35,7 @@ Sprint 0 Days 1–3 operational setup passes. Use the Windows desktop **Merlin U
 
 ### A. Section 8 — operationally complete
 
-Read [final Day 3 evidence](part-04-environment-setup.md). Corrected services postgres/redis passed health checks and are now intentionally stopped; images are digest-pinned; secret boundary, host/container positive/negative auth, PING, non-root processes, resource/logging policies and storage retention pass. PostgreSQL volume and cluster identity are preserved. Do not rerun the transition without a concrete reason. Part 04 contains the reproduction steps.
+Read [final Day 3 evidence](part-04-environment-setup.md). October 6: corrected services postgres/redis are running and healthy; images are digest-pinned; secret boundary, host/container positive/negative auth, PING, non-root processes, resource/logging policies and storage retention pass. PostgreSQL volume and cluster identity are preserved. Do not rerun the transition without a concrete reason. Part 04 contains the reproduction steps.
 
 ### B. Accounts and next-day boundary
 
@@ -54,7 +54,7 @@ All numbered Part files 1–25 exist. They are the planning source, not proof th
 | Reality check and stack | Part 1 | Exists; hour ledger and cut line defined |
 | Project charter | Part 2 | Exists; verify licenses and model choices before use |
 | Workflow | Part 3 | Exists; use as daily operating procedure |
-| Environment | Part 4 plus Section 8 supplement | Section 8 operationally passes; later environment gates pending |
+| Environment | Part 4 | Section 8 operationally passes; later environment gates pending |
 | Components | Part 5 | Exists; source for implementation boundaries |
 | Checklists | Parts 6–7 | Exists; source for Jira tasks |
 | PRD/Epics | Parts 8–9 | Exists as compact specifications; full story detail still needs expansion before Jira import |
@@ -95,6 +95,11 @@ Stop and record a blocker when: a secret would enter Git; a service would bind p
 
 Section 8 is complete only after S8-01 through S8-05 pass with dated sanitized evidence. Part 4 is complete only after Sections 1–9 gates are either passed or honestly marked deferred with an owner and next action. The project is not built because planning documents exist; implementation evidence must come from learner-authored code, configuration, tests, PRs, benchmarks, and releases.
 
-Day 4 update (October 2): retention rerun passes; services stopped and volumes preserved. Part 17 contains hardware/evidence, SETUP/README outlines, doctor/CI specifications and the fresh-clone blocker: setup inputs are untracked. Requested Day 4 verification/docs/specifications are complete; learner learning/time and fresh-clone follow-up remain open. Continue at STATE NEXT.
+Historical Day 4 update: retention passed and services were stopped. Setup inputs were later committed and an isolated adapted clone passed. October 6 services are running; public unmodified reproduction, doctor/CI and learner ritual evidence remain open. Continue at STATE NEXT.
 
 Sprint 0 audit: [Part 17 S0-CLOSE](part-17-sprint0.md#s0-close--concrete-route-to-full-completion) defines remaining implementation/clone/personal gates. Section 8 passes; full-S0 NO-GO until reproduction/CI proof exists. Day 5 audit is delivered, learner ritual evidence pending.
+
+## Start coding — October 6
+
+📚 Learn first: [current environment audit](part-04-environment-setup.md#current-coding-readiness-audit--october-6-2026), current versus historical evidence; stop before optional installers.
+↩ Return: open [Day 6](part-18-sprint1.md#day-6--tuesday-october-6--first-database-foundation), then C-04.01/.02 in Part 6. Local foundations are ready; dependency compatibility and isolated migration prerequisites must pass before C-04.03. The first users/notes slice is not an instruction to build every backend component today.

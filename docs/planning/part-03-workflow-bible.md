@@ -33,10 +33,12 @@ Never leave an item In Progress overnight without a state note: last green check
 
 Each day’s blocks must equal the Part 1 capacity row.
 
-- Type S: setup/reading only; no feature code; 15-minute DSA and ritual; record spill.
-- Type A, 4 h: Learn 1 h; implement/design 2 h; verify 45 min; DSA 15 min; ritual 30 min. Monday ceremony uses 1 h inside the floor.
-- Type B, 6 h: Learn 90 min; implement 3 h; verify 45 min; DSA 30 min; ritual 45 min. Stretch is catch-up only.
-- Type C, 5 h: buffer first; Learn 90 min; implement 2–2.5 h; verify 45 min; DSA 30 min; ritual 45 min. Sunday mock/re-quiz/audit are separately recorded.
+- Type S: use Part 17's corrected day-specific setup allocations; no feature code. DSA is learner-deferred and its slot remains uncommitted.
+- Type A, 4 h: net learning/design/implementation/verification 183 min + uncommitted former DSA 15 min + ritual 30 min + reserve 12 min = 240 min. Monday additionally has a 60-minute ceremony inside the floor, reducing net work to 123 min.
+- Type B, 6 h: net work 249 min + uncommitted former DSA 30 min + ritual 45 min + reserve 36 min = 360 min. Day 6 uses the concrete Part 18 split; stretch is not committed capacity.
+- Type C: use the actual Part 1 row. Saturday 5 h: net 201 + uncommitted 30 + ritual 45 + reserve 24 = 300 min. Sunday 5 h: net 75 or 105 + uncommitted 30 + ritual 45 + reserve 60 + scheduled ceremony 90 or 60 = 300 min. Sunday extras are inside the floor, never added afterward.
+
+These totals replace the earlier templates that exceeded their stated caps. Net work includes verification and setup spill; neither is an extra block. Unused reserve and deferred DSA do not automatically become feature time.
 
 📚 Learn first (Must read): [Scrum Guide](https://scrumguides.org/scrum-guide.html), read Sprint Planning, Daily Scrum, Sprint Review and Sprint Retrospective; stop after those sections; why: ceremonies have different purposes (~20 min).
 ↩ Return to build: copy the matching S/A/B/C template into the daily note; done when floor, DSA, rituals, reserve and ceremony sum exactly; time box: 15 min on Day 5; if stuck: use Part 1’s capacity table.

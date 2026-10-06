@@ -1,13 +1,12 @@
-name: merlin
+name: ${MERLIN_PROJECT_NAME:-merlin}
 
 services:
   postgres:
     image: postgres:17.11-bookworm@sha256:91eb910c44c7ed13f7f1a4ccadaa9ca72ef14cddc04cacb6e070e48eb44731a3
-    container_name: merlin-db
     restart: unless-stopped
     stop_grace_period: 30s
     ports:
-      - "127.0.0.1:5432:5432"
+      - "127.0.0.1:${POSTGRES_HOST_PORT:-5432}:5432"
     environment:
       POSTGRES_USER: ${POSTGRES_USER:?Set POSTGRES_USER in .env}
       POSTGRES_DB: ${POSTGRES_DB:?Set POSTGRES_DB in .env}
@@ -30,12 +29,11 @@ services:
 
   redis:
     image: redis:8.10.2-trixie@sha256:7ef5b5cec96495a04ca7feff88a9492efeab8053fb284d24bdd73344c9245a48
-    container_name: merlin-cache
     restart: unless-stopped
     stop_grace_period: 30s
     command: ["redis-server", "--save", "", "--appendonly", "no", "--maxmemory", "128mb", "--maxmemory-policy", "noeviction"]
     ports:
-      - "127.0.0.1:6379:6379"
+      - "127.0.0.1:${REDIS_HOST_PORT:-6379}:6379"
     volumes:
       - redis_data:/data
     healthcheck:
@@ -58,4 +56,4 @@ volumes:
 
 networks:
   default:
-    name: merlin-network
+    name: ${MERLIN_NETWORK_NAME:-merlin-network}

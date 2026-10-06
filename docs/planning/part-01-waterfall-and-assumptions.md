@@ -219,6 +219,8 @@ Explain back: Why is valid tool-call JSON not permission to execute it?
 
 ### 5.1 Released planning pins, not a tested dependency lock
 
+October 6 observed setup overrides planning candidates: Python 3.12.14 in the existing Ubuntu `.venv` passes the project lock check. Keep it; 3.12.15 below remains an earlier candidate. Backend dependency compatibility remains a first-use gate because the current project declares no feature packages. See Part 04's dated coding-readiness audit; do not describe the whole application stack as installed.
+
 “Verified” below means the official release evidence was read on **2026-10-01**. It does not mean installed, mutually compatible, vulnerability-free or benchmarked. Recheck security advisories and resolve the learner's lockfiles on first use. If compatibility fails, change the pin in an ADR instead of installing “latest” silently.
 
 Before **every** MCP/framework implementation session, re-read the pinned official documentation and changelog. Exact API details remain **🔎 verify** until checked for that installed version; checking a release number does not verify a method signature.
