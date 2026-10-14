@@ -1,0 +1,236 @@
+{
+  "recorded_date": "2026-10-11",
+  "raw_reports": "/tmp/merlin-test-suite-k3sx62g0",
+  "comparison_reports": "/tmp/merlin-test-suite-61blqqhn",
+  "seconds": 67.397774,
+  "previous_seconds": 62.089123,
+  "original_seconds": 791.151679,
+  "summary": {
+    "started_utc": "2026-10-11T19:47:43.891173+00:00",
+    "stages": [
+      {
+        "stage": "python-tests",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 7.85
+      },
+      {
+        "stage": "quiz-tests",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 0.094
+      },
+      {
+        "stage": "legacy-python-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 5.842
+      },
+      {
+        "stage": "python-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "excluded_invalid_import_faults": [
+          "ast-database_connectivity_probe-21-11",
+          "ast-notes_maintenance-76-42",
+          "ast-doctor-229-52",
+          "ast-prd_lint-181-88"
+        ],
+        "seconds": 37.717
+      },
+      {
+        "stage": "database-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 14.579
+      },
+      {
+        "stage": "timestamp-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 0.723
+      },
+      {
+        "stage": "quiz-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 1.316
+      },
+      {
+        "stage": "browser-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 8.416
+      },
+      {
+        "stage": "database-lifecycle-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 7.247
+      },
+      {
+        "stage": "migration-undo-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 16.202
+      },
+      {
+        "stage": "documentation",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 0.117
+      },
+      {
+        "stage": "whitespace",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 0.011
+      }
+    ],
+    "status": "PASS",
+    "execution": {
+      "database_transport": "guarded reusable libpq session",
+      "python_fault_workers": 3,
+      "schedule": "independent CPU lane and serial database lane",
+      "python_fault_scope": "dependent"
+    },
+    "finished_utc": "2026-10-11T19:48:51.288947+00:00"
+  },
+  "coverage_comparison": {
+    "python_case_detection_sets": true,
+    "python_fault_statuses": true,
+    "python_scope_manifests": true,
+    "quiz_case_detection_sets": true,
+    "quiz_fault_statuses": true,
+    "sql_all_case_fault_pairs": true,
+    "sql_all_baselines": true,
+    "legacy_all_faults": true,
+    "browser_cases_and_detection": true,
+    "lifecycle_cases_and_detection": true,
+    "migration_source_preserved": true,
+    "migration_roundtrips": true,
+    "migration_gates": true,
+    "migration_repairs": true,
+    "migration_concurrency": true,
+    "database_fingerprint": true
+  },
+  "execution_controls": {
+    "checks": [
+      {
+        "scenario": "pass",
+        "passed": true,
+        "runner_exit": 0
+      },
+      {
+        "scenario": "failure",
+        "passed": true,
+        "runner_exit": 1
+      },
+      {
+        "scenario": "interrupt",
+        "passed": true,
+        "runner_exit": 1
+      }
+    ]
+  },
+  "scope_note": "All baseline cases, faults, SQL pairs, exact detections and preservation checks match the earlier full audit. Only database stage order changed; the worker trial used three workers instead of six.",
+  "baseline_summary": {
+    "started_utc": "2026-10-11T19:43:36.932189+00:00",
+    "stages": [
+      {
+        "stage": "python-tests",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 8.269
+      },
+      {
+        "stage": "quiz-tests",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 0.086
+      },
+      {
+        "stage": "legacy-python-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 5.599
+      },
+      {
+        "stage": "python-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "excluded_invalid_import_faults": [
+          "ast-database_connectivity_probe-21-11",
+          "ast-notes_maintenance-76-42",
+          "ast-doctor-229-52",
+          "ast-prd_lint-181-88"
+        ],
+        "seconds": 24.72
+      },
+      {
+        "stage": "database-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 24.585
+      },
+      {
+        "stage": "timestamp-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 0.936
+      },
+      {
+        "stage": "quiz-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 1.297
+      },
+      {
+        "stage": "browser-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 8.157
+      },
+      {
+        "stage": "database-lifecycle-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 7.884
+      },
+      {
+        "stage": "migration-undo-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 13.101
+      },
+      {
+        "stage": "documentation",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 0.152
+      },
+      {
+        "stage": "whitespace",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 0.037
+      }
+    ],
+    "status": "PASS",
+    "execution": {
+      "database_transport": "guarded reusable libpq session",
+      "python_fault_workers": 6,
+      "schedule": "independent CPU lane and serial database lane",
+      "python_fault_scope": "dependent"
+    },
+    "finished_utc": "2026-10-11T19:44:39.021312+00:00"
+  },
+  "database_seconds": 38.751000000000005,
+  "baseline_database_seconds": 46.506,
+  "retained": false,
+  "timing_limit": "Single runs on a shared machine; historical 58.50-second default run was slightly faster than the retained reordered run. No robust overall or 2\u20133x database gain established.",
+  "source_sha256": {
+    "tools/run_test_suite.py": "e77d4aa884198ec5c149eecfa7dc59cccad8ebefd177edf0a748c5b8b6eadf80",
+    "tools/verify_suite_execution.py": "573fe9fc64f17cf9d53990849aadc20431f1fff94cf0e6068bbbe7e168f57ca9"
+  }
+}

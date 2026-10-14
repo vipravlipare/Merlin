@@ -1,0 +1,161 @@
+{
+  "review_date": "2026-10-12",
+  "decision": "Consolidate only the second branch business-case replay after strict same-run equivalence witness succeeds.",
+  "branches": {
+    "false": {
+      "case_count": 382,
+      "replay_mode": "executed"
+    },
+    "true": {
+      "case_count": 0,
+      "replay_mode": "equivalent_rebuild"
+    }
+  },
+  "preserved": [
+    "Both permission-baseline possibilities",
+    "Both 002-down/001-down and 001-up/002-up sequences",
+    "Both PUBLIC CREATE restoration assertions",
+    "Both unrelated sentinel and prerequisite/login preservation assertions",
+    "Before/after complete logical metadata comparison for each branch",
+    "Both runtime before/after comparisons",
+    "Both actual transactions and rollbacks",
+    "All 14 safety gates, 17 repair checks, three concurrency checks and five lifecycle cases",
+    "All SQL baselines and 607 fault pairs elsewhere"
+  ],
+  "equivalence_dimensions": {
+    "columns": [
+      "relation and ordinal",
+      "type name and type modifier",
+      "collation identity",
+      "array dimensionality",
+      "required and generated flags",
+      "identity mode",
+      "ACL",
+      "storage and compression",
+      "column options",
+      "missing-value metadata"
+    ],
+    "relations": [
+      "owner and ACL",
+      "row-security enable/force",
+      "relation kind and persistence",
+      "access method",
+      "table/view options including security_invoker",
+      "replica identity",
+      "tablespace identity"
+    ],
+    "functions": [
+      "full stored definition",
+      "owner and ACL",
+      "SET configuration",
+      "strictness",
+      "volatility",
+      "parallel mode",
+      "SECURITY DEFINER flag",
+      "leakproof flag"
+    ],
+    "constraints": [
+      "full definition",
+      "validation status",
+      "deferrable and initially-deferred flags"
+    ],
+    "policies": [
+      "name",
+      "command kind",
+      "permissive/restrictive flag",
+      "roles",
+      "USING and WITH CHECK expressions"
+    ],
+    "indexes": [
+      "definition, key/expression order, directions and predicates",
+      "valid, ready and live state",
+      "unique, primary and NULL uniqueness flags",
+      "key and attribute counts",
+      "access method and options"
+    ],
+    "roles": [
+      "login/superuser/bypass/create DB/create role/replication flags",
+      "role configuration",
+      "inherit flag",
+      "connection limit",
+      "valid-until",
+      "database/role default-setting records"
+    ],
+    "memberships": [
+      "role/member/grantor identities",
+      "admin, inherit and set-role options"
+    ],
+    "other": [
+      "public schema owner/ACL",
+      "column defaults and generated expressions",
+      "trigger definition and enabled state",
+      "view definition",
+      "rewrite rules and enabled state",
+      "inheritance parents and sequence"
+    ],
+    "runtime": [
+      "same per-run command/target",
+      "same server version",
+      "same database encoding/collation/ctype/version",
+      "same session/current user",
+      "same selected parsing/time/row-security/access-method/compression/locale settings",
+      "same extension names and versions",
+      "pinned Unicode helper probe and version guard embedded in unchanged up SQL",
+      "zero users and notes before and after rebuild"
+    ],
+    "sources": [
+      "all four migration file hashes unchanged before/after each branch",
+      "SQL test source hash unchanged",
+      "both audit tool source hashes unchanged"
+    ],
+    "normalization": [
+      "role OIDs map to role names",
+      "generated RI constraint trigger numeric suffixes normalize",
+      "only outer inventory ordering normalizes",
+      "nested arrays retain exact order"
+    ]
+  },
+  "witness_fields": [
+    "validated",
+    "reference_baseline_public_create",
+    "reference_case_count",
+    "same_rebuilt_schema",
+    "same_runtime",
+    "source_sha256",
+    "same_source_sha256",
+    "runtime_target_sha256",
+    "schema_sha256",
+    "reference_schema_sha256",
+    "runtime_sha256",
+    "reference_runtime_sha256"
+  ],
+  "offline_verification": {
+    "AST_and_imports": "PASS",
+    "valid_mocked_rebuild_case_counts": [
+      382,
+      0
+    ],
+    "changed_second_branch_column_type": "REJECTED",
+    "changed_second_branch_TimeZone": "REJECTED",
+    "changed_second_branch_nested_array_order": "REJECTED",
+    "database_runtime": "NOT RUN"
+  },
+  "limits": [
+    "This is logical equivalence for the fixed current migration/test scope, not universal PostgreSQL equivalence.",
+    "Physical OIDs, relation file identities, planner statistics, MVCC transaction IDs and byte-level page contents are not required to match.",
+    "Actual random UUID outputs and server clock values naturally differ; unchanged definitions and runtime are the equivalence condition.",
+    "The runtime source is the same per-run verified immutable container environment; no previous-run result is cached or trusted.",
+    "The pinned Unicode probe is an extra runtime witness, not a replacement for the complete 382-case first replay.",
+    "If schema, source, runtime or first-case replay differs/fails, the audit fails; it does not silently accept reduced coverage.",
+    "The stronger fingerprint changes preservation values; fresh suite verification is required. No new database success or timing is claimed."
+  ],
+  "source_sha256": {
+    "tools/audit_database_cases.py": "f0d89d3b63e275a2f363b77124a3746f81417c2499b9b0d34a7b560a51d4fb9b",
+    "tools/audit_migration_undo.py": "6c60e3b0e7e8763b30faaeb81272067bb9b103c7d580787acab3cf885a10715e"
+  },
+  "official_catalog_sources": [
+    "https://www.postgresql.org/docs/17/catalog-pg-attribute.html",
+    "https://www.postgresql.org/docs/17/catalog-pg-class.html",
+    "https://www.postgresql.org/docs/17/catalog-pg-db-role-setting.html"
+  ]
+}

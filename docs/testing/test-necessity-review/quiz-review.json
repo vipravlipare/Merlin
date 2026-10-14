@@ -1,0 +1,2708 @@
+{
+  "review_date": "2026-10-12",
+  "scope": "Source and evidence review only; no product/test/tool edits or browser/DB/fault execution.",
+  "source_sha256": {
+    "quizzes/sprint-0-quiz.html": "1f43c0e04def801c3edaf5b77bcb60c3da285712f91ed8a7290d7ec590cdd57d",
+    "tests/quiz.test.js": "d51691b52b720b4037256af9477c68ec987bb7316101e19c5a7828cee0d20f47",
+    "tools/audit_quiz_cases.py": "6401d8df6f44f914593c0054b8182b8a1d17f29ae02d80846ebf42e61ff7787c",
+    "tools/audit_quiz_browser.mjs": "537eec314e2b64c18c3d4d8d3fd5fcb1d9341d5f181b0668db846d9128449d04"
+  },
+  "javascript_evidence_hash_matches": {
+    "quizzes/sprint-0-quiz.html": true,
+    "tests/quiz.test.js": true
+  },
+  "browser_evidence_limitation": "No hashes recorded; case names/mutation strings match current sources but matching run identity cannot be cryptographically proven.",
+  "evidence_files": [
+    "/tmp/merlin-test-suite-2j54l_ma/merlin-quiz-effectiveness.json",
+    "/tmp/merlin-test-suite-2j54l_ma/merlin-browser-effectiveness.json"
+  ],
+  "summary": {
+    "javascript-case": {
+      "KEEP": 36,
+      "MERGE": 2,
+      "REMOVE": 0,
+      "IMPROVE": 4
+    },
+    "javascript-fault": {
+      "KEEP": 27,
+      "MERGE": 0,
+      "REMOVE": 0,
+      "IMPROVE": 8
+    },
+    "browser-case": {
+      "KEEP": 13,
+      "MERGE": 0,
+      "REMOVE": 0,
+      "IMPROVE": 3
+    },
+    "browser-fault": {
+      "KEEP": 12,
+      "MERGE": 2,
+      "REMOVE": 0,
+      "IMPROVE": 2
+    }
+  },
+  "rows": [
+    {
+      "id": "JS-C01",
+      "kind": "javascript-case",
+      "name": "the complete browser script parses",
+      "decision": "KEEP",
+      "expectation": "Whole script compiles.",
+      "behavioral_requirement": "Whole script compiles.",
+      "rationale": "This is the offline Node suite\u2019s only full-script compilation check. Top-level VM evaluation stops at the UI boundary, so a syntax defect in UI code can otherwise escape the pure-logic suite. The cheap syntax gate complements actual browser execution; browser availability/version preflight does not compile the product.",
+      "overlap_ids": [
+        "BR-C01",
+        "BR-C02",
+        "BR-C03",
+        "BR-C04",
+        "BR-C05",
+        "BR-C06",
+        "BR-C07",
+        "BR-C08",
+        "BR-C09",
+        "BR-C10",
+        "BR-C11",
+        "BR-C12",
+        "BR-C13",
+        "BR-C14",
+        "BR-C15",
+        "BR-C16"
+      ],
+      "source_refs": [
+        "tests/quiz.test.js:21",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "evidence": {
+        "case": "the complete browser script parses",
+        "baseline": "passed",
+        "detects": [
+          "script-syntax-error"
+        ]
+      }
+    },
+    {
+      "id": "JS-C02",
+      "kind": "javascript-case",
+      "name": "the bank has 35 distinct questions and valid choice indexes",
+      "decision": "IMPROVE",
+      "expectation": "IDs1\u201335 in order; four distinct choices, integer correct0\u20133, nonempty text, critical IDs15,17,21.",
+      "behavioral_requirement": "IDs1\u201335 in order; four distinct choices, integer correct0\u20133, nonempty text, critical IDs15,17,21.",
+      "rationale": "Real bank invariants matter; exact35/ordering/critical IDs are editorial contract. Generic scoring fixtures assume every correct index0; document content contract and distinguish maintenance coupling.",
+      "overlap_ids": [
+        "BR-C01"
+      ],
+      "source_refs": [
+        "tests/quiz.test.js:25",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "evidence": {
+        "case": "the bank has 35 distinct questions and valid choice indexes",
+        "baseline": "passed",
+        "detects": [
+          "bank-duplicate-id",
+          "bank-critical-removed"
+        ]
+      }
+    },
+    {
+      "id": "JS-C03",
+      "kind": "javascript-case",
+      "name": "all correct answers score 35/35 with no missing or critical errors",
+      "decision": "KEEP",
+      "expectation": "35/35,100%,pass; empty missing/missed/critical lists; Workspace2/2.",
+      "behavioral_requirement": "35/35,100%,pass; empty missing/missed/critical lists; Workspace2/2.",
+      "rationale": "Distinct input shape, type, boundary or transition can fail independently despite shared mutation kills. Preserve exact assertion.",
+      "overlap_ids": [
+        "BR-C05"
+      ],
+      "source_refs": [
+        "tests/quiz.test.js:36",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "evidence": {
+        "case": "all correct answers score 35/35 with no missing or critical errors",
+        "baseline": "passed",
+        "detects": [
+          "bank-duplicate-id",
+          "answers-always-wrong",
+          "topic-totals-not-counted",
+          "topic-correct-not-counted"
+        ]
+      }
+    },
+    {
+      "id": "JS-C04",
+      "kind": "javascript-case",
+      "name": "exactly 80 percent passes when critical answers are correct",
+      "decision": "KEEP",
+      "expectation": "28/35,80%,pass; missed IDs1\u20137.",
+      "behavioral_requirement": "28/35,80%,pass; missed IDs1\u20137.",
+      "rationale": "Distinct input shape, type, boundary or transition can fail independently despite shared mutation kills. Preserve exact assertion.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tests/quiz.test.js:46",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "evidence": {
+        "case": "exactly 80 percent passes when critical answers are correct",
+        "baseline": "passed",
+        "detects": [
+          "bank-duplicate-id",
+          "answers-always-wrong",
+          "answers-always-correct",
+          "threshold-too-strict",
+          "caller-answers-overwritten"
+        ]
+      }
+    },
+    {
+      "id": "JS-C05",
+      "kind": "javascript-case",
+      "name": "one more noncritical error falls below the pass threshold",
+      "decision": "KEEP",
+      "expectation": "27/35,77%,fail.",
+      "behavioral_requirement": "27/35,77%,fail.",
+      "rationale": "Distinct input shape, type, boundary or transition can fail independently despite shared mutation kills. Preserve exact assertion.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tests/quiz.test.js:56",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "evidence": {
+        "case": "one more noncritical error falls below the pass threshold",
+        "baseline": "passed",
+        "detects": [
+          "bank-duplicate-id",
+          "answers-always-wrong",
+          "answers-always-correct",
+          "threshold-too-permissive",
+          "caller-answers-overwritten"
+        ]
+      }
+    },
+    {
+      "id": "JS-C06",
+      "kind": "javascript-case",
+      "name": "critical question 15 prevents passing even at 97 percent",
+      "decision": "KEEP",
+      "expectation": "Wrong critical ID15 yields97%,fail,criticalMissed=[15].",
+      "behavioral_requirement": "Wrong critical ID15 yields97%,fail,criticalMissed=[15].",
+      "rationale": "Distinct input shape, type, boundary or transition can fail independently despite shared mutation kills. Preserve exact assertion.",
+      "overlap_ids": [
+        "JS-C07",
+        "JS-C08",
+        "BR-C15"
+      ],
+      "source_refs": [
+        "tests/quiz.test.js:66",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "evidence": {
+        "case": "critical question 15 prevents passing even at 97 percent",
+        "baseline": "passed",
+        "detects": [
+          "bank-duplicate-id",
+          "bank-critical-removed",
+          "answers-always-wrong",
+          "answers-always-correct",
+          "critical-errors-ignored",
+          "empty-attempt-passes",
+          "caller-answers-overwritten"
+        ]
+      }
+    },
+    {
+      "id": "JS-C07",
+      "kind": "javascript-case",
+      "name": "critical question 17 prevents passing even at 97 percent",
+      "decision": "KEEP",
+      "expectation": "Wrong critical ID17 yields97%,fail,criticalMissed=[17].",
+      "behavioral_requirement": "Wrong critical ID17 yields97%,fail,criticalMissed=[17].",
+      "rationale": "Distinct input shape, type, boundary or transition can fail independently despite shared mutation kills. Preserve exact assertion.",
+      "overlap_ids": [
+        "JS-C06",
+        "JS-C08",
+        "BR-C15"
+      ],
+      "source_refs": [
+        "tests/quiz.test.js:66",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "evidence": {
+        "case": "critical question 17 prevents passing even at 97 percent",
+        "baseline": "passed",
+        "detects": [
+          "bank-duplicate-id",
+          "bank-critical-removed",
+          "answers-always-wrong",
+          "answers-always-correct",
+          "critical-errors-ignored",
+          "empty-attempt-passes",
+          "caller-answers-overwritten"
+        ]
+      }
+    },
+    {
+      "id": "JS-C08",
+      "kind": "javascript-case",
+      "name": "critical question 21 prevents passing even at 97 percent",
+      "decision": "KEEP",
+      "expectation": "Wrong critical ID21 yields97%,fail,criticalMissed=[21].",
+      "behavioral_requirement": "Wrong critical ID21 yields97%,fail,criticalMissed=[21].",
+      "rationale": "Distinct input shape, type, boundary or transition can fail independently despite shared mutation kills. Preserve exact assertion.",
+      "overlap_ids": [
+        "JS-C06",
+        "JS-C07",
+        "BR-C15"
+      ],
+      "source_refs": [
+        "tests/quiz.test.js:66",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "evidence": {
+        "case": "critical question 21 prevents passing even at 97 percent",
+        "baseline": "passed",
+        "detects": [
+          "bank-duplicate-id",
+          "bank-critical-removed",
+          "answers-always-wrong",
+          "answers-always-correct",
+          "critical-errors-ignored",
+          "empty-attempt-passes",
+          "caller-answers-overwritten"
+        ]
+      }
+    },
+    {
+      "id": "JS-C09",
+      "kind": "javascript-case",
+      "name": "absent answer counts as missing, never as correct",
+      "decision": "KEEP",
+      "expectation": "undefined yields missing=[1],correct0,pass=false.",
+      "behavioral_requirement": "undefined yields missing=[1],correct0,pass=false.",
+      "rationale": "Distinct input shape, type, boundary or transition can fail independently despite shared mutation kills. Preserve exact assertion.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tests/quiz.test.js:78",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "evidence": {
+        "case": "absent answer counts as missing, never as correct",
+        "baseline": "passed",
+        "detects": [
+          "invalid-answers-accepted",
+          "integer-check-removed"
+        ]
+      }
+    },
+    {
+      "id": "JS-C10",
+      "kind": "javascript-case",
+      "name": "null answer counts as missing, never as correct",
+      "decision": "KEEP",
+      "expectation": "null yields missing=[1],correct0,pass=false.",
+      "behavioral_requirement": "null yields missing=[1],correct0,pass=false.",
+      "rationale": "Distinct input shape, type, boundary or transition can fail independently despite shared mutation kills. Preserve exact assertion.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tests/quiz.test.js:78",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "evidence": {
+        "case": "null answer counts as missing, never as correct",
+        "baseline": "passed",
+        "detects": [
+          "invalid-answers-accepted",
+          "integer-check-removed"
+        ]
+      }
+    },
+    {
+      "id": "JS-C11",
+      "kind": "javascript-case",
+      "name": "string answer counts as missing, never as correct",
+      "decision": "KEEP",
+      "expectation": "string0 yields missing=[1],correct0,pass=false.",
+      "behavioral_requirement": "string0 yields missing=[1],correct0,pass=false.",
+      "rationale": "Distinct input shape, type, boundary or transition can fail independently despite shared mutation kills. Preserve exact assertion.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tests/quiz.test.js:78",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "evidence": {
+        "case": "string answer counts as missing, never as correct",
+        "baseline": "passed",
+        "detects": [
+          "invalid-answers-accepted",
+          "integer-check-removed"
+        ]
+      }
+    },
+    {
+      "id": "JS-C12",
+      "kind": "javascript-case",
+      "name": "boolean answer counts as missing, never as correct",
+      "decision": "KEEP",
+      "expectation": "true yields missing=[1],correct0,pass=false.",
+      "behavioral_requirement": "true yields missing=[1],correct0,pass=false.",
+      "rationale": "Distinct input shape, type, boundary or transition can fail independently despite shared mutation kills. Preserve exact assertion.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tests/quiz.test.js:78",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "evidence": {
+        "case": "boolean answer counts as missing, never as correct",
+        "baseline": "passed",
+        "detects": [
+          "invalid-answers-accepted",
+          "integer-check-removed"
+        ]
+      }
+    },
+    {
+      "id": "JS-C13",
+      "kind": "javascript-case",
+      "name": "negative answer counts as missing, never as correct",
+      "decision": "KEEP",
+      "expectation": "-1 yields missing=[1],correct0,pass=false.",
+      "behavioral_requirement": "-1 yields missing=[1],correct0,pass=false.",
+      "rationale": "Distinct input shape, type, boundary or transition can fail independently despite shared mutation kills. Preserve exact assertion.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tests/quiz.test.js:78",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "evidence": {
+        "case": "negative answer counts as missing, never as correct",
+        "baseline": "passed",
+        "detects": [
+          "invalid-answers-accepted",
+          "negative-answer-accepted"
+        ]
+      }
+    },
+    {
+      "id": "JS-C14",
+      "kind": "javascript-case",
+      "name": "too large answer counts as missing, never as correct",
+      "decision": "KEEP",
+      "expectation": "4 yields missing=[1],correct0,pass=false.",
+      "behavioral_requirement": "4 yields missing=[1],correct0,pass=false.",
+      "rationale": "Distinct input shape, type, boundary or transition can fail independently despite shared mutation kills. Preserve exact assertion.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tests/quiz.test.js:78",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "evidence": {
+        "case": "too large answer counts as missing, never as correct",
+        "baseline": "passed",
+        "detects": [
+          "invalid-answers-accepted",
+          "too-large-answer-accepted"
+        ]
+      }
+    },
+    {
+      "id": "JS-C15",
+      "kind": "javascript-case",
+      "name": "fraction answer counts as missing, never as correct",
+      "decision": "KEEP",
+      "expectation": "1.5 yields missing=[1],correct0,pass=false.",
+      "behavioral_requirement": "1.5 yields missing=[1],correct0,pass=false.",
+      "rationale": "Distinct input shape, type, boundary or transition can fail independently despite shared mutation kills. Preserve exact assertion.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tests/quiz.test.js:78",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "evidence": {
+        "case": "fraction answer counts as missing, never as correct",
+        "baseline": "passed",
+        "detects": [
+          "invalid-answers-accepted",
+          "integer-check-removed"
+        ]
+      }
+    },
+    {
+      "id": "JS-C16",
+      "kind": "javascript-case",
+      "name": "NaN answer counts as missing, never as correct",
+      "decision": "KEEP",
+      "expectation": "NaN yields missing=[1],correct0,pass=false.",
+      "behavioral_requirement": "NaN yields missing=[1],correct0,pass=false.",
+      "rationale": "Distinct input shape, type, boundary or transition can fail independently despite shared mutation kills. Preserve exact assertion.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tests/quiz.test.js:78",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "evidence": {
+        "case": "NaN answer counts as missing, never as correct",
+        "baseline": "passed",
+        "detects": [
+          "invalid-answers-accepted",
+          "integer-check-removed"
+        ]
+      }
+    },
+    {
+      "id": "JS-C17",
+      "kind": "javascript-case",
+      "name": "empty attempts cannot pass and unknown questions reject",
+      "decision": "IMPROVE",
+      "expectation": "Empty attempt fails; unknown999 throws Unknown question.",
+      "behavioral_requirement": "Empty attempt fails; unknown999 throws Unknown question.",
+      "rationale": "Split two independent negative contracts for case-level proof.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tests/quiz.test.js:86",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "evidence": {
+        "case": "empty attempts cannot pass and unknown questions reject",
+        "baseline": "passed",
+        "detects": [
+          "empty-attempt-passes",
+          "unknown-question-ignored"
+        ]
+      }
+    },
+    {
+      "id": "JS-C18",
+      "kind": "javascript-case",
+      "name": "retry scoring uses the selected questions rather than the full bank",
+      "decision": "KEEP",
+      "expectation": "IDs1,2 yield2/2,100%; input unchanged.",
+      "behavioral_requirement": "IDs1,2 yield2/2,100%; input unchanged.",
+      "rationale": "Distinct input shape, type, boundary or transition can fail independently despite shared mutation kills. Preserve exact assertion.",
+      "overlap_ids": [
+        "BR-C08"
+      ],
+      "source_refs": [
+        "tests/quiz.test.js:91",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "evidence": {
+        "case": "retry scoring uses the selected questions rather than the full bank",
+        "baseline": "passed",
+        "detects": [
+          "bank-duplicate-id",
+          "answers-always-wrong",
+          "full-bank-denominator"
+        ]
+      }
+    },
+    {
+      "id": "JS-C19",
+      "kind": "javascript-case",
+      "name": "valid partial saved answers restore and validation does not mutate them",
+      "decision": "KEEP",
+      "expectation": "Valid partial state accepts without mutation.",
+      "behavioral_requirement": "Valid partial state accepts without mutation.",
+      "rationale": "Distinct input shape, type, boundary or transition can fail independently despite shared mutation kills. Preserve exact assertion.",
+      "overlap_ids": [
+        "JS-C41",
+        "JS-C42",
+        "BR-C04"
+      ],
+      "source_refs": [
+        "tests/quiz.test.js:100",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "evidence": {
+        "case": "valid partial saved answers restore and validation does not mutate them",
+        "baseline": "passed",
+        "detects": [
+          "bank-duplicate-id",
+          "saved-states-all-rejected",
+          "partial-saved-state-modified"
+        ]
+      }
+    },
+    {
+      "id": "JS-C20",
+      "kind": "javascript-case",
+      "name": "submitted saved attempts require an answer to every selected question",
+      "decision": "KEEP",
+      "expectation": "Incomplete submitted cache rejects; adding answer2 accepts.",
+      "behavioral_requirement": "Incomplete submitted cache rejects; adding answer2 accepts.",
+      "rationale": "Distinct input shape, type, boundary or transition can fail independently despite shared mutation kills. Preserve exact assertion.",
+      "overlap_ids": [
+        "BR-C11"
+      ],
+      "source_refs": [
+        "tests/quiz.test.js:107",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "evidence": {
+        "case": "submitted saved attempts require an answer to every selected question",
+        "baseline": "passed",
+        "detects": [
+          "bank-duplicate-id",
+          "saved-states-all-rejected",
+          "saved-states-all-accepted",
+          "partial-submitted-cache-accepted"
+        ]
+      }
+    },
+    {
+      "id": "JS-C21",
+      "kind": "javascript-case",
+      "name": "saved state rejects empty ids",
+      "decision": "KEEP",
+      "expectation": "Saved state rejects empty IDs.",
+      "behavioral_requirement": "Saved state rejects empty IDs.",
+      "rationale": "Distinct input shape, type, boundary or transition can fail independently despite shared mutation kills. Preserve exact assertion.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tests/quiz.test.js:128",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "evidence": {
+        "case": "saved state rejects empty ids",
+        "baseline": "passed",
+        "detects": [
+          "saved-states-all-accepted",
+          "empty-ids-accepted"
+        ]
+      }
+    },
+    {
+      "id": "JS-C22",
+      "kind": "javascript-case",
+      "name": "saved state rejects duplicate ids",
+      "decision": "KEEP",
+      "expectation": "Saved state rejects duplicate IDs.",
+      "behavioral_requirement": "Saved state rejects duplicate IDs.",
+      "rationale": "Distinct input shape, type, boundary or transition can fail independently despite shared mutation kills. Preserve exact assertion.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tests/quiz.test.js:128",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "evidence": {
+        "case": "saved state rejects duplicate ids",
+        "baseline": "passed",
+        "detects": [
+          "saved-states-all-accepted",
+          "duplicate-ids-accepted"
+        ]
+      }
+    },
+    {
+      "id": "JS-C23",
+      "kind": "javascript-case",
+      "name": "saved state rejects unknown id",
+      "decision": "KEEP",
+      "expectation": "Saved state rejects unknown999.",
+      "behavioral_requirement": "Saved state rejects unknown999.",
+      "rationale": "Distinct input shape, type, boundary or transition can fail independently despite shared mutation kills. Preserve exact assertion.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tests/quiz.test.js:128",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "evidence": {
+        "case": "saved state rejects unknown id",
+        "baseline": "passed",
+        "detects": [
+          "saved-states-all-accepted",
+          "unknown-ids-accepted"
+        ]
+      }
+    },
+    {
+      "id": "JS-C24",
+      "kind": "javascript-case",
+      "name": "saved state rejects missing answers",
+      "decision": "KEEP",
+      "expectation": "Saved state rejects absent answers.",
+      "behavioral_requirement": "Saved state rejects absent answers.",
+      "rationale": "Distinct input shape, type, boundary or transition can fail independently despite shared mutation kills. Preserve exact assertion.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tests/quiz.test.js:128",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "evidence": {
+        "case": "saved state rejects missing answers",
+        "baseline": "passed",
+        "detects": [
+          "saved-states-all-accepted",
+          "answers-not-required"
+        ]
+      }
+    },
+    {
+      "id": "JS-C25",
+      "kind": "javascript-case",
+      "name": "saved state rejects invalid answer",
+      "decision": "KEEP",
+      "expectation": "Saved state rejects string answer0.",
+      "behavioral_requirement": "Saved state rejects string answer0.",
+      "rationale": "Distinct input shape, type, boundary or transition can fail independently despite shared mutation kills. Preserve exact assertion.",
+      "overlap_ids": [
+        "JS-C11"
+      ],
+      "source_refs": [
+        "tests/quiz.test.js:128",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "evidence": {
+        "case": "saved state rejects invalid answer",
+        "baseline": "passed",
+        "detects": [
+          "saved-states-all-accepted",
+          "permutation-integers-ignored",
+          "saved-answer-types-ignored",
+          "partial-saved-state-modified"
+        ]
+      }
+    },
+    {
+      "id": "JS-C26",
+      "kind": "javascript-case",
+      "name": "saved state rejects missing order",
+      "decision": "KEEP",
+      "expectation": "Saved state rejects absent order.",
+      "behavioral_requirement": "Saved state rejects absent order.",
+      "rationale": "Distinct input shape, type, boundary or transition can fail independently despite shared mutation kills. Preserve exact assertion.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tests/quiz.test.js:128",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "evidence": {
+        "case": "saved state rejects missing order",
+        "baseline": "passed",
+        "detects": [
+          "saved-states-all-accepted",
+          "order-not-required"
+        ]
+      }
+    },
+    {
+      "id": "JS-C27",
+      "kind": "javascript-case",
+      "name": "saved state rejects short permutation",
+      "decision": "IMPROVE",
+      "expectation": "Saved state rejects three choices.",
+      "behavioral_requirement": "Saved state rejects three choices.",
+      "rationale": "Three choices fail distinct-count too; length-removal fault does not kill this case. Do not claim independent length guard proof.",
+      "overlap_ids": [
+        "JS-C28",
+        "JS-C29"
+      ],
+      "source_refs": [
+        "tests/quiz.test.js:128",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "evidence": {
+        "case": "saved state rejects short permutation",
+        "baseline": "passed",
+        "detects": [
+          "saved-states-all-accepted"
+        ]
+      }
+    },
+    {
+      "id": "JS-C28",
+      "kind": "javascript-case",
+      "name": "saved state rejects long permutation",
+      "decision": "KEEP",
+      "expectation": "Saved state rejects five choices.",
+      "behavioral_requirement": "Saved state rejects five choices.",
+      "rationale": "Distinct input shape, type, boundary or transition can fail independently despite shared mutation kills. Preserve exact assertion.",
+      "overlap_ids": [
+        "JS-C27",
+        "JS-C29"
+      ],
+      "source_refs": [
+        "tests/quiz.test.js:128",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "evidence": {
+        "case": "saved state rejects long permutation",
+        "baseline": "passed",
+        "detects": [
+          "saved-states-all-accepted",
+          "permutation-length-ignored"
+        ]
+      }
+    },
+    {
+      "id": "JS-C29",
+      "kind": "javascript-case",
+      "name": "saved state rejects duplicate choice",
+      "decision": "KEEP",
+      "expectation": "Saved state rejects duplicate choice2.",
+      "behavioral_requirement": "Saved state rejects duplicate choice2.",
+      "rationale": "Distinct input shape, type, boundary or transition can fail independently despite shared mutation kills. Preserve exact assertion.",
+      "overlap_ids": [
+        "JS-C27",
+        "JS-C28"
+      ],
+      "source_refs": [
+        "tests/quiz.test.js:128",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "evidence": {
+        "case": "saved state rejects duplicate choice",
+        "baseline": "passed",
+        "detects": [
+          "saved-states-all-accepted",
+          "permutation-duplicates-ignored"
+        ]
+      }
+    },
+    {
+      "id": "JS-C30",
+      "kind": "javascript-case",
+      "name": "saved state rejects out of range choice",
+      "decision": "KEEP",
+      "expectation": "Saved state rejects out-of-range4.",
+      "behavioral_requirement": "Saved state rejects out-of-range4.",
+      "rationale": "Distinct input shape, type, boundary or transition can fail independently despite shared mutation kills. Preserve exact assertion.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tests/quiz.test.js:128",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "evidence": {
+        "case": "saved state rejects out of range choice",
+        "baseline": "passed",
+        "detects": [
+          "saved-states-all-accepted",
+          "permutation-bounds-ignored"
+        ]
+      }
+    },
+    {
+      "id": "JS-C31",
+      "kind": "javascript-case",
+      "name": "saved state rejects fractional choice",
+      "decision": "KEEP",
+      "expectation": "Saved state rejects fractional2.5.",
+      "behavioral_requirement": "Saved state rejects fractional2.5.",
+      "rationale": "Distinct input shape, type, boundary or transition can fail independently despite shared mutation kills. Preserve exact assertion.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tests/quiz.test.js:128",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "evidence": {
+        "case": "saved state rejects fractional choice",
+        "baseline": "passed",
+        "detects": [
+          "saved-states-all-accepted",
+          "permutation-integers-ignored"
+        ]
+      }
+    },
+    {
+      "id": "JS-C32",
+      "kind": "javascript-case",
+      "name": "absent or unparsable saved-state shape cannot restore",
+      "decision": "KEEP",
+      "expectation": "Reject null,undefined,{},string,array top-level states.",
+      "behavioral_requirement": "Reject null,undefined,{},string,array top-level states.",
+      "rationale": "Distinct input shape, type, boundary or transition can fail independently despite shared mutation kills. Preserve exact assertion.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tests/quiz.test.js:135",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "evidence": {
+        "case": "absent or unparsable saved-state shape cannot restore",
+        "baseline": "passed",
+        "detects": [
+          "saved-states-all-accepted"
+        ]
+      }
+    },
+    {
+      "id": "JS-C33",
+      "kind": "javascript-case",
+      "name": "shuffling preserves choices and uses the injected random source",
+      "decision": "IMPROVE",
+      "expectation": "random0 gives[1,2,3,0],three calls; random0.999 gives[0,1,2,3].",
+      "behavioral_requirement": "random0 gives[1,2,3,0],three calls; random0.999 gives[0,1,2,3].",
+      "rationale": "Exact shuffle sequence/three calls pins Fisher\u2013Yates; retain permutation/random-source contract and document algorithm requirement.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tests/quiz.test.js:139",
+        "quizzes/sprint-0-quiz.html:82"
+      ],
+      "evidence": {
+        "case": "shuffling preserves choices and uses the injected random source",
+        "baseline": "passed",
+        "detects": [
+          "shuffle-disabled",
+          "shuffle-loses-choice"
+        ]
+      }
+    },
+    {
+      "id": "JS-C34",
+      "kind": "javascript-case",
+      "name": "one missing answer blocks an otherwise correct attempt",
+      "decision": "KEEP",
+      "expectation": "Missing1 yields34 correct,fail,missing=[1].",
+      "behavioral_requirement": "Missing1 yields34 correct,fail,missing=[1].",
+      "rationale": "Distinct input shape, type, boundary or transition can fail independently despite shared mutation kills. Preserve exact assertion.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tests/quiz.test.js:147",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "evidence": {
+        "case": "one missing answer blocks an otherwise correct attempt",
+        "baseline": "passed",
+        "detects": [
+          "bank-duplicate-id",
+          "answers-always-wrong",
+          "invalid-answers-accepted",
+          "integer-check-removed",
+          "empty-attempt-passes"
+        ]
+      }
+    },
+    {
+      "id": "JS-C35",
+      "kind": "javascript-case",
+      "name": "all wrong answers populate every error and topic total",
+      "decision": "KEEP",
+      "expectation": "All wrong yields0%,fail,all IDs missed,critical15,17,21,no missing; every topic correct0 and correct total.",
+      "behavioral_requirement": "All wrong yields0%,fail,all IDs missed,critical15,17,21,no missing; every topic correct0 and correct total.",
+      "rationale": "Distinct input shape, type, boundary or transition can fail independently despite shared mutation kills. Preserve exact assertion.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tests/quiz.test.js:157",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "evidence": {
+        "case": "all wrong answers populate every error and topic total",
+        "baseline": "passed",
+        "detects": [
+          "bank-duplicate-id",
+          "bank-critical-removed",
+          "answers-always-correct",
+          "caller-answers-overwritten",
+          "topic-totals-not-counted"
+        ]
+      }
+    },
+    {
+      "id": "JS-C36",
+      "kind": "javascript-case",
+      "name": "saved state rejects an answer array that loses progress after saving",
+      "decision": "KEEP",
+      "expectation": "Array answer1 serializes[null,0]; persisted and original empty arrays reject.",
+      "behavioral_requirement": "Array answer1 serializes[null,0]; persisted and original empty arrays reject.",
+      "rationale": "Distinct input shape, type, boundary or transition can fail independently despite shared mutation kills. Preserve exact assertion.",
+      "overlap_ids": [
+        "JS-C38",
+        "JS-C39",
+        "JS-C40",
+        "BR-C13"
+      ],
+      "source_refs": [
+        "tests/quiz.test.js:175",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "evidence": {
+        "case": "saved state rejects an answer array that loses progress after saving",
+        "baseline": "passed",
+        "detects": [
+          "saved-states-all-accepted",
+          "answers-not-required",
+          "answer-arrays-accepted"
+        ]
+      }
+    },
+    {
+      "id": "JS-C37",
+      "kind": "javascript-case",
+      "name": "wrong answers must not modify the caller answer map",
+      "decision": "KEEP",
+      "expectation": "Wrong-answer map unchanged after grading.",
+      "behavioral_requirement": "Wrong-answer map unchanged after grading.",
+      "rationale": "Distinct input shape, type, boundary or transition can fail independently despite shared mutation kills. Preserve exact assertion.",
+      "overlap_ids": [
+        "JS-C04",
+        "JS-C05",
+        "JS-C35"
+      ],
+      "source_refs": [
+        "tests/quiz.test.js:186",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "evidence": {
+        "case": "wrong answers must not modify the caller answer map",
+        "baseline": "passed",
+        "detects": [
+          "bank-duplicate-id",
+          "caller-answers-overwritten"
+        ]
+      }
+    },
+    {
+      "id": "JS-C38",
+      "kind": "javascript-case",
+      "name": "saved state rejects empty answer arrays before any reload",
+      "decision": "MERGE",
+      "expectation": "Empty answer array rejects before reload.",
+      "behavioral_requirement": "Empty answer array rejects before reload.",
+      "rationale": "Exact empty-array rejection already asserted by JS-C36; retain that expectation there.",
+      "overlap_ids": [
+        "JS-C36"
+      ],
+      "source_refs": [
+        "tests/quiz.test.js:194",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "evidence": {
+        "case": "saved state rejects empty answer arrays before any reload",
+        "baseline": "passed",
+        "detects": [
+          "saved-states-all-accepted",
+          "answers-not-required",
+          "answer-arrays-accepted"
+        ]
+      }
+    },
+    {
+      "id": "JS-C39",
+      "kind": "javascript-case",
+      "name": "saved state rejects dense answer arrays before any reload",
+      "decision": "KEEP",
+      "expectation": "Dense[0,1] answer array rejects before reload.",
+      "behavioral_requirement": "Dense[0,1] answer array rejects before reload.",
+      "rationale": "Distinct input shape, type, boundary or transition can fail independently despite shared mutation kills. Preserve exact assertion.",
+      "overlap_ids": [
+        "JS-C36",
+        "JS-C38",
+        "JS-C40",
+        "BR-C13"
+      ],
+      "source_refs": [
+        "tests/quiz.test.js:194",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "evidence": {
+        "case": "saved state rejects dense answer arrays before any reload",
+        "baseline": "passed",
+        "detects": [
+          "saved-states-all-accepted",
+          "answers-not-required",
+          "answer-arrays-accepted"
+        ]
+      }
+    },
+    {
+      "id": "JS-C40",
+      "kind": "javascript-case",
+      "name": "saved state rejects sparse answer arrays before any reload",
+      "decision": "KEEP",
+      "expectation": "Sparse answer1=0 array rejects before reload.",
+      "behavioral_requirement": "Sparse answer1=0 array rejects before reload.",
+      "rationale": "Distinct input shape, type, boundary or transition can fail independently despite shared mutation kills. Preserve exact assertion.",
+      "overlap_ids": [
+        "JS-C36",
+        "JS-C38",
+        "JS-C39",
+        "BR-C13"
+      ],
+      "source_refs": [
+        "tests/quiz.test.js:194",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "evidence": {
+        "case": "saved state rejects sparse answer arrays before any reload",
+        "baseline": "passed",
+        "detects": [
+          "saved-states-all-accepted",
+          "answers-not-required",
+          "answer-arrays-accepted"
+        ]
+      }
+    },
+    {
+      "id": "JS-C41",
+      "kind": "javascript-case",
+      "name": "valid answer objects preserve exact progress across repeated JSON reloads",
+      "decision": "MERGE",
+      "expectation": "Empty object accepts; answers1=0,2=3 preserve equality/validity through three JSON roundtrips.",
+      "behavioral_requirement": "Empty object accepts; answers1=0,2=3 preserve equality/validity through three JSON roundtrips.",
+      "rationale": "Three repeated JSON roundtrips exercise no application persistence. Merge one object compatibility fixture into JS-C19/42; BR-C04 proves actual reload.",
+      "overlap_ids": [
+        "JS-C19",
+        "JS-C42",
+        "BR-C04"
+      ],
+      "source_refs": [
+        "tests/quiz.test.js:201",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "evidence": {
+        "case": "valid answer objects preserve exact progress across repeated JSON reloads",
+        "baseline": "passed",
+        "detects": [
+          "bank-duplicate-id",
+          "saved-states-all-rejected",
+          "partial-saved-state-modified"
+        ]
+      }
+    },
+    {
+      "id": "JS-C42",
+      "kind": "javascript-case",
+      "name": "ordinary object state restores across JavaScript execution contexts",
+      "decision": "KEEP",
+      "expectation": "Fresh-VM validator accepts caller-realm JSON object.",
+      "behavioral_requirement": "Fresh-VM validator accepts caller-realm JSON object.",
+      "rationale": "Cross-realm compatibility prevents instanceof/prototype identity rejection; necessary harness/API contract, not actual persistence proof.",
+      "overlap_ids": [
+        "JS-C19",
+        "JS-C41"
+      ],
+      "source_refs": [
+        "tests/quiz.test.js:215",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "evidence": {
+        "case": "ordinary object state restores across JavaScript execution contexts",
+        "baseline": "passed",
+        "detects": [
+          "bank-duplicate-id",
+          "saved-states-all-rejected"
+        ]
+      }
+    },
+    {
+      "id": "JS-F01",
+      "kind": "javascript-fault",
+      "name": "script-syntax-error",
+      "decision": "KEEP",
+      "expectation": "Reject altered behavior in JS-C01",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "The isolated UI syntax mutation proves the offline full-script compile gate detects syntax defects beyond the pure-logic extraction boundary. Browser execution provides complementary coverage.",
+      "overlap_ids": [
+        "JS-C01"
+      ],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:16",
+        "quizzes/sprint-0-quiz.html:98"
+      ],
+      "old": "render();if(submitted)showResults(false);",
+      "replacement": "render(;if(submitted)showResults(false);",
+      "match_count": 1,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C01"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "JS-F02",
+      "kind": "javascript-fault",
+      "name": "bank-duplicate-id",
+      "decision": "KEEP",
+      "expectation": "Reject altered behavior in JS-C02,JS-C03,JS-C04,JS-C05,JS-C06,JS-C07,JS-C08,JS-C18,JS-C19,JS-C20,JS-C34,JS-C35,JS-C37,JS-C41,JS-C42",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "Transform changes responsible code and named cases observe a contract violation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:17",
+        "quizzes/sprint-0-quiz.html:79"
+      ],
+      "old": "\"id\": 2,",
+      "replacement": "\"id\": 1,",
+      "match_count": 1,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C02",
+        "JS-C03",
+        "JS-C04",
+        "JS-C05",
+        "JS-C06",
+        "JS-C07",
+        "JS-C08",
+        "JS-C18",
+        "JS-C19",
+        "JS-C20",
+        "JS-C34",
+        "JS-C35",
+        "JS-C37",
+        "JS-C41",
+        "JS-C42"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "JS-F03",
+      "kind": "javascript-fault",
+      "name": "bank-critical-removed",
+      "decision": "IMPROVE",
+      "expectation": "Reject altered behavior in JS-C02,JS-C06,JS-C07,JS-C08,JS-C35",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "All three critical flags change together; inject each separately before claiming per-ID fault effectiveness.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:18",
+        "quizzes/sprint-0-quiz.html:79"
+      ],
+      "old": "\"critical\": true",
+      "replacement": "\"critical\": false",
+      "match_count": 3,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C02",
+        "JS-C06",
+        "JS-C07",
+        "JS-C08",
+        "JS-C35"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "JS-F04",
+      "kind": "javascript-fault",
+      "name": "answers-always-wrong",
+      "decision": "KEEP",
+      "expectation": "Reject altered behavior in JS-C03,JS-C04,JS-C05,JS-C06,JS-C07,JS-C08,JS-C18,JS-C34",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "Transform changes responsible code and named cases observe a contract violation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:19",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "old": "answers[id]===q.correct",
+      "replacement": "false",
+      "match_count": 2,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C03",
+        "JS-C04",
+        "JS-C05",
+        "JS-C06",
+        "JS-C07",
+        "JS-C08",
+        "JS-C18",
+        "JS-C34"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "JS-F05",
+      "kind": "javascript-fault",
+      "name": "answers-always-correct",
+      "decision": "KEEP",
+      "expectation": "Reject altered behavior in JS-C04,JS-C05,JS-C06,JS-C07,JS-C08,JS-C35",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "Transform changes responsible code and named cases observe a contract violation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:20",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "old": "answers[id]===q.correct",
+      "replacement": "true",
+      "match_count": 2,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C04",
+        "JS-C05",
+        "JS-C06",
+        "JS-C07",
+        "JS-C08",
+        "JS-C35"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "JS-F06",
+      "kind": "javascript-fault",
+      "name": "threshold-too-strict",
+      "decision": "KEEP",
+      "expectation": "Reject altered behavior in JS-C04",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "Transform changes responsible code and named cases observe a contract violation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:21",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "old": "correct/ids.length>=.8",
+      "replacement": "correct/ids.length>.8",
+      "match_count": 1,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C04"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "JS-F07",
+      "kind": "javascript-fault",
+      "name": "threshold-too-permissive",
+      "decision": "KEEP",
+      "expectation": "Reject altered behavior in JS-C05",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "Transform changes responsible code and named cases observe a contract violation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:22",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "old": "correct/ids.length>=.8",
+      "replacement": "correct/ids.length>=.7",
+      "match_count": 1,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C05"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "JS-F08",
+      "kind": "javascript-fault",
+      "name": "critical-errors-ignored",
+      "decision": "KEEP",
+      "expectation": "Reject altered behavior in JS-C06,JS-C07,JS-C08",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "Transform changes responsible code and named cases observe a contract violation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:23",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "old": "criticalMissed.length===0",
+      "replacement": "true",
+      "match_count": 1,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C06",
+        "JS-C07",
+        "JS-C08"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "JS-F09",
+      "kind": "javascript-fault",
+      "name": "invalid-answers-accepted",
+      "decision": "IMPROVE",
+      "expectation": "Reject altered behavior in JS-C09,JS-C10,JS-C11,JS-C12,JS-C13,JS-C14,JS-C15,JS-C16,JS-C34",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "Broad sabotage proves harness reachability; narrower existing guards and assertions should carry independent necessity proof.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:24",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "old": "!Number.isInteger(answers[id])||answers[id]<0||answers[id]>3",
+      "replacement": "false",
+      "match_count": 1,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C09",
+        "JS-C10",
+        "JS-C11",
+        "JS-C12",
+        "JS-C13",
+        "JS-C14",
+        "JS-C15",
+        "JS-C16",
+        "JS-C34"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "JS-F10",
+      "kind": "javascript-fault",
+      "name": "negative-answer-accepted",
+      "decision": "KEEP",
+      "expectation": "Reject altered behavior in JS-C13",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "Transform changes responsible code and named cases observe a contract violation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:25",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "old": "answers[id]<0",
+      "replacement": "false",
+      "match_count": 1,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C13"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "JS-F11",
+      "kind": "javascript-fault",
+      "name": "too-large-answer-accepted",
+      "decision": "KEEP",
+      "expectation": "Reject altered behavior in JS-C14",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "Transform changes responsible code and named cases observe a contract violation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:26",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "old": "answers[id]>3",
+      "replacement": "false",
+      "match_count": 1,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C14"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "JS-F12",
+      "kind": "javascript-fault",
+      "name": "integer-check-removed",
+      "decision": "KEEP",
+      "expectation": "Reject altered behavior in JS-C09,JS-C10,JS-C11,JS-C12,JS-C15,JS-C16,JS-C34",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "Transform changes responsible code and named cases observe a contract violation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:27",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "old": "!Number.isInteger(answers[id])",
+      "replacement": "false",
+      "match_count": 1,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C09",
+        "JS-C10",
+        "JS-C11",
+        "JS-C12",
+        "JS-C15",
+        "JS-C16",
+        "JS-C34"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "JS-F13",
+      "kind": "javascript-fault",
+      "name": "empty-attempt-passes",
+      "decision": "IMPROVE",
+      "expectation": "Reject altered behavior in JS-C06,JS-C07,JS-C08,JS-C17,JS-C34",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "Also removes missing-answer and critical gates; their kills do not independently prove empty-attempt guard. Mutate empty condition alone.",
+      "overlap_ids": [
+        "JS-F08",
+        "JS-C34"
+      ],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:28",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "old": "ids.length>0&&missing.length===0&&correct/ids.length>=.8&&criticalMissed.length===0",
+      "replacement": "ids.length===0||correct/ids.length>=.8",
+      "match_count": 1,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C06",
+        "JS-C07",
+        "JS-C08",
+        "JS-C17",
+        "JS-C34"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "JS-F14",
+      "kind": "javascript-fault",
+      "name": "unknown-question-ignored",
+      "decision": "KEEP",
+      "expectation": "Reject altered behavior in JS-C17",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "Transform changes responsible code and named cases observe a contract violation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:29",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "old": "if(!q)throw new Error('Unknown question');",
+      "replacement": "if(!q)continue;",
+      "match_count": 1,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C17"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "JS-F15",
+      "kind": "javascript-fault",
+      "name": "full-bank-denominator",
+      "decision": "KEEP",
+      "expectation": "Reject altered behavior in JS-C18",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "Transform changes responsible code and named cases observe a contract violation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:30",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "old": "total:ids.length",
+      "replacement": "total:QUESTIONS.length",
+      "match_count": 1,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C18"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "JS-F16",
+      "kind": "javascript-fault",
+      "name": "caller-answers-overwritten",
+      "decision": "KEEP",
+      "expectation": "Reject altered behavior in JS-C04,JS-C05,JS-C06,JS-C07,JS-C08,JS-C35,JS-C37",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "Transform changes responsible code and named cases observe a contract violation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:31",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "old": "const ok=answers[id]===q.correct;",
+      "replacement": "answers[id]=q.correct;const ok=answers[id]===q.correct;",
+      "match_count": 1,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C04",
+        "JS-C05",
+        "JS-C06",
+        "JS-C07",
+        "JS-C08",
+        "JS-C35",
+        "JS-C37"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "JS-F17",
+      "kind": "javascript-fault",
+      "name": "topic-totals-not-counted",
+      "decision": "KEEP",
+      "expectation": "Reject altered behavior in JS-C03,JS-C35",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "Transform changes responsible code and named cases observe a contract violation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:32",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "old": "topics[q.topic].total++",
+      "replacement": "topics[q.topic].total+=0",
+      "match_count": 1,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C03",
+        "JS-C35"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "JS-F18",
+      "kind": "javascript-fault",
+      "name": "topic-correct-not-counted",
+      "decision": "KEEP",
+      "expectation": "Reject altered behavior in JS-C03",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "Transform changes responsible code and named cases observe a contract violation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:33",
+        "quizzes/sprint-0-quiz.html:83"
+      ],
+      "old": "topics[q.topic].correct+=ok?1:0",
+      "replacement": "topics[q.topic].correct+=0",
+      "match_count": 1,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C03"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "JS-F19",
+      "kind": "javascript-fault",
+      "name": "saved-states-all-rejected",
+      "decision": "IMPROVE",
+      "expectation": "Reject altered behavior in JS-C19,JS-C20,JS-C41,JS-C42",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "Broad sabotage proves harness reachability; narrower existing guards and assertions should carry independent necessity proof.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:34",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "old": "function validSaved(saved){",
+      "replacement": "function validSaved(saved){return false;",
+      "match_count": 1,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C19",
+        "JS-C20",
+        "JS-C41",
+        "JS-C42"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "JS-F20",
+      "kind": "javascript-fault",
+      "name": "saved-states-all-accepted",
+      "decision": "IMPROVE",
+      "expectation": "Reject altered behavior in JS-C20,JS-C21,JS-C22,JS-C23,JS-C24,JS-C25,JS-C26,JS-C27,JS-C28,JS-C29,JS-C30,JS-C31,JS-C32,JS-C36,JS-C38,JS-C39,JS-C40",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "Broad sabotage proves harness reachability; narrower existing guards and assertions should carry independent necessity proof.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:35",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "old": "function validSaved(saved){",
+      "replacement": "function validSaved(saved){return true;",
+      "match_count": 1,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C20",
+        "JS-C21",
+        "JS-C22",
+        "JS-C23",
+        "JS-C24",
+        "JS-C25",
+        "JS-C26",
+        "JS-C27",
+        "JS-C28",
+        "JS-C29",
+        "JS-C30",
+        "JS-C31",
+        "JS-C32",
+        "JS-C36",
+        "JS-C38",
+        "JS-C39",
+        "JS-C40"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "JS-F21",
+      "kind": "javascript-fault",
+      "name": "empty-ids-accepted",
+      "decision": "KEEP",
+      "expectation": "Reject altered behavior in JS-C21",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "Transform changes responsible code and named cases observe a contract violation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:36",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "old": "!saved.ids.length",
+      "replacement": "false",
+      "match_count": 1,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C21"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "JS-F22",
+      "kind": "javascript-fault",
+      "name": "duplicate-ids-accepted",
+      "decision": "KEEP",
+      "expectation": "Reject altered behavior in JS-C22",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "Transform changes responsible code and named cases observe a contract violation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:37",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "old": "new Set(saved.ids).size!==saved.ids.length",
+      "replacement": "false",
+      "match_count": 1,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C22"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "JS-F23",
+      "kind": "javascript-fault",
+      "name": "unknown-ids-accepted",
+      "decision": "KEEP",
+      "expectation": "Reject altered behavior in JS-C23",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "Transform changes responsible code and named cases observe a contract violation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:38",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "old": "saved.ids.some(id=>!ids.has(id))",
+      "replacement": "false",
+      "match_count": 1,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C23"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "JS-F24",
+      "kind": "javascript-fault",
+      "name": "answers-not-required",
+      "decision": "IMPROVE",
+      "expectation": "Reject altered behavior in JS-C24,JS-C36,JS-C38,JS-C39,JS-C40",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "Broad sabotage proves harness reachability; narrower existing guards and assertions should carry independent necessity proof.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:39",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "old": "!saved.answers||typeof saved.answers!=='object'||Array.isArray(saved.answers)",
+      "replacement": "false",
+      "match_count": 1,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C24",
+        "JS-C36",
+        "JS-C38",
+        "JS-C39",
+        "JS-C40"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "JS-F25",
+      "kind": "javascript-fault",
+      "name": "answer-arrays-accepted",
+      "decision": "KEEP",
+      "expectation": "Reject altered behavior in JS-C36,JS-C38,JS-C39,JS-C40",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "Transform changes responsible code and named cases observe a contract violation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:40",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "old": "Array.isArray(saved.answers)",
+      "replacement": "false",
+      "match_count": 1,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C36",
+        "JS-C38",
+        "JS-C39",
+        "JS-C40"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "JS-F26",
+      "kind": "javascript-fault",
+      "name": "order-not-required",
+      "decision": "KEEP",
+      "expectation": "Reject altered behavior in JS-C26",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "Transform changes responsible code and named cases observe a contract violation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:41",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "old": "!saved.order||typeof saved.order!=='object'",
+      "replacement": "false",
+      "match_count": 1,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C26"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "JS-F27",
+      "kind": "javascript-fault",
+      "name": "permutation-length-ignored",
+      "decision": "KEEP",
+      "expectation": "Reject altered behavior in JS-C28",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "Transform changes responsible code and named cases observe a contract violation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:42",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "old": "saved.order[id].length===4",
+      "replacement": "true",
+      "match_count": 1,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C28"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "JS-F28",
+      "kind": "javascript-fault",
+      "name": "permutation-duplicates-ignored",
+      "decision": "KEEP",
+      "expectation": "Reject altered behavior in JS-C29",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "Transform changes responsible code and named cases observe a contract violation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:43",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "old": "new Set(saved.order[id]).size===4",
+      "replacement": "true",
+      "match_count": 1,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C29"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "JS-F29",
+      "kind": "javascript-fault",
+      "name": "permutation-bounds-ignored",
+      "decision": "IMPROVE",
+      "expectation": "Reject altered behavior in JS-C30",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "Global replacement changes bounds in both permutation and saved answers. Scope responsible permutation callback.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:44",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "old": "v>=0&&v<=3",
+      "replacement": "true",
+      "match_count": 2,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C30"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "JS-F30",
+      "kind": "javascript-fault",
+      "name": "permutation-integers-ignored",
+      "decision": "IMPROVE",
+      "expectation": "Reject altered behavior in JS-C25,JS-C31",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "Global replacement changes BOTH permutation and saved-answer integer validation. JS-C25 detection is collateral. Scope permutation site; JS-F31 covers answer values.",
+      "overlap_ids": [
+        "JS-F31"
+      ],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:45",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "old": "Number.isInteger(v)",
+      "replacement": "true",
+      "match_count": 2,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C25",
+        "JS-C31"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "JS-F31",
+      "kind": "javascript-fault",
+      "name": "saved-answer-types-ignored",
+      "decision": "KEEP",
+      "expectation": "Reject altered behavior in JS-C25",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "Transform changes responsible code and named cases observe a contract violation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:46",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "old": "Object.values(saved.answers).every(v=>Number.isInteger(v)&&v>=0&&v<=3)",
+      "replacement": "true",
+      "match_count": 1,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C25"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "JS-F32",
+      "kind": "javascript-fault",
+      "name": "partial-submitted-cache-accepted",
+      "decision": "KEEP",
+      "expectation": "Reject altered behavior in JS-C20",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "Transform changes responsible code and named cases observe a contract violation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:47",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "old": "if(saved.submitted===true&&saved.ids.some(id=>!Object.hasOwn(saved.answers,id)))return false;",
+      "replacement": "",
+      "match_count": 1,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C20"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "JS-F33",
+      "kind": "javascript-fault",
+      "name": "shuffle-disabled",
+      "decision": "KEEP",
+      "expectation": "Reject altered behavior in JS-C33",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "Transform changes responsible code and named cases observe a contract violation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:48",
+        "quizzes/sprint-0-quiz.html:82"
+      ],
+      "old": "const j=Math.floor(random()*(i+1))",
+      "replacement": "const j=i",
+      "match_count": 1,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C33"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "JS-F34",
+      "kind": "javascript-fault",
+      "name": "shuffle-loses-choice",
+      "decision": "KEEP",
+      "expectation": "Reject altered behavior in JS-C33",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "Transform changes responsible code and named cases observe a contract violation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:49",
+        "quizzes/sprint-0-quiz.html:82"
+      ],
+      "old": "return a;}",
+      "replacement": "return [0,0,2,3];}",
+      "match_count": 1,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C33"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "JS-F35",
+      "kind": "javascript-fault",
+      "name": "partial-saved-state-modified",
+      "decision": "KEEP",
+      "expectation": "Reject altered behavior in JS-C19,JS-C25,JS-C41",
+      "behavioral_requirement": "Preserve expectations in each named detecting case.",
+      "rationale": "Transform changes responsible code and named cases observe a contract violation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_cases.py:50",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "old": "return saved.ids.every",
+      "replacement": "saved.answers[1]=3;return saved.ids.every",
+      "match_count": 1,
+      "applied_change": true,
+      "identical_transformed_fault_ids": [],
+      "detecting_case_ids": [
+        "JS-C19",
+        "JS-C25",
+        "JS-C41"
+      ],
+      "evidence_status": "DETECTED"
+    },
+    {
+      "id": "BR-C01",
+      "kind": "browser-case",
+      "name": "fresh quiz renders 35 questions and 140 choices",
+      "decision": "IMPROVE",
+      "expectation": "check:async p=>{assert.equal(await count(p),35);assert.equal(await p.locator('input[type=radio]').count(),140);assert.match(await p.locator('#progress-label').innerText(),/^0 \\/ 35 answered/);}},",
+      "behavioral_requirement": "fresh quiz renders 35 questions and 140 choices",
+      "rationale": "Rendering invariant matters;35/140 couples to content edits. Separate editorial count from generic per-question rendering.",
+      "overlap_ids": [
+        "JS-C02"
+      ],
+      "source_refs": [
+        "tools/audit_quiz_browser.mjs:21",
+        "quizzes/sprint-0-quiz.html:92"
+      ],
+      "baseline": {
+        "outcome": "passed"
+      }
+    },
+    {
+      "id": "BR-F01",
+      "kind": "browser-fault",
+      "name": "fresh quiz renders 35 questions and 140 choices",
+      "decision": "KEEP",
+      "expectation": "BR-C01 rejects altered contract.",
+      "behavioral_requirement": "fresh quiz renders 35 questions and 140 choices",
+      "rationale": "Recorded failure observes concrete output/control violation caused by responsible UI mutation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_browser.mjs:21",
+        "quizzes/sprint-0-quiz.html:92"
+      ],
+      "old": "for(const [number,id] of ids.entries())",
+      "replacement": "for(const [number,id] of ids.slice(1).entries())",
+      "match_count": 1,
+      "applied_change": true,
+      "detecting_case_ids": [
+        "BR-C01"
+      ],
+      "evidence_status": "DETECTED",
+      "recorded_failure": "Expected values to be strictly equal:\n\n34 !== 35\n",
+      "page_errors": []
+    },
+    {
+      "id": "BR-C02",
+      "kind": "browser-case",
+      "name": "missing answers block results and focus the first missing question",
+      "decision": "KEEP",
+      "expectation": "check:async p=>{await submit(p);assert.equal(await visibleResults(p),false);assert.match(await p.locator('#notice').innerText(),/remaining 35/);assert.equal(await p.evaluate(()=>document.activeElement.name),'q1');assert.equal((await state(p)).submitted,false);}},",
+      "behavioral_requirement": "missing answers block results and focus the first missing question",
+      "rationale": "Actual DOM, events, storage and control-state integration complement pure-logic coverage.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_browser.mjs:23",
+        "quizzes/sprint-0-quiz.html:93"
+      ],
+      "baseline": {
+        "outcome": "passed"
+      }
+    },
+    {
+      "id": "BR-F02",
+      "kind": "browser-fault",
+      "name": "missing answers block results and focus the first missing question",
+      "decision": "KEEP",
+      "expectation": "BR-C02 rejects altered contract.",
+      "behavioral_requirement": "missing answers block results and focus the first missing question",
+      "rationale": "Recorded failure observes concrete output/control violation caused by responsible UI mutation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_browser.mjs:23",
+        "quizzes/sprint-0-quiz.html:93"
+      ],
+      "old": "if(lastGrade.missing.length){",
+      "replacement": "if(false){",
+      "match_count": 1,
+      "applied_change": true,
+      "detecting_case_ids": [
+        "BR-C02"
+      ],
+      "evidence_status": "DETECTED",
+      "recorded_failure": "Expected values to be strictly equal:\n\ntrue !== false\n",
+      "page_errors": []
+    },
+    {
+      "id": "BR-C03",
+      "kind": "browser-case",
+      "name": "radio change updates progress and saves the exact answer",
+      "decision": "KEEP",
+      "expectation": "check:async p=>{await p.locator('#question-1 input[value=\"2\"]').check();assert.equal((await state(p)).answers[1],2);assert.match(await p.locator('#progress-label').innerText(),/^1 \\/ 35/);}},",
+      "behavioral_requirement": "radio change updates progress and saves the exact answer",
+      "rationale": "Actual DOM, events, storage and control-state integration complement pure-logic coverage.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_browser.mjs:25",
+        "quizzes/sprint-0-quiz.html:92"
+      ],
+      "baseline": {
+        "outcome": "passed"
+      }
+    },
+    {
+      "id": "BR-F03",
+      "kind": "browser-fault",
+      "name": "radio change updates progress and saves the exact answer",
+      "decision": "KEEP",
+      "expectation": "BR-C03 rejects altered contract.",
+      "behavioral_requirement": "radio change updates progress and saves the exact answer",
+      "rationale": "Recorded failure observes concrete output/control violation caused by responsible UI mutation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_browser.mjs:25",
+        "quizzes/sprint-0-quiz.html:92"
+      ],
+      "old": "answers[id]=index;",
+      "replacement": "answers[id]=0;",
+      "match_count": 1,
+      "applied_change": true,
+      "detecting_case_ids": [
+        "BR-C03"
+      ],
+      "evidence_status": "DETECTED",
+      "recorded_failure": "Expected values to be strictly equal:\n\n0 !== 2\n",
+      "page_errors": []
+    },
+    {
+      "id": "BR-C04",
+      "kind": "browser-case",
+      "name": "partial progress and choice order survive reload",
+      "decision": "KEEP",
+      "expectation": "check:async p=>{assert.equal(await count(p),2);assert.equal(await p.locator('#question-1 input[value=\"0\"]').isChecked(),true);assert.deepEqual(await p.locator('#question-2 input').evaluateAll(ns=>ns.map(n=>Number(n.value))),[3,2,1,0]);await p.locator('#question-2 input[value=\"2\"]').check();await p.reload();assert.equal(await p.locator('#question-2 input[value=\"2\"]').isChecked(),true);assert.match(await p.locator('#progress-label').innerText(),/^2 \\/ 2/);}},",
+      "behavioral_requirement": "partial progress and choice order survive reload",
+      "rationale": "Actual DOM, events, storage and control-state integration complement pure-logic coverage.",
+      "overlap_ids": [
+        "JS-C19",
+        "JS-C41"
+      ],
+      "source_refs": [
+        "tools/audit_quiz_browser.mjs:27",
+        "quizzes/sprint-0-quiz.html:92"
+      ],
+      "baseline": {
+        "outcome": "passed"
+      }
+    },
+    {
+      "id": "BR-F04",
+      "kind": "browser-fault",
+      "name": "partial progress and choice order survive reload",
+      "decision": "KEEP",
+      "expectation": "BR-C04 rejects altered contract.",
+      "behavioral_requirement": "partial progress and choice order survive reload",
+      "rationale": "Recorded failure observes concrete output/control violation caused by responsible UI mutation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_browser.mjs:27",
+        "quizzes/sprint-0-quiz.html:92"
+      ],
+      "old": "input.checked=answers[id]===index;",
+      "replacement": "input.checked=false;",
+      "match_count": 1,
+      "applied_change": true,
+      "detecting_case_ids": [
+        "BR-C04"
+      ],
+      "evidence_status": "DETECTED",
+      "recorded_failure": "Expected values to be strictly equal:\n\nfalse !== true\n",
+      "page_errors": []
+    },
+    {
+      "id": "BR-C05",
+      "kind": "browser-case",
+      "name": "all correct answers show honest score and lock controls",
+      "decision": "KEEP",
+      "expectation": "check:async p=>{await submit(p);assert.equal(await visibleResults(p),true);assert.match(await p.locator('#score').innerText(),/^35 \\/ 35 \u00b7 100%$/);assert.match(await p.locator('#result-message').innerText(),/does not certify full Sprint 0 completion/);assert.equal(await p.locator('input:disabled').count(),140);assert.equal(await p.locator('#submit').isDisabled(),true);assert.equal(await p.locator('#retry').isDisabled(),true);assert.equal(await p.locator('.feedback').count(),35);}},",
+      "behavioral_requirement": "all correct answers show honest score and lock controls",
+      "rationale": "Actual DOM, events, storage and control-state integration complement pure-logic coverage.",
+      "overlap_ids": [
+        "JS-C03"
+      ],
+      "source_refs": [
+        "tools/audit_quiz_browser.mjs:29",
+        "quizzes/sprint-0-quiz.html:93"
+      ],
+      "baseline": {
+        "outcome": "passed"
+      }
+    },
+    {
+      "id": "BR-F05",
+      "kind": "browser-fault",
+      "name": "all correct answers show honest score and lock controls",
+      "decision": "KEEP",
+      "expectation": "BR-C05 rejects altered contract.",
+      "behavioral_requirement": "all correct answers show honest score and lock controls",
+      "rationale": "Recorded failure observes concrete output/control violation caused by responsible UI mutation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_browser.mjs:29",
+        "quizzes/sprint-0-quiz.html:93"
+      ],
+      "old": "box.querySelectorAll('input').forEach(n=>n.disabled=true);",
+      "replacement": "",
+      "match_count": 1,
+      "applied_change": true,
+      "detecting_case_ids": [
+        "BR-C05"
+      ],
+      "evidence_status": "DETECTED",
+      "recorded_failure": "Expected values to be strictly equal:\n\n0 !== 140\n",
+      "page_errors": []
+    },
+    {
+      "id": "BR-C06",
+      "kind": "browser-case",
+      "name": "double submission never duplicates feedback",
+      "decision": "KEEP",
+      "expectation": "check:async p=>{await submit(p);await p.locator('#quiz').evaluate(form=>form.dispatchEvent(new Event('submit',{bubbles:true,cancelable:true})));assert.equal(await p.locator('.feedback').count(),35);}},",
+      "behavioral_requirement": "double submission never duplicates feedback",
+      "rationale": "Actual DOM, events, storage and control-state integration complement pure-logic coverage.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_browser.mjs:31",
+        "quizzes/sprint-0-quiz.html:94"
+      ],
+      "baseline": {
+        "outcome": "passed"
+      }
+    },
+    {
+      "id": "BR-F06",
+      "kind": "browser-fault",
+      "name": "double submission never duplicates feedback",
+      "decision": "KEEP",
+      "expectation": "BR-C06 rejects altered contract.",
+      "behavioral_requirement": "double submission never duplicates feedback",
+      "rationale": "Recorded failure observes concrete output/control violation caused by responsible UI mutation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_browser.mjs:31",
+        "quizzes/sprint-0-quiz.html:94"
+      ],
+      "old": "if(!submitted)showResults();",
+      "replacement": "showResults();",
+      "match_count": 1,
+      "applied_change": true,
+      "detecting_case_ids": [
+        "BR-C06"
+      ],
+      "evidence_status": "DETECTED",
+      "recorded_failure": "Expected values to be strictly equal:\n\n70 !== 35\n",
+      "page_errors": []
+    },
+    {
+      "id": "BR-C07",
+      "kind": "browser-case",
+      "name": "retry contains only mistakes and clears previous answers",
+      "decision": "KEEP",
+      "expectation": "check:async p=>{await submit(p);await p.locator('#retry').click();assert.equal(await count(p),2);assert.deepEqual((await state(p)).ids,[1,15]);assert.deepEqual((await state(p)).answers,{});assert.equal(await p.locator('input:checked').count(),0);assert.equal(await visibleResults(p),false);assert.equal(await p.locator('#submit').isDisabled(),false);assert.equal((await state(p)).submitted,false);}},",
+      "behavioral_requirement": "retry contains only mistakes and clears previous answers",
+      "rationale": "Actual DOM, events, storage and control-state integration complement pure-logic coverage.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_browser.mjs:33",
+        "quizzes/sprint-0-quiz.html:95"
+      ],
+      "baseline": {
+        "outcome": "passed"
+      }
+    },
+    {
+      "id": "BR-F07",
+      "kind": "browser-fault",
+      "name": "retry contains only mistakes and clears previous answers",
+      "decision": "KEEP",
+      "expectation": "BR-C07 rejects altered contract.",
+      "behavioral_requirement": "retry contains only mistakes and clears previous answers",
+      "rationale": "Recorded failure observes concrete output/control violation caused by responsible UI mutation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_browser.mjs:33",
+        "quizzes/sprint-0-quiz.html:95"
+      ],
+      "old": "ids=[...lastGrade.missed];",
+      "replacement": "ids=QUESTIONS.map(q=>q.id);",
+      "match_count": 1,
+      "applied_change": true,
+      "detecting_case_ids": [
+        "BR-C07"
+      ],
+      "evidence_status": "DETECTED",
+      "recorded_failure": "Expected values to be strictly equal:\n\n35 !== 2\n",
+      "page_errors": []
+    },
+    {
+      "id": "BR-C08",
+      "kind": "browser-case",
+      "name": "retry score uses its own denominator and practice wording",
+      "decision": "KEEP",
+      "expectation": "check:async p=>{await submit(p);await p.locator('#retry').click();await answerAll(p);await submit(p);assert.match(await p.locator('#score').innerText(),/^2 \\/ 2 \u00b7 100%$/);assert.match(await p.locator('#result-message').innerText(),/^Practice threshold met/);}},",
+      "behavioral_requirement": "retry score uses its own denominator and practice wording",
+      "rationale": "Actual DOM, events, storage and control-state integration complement pure-logic coverage.",
+      "overlap_ids": [
+        "JS-C18"
+      ],
+      "source_refs": [
+        "tools/audit_quiz_browser.mjs:35",
+        "quizzes/sprint-0-quiz.html:93"
+      ],
+      "baseline": {
+        "outcome": "passed"
+      }
+    },
+    {
+      "id": "BR-F08",
+      "kind": "browser-fault",
+      "name": "retry score uses its own denominator and practice wording",
+      "decision": "KEEP",
+      "expectation": "BR-C08 rejects altered contract.",
+      "behavioral_requirement": "retry score uses its own denominator and practice wording",
+      "rationale": "Recorded failure observes concrete output/control violation caused by responsible UI mutation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_browser.mjs:35",
+        "quizzes/sprint-0-quiz.html:93"
+      ],
+      "old": "ids.length<QUESTIONS.length?'Practice threshold met':'Quiz threshold met'",
+      "replacement": "'Quiz threshold met'",
+      "match_count": 1,
+      "applied_change": true,
+      "detecting_case_ids": [
+        "BR-C08"
+      ],
+      "evidence_status": "DETECTED",
+      "recorded_failure": "The input did not match the regular expression /^Practice threshold met/. Input:\n\n'Quiz threshold met. Explain the reasons in your own words; this does not certify full Sprint 0 completion.'\n",
+      "page_errors": []
+    },
+    {
+      "id": "BR-C09",
+      "kind": "browser-case",
+      "name": "restart restores full bank and clears completed progress",
+      "decision": "KEEP",
+      "expectation": "check:async p=>{await submit(p);await p.locator('#restart').click();assert.equal(await count(p),35);assert.equal(await p.locator('input:checked').count(),0);assert.equal(await p.locator('input:disabled').count(),0);assert.equal(await visibleResults(p),false);assert.equal((await state(p)).submitted,false);}},",
+      "behavioral_requirement": "restart restores full bank and clears completed progress",
+      "rationale": "Actual DOM, events, storage and control-state integration complement pure-logic coverage.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_browser.mjs:37",
+        "quizzes/sprint-0-quiz.html:96"
+      ],
+      "baseline": {
+        "outcome": "passed"
+      }
+    },
+    {
+      "id": "BR-F09",
+      "kind": "browser-fault",
+      "name": "restart restores full bank and clears completed progress",
+      "decision": "KEEP",
+      "expectation": "BR-C09 rejects altered contract.",
+      "behavioral_requirement": "restart restores full bank and clears completed progress",
+      "rationale": "Recorded failure observes concrete output/control violation caused by responsible UI mutation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_browser.mjs:37",
+        "quizzes/sprint-0-quiz.html:96"
+      ],
+      "old": "ids=QUESTIONS.map(q=>q.id);answers={};order={};submitted=false;lastGrade=null;",
+      "replacement": "ids=[1];answers={};order={};submitted=false;lastGrade=null;",
+      "match_count": 1,
+      "applied_change": true,
+      "detecting_case_ids": [
+        "BR-C09"
+      ],
+      "evidence_status": "DETECTED",
+      "recorded_failure": "Expected values to be strictly equal:\n\n1 !== 35\n",
+      "page_errors": []
+    },
+    {
+      "id": "BR-C10",
+      "kind": "browser-case",
+      "name": "completed attempts restore results after reload",
+      "decision": "KEEP",
+      "expectation": "check:async p=>{assert.equal(await visibleResults(p),true);assert.equal(await p.locator('input:disabled').count(),140);await p.reload();assert.equal(await visibleResults(p),true);assert.equal(await p.locator('.feedback').count(),35);}},",
+      "behavioral_requirement": "completed attempts restore results after reload",
+      "rationale": "Actual DOM, events, storage and control-state integration complement pure-logic coverage.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_browser.mjs:39",
+        "quizzes/sprint-0-quiz.html:98"
+      ],
+      "baseline": {
+        "outcome": "passed"
+      }
+    },
+    {
+      "id": "BR-F10",
+      "kind": "browser-fault",
+      "name": "completed attempts restore results after reload",
+      "decision": "KEEP",
+      "expectation": "BR-C10 rejects altered contract.",
+      "behavioral_requirement": "completed attempts restore results after reload",
+      "rationale": "Recorded failure observes concrete output/control violation caused by responsible UI mutation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_browser.mjs:39",
+        "quizzes/sprint-0-quiz.html:98"
+      ],
+      "old": "if(submitted)showResults(false);",
+      "replacement": "",
+      "match_count": 1,
+      "applied_change": true,
+      "detecting_case_ids": [
+        "BR-C10"
+      ],
+      "evidence_status": "DETECTED",
+      "recorded_failure": "Expected values to be strictly equal:\n\nfalse !== true\n",
+      "page_errors": []
+    },
+    {
+      "id": "BR-C11",
+      "kind": "browser-case",
+      "name": "incomplete submitted cache resets and remains usable",
+      "decision": "KEEP",
+      "expectation": "check:async p=>{assert.equal(await count(p),35);await answerAll(p);await submit(p);assert.equal(await visibleResults(p),true);assert.match(await p.locator('#score').innerText(),/100%/);}},",
+      "behavioral_requirement": "incomplete submitted cache resets and remains usable",
+      "rationale": "Actual DOM, events, storage and control-state integration complement pure-logic coverage.",
+      "overlap_ids": [
+        "JS-C20",
+        "JS-F32"
+      ],
+      "source_refs": [
+        "tools/audit_quiz_browser.mjs:41",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "baseline": {
+        "outcome": "passed"
+      }
+    },
+    {
+      "id": "BR-F11",
+      "kind": "browser-fault",
+      "name": "incomplete submitted cache resets and remains usable",
+      "decision": "MERGE",
+      "expectation": "BR-C11 rejects altered contract.",
+      "behavioral_requirement": "incomplete submitted cache resets and remains usable",
+      "rationale": "Duplicate underlying validation mutation at JS layer; share fault catalogue entry while preserving distinct browser integration application.",
+      "overlap_ids": [
+        "JS-F32"
+      ],
+      "source_refs": [
+        "tools/audit_quiz_browser.mjs:41",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "old": "if(saved.submitted===true&&saved.ids.some(id=>!Object.hasOwn(saved.answers,id)))return false;",
+      "replacement": "",
+      "match_count": 1,
+      "applied_change": true,
+      "detecting_case_ids": [
+        "BR-C11"
+      ],
+      "evidence_status": "DETECTED",
+      "recorded_failure": "Expected values to be strictly equal:\n\n2 !== 35\n",
+      "page_errors": []
+    },
+    {
+      "id": "BR-C12",
+      "kind": "browser-case",
+      "name": "malformed cache resets without script errors",
+      "decision": "KEEP",
+      "expectation": "check:async p=>{assert.equal(await count(p),35);await p.locator('#question-1 input[value=\"1\"]').check();assert.equal((await state(p)).answers[1],1);}},",
+      "behavioral_requirement": "malformed cache resets without script errors",
+      "rationale": "Actual DOM, events, storage and control-state integration complement pure-logic coverage.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_browser.mjs:43",
+        "quizzes/sprint-0-quiz.html:88"
+      ],
+      "baseline": {
+        "outcome": "passed"
+      }
+    },
+    {
+      "id": "BR-F12",
+      "kind": "browser-fault",
+      "name": "malformed cache resets without script errors",
+      "decision": "IMPROVE",
+      "expectation": "BR-C12 rejects altered contract.",
+      "behavioral_requirement": "malformed cache resets without script errors",
+      "rationale": "Throw in JSON catch aborts initialization:0 versus35 fieldsets and page error. Valid error containment fault but crude crash sabotage; pair with reset failure without crash.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_browser.mjs:43",
+        "quizzes/sprint-0-quiz.html:88"
+      ],
+      "old": "}catch{}\nfunction save()",
+      "replacement": "}catch{throw new Error(\"cache failure\");}\nfunction save()",
+      "match_count": 1,
+      "applied_change": true,
+      "detecting_case_ids": [
+        "BR-C12"
+      ],
+      "evidence_status": "DETECTED",
+      "recorded_failure": "Expected values to be strictly equal:\n\n0 !== 35\n",
+      "page_errors": [
+        "cache failure"
+      ]
+    },
+    {
+      "id": "BR-C13",
+      "kind": "browser-case",
+      "name": "array answer cache resets rather than silently losing progress",
+      "decision": "KEEP",
+      "expectation": "check:async p=>{assert.equal(await count(p),35);assert.equal(await p.locator('input:checked').count(),0);}},",
+      "behavioral_requirement": "array answer cache resets rather than silently losing progress",
+      "rationale": "Actual DOM, events, storage and control-state integration complement pure-logic coverage.",
+      "overlap_ids": [
+        "JS-C36",
+        "JS-C38",
+        "JS-C39",
+        "JS-C40",
+        "JS-F25"
+      ],
+      "source_refs": [
+        "tools/audit_quiz_browser.mjs:45",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "baseline": {
+        "outcome": "passed"
+      }
+    },
+    {
+      "id": "BR-F13",
+      "kind": "browser-fault",
+      "name": "array answer cache resets rather than silently losing progress",
+      "decision": "MERGE",
+      "expectation": "BR-C13 rejects altered contract.",
+      "behavioral_requirement": "array answer cache resets rather than silently losing progress",
+      "rationale": "Duplicate underlying validation mutation at JS layer; share fault catalogue entry while preserving distinct browser integration application.",
+      "overlap_ids": [
+        "JS-F25"
+      ],
+      "source_refs": [
+        "tools/audit_quiz_browser.mjs:45",
+        "quizzes/sprint-0-quiz.html:84"
+      ],
+      "old": "Array.isArray(saved.answers)",
+      "replacement": "false",
+      "match_count": 1,
+      "applied_change": true,
+      "detecting_case_ids": [
+        "BR-C13"
+      ],
+      "evidence_status": "DETECTED",
+      "recorded_failure": "Expected values to be strictly equal:\n\n2 !== 35\n",
+      "page_errors": []
+    },
+    {
+      "id": "BR-C14",
+      "kind": "browser-case",
+      "name": "storage unavailable still allows completing a quiz",
+      "decision": "IMPROVE",
+      "expectation": "check:async p=>{assert.equal(await count(p),35);await answerAll(p);await submit(p);assert.equal(await visibleResults(p),true);assert.match(await p.locator('#score').innerText(),/100%/);}},",
+      "behavioral_requirement": "storage unavailable still allows completing a quiz",
+      "rationale": "Baseline proves completion with blocked storage. Mutant also completes; generic pageErrors assertion alone kills it. Label containment evidence precisely.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_browser.mjs:47",
+        "quizzes/sprint-0-quiz.html:89"
+      ],
+      "baseline": {
+        "outcome": "passed"
+      }
+    },
+    {
+      "id": "BR-F14",
+      "kind": "browser-fault",
+      "name": "storage unavailable still allows completing a quiz",
+      "decision": "IMPROVE",
+      "expectation": "BR-C14 rejects altered contract.",
+      "behavioral_requirement": "storage unavailable still allows completing a quiz",
+      "rationale": "Score/completion checks pass;36 storage failure page errors alone kill mutant. Valid uncaught-error containment proof, not completion failure proof.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_browser.mjs:47",
+        "quizzes/sprint-0-quiz.html:89"
+      ],
+      "old": "}catch{}}\nfunction el",
+      "replacement": "}catch{throw new Error(\"storage failure\");}}\nfunction el",
+      "match_count": 1,
+      "applied_change": true,
+      "detecting_case_ids": [
+        "BR-C14"
+      ],
+      "evidence_status": "DETECTED",
+      "recorded_failure": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   'storage failure',\n+   'storage failure',\n+   'storage failure',\n+   'storage failure',\n+   'storage failure',\n+   'storage failure',\n+   'storage failure',\n+   'storage failure',\n+   'storage failure',\n+   'storage failure',\n+   'storage failure',\n+   'storage failure',\n+   'storage failure',\n+   'storage failure',\n+   'storage failure',\n+   'storage failure',\n+   'storage failure',\n+   'storage failure',\n+   'storage failure',\n+   'storage failure',\n+   'storage failure',\n+   'storage failure',\n+   'storage failure',\n+   'storage failure',\n+   'storage failure',\n+   'storage failure',\n+   'storage failure',\n+   'storage failure',\n+   'storage failure',\n+   'storage failure',\n+   'storage failure',\n+   'storage failure',\n+   'storage failure',\n+   'storage failure',\n+   'storage failure',\n+   'storage failure',\n+   'storage failure'\n+ ]\n- []\n",
+      "page_errors": [
+        "storage failure",
+        "storage failure",
+        "storage failure",
+        "storage failure",
+        "storage failure",
+        "storage failure",
+        "storage failure",
+        "storage failure",
+        "storage failure",
+        "storage failure",
+        "storage failure",
+        "storage failure",
+        "storage failure",
+        "storage failure",
+        "storage failure",
+        "storage failure",
+        "storage failure",
+        "storage failure",
+        "storage failure",
+        "storage failure",
+        "storage failure",
+        "storage failure",
+        "storage failure",
+        "storage failure",
+        "storage failure",
+        "storage failure",
+        "storage failure",
+        "storage failure",
+        "storage failure",
+        "storage failure",
+        "storage failure",
+        "storage failure",
+        "storage failure",
+        "storage failure",
+        "storage failure",
+        "storage failure",
+        "storage failure"
+      ]
+    },
+    {
+      "id": "BR-C15",
+      "kind": "browser-case",
+      "name": "critical mistake shows warning despite a high score",
+      "decision": "KEEP",
+      "expectation": "check:async p=>{await submit(p);assert.match(await p.locator('#score').innerText(),/97%/);assert.match(await p.locator('#result-message').innerText(),/missed critical secret\\/authentication\\/storage/);}},",
+      "behavioral_requirement": "critical mistake shows warning despite a high score",
+      "rationale": "Actual DOM, events, storage and control-state integration complement pure-logic coverage.",
+      "overlap_ids": [
+        "JS-C06",
+        "JS-C07",
+        "JS-C08"
+      ],
+      "source_refs": [
+        "tools/audit_quiz_browser.mjs:49",
+        "quizzes/sprint-0-quiz.html:93"
+      ],
+      "baseline": {
+        "outcome": "passed"
+      }
+    },
+    {
+      "id": "BR-F15",
+      "kind": "browser-fault",
+      "name": "critical mistake shows warning despite a high score",
+      "decision": "KEEP",
+      "expectation": "BR-C15 rejects altered contract.",
+      "behavioral_requirement": "critical mistake shows warning despite a high score",
+      "rationale": "Recorded failure observes concrete output/control violation caused by responsible UI mutation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_browser.mjs:49",
+        "quizzes/sprint-0-quiz.html:93"
+      ],
+      "old": "lastGrade.criticalMissed.length?' Review the missed critical secret/authentication/storage questions even if the percentage is high.':''",
+      "replacement": "''",
+      "match_count": 1,
+      "applied_change": true,
+      "detecting_case_ids": [
+        "BR-C15"
+      ],
+      "evidence_status": "DETECTED",
+      "recorded_failure": "The input did not match the regular expression /missed critical secret\\/authentication\\/storage/. Input:\n\n'Keep practicing. Read the explanations below, then retry the missed questions.'\n",
+      "page_errors": []
+    },
+    {
+      "id": "BR-C16",
+      "kind": "browser-case",
+      "name": "print control invokes the browser print action once",
+      "decision": "IMPROVE",
+      "expectation": "check:async p=>{await submit(p);await p.evaluate(()=>{window.print=()=>{window.printCalls=(window.printCalls||0)+1;};});await p.locator('#print').click();assert.equal(await p.evaluate(()=>window.printCalls),1);}},",
+      "behavioral_requirement": "print control invokes the browser print action once",
+      "rationale": "Stub proves exactly one window.print call only; does not prove print layout or readability.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_browser.mjs:51",
+        "quizzes/sprint-0-quiz.html:97"
+      ],
+      "baseline": {
+        "outcome": "passed"
+      }
+    },
+    {
+      "id": "BR-F16",
+      "kind": "browser-fault",
+      "name": "print control invokes the browser print action once",
+      "decision": "KEEP",
+      "expectation": "BR-C16 rejects altered contract.",
+      "behavioral_requirement": "print control invokes the browser print action once",
+      "rationale": "Recorded failure observes concrete output/control violation caused by responsible UI mutation.",
+      "overlap_ids": [],
+      "source_refs": [
+        "tools/audit_quiz_browser.mjs:51",
+        "quizzes/sprint-0-quiz.html:97"
+      ],
+      "old": "()=>window.print()",
+      "replacement": "()=>{}",
+      "match_count": 1,
+      "applied_change": true,
+      "detecting_case_ids": [
+        "BR-C16"
+      ],
+      "evidence_status": "DETECTED",
+      "recorded_failure": "Expected values to be strictly equal:\n\nundefined !== 1\n",
+      "page_errors": []
+    }
+  ]
+}

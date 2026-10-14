@@ -1,0 +1,114 @@
+{
+  "review_date": "2026-10-12",
+  "scope": "Focused source and historical evidence review; no database operations or fresh runtime experiments.",
+  "before": {
+    "sql_cases": 384,
+    "sql_baselines_including_reconnect": 385,
+    "fault_pairs_including_reconnect": 607
+  },
+  "after": {
+    "sql_cases": 382,
+    "sql_baselines_including_reconnect": 383,
+    "fault_pairs_including_reconnect": 607
+  },
+  "baseline_aliases": [
+    {
+      "removed_id": "sql-valid-batch-cleanup_expired_blank_notes-1",
+      "canonical_id": "expiry-batch-one",
+      "decision": "MERGE",
+      "equality": "Exact case.sql equality verified before editing; canonical statement unchanged afterward.",
+      "script_sha256": "b2aa40c41ebd55452cca3e75b14e48cf8635de6c8506a8576352035defe90dff",
+      "retained_script": "SET LOCAL session_replication_role = replica; UPDATE public.notes SET body='',blank_body_expires_at=now()-interval '2 days' WHERE id='{n}'; SET LOCAL session_replication_role = origin; SET LOCAL session_replication_role = replica; UPDATE public.notes SET body='',blank_body_expires_at=now()-interval '1 day' WHERE id='{other}'; SET LOCAL session_replication_role = origin; DO $check$ BEGIN IF (public.cleanup_expired_blank_notes(1)=1) IS NOT TRUE THEN RAISE EXCEPTION 'ASSERTION: Expected database state was not observed'; END IF; END $check$;DO $check$ BEGIN IF ((SELECT deleted_at IS NOT NULL FROM public.notes WHERE id='{n}') AND (SELECT deleted_at IS NULL FROM public.notes WHERE id='{other}')) IS NOT TRUE THEN RAISE EXCEPTION 'ASSERTION: Expected database state was not observed'; END IF; END $check$;",
+      "retained_faults": [
+        {
+          "name": "expiry-source-selection-wrong",
+          "sql": "DO $mutate$ DECLARE original text; BEGIN SELECT pg_get_functiondef('public.cleanup_expired_blank_notes(integer)'::regprocedure) INTO original; IF position($old$LIMIT batch_size FOR UPDATE SKIP LOCKED$old$ IN original)=0 THEN RAISE EXCEPTION 'UNAPPLIED source fault'; END IF; EXECUTE replace(original,$old$LIMIT batch_size FOR UPDATE SKIP LOCKED$old$,$new$FOR UPDATE SKIP LOCKED$new$); END $mutate$;",
+          "before_seed": false
+        },
+        {
+          "name": "expiry-source-selection-wrong",
+          "sql": "DO $mutate$ DECLARE original text; BEGIN SELECT pg_get_functiondef('public.cleanup_expired_blank_notes(integer)'::regprocedure) INTO original; IF position($old$ORDER BY blank_body_expires_at, id$old$ IN original)=0 THEN RAISE EXCEPTION 'UNAPPLIED source fault'; END IF; EXECUTE replace(original,$old$ORDER BY blank_body_expires_at, id$old$,$new$ORDER BY blank_body_expires_at DESC, id$new$); END $mutate$;",
+          "before_seed": false
+        }
+      ]
+    },
+    {
+      "removed_id": "sql-valid-batch-purge_deleted_notes-1",
+      "canonical_id": "purge-batch-one",
+      "decision": "MERGE",
+      "equality": "Exact case.sql equality verified before editing; canonical statement unchanged afterward.",
+      "script_sha256": "a4888c89319e7fda91be92e833e1f0ec5daf0d231b94c0c0ad189b649c89b000",
+      "retained_script": "SET LOCAL session_replication_role = replica; UPDATE public.notes SET deleted_at=now()-interval '16 days' WHERE id='{n}'; SET LOCAL session_replication_role = origin; SET LOCAL session_replication_role = replica; UPDATE public.notes SET deleted_at=now()-interval '15 days' WHERE id='{other}'; SET LOCAL session_replication_role = origin; DO $check$ BEGIN IF (public.purge_deleted_notes(1)=1) IS NOT TRUE THEN RAISE EXCEPTION 'ASSERTION: Expected database state was not observed'; END IF; END $check$;DO $check$ BEGIN IF (NOT EXISTS(SELECT 1 FROM public.notes WHERE id='{n}') AND EXISTS(SELECT 1 FROM public.notes WHERE id='{other}')) IS NOT TRUE THEN RAISE EXCEPTION 'ASSERTION: Expected database state was not observed'; END IF; END $check$;",
+      "retained_faults": [
+        {
+          "name": "purge-source-selection-wrong",
+          "sql": "DO $mutate$ DECLARE original text; BEGIN SELECT pg_get_functiondef('public.purge_deleted_notes(integer)'::regprocedure) INTO original; IF position($old$LIMIT batch_size FOR UPDATE SKIP LOCKED$old$ IN original)=0 THEN RAISE EXCEPTION 'UNAPPLIED source fault'; END IF; EXECUTE replace(original,$old$LIMIT batch_size FOR UPDATE SKIP LOCKED$old$,$new$FOR UPDATE SKIP LOCKED$new$); END $mutate$;",
+          "before_seed": false
+        },
+        {
+          "name": "purge-source-selection-wrong",
+          "sql": "DO $mutate$ DECLARE original text; BEGIN SELECT pg_get_functiondef('public.purge_deleted_notes(integer)'::regprocedure) INTO original; IF position($old$ORDER BY deleted_at, id$old$ IN original)=0 THEN RAISE EXCEPTION 'UNAPPLIED source fault'; END IF; EXECUTE replace(original,$old$ORDER BY deleted_at, id$old$,$new$ORDER BY deleted_at DESC, id$new$); END $mutate$;",
+          "before_seed": false
+        }
+      ]
+    }
+  ],
+  "null_email_assertion": {
+    "id": "F049-F050",
+    "decision": "IMPROVE",
+    "old_assertion_ids": [
+      "a",
+      "b"
+    ],
+    "new_assertion_ids": [
+      "extra",
+      "missing"
+    ],
+    "after_sql": "INSERT INTO public.users(id,username) VALUES ('{extra}','audit_null_one'),('{missing}','audit_null_two');DO $check$ BEGIN IF ((SELECT count(*)=2 FROM public.users WHERE id IN ('{extra}','{missing}') AND email IS NULL)) IS NOT TRUE THEN RAISE EXCEPTION 'ASSERTION: Expected database state was not observed'; END IF; END $check$;",
+    "rationale": "Observe the two newly inserted users. Shared seed users have their emails deliberately changed while preparing the NULLS NOT DISTINCT index mutant, so seed-only preparation could falsify the old assertion without defective uniqueness enforcement."
+  },
+  "verification": {
+    "all_other_case_ids_preserved": true,
+    "exact_pair_union_under_aliases": true,
+    "fault_implementations_preserved": true,
+    "canonical_scripts_unchanged": true,
+    "ast_parse": "PASS",
+    "database_runtime": "NOT RUN"
+  },
+  "source_hashes": {
+    "tests/test_users_notes_database.py": "94515aef520ccd6675f2a1352c200f85fab9ee6944fd971cd50cb44599e8d6a5",
+    "tools/audit_database_cases.py": "12f66202cba7a13d509a5e07f3e97ae58e06823a3b864cdafc615bfb94521e93"
+  },
+  "runtime_evidence_review": {
+    "report": "/tmp/merlin-test-suite-y0i5_1fz/merlin-sql-effectiveness-final.json",
+    "observed_baselines": 385,
+    "observed_pairs": 607,
+    "observed_assertion_detections": 581,
+    "observed_behavior_errors": 26,
+    "observed_survivals": 0,
+    "note": "Historical evidence precedes these edits. Fresh source verification required."
+  },
+  "unapplied_candidates": [
+    "Second migration replay reduction is conditional; do not prune without stronger branch-independent final-state proof.",
+    "Adjacent lifecycle preservation checks may share boundary observations while retaining every transition gate; no changes made here.",
+    "Same kill sets do not prove Unicode inputs redundant; all remaining distinct Unicode cases preserved."
+  ],
+  "backup_overlap_review": {
+    "decision": "KEEP with safeguards",
+    "rationale": "Source baselines use rollback-only fixtures, including actual second-write FK failure and reconnect. Preparation may run concurrently using WAL-complete fresh pg_basebackup and pg_verifybackup, but fault isolation controls themselves inject faults and must wait until both baseline stages finish. Copy startup must independently verify recovery completion, identity, data directory, empty rows, schema fingerprint and durable server settings; join startup before cleanup on any failure.",
+    "source_citations": [
+      "tests/test_users_notes_database.py:452",
+      "tests/test_users_notes_database.py:467",
+      "tools/database_sandboxes.py:62",
+      "tools/database_sandboxes.py:154",
+      "tools/database_test_session.py:99",
+      "tools/run_test_suite.py:389",
+      "tools/verify_database_sandboxes.py:114"
+    ],
+    "official_sources": [
+      "https://www.postgresql.org/docs/17/app-pgbasebackup.html",
+      "https://www.postgresql.org/docs/17/app-pgverifybackup.html"
+    ],
+    "limitation": "pg_verifybackup is not a complete restoration proof. No runtime benchmark was performed by this reviewer."
+  }
+}

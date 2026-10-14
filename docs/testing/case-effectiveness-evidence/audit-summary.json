@@ -1,0 +1,22 @@
+{
+  "python_observations": 349,
+  "python_subtests": 3,
+  "python_faults": {
+    "DETECTED": 235,
+    "INVALID": 4
+  },
+  "sql_cases": 389,
+  "sql_fault_pairs": {
+    "DETECTED_ASSERTION": 550,
+    "DETECTED_BEHAVIOR_ERROR": 53,
+    "SURVIVED": 50
+  },
+  "sql_distinct_faults": 71,
+  "quiz_cases": 42,
+  "quiz_faults": {
+    "DETECTED": 35
+  },
+  "browser_cases": 16,
+  "lifecycle_cases": 5,
+  "preserved": true
+}

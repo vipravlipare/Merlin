@@ -1,0 +1,8 @@
+{
+  "reference": "/tmp/merlin-test-suite-gdzcymit/merlin-python-effectiveness-final.json",
+  "candidate": "/tmp/merlin-python-quiet-reporting.json",
+  "fault_entries": 239,
+  "baseline_rows": 332,
+  "exact_status_detection_scope_outcomes": true,
+  "failure_diagnostics_retained": true
+}

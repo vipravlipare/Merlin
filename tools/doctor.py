@@ -49,7 +49,7 @@ class Doctor:
             declared = data['project']['requires-python']
             python_ok = declared in ('>=3.12,<3.13', '>=3.12, <3.13', '==3.12.*')
             empty = not data['project'].get('dependencies', [])
-        except (OSError, ValueError, KeyError):
+        except (OSError, ValueError, KeyError, TypeError):
             python_ok, empty = False, False
         self.report('PYTHON-PIN', python_ok, 'project declares Python 3.12 only', 'correct requires-python')
         self.report('LOCKFILES', all((self.root / p).is_file() for p in ('uv.lock', 'pnpm-lock.yaml')),
@@ -59,7 +59,7 @@ class Doctor:
             self.report('UV-LOCK', result.returncode == 0, 'offline lock consistency checked', 'run uv lock and review changes')
         else:
             self.report('UV-LOCK', False, 'uv unavailable', 'install pinned uv', warn=self.static)
-        self.report('APP-TESTS', False, 'application tests N/A: no application dependencies or features verified',
+        self.report('APP-TESTS', False, 'application test suite is not run by this setup checker',
                     'define application test scope before claiming feature verification', warn=True)
         for tool, major in (('node', 24), ('pnpm', 12)):
             result = self.command([tool, '--version'])
@@ -68,7 +68,7 @@ class Doctor:
                         f'{tool} major version {major} required', f'install planned {tool} version', warn=self.static)
         for client in ('psql', 'redis-cli'):
             self.report('HOST-' + client.upper(), bool(shutil.which(client)),
-                        'native host client available', 'install host client from SETUP.md', warn=self.static)
+                        'native host client available', 'install host client from docs/setup/local-setup.md', warn=self.static)
         env = self.root / '.env'
         self.report('ENV-EXISTS', env.is_file(), 'local environment file present', 'copy .env.example and set local values', warn=self.static)
         if env.is_file():
@@ -98,6 +98,22 @@ class Doctor:
             return None
         try:
             health, host, mounts, labels = [json.loads(part) for part in result.stdout.strip().split('|')]
+            # Valid JSON can still have the wrong shape; refuse it before .get() calls.
+            if not (isinstance(health, str) and isinstance(host, dict)
+                    and isinstance(mounts, list) and all(isinstance(mount, dict) for mount in mounts)
+                    and isinstance(labels, dict)):
+                return None
+            ports = host.get('PortBindings', {})
+            log = host.get('LogConfig', {})
+            if not isinstance(ports, dict) or not isinstance(log, dict):
+                return None
+            if not isinstance(log.get('Config', {}), dict):
+                return None
+            if any(bindings is not None and (
+                    not isinstance(bindings, list)
+                    or any(not isinstance(binding, dict) for binding in bindings))
+                   for bindings in ports.values()):
+                return None
             return health, host, mounts, labels
         except (ValueError, TypeError):
             return None
@@ -117,11 +133,10 @@ class Doctor:
             health, host, mounts, labels = info
             self.report(prefix + '-HEALTH', health == 'healthy', 'service healthy', 'inspect service health privately')
             bindings = host.get('PortBindings', {}).get(port) or []
-            valid_port = len(bindings) == 1 and bindings[0].get('HostIp') == '127.0.0.1' and str(bindings[0].get('HostPort', '')).isdigit() and 0 < int(bindings[0]['HostPort']) <= 65535
+            valid_port = len(bindings) == 1 and bindings[0].get('HostIp') == '127.0.0.1' and bool(re.fullmatch(r'[0-9]{1,5}', str(bindings[0].get('HostPort', '')))) and 0 < int(bindings[0]['HostPort']) <= 65535
             if valid_port:
                 self.host_ports[service] = str(bindings[0]['HostPort'])
-            self.report(prefix + '-PORT', len(bindings) == 1 and bindings[0].get('HostIp') == '127.0.0.1'
-                        and str(bindings[0].get('HostPort', '')).isdigit() and 0 < int(bindings[0]['HostPort']) <= 65535,
+            self.report(prefix + '-PORT', valid_port,
                         'service port bound to loopback', 'use one 127.0.0.1 host port mapping')
             self.report(prefix + '-LIMITS', host.get('Memory') == memory and host.get('NanoCpus') == cpus,
                         'CPU and memory limits match budget', 'restore documented service limits')

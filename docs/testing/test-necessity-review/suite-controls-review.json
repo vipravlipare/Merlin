@@ -1,0 +1,1752 @@
+{
+  "scope": "Every original default stage, prerequisite invocation, named infrastructure control, legacy repeated fault, and integrated safety/result guard. Original individual source reviews are preserved; applied repair outcomes are recorded separately.",
+  "rows": [
+    {
+      "group": "coordinator",
+      "id": "pass",
+      "decision": "KEEP",
+      "rationale": "Baseline-first ordering, independent lane overlap, target routing, all stages and cleanup succeed.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "coordinator",
+      "id": "serial",
+      "decision": "KEEP",
+      "rationale": "Fallback executes database stages serially without sandbox-target inheritance.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "coordinator",
+      "id": "failure",
+      "decision": "KEEP",
+      "rationale": "Zero process exit with rejected evidence must fail the stage and leave dependent work pending.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "coordinator",
+      "id": "setup-failure",
+      "decision": "KEEP",
+      "rationale": "Failed copy creation must stop database faults and final gates.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "coordinator",
+      "id": "interrupt",
+      "decision": "KEEP",
+      "rationale": "Real SIGINT must terminate every active child process and clean copy resources.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "coordinator",
+      "id": "preflight-pass",
+      "decision": "KEEP",
+      "rationale": "All eight prerequisites run; only independent groups overlap.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "coordinator",
+      "id": "preflight-failure",
+      "decision": "KEEP",
+      "rationale": "Nonzero prerequisite exit prevents baselines and suppresses private error text.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "coordinator",
+      "id": "preflight-timeout",
+      "decision": "KEEP",
+      "rationale": "Timed-out prerequisite prevents baseline execution; cannot become success.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "native transport",
+      "id": "native_equivalence_0",
+      "decision": "KEEP",
+      "rationale": "Quoted semicolons, doubled quotes, NULL and scalar output match psql. Independent native_expected control now verifies status/output as well. Independent native_expected control now verifies status/output as well. Independent native_expected control now verifies status/output as well. Independent native_expected control now verifies status/output as well.",
+      "source": "tools/verify_native_psql.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "native transport",
+      "id": "native_equivalence_1",
+      "decision": "KEEP",
+      "rationale": "ON_ERROR_STOP stops after division-by-zero and preserves diagnostic equivalence. Independent native_expected control now verifies status/output as well. Independent native_expected control now verifies status/output as well. Independent native_expected control now verifies status/output as well. Independent native_expected control now verifies status/output as well.",
+      "source": "tools/verify_native_psql.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "native transport",
+      "id": "native_equivalence_2",
+      "decision": "KEEP",
+      "rationale": "AUTOCOMMIT directive and explicit transaction match direct psql. Independent native_expected control now verifies status/output as well. Independent native_expected control now verifies status/output as well. Independent native_expected control now verifies status/output as well. Independent native_expected control now verifies status/output as well.",
+      "source": "tools/verify_native_psql.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "native transport",
+      "id": "native_equivalence_3",
+      "decision": "KEEP",
+      "rationale": "SET LOCAL state and rollback match psql. Independent native_expected control now verifies status/output as well. Independent native_expected control now verifies status/output as well. Independent native_expected control now verifies status/output as well. Independent native_expected control now verifies status/output as well.",
+      "source": "tools/verify_native_psql.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "native transport",
+      "id": "large_script_complete",
+      "decision": "KEEP",
+      "rationale": "A 400KB input with delayed server output must not be truncated across communicate retries.",
+      "source": "tools/verify_native_psql.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "native transport",
+      "id": "fresh_connection",
+      "decision": "KEEP",
+      "rationale": "Both calls must succeed with positive numeric backend IDs that differ. Previously differing error/success output could pass; repaired.",
+      "source": "tools/verify_native_psql.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "native transport",
+      "id": "timeout_raised",
+      "decision": "KEEP",
+      "rationale": "A real sleeping PostgreSQL query must raise the configured client timeout.",
+      "source": "tools/verify_native_psql.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "native transport",
+      "id": "timeout_connection_closed",
+      "decision": "KEEP",
+      "rationale": "Timed-out server session must disappear; a client exception alone does not prove server cancellation.",
+      "source": "tools/verify_native_psql.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "native transport",
+      "id": "wrong_container_rejected",
+      "decision": "KEEP",
+      "rationale": "Refuse nonmatching container identity before transport execution.",
+      "source": "tools/verify_native_psql.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "native transport",
+      "id": "interrupt_connection_closed",
+      "decision": "KEEP",
+      "rationale": "SIGINT must close the running query and return a failed child status.",
+      "source": "tools/verify_native_psql.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "native transport",
+      "id": "preserved",
+      "decision": "KEEP",
+      "rationale": "Identity, fingerprint and empty tables must match before and after transport controls.",
+      "source": "tools/verify_native_psql.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "terminal isolation",
+      "id": "fork-probe",
+      "decision": "KEEP",
+      "rationale": "Real controlling-terminal input must become EOF in fork workers, including import-time prompts.",
+      "source": "tools/verify_python_isolation.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "terminal isolation",
+      "id": "subprocess-probe",
+      "decision": "KEEP",
+      "rationale": "The subprocess fallback must also detach from terminal input.",
+      "source": "tools/verify_python_isolation.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "terminal isolation",
+      "id": "stdin-isolated",
+      "decision": "KEEP",
+      "rationale": "Independent input() regression proves ordinary workers cannot inherit interactive stdin.",
+      "source": "tools/verify_python_isolation.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "terminal isolation",
+      "id": "real-timeout",
+      "decision": "KEEP",
+      "rationale": "A real sleeping worker must time out, never be classified as a detection.",
+      "source": "tools/verify_python_isolation.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "database isolation",
+      "id": "route-sql",
+      "decision": "KEEP",
+      "rationale": "Queries reach the SQL physical copy, not the source or another lane.",
+      "source": "tools/verify_database_sandboxes.py",
+      "evidence": "Observed PASS in /tmp/merlin-test-suite-wk7x59ri"
+    },
+    {
+      "group": "database isolation",
+      "id": "route-lifecycle",
+      "decision": "KEEP",
+      "rationale": "Committed lifecycle queries reach their separate physical copy.",
+      "source": "tools/verify_database_sandboxes.py",
+      "evidence": "Observed PASS in /tmp/merlin-test-suite-wk7x59ri"
+    },
+    {
+      "group": "database isolation",
+      "id": "route-migration",
+      "decision": "KEEP",
+      "rationale": "Destructive migration queries reach their separate physical copy.",
+      "source": "tools/verify_database_sandboxes.py",
+      "evidence": "Observed PASS in /tmp/merlin-test-suite-wk7x59ri"
+    },
+    {
+      "group": "database isolation",
+      "id": "cpu-limit-changed",
+      "decision": "KEEP",
+      "rationale": "Reject unexpected CPU allocation before destructive test work.",
+      "source": "tools/verify_database_sandboxes.py",
+      "evidence": "Observed PASS in /tmp/merlin-test-suite-wk7x59ri"
+    },
+    {
+      "group": "database isolation",
+      "id": "memory-limit-changed",
+      "decision": "KEEP",
+      "rationale": "Reject unexpected memory allocation.",
+      "source": "tools/verify_database_sandboxes.py",
+      "evidence": "Observed PASS in /tmp/merlin-test-suite-wk7x59ri"
+    },
+    {
+      "group": "database isolation",
+      "id": "external-network-refused",
+      "decision": "KEEP",
+      "rationale": "Reject network-accessible copy metadata.",
+      "source": "tools/verify_database_sandboxes.py",
+      "evidence": "Observed PASS in /tmp/merlin-test-suite-wk7x59ri"
+    },
+    {
+      "group": "database isolation",
+      "id": "shared-source-volume-refused",
+      "decision": "KEEP",
+      "rationale": "Reject a source-mounted volume independently of path checks.",
+      "source": "tools/verify_database_sandboxes.py",
+      "evidence": "Observed PASS in /tmp/merlin-test-suite-wk7x59ri"
+    },
+    {
+      "group": "database isolation",
+      "id": "published-port-refused",
+      "decision": "KEEP",
+      "rationale": "Reject published host ports independently of network mode.",
+      "source": "tools/verify_database_sandboxes.py",
+      "evidence": "Observed PASS in /tmp/merlin-test-suite-wk7x59ri"
+    },
+    {
+      "group": "database isolation",
+      "id": "stale-desktop-port-refused",
+      "decision": "KEEP",
+      "rationale": "Reject inherited Desktop forwarding metadata.",
+      "source": "tools/verify_database_sandboxes.py",
+      "evidence": "Observed PASS in /tmp/merlin-test-suite-wk7x59ri"
+    },
+    {
+      "group": "database isolation",
+      "id": "source-as-clone",
+      "decision": "KEEP",
+      "rationale": "Refuse treating the source container as a disposable clone.",
+      "source": "tools/verify_database_sandboxes.py",
+      "evidence": "Observed PASS in /tmp/merlin-test-suite-wk7x59ri"
+    },
+    {
+      "group": "database isolation",
+      "id": "source-volume-path",
+      "decision": "KEEP",
+      "rationale": "Refuse the original PostgreSQL data path.",
+      "source": "tools/verify_database_sandboxes.py",
+      "evidence": "Observed PASS in /tmp/merlin-test-suite-wk7x59ri"
+    },
+    {
+      "group": "database isolation",
+      "id": "wrong-source",
+      "decision": "KEEP",
+      "rationale": "Refuse a manifest owned by another source identity.",
+      "source": "tools/verify_database_sandboxes.py",
+      "evidence": "Observed PASS in /tmp/merlin-test-suite-wk7x59ri"
+    },
+    {
+      "group": "database isolation",
+      "id": "wrong-container",
+      "decision": "KEEP",
+      "rationale": "Refuse nonexistent/mismatching target container identity.",
+      "source": "tools/verify_database_sandboxes.py",
+      "evidence": "Observed PASS in /tmp/merlin-test-suite-wk7x59ri"
+    },
+    {
+      "group": "database isolation",
+      "id": "crossed-socket",
+      "decision": "KEEP",
+      "rationale": "Refuse another lane socket, preserving storage/socket ownership.",
+      "source": "tools/verify_database_sandboxes.py",
+      "evidence": "Observed PASS in /tmp/merlin-test-suite-wk7x59ri"
+    },
+    {
+      "group": "database isolation",
+      "id": "wrong-fingerprint",
+      "decision": "KEEP",
+      "rationale": "A valid-looking target with wrong schema fingerprint must never fall back to source.",
+      "source": "tools/verify_database_sandboxes.py",
+      "evidence": "Observed PASS in /tmp/merlin-test-suite-wk7x59ri"
+    },
+    {
+      "group": "database isolation",
+      "id": "public-manifest-refused",
+      "decision": "KEEP",
+      "rationale": "Manifest must remain private and owned by the current user.",
+      "source": "tools/verify_database_sandboxes.py",
+      "evidence": "Observed PASS in /tmp/merlin-test-suite-wk7x59ri"
+    },
+    {
+      "group": "database isolation",
+      "id": "manifest-symlink-refused",
+      "decision": "KEEP",
+      "rationale": "Open manifests without following symlinks.",
+      "source": "tools/verify_database_sandboxes.py",
+      "evidence": "Observed PASS in /tmp/merlin-test-suite-wk7x59ri"
+    },
+    {
+      "group": "database isolation",
+      "id": "changed-runtime-content-invalidates-cache",
+      "decision": "KEEP",
+      "rationale": "Content hash must change when a dependency file changes; this is a hash-unit control, not image-corruption end-to-end proof.",
+      "source": "tools/verify_database_sandboxes.py",
+      "evidence": "Observed PASS in /tmp/merlin-test-suite-wk7x59ri"
+    },
+    {
+      "group": "database isolation",
+      "id": "missing-runtime-file-refused",
+      "decision": "KEEP",
+      "rationale": "Missing dependency code must prevent runtime hash reuse.",
+      "source": "tools/verify_database_sandboxes.py",
+      "evidence": "Observed PASS in /tmp/merlin-test-suite-wk7x59ri"
+    },
+    {
+      "group": "database isolation",
+      "id": "live-fault-isolated-from-other-copies-and-source",
+      "decision": "KEEP",
+      "rationale": "A real faulty SQL function in one copy must not affect either other copy or source.",
+      "source": "tools/verify_database_sandboxes.py",
+      "evidence": "Observed PASS in /tmp/merlin-test-suite-wk7x59ri"
+    },
+    {
+      "group": "database isolation",
+      "id": "control-fault-rolled-back",
+      "decision": "KEEP",
+      "rationale": "The deliberately faulty function must be restored after its transaction.",
+      "source": "tools/verify_database_sandboxes.py",
+      "evidence": "Observed PASS in /tmp/merlin-test-suite-wk7x59ri"
+    },
+    {
+      "group": "preflight invocation",
+      "id": "scheduling",
+      "decision": "KEEP",
+      "rationale": "Execute the eight coordinator controls before baselines.",
+      "source": "tools/run_test_suite.py:preflight",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "preflight invocation",
+      "id": "native",
+      "decision": "KEEP",
+      "rationale": "Execute eleven transport controls, with real PostgreSQL cancellation.",
+      "source": "tools/run_test_suite.py:preflight",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "preflight invocation",
+      "id": "imports",
+      "decision": "KEEP",
+      "rationale": "Required Python modules import and interpreter is Python3.12; does not verify every installed package version.",
+      "source": "tools/run_test_suite.py:preflight",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "preflight invocation",
+      "id": "node",
+      "decision": "KEEP",
+      "rationale": "Node major version24 is required; does not promise a particular patch version.",
+      "source": "tools/run_test_suite.py:preflight",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "preflight invocation",
+      "id": "transport",
+      "decision": "KEEP",
+      "rationale": "Reusable SQL transport starts under the target identity/fingerprint guard.",
+      "source": "tools/run_test_suite.py:preflight",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "preflight invocation",
+      "id": "preservation",
+      "decision": "KEEP",
+      "rationale": "Original target is the isolated Day6 cluster with empty user/note tables.",
+      "source": "tools/run_test_suite.py:preflight",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "preflight invocation",
+      "id": "browser",
+      "decision": "KEEP",
+      "rationale": "Pinned Playwright1.58.2 and Chromium145.0.7632.6 actually launch; no product compilation here.",
+      "source": "tools/run_test_suite.py:preflight",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "preflight invocation",
+      "id": "python-isolation",
+      "decision": "KEEP",
+      "rationale": "Execute all four real controlling-terminal worker checks.",
+      "source": "tools/run_test_suite.py:preflight",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "emoji-weight-one",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "codepoint-instead-of-grapheme",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "title-bound-relaxed",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "title-bound-too-strict",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "body-bound-relaxed",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "body-bound-too-strict",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "body-stripped",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "real-title-stripped",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "email-lowercased",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "blank-title-stored-empty",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "draft-delete-protection-removed",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "nul-check-removed",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "target-check-skipped",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "identity-or-changed-to-and",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "target-port-original-db",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "batch1001-allowed",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "lock-timeout-removed",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "wrong-expiry-function",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "once-flag-ignored",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "custom-interval-ignored",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "cli-error-secret-leaked",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "strict-batch-guard-removed",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "strict-draft-guard-removed",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "utf8-guard-removed",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "unexpected-extra-sql",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "email-padding-retained",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "optional-email-empty-string",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "empty-email-empty-string",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "none-body-not-normalized",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "draft-title-bypasses-limit",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "draft-body-bypasses-limit",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "save-default-is-draft",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "text-type-guard-disabled",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "valid-unicode-rejected-ascii",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "nul-only-at-start",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "valid-body-erased",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "valid-title-erased",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "blank-save-never-deletes",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "target-host-public",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "target-database-original",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "target-user-original",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "connection-timeout-unbounded",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "batch-zero-allowed",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "batch1000-rejected",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "statement-timeout-removed",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "purge-parameter-altered",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "cleanup-counts-swapped",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "early-explicit-commit",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "default-interval-altered",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "nine-second-interval-allowed",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "ten-second-interval-rejected",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "runtime-error-not-sanitized",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "output-counts-swapped",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "interrupt-message-omitted",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "legacy repeated fault",
+      "id": "nul-error-echoes-input",
+      "decision": "MERGE",
+      "rationale": "Exact implementation is retained in the canonical per-case Python audit; remove its second mandatory execution, not the fault or baseline.",
+      "source": "tools/check_mutations.py / tools/audit_python_cases.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "stage",
+      "id": "python-tests",
+      "decision": "KEEP",
+      "rationale": "Independent unmodified Python and direct PostgreSQL baselines must pass before faults.",
+      "source": "tools/run_test_suite.py:stages",
+      "evidence": "Observed PASS before changes: 9.356s"
+    },
+    {
+      "group": "stage",
+      "id": "quiz-tests",
+      "decision": "KEEP",
+      "rationale": "Independent unmodified offline JavaScript baseline must pass before faults.",
+      "source": "tools/run_test_suite.py:stages",
+      "evidence": "Observed PASS before changes: 0.148s"
+    },
+    {
+      "group": "stage",
+      "id": "legacy-python-faults",
+      "decision": "MERGE",
+      "rationale": "All55 literal fault transformations already run in the canonical Python audit.",
+      "source": "tools/run_test_suite.py:stages",
+      "evidence": "Observed PASS before changes: 8.932s"
+    },
+    {
+      "group": "stage",
+      "id": "python-case-faults",
+      "decision": "KEEP",
+      "rationale": "Canonical per-case Python sensitivity, selected dependency scopes and invalid diagnostics.",
+      "source": "tools/run_test_suite.py:stages",
+      "evidence": "Observed PASS before changes: 33.617s"
+    },
+    {
+      "group": "stage",
+      "id": "database-case-faults",
+      "decision": "KEEP",
+      "rationale": "Stored SQL constraints, triggers, role boundaries, worker behavior and reconnect verification.",
+      "source": "tools/run_test_suite.py:stages",
+      "evidence": "Observed PASS before changes: 18.973s"
+    },
+    {
+      "group": "stage",
+      "id": "timestamp-case-faults",
+      "decision": "MERGE",
+      "rationale": "F077 and its same recipes already run in the complete SQL audit; keep --only F077 for focused debugging.",
+      "source": "tools/run_test_suite.py:stages",
+      "evidence": "Observed PASS before changes: 1.1s"
+    },
+    {
+      "group": "stage",
+      "id": "quiz-case-faults",
+      "decision": "KEEP",
+      "rationale": "Pure scoring/cache-logic fault checks complement real browser behavior.",
+      "source": "tools/run_test_suite.py:stages",
+      "evidence": "Observed PASS before changes: 2.358s"
+    },
+    {
+      "group": "stage",
+      "id": "browser-case-faults",
+      "decision": "KEEP",
+      "rationale": "Real DOM, event, storage, reload and retry behavior with paired faulty HTML.",
+      "source": "tools/run_test_suite.py:stages",
+      "evidence": "Observed PASS before changes: 14.24s"
+    },
+    {
+      "group": "stage",
+      "id": "database-lifecycle-faults",
+      "decision": "KEEP",
+      "rationale": "Committed state and two-session locks cannot be proven by rollback-only cases or mocks.",
+      "source": "tools/run_test_suite.py:stages",
+      "evidence": "Observed PASS before changes: 9.768s"
+    },
+    {
+      "group": "stage",
+      "id": "migration-undo-faults",
+      "decision": "KEEP",
+      "rationale": "Undo/reapply, refusal gates, locks and damage repair stay in disposable storage.",
+      "source": "tools/run_test_suite.py:stages",
+      "evidence": "Observed PASS before changes: 17.167s"
+    },
+    {
+      "group": "stage",
+      "id": "documentation",
+      "decision": "KEEP",
+      "rationale": "Validate learning/return/navigation links and authored Part contracts.",
+      "source": "tools/run_test_suite.py:stages",
+      "evidence": "Observed PASS before changes: 0.237s"
+    },
+    {
+      "group": "stage",
+      "id": "whitespace",
+      "decision": "KEEP",
+      "rationale": "Reject accidental patch whitespace defects; not an application behavior test.",
+      "source": "tools/run_test_suite.py:stages",
+      "evidence": "Observed PASS before changes: 0.08s"
+    },
+    {
+      "group": "integrated guard",
+      "id": "assertions-enabled",
+      "decision": "KEEP",
+      "rationale": "Refuse optimized Python, because result gates use assertions.",
+      "source": "tools/run_test_suite.py; tools/database_sandboxes.py; tools/database_test_session.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "integrated guard",
+      "id": "suite-lock",
+      "decision": "KEEP",
+      "rationale": "Reject simultaneous full runners using a no-follow lock and nonblocking flock.",
+      "source": "tools/run_test_suite.py; tools/database_sandboxes.py; tools/database_test_session.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "integrated guard",
+      "id": "output-directory",
+      "decision": "KEEP",
+      "rationale": "Refuse reusing a nonempty result folder; old evidence cannot masquerade as this run.",
+      "source": "tools/run_test_suite.py; tools/database_sandboxes.py; tools/database_test_session.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "integrated guard",
+      "id": "environment-sanitization",
+      "decision": "KEEP",
+      "rationale": "Remove inherited pytest filters and sandbox targeting; enable all database tests.",
+      "source": "tools/run_test_suite.py; tools/database_sandboxes.py; tools/database_test_session.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "integrated guard",
+      "id": "fresh-backup",
+      "decision": "KEEP",
+      "rationale": "Always take and verify a new physical backup; database contents/results are never cached.",
+      "source": "tools/run_test_suite.py; tools/database_sandboxes.py; tools/database_test_session.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "integrated guard",
+      "id": "source-tablespaces",
+      "decision": "KEEP",
+      "rationale": "Refuse custom tablespaces before backup to avoid restoring original absolute paths.",
+      "source": "tools/run_test_suite.py; tools/database_sandboxes.py; tools/database_test_session.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "integrated guard",
+      "id": "runtime-source-digest",
+      "decision": "KEEP",
+      "rationale": "Verify source dependency file content and image provenance; verify again in every clone.",
+      "source": "tools/run_test_suite.py; tools/database_sandboxes.py; tools/database_test_session.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "integrated guard",
+      "id": "manifest-shape",
+      "decision": "KEEP",
+      "rationale": "Validate exact manifest fields and lane paths before publishing private targets.",
+      "source": "tools/run_test_suite.py; tools/database_sandboxes.py; tools/database_test_session.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "integrated guard",
+      "id": "owned-cleanup",
+      "decision": "KEEP",
+      "rationale": "Inventory per-run labels and verify each container/volume ownership before removal.",
+      "source": "tools/run_test_suite.py; tools/database_sandboxes.py; tools/database_test_session.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "integrated guard",
+      "id": "post-cleanup-source",
+      "decision": "KEEP",
+      "rationale": "Original identity/fingerprint/empty target must be preserved after all destructive work.",
+      "source": "tools/run_test_suite.py; tools/database_sandboxes.py; tools/database_test_session.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "integrated guard",
+      "id": "SQL-request-reset",
+      "decision": "KEEP",
+      "rationale": "Every reusable request must rollback and discard session state; startup/requests enforce target identity.",
+      "source": "tools/run_test_suite.py; tools/database_sandboxes.py; tools/database_test_session.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "integrated guard",
+      "id": "complete-report-inventory",
+      "decision": "KEEP",
+      "rationale": "Reports must contain every reviewed case/fault/pair exactly once; previous validators accepted six fabricated truncated reports.",
+      "source": "tools/run_test_suite.py; tools/database_sandboxes.py; tools/database_test_session.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "integrated guard",
+      "id": "baseline-fault-consistency",
+      "decision": "KEEP",
+      "rationale": "Do not accept effectiveness labels when underlying baseline or mutation outcomes contradict them.",
+      "source": "tools/run_test_suite.py; tools/database_sandboxes.py; tools/database_test_session.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "integrated guard",
+      "id": "no-foreign-error-leak",
+      "decision": "KEEP",
+      "rationale": "Runner prerequisite errors omit private captured output.",
+      "source": "tools/run_test_suite.py; tools/database_sandboxes.py; tools/database_test_session.py",
+      "evidence": "Source inspection; prior complete suite passed"
+    },
+    {
+      "group": "native expected result",
+      "id": "native_expected_0",
+      "decision": "KEEP",
+      "rationale": "Independent expected status/output prevents two identically broken transports from passing the equivalence oracle.",
+      "source": "tools/verify_native_psql.py",
+      "evidence": "Final native preflight passed."
+    },
+    {
+      "group": "native expected result",
+      "id": "native_expected_1",
+      "decision": "KEEP",
+      "rationale": "Independent expected status/output prevents two identically broken transports from passing the equivalence oracle.",
+      "source": "tools/verify_native_psql.py",
+      "evidence": "Final native preflight passed."
+    },
+    {
+      "group": "native expected result",
+      "id": "native_expected_2",
+      "decision": "KEEP",
+      "rationale": "Independent expected status/output prevents two identically broken transports from passing the equivalence oracle.",
+      "source": "tools/verify_native_psql.py",
+      "evidence": "Final native preflight passed."
+    },
+    {
+      "group": "native expected result",
+      "id": "native_expected_3",
+      "decision": "KEEP",
+      "rationale": "Independent expected status/output prevents two identically broken transports from passing the equivalence oracle.",
+      "source": "tools/verify_native_psql.py",
+      "evidence": "Final native preflight passed."
+    },
+    {
+      "group": "SQL boundary lexer",
+      "id": "lexer-quoted-semicolon",
+      "decision": "KEEP",
+      "rationale": "Preserve the named SQL string/comment statement boundary or reject its unterminated form before execution.",
+      "source": "tools/verify_native_psql.py",
+      "evidence": "Final native preflight passed."
+    },
+    {
+      "group": "SQL boundary lexer",
+      "id": "lexer-doubled-string-quote",
+      "decision": "KEEP",
+      "rationale": "Preserve the named SQL string/comment statement boundary or reject its unterminated form before execution.",
+      "source": "tools/verify_native_psql.py",
+      "evidence": "Final native preflight passed."
+    },
+    {
+      "group": "SQL boundary lexer",
+      "id": "lexer-quoted-identifier",
+      "decision": "KEEP",
+      "rationale": "Preserve the named SQL string/comment statement boundary or reject its unterminated form before execution.",
+      "source": "tools/verify_native_psql.py",
+      "evidence": "Final native preflight passed."
+    },
+    {
+      "group": "SQL boundary lexer",
+      "id": "lexer-nested-block-comment",
+      "decision": "KEEP",
+      "rationale": "Preserve the named SQL string/comment statement boundary or reject its unterminated form before execution.",
+      "source": "tools/verify_native_psql.py",
+      "evidence": "Final native preflight passed."
+    },
+    {
+      "group": "SQL boundary lexer",
+      "id": "lexer-line-comment",
+      "decision": "KEEP",
+      "rationale": "Preserve the named SQL string/comment statement boundary or reject its unterminated form before execution.",
+      "source": "tools/verify_native_psql.py",
+      "evidence": "Final native preflight passed."
+    },
+    {
+      "group": "SQL boundary lexer",
+      "id": "lexer-dollar-body",
+      "decision": "KEEP",
+      "rationale": "Preserve the named SQL string/comment statement boundary or reject its unterminated form before execution.",
+      "source": "tools/verify_native_psql.py",
+      "evidence": "Final native preflight passed."
+    },
+    {
+      "group": "SQL boundary lexer",
+      "id": "lexer-tagged-dollar-body",
+      "decision": "KEEP",
+      "rationale": "Preserve the named SQL string/comment statement boundary or reject its unterminated form before execution.",
+      "source": "tools/verify_native_psql.py",
+      "evidence": "Final native preflight passed."
+    },
+    {
+      "group": "SQL boundary lexer",
+      "id": "lexer-escaped-string",
+      "decision": "KEEP",
+      "rationale": "Preserve the named SQL string/comment statement boundary or reject its unterminated form before execution.",
+      "source": "tools/verify_native_psql.py",
+      "evidence": "Final native preflight passed."
+    },
+    {
+      "group": "SQL boundary lexer",
+      "id": "lexer-unterminated-string",
+      "decision": "KEEP",
+      "rationale": "Preserve the named SQL string/comment statement boundary or reject its unterminated form before execution.",
+      "source": "tools/verify_native_psql.py",
+      "evidence": "Final native preflight passed."
+    },
+    {
+      "group": "SQL boundary lexer",
+      "id": "lexer-unterminated-identifier",
+      "decision": "KEEP",
+      "rationale": "Preserve the named SQL string/comment statement boundary or reject its unterminated form before execution.",
+      "source": "tools/verify_native_psql.py",
+      "evidence": "Final native preflight passed."
+    },
+    {
+      "group": "SQL boundary lexer",
+      "id": "lexer-unterminated-dollar",
+      "decision": "KEEP",
+      "rationale": "Preserve the named SQL string/comment statement boundary or reject its unterminated form before execution.",
+      "source": "tools/verify_native_psql.py",
+      "evidence": "Final native preflight passed."
+    },
+    {
+      "group": "SQL boundary lexer",
+      "id": "lexer-unterminated-block-comment",
+      "decision": "KEEP",
+      "rationale": "Preserve the named SQL string/comment statement boundary or reject its unterminated form before execution.",
+      "source": "tools/verify_native_psql.py",
+      "evidence": "Final native preflight passed."
+    },
+    {
+      "group": "coordinator lifecycle",
+      "id": "baseline-failure",
+      "decision": "KEEP",
+      "rationale": "Join asynchronous copy setup, preserve the first blocker and clean owned resources without starting faults after this failure/interrupt.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "coordinator lifecycle",
+      "id": "interrupt-setup",
+      "decision": "KEEP",
+      "rationale": "Join asynchronous copy setup, preserve the first blocker and clean owned resources without starting faults after this failure/interrupt.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "coordinator lifecycle",
+      "id": "prerequisite-failure",
+      "decision": "KEEP",
+      "rationale": "Join asynchronous copy setup, preserve the first blocker and clean owned resources without starting faults after this failure/interrupt.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "migration-undo-faults-complete-positive",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "migration-undo-faults-contradictory-schema",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "migration-undo-faults-contradictory-runtime",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "migration-undo-faults-wrong-target",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "migration-undo-faults-missing-source",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "migration-undo-faults-false-validation",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "migration-undo-faults-malformed-schema-digest",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "migration-undo-faults-wrong-replay-count",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "migration-undo-faults-wrong-replay-mode",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "migration-undo-faults-missing-branch",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "legacy-python-faults-complete-positive",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "legacy-python-faults-truncated",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "legacy-python-faults-duplicate",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "python-case-faults-complete-positive",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "python-case-faults-truncated",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "python-case-faults-duplicate",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "python-case-faults-missing-fault",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "python-case-faults-missing-source-manifest",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "python-case-faults-contradictory-baseline",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "python-case-faults-missing-scope-proof",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "python-case-faults-invented-detection",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "database-case-faults-complete-positive",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "database-case-faults-truncated",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "database-case-faults-duplicate",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "database-case-faults-missing-source-manifest",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "database-case-faults-contradictory-preservation",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "database-case-faults-missing-pair",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "quiz-case-faults-complete-positive",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "quiz-case-faults-truncated",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "quiz-case-faults-duplicate",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "quiz-case-faults-missing-fault",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "quiz-case-faults-missing-source-manifest",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "quiz-case-faults-contradictory-baseline",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "quiz-case-faults-invented-detection",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "browser-case-faults-complete-positive",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "browser-case-faults-truncated",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "browser-case-faults-duplicate",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "browser-case-faults-missing-source-manifest",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "browser-case-faults-contradictory-mutation",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "database-lifecycle-faults-complete-positive",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "database-lifecycle-faults-truncated",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "database-lifecycle-faults-duplicate",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "result-validator counterfactual",
+      "id": "database-lifecycle-faults-contradictory-mutation",
+      "decision": "KEEP",
+      "rationale": "The complete positive report is accepted; this specific omitted, duplicated, contradictory or wrongly targeted report is rejected by the real validator.",
+      "source": "tools/verify_suite_execution.py",
+      "evidence": "Focused controls and complete default-run preflight PASS."
+    },
+    {
+      "group": "SQL shard proof",
+      "id": "sql-shards-complete-positive",
+      "decision": "KEEP",
+      "rationale": "The actual merger must accept the complete partition or refuse this exact missing/duplicated/crossed/wrongly targeted/unpreserved evidence or invalid selector before database transport.",
+      "source": "tools/verify_suite_execution.py:check_sql_shards",
+      "evidence": "Focused and default full-run preflight PASS."
+    },
+    {
+      "group": "SQL shard proof",
+      "id": "sql-shards-missing-case",
+      "decision": "KEEP",
+      "rationale": "The actual merger must accept the complete partition or refuse this exact missing/duplicated/crossed/wrongly targeted/unpreserved evidence or invalid selector before database transport.",
+      "source": "tools/verify_suite_execution.py:check_sql_shards",
+      "evidence": "Focused and default full-run preflight PASS."
+    },
+    {
+      "group": "SQL shard proof",
+      "id": "sql-shards-duplicate-case",
+      "decision": "KEEP",
+      "rationale": "The actual merger must accept the complete partition or refuse this exact missing/duplicated/crossed/wrongly targeted/unpreserved evidence or invalid selector before database transport.",
+      "source": "tools/verify_suite_execution.py:check_sql_shards",
+      "evidence": "Focused and default full-run preflight PASS."
+    },
+    {
+      "group": "SQL shard proof",
+      "id": "sql-shards-crossed-case",
+      "decision": "KEEP",
+      "rationale": "The actual merger must accept the complete partition or refuse this exact missing/duplicated/crossed/wrongly targeted/unpreserved evidence or invalid selector before database transport.",
+      "source": "tools/verify_suite_execution.py:check_sql_shards",
+      "evidence": "Focused and default full-run preflight PASS."
+    },
+    {
+      "group": "SQL shard proof",
+      "id": "sql-shards-wrong-index",
+      "decision": "KEEP",
+      "rationale": "The actual merger must accept the complete partition or refuse this exact missing/duplicated/crossed/wrongly targeted/unpreserved evidence or invalid selector before database transport.",
+      "source": "tools/verify_suite_execution.py:check_sql_shards",
+      "evidence": "Focused and default full-run preflight PASS."
+    },
+    {
+      "group": "SQL shard proof",
+      "id": "sql-shards-wrong-source",
+      "decision": "KEEP",
+      "rationale": "The actual merger must accept the complete partition or refuse this exact missing/duplicated/crossed/wrongly targeted/unpreserved evidence or invalid selector before database transport.",
+      "source": "tools/verify_suite_execution.py:check_sql_shards",
+      "evidence": "Focused and default full-run preflight PASS."
+    },
+    {
+      "group": "SQL shard proof",
+      "id": "sql-shards-false-preservation",
+      "decision": "KEEP",
+      "rationale": "The actual merger must accept the complete partition or refuse this exact missing/duplicated/crossed/wrongly targeted/unpreserved evidence or invalid selector before database transport.",
+      "source": "tools/verify_suite_execution.py:check_sql_shards",
+      "evidence": "Focused and default full-run preflight PASS."
+    },
+    {
+      "group": "SQL shard proof",
+      "id": "sql-shards-wrong-fingerprint",
+      "decision": "KEEP",
+      "rationale": "The actual merger must accept the complete partition or refuse this exact missing/duplicated/crossed/wrongly targeted/unpreserved evidence or invalid selector before database transport.",
+      "source": "tools/verify_suite_execution.py:check_sql_shards",
+      "evidence": "Focused and default full-run preflight PASS."
+    },
+    {
+      "group": "SQL shard proof",
+      "id": "sql-shards-duplicate-target",
+      "decision": "KEEP",
+      "rationale": "The actual merger must accept the complete partition or refuse this exact missing/duplicated/crossed/wrongly targeted/unpreserved evidence or invalid selector before database transport.",
+      "source": "tools/verify_suite_execution.py:check_sql_shards",
+      "evidence": "Focused and default full-run preflight PASS."
+    },
+    {
+      "group": "SQL shard proof",
+      "id": "sql-shards-missing-shard",
+      "decision": "KEEP",
+      "rationale": "The actual merger must accept the complete partition or refuse this exact missing/duplicated/crossed/wrongly targeted/unpreserved evidence or invalid selector before database transport.",
+      "source": "tools/verify_suite_execution.py:check_sql_shards",
+      "evidence": "Focused and default full-run preflight PASS."
+    },
+    {
+      "group": "SQL shard proof",
+      "id": "sql-shards-refuse-2/2",
+      "decision": "KEEP",
+      "rationale": "The actual merger must accept the complete partition or refuse this exact missing/duplicated/crossed/wrongly targeted/unpreserved evidence or invalid selector before database transport.",
+      "source": "tools/verify_suite_execution.py:check_sql_shards",
+      "evidence": "Focused and default full-run preflight PASS."
+    },
+    {
+      "group": "SQL shard proof",
+      "id": "sql-shards-refuse--1/2",
+      "decision": "KEEP",
+      "rationale": "The actual merger must accept the complete partition or refuse this exact missing/duplicated/crossed/wrongly targeted/unpreserved evidence or invalid selector before database transport.",
+      "source": "tools/verify_suite_execution.py:check_sql_shards",
+      "evidence": "Focused and default full-run preflight PASS."
+    },
+    {
+      "group": "SQL shard proof",
+      "id": "sql-shards-refuse-0/0",
+      "decision": "KEEP",
+      "rationale": "The actual merger must accept the complete partition or refuse this exact missing/duplicated/crossed/wrongly targeted/unpreserved evidence or invalid selector before database transport.",
+      "source": "tools/verify_suite_execution.py:check_sql_shards",
+      "evidence": "Focused and default full-run preflight PASS."
+    },
+    {
+      "group": "SQL shard proof",
+      "id": "sql-shards-refuse-x/2",
+      "decision": "KEEP",
+      "rationale": "The actual merger must accept the complete partition or refuse this exact missing/duplicated/crossed/wrongly targeted/unpreserved evidence or invalid selector before database transport.",
+      "source": "tools/verify_suite_execution.py:check_sql_shards",
+      "evidence": "Focused and default full-run preflight PASS."
+    },
+    {
+      "group": "SQL shard proof",
+      "id": "sql-shards-refuse-partial-filter",
+      "decision": "KEEP",
+      "rationale": "The actual merger must accept the complete partition or refuse this exact missing/duplicated/crossed/wrongly targeted/unpreserved evidence or invalid selector before database transport.",
+      "source": "tools/verify_suite_execution.py:check_sql_shards",
+      "evidence": "Focused and default full-run preflight PASS."
+    },
+    {
+      "group": "independent target route",
+      "id": "route-sql-second",
+      "decision": "KEEP",
+      "rationale": "Extra SQL target must route to its own verified private data directory; live faulty SQL cannot affect this copy.",
+      "source": "tools/verify_database_sandboxes.py",
+      "evidence": "Final complete isolation controls PASS."
+    },
+    {
+      "group": "SQL parent shard gate",
+      "id": "sql-parent-shards-complete-positive",
+      "decision": "KEEP",
+      "rationale": "The real parent validator must accept complete partition reports and refuse contradictory merged proof, changed child outcomes, missing child report, wrong source or reused target.",
+      "source": "tools/verify_suite_execution.py:check_sql_shards",
+      "evidence": "Focused real-validator positive/negative controls PASS; final default-run preflight follows."
+    },
+    {
+      "group": "SQL parent shard gate",
+      "id": "sql-parent-shards-contradictory-merged-proof",
+      "decision": "KEEP",
+      "rationale": "The real parent validator must accept complete partition reports and refuse contradictory merged proof, changed child outcomes, missing child report, wrong source or reused target.",
+      "source": "tools/verify_suite_execution.py:check_sql_shards",
+      "evidence": "Focused real-validator positive/negative controls PASS; final default-run preflight follows."
+    },
+    {
+      "group": "SQL parent shard gate",
+      "id": "sql-parent-shards-changed-child-outcome",
+      "decision": "KEEP",
+      "rationale": "The real parent validator must accept complete partition reports and refuse contradictory merged proof, changed child outcomes, missing child report, wrong source or reused target.",
+      "source": "tools/verify_suite_execution.py:check_sql_shards",
+      "evidence": "Focused real-validator positive/negative controls PASS; final default-run preflight follows."
+    },
+    {
+      "group": "SQL parent shard gate",
+      "id": "sql-parent-shards-missing-child",
+      "decision": "KEEP",
+      "rationale": "The real parent validator must accept complete partition reports and refuse contradictory merged proof, changed child outcomes, missing child report, wrong source or reused target.",
+      "source": "tools/verify_suite_execution.py:check_sql_shards",
+      "evidence": "Focused real-validator positive/negative controls PASS; final default-run preflight follows."
+    },
+    {
+      "group": "SQL parent shard gate",
+      "id": "sql-parent-shards-wrong-child-source",
+      "decision": "KEEP",
+      "rationale": "The real parent validator must accept complete partition reports and refuse contradictory merged proof, changed child outcomes, missing child report, wrong source or reused target.",
+      "source": "tools/verify_suite_execution.py:check_sql_shards",
+      "evidence": "Focused real-validator positive/negative controls PASS; final default-run preflight follows."
+    },
+    {
+      "group": "SQL parent shard gate",
+      "id": "sql-parent-shards-crossed-target",
+      "decision": "KEEP",
+      "rationale": "The real parent validator must accept complete partition reports and refuse contradictory merged proof, changed child outcomes, missing child report, wrong source or reused target.",
+      "source": "tools/verify_suite_execution.py:check_sql_shards",
+      "evidence": "Focused real-validator positive/negative controls PASS; final default-run preflight follows."
+    }
+  ],
+  "named_infrastructure_checks": 128,
+  "repeated_legacy_faults": 55,
+  "limits": [
+    "No finite suite can prove every possible future error. KEEP means a concrete present contract/partition, not mathematical minimality.",
+    "The standalone committed migration verifier is optional and is not called by the default suite; its contract is documented separately in the command reference.",
+    "SQL splitter malformed grammar and every image/cleanup failure path are not all independently fault-injected by current controls."
+  ],
+  "counts": {
+    "KEEP": 160,
+    "MERGE": 57
+  }
+}

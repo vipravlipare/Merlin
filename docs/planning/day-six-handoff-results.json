@@ -1,0 +1,334 @@
+{
+  "recorded_date": "2026-10-11",
+  "day_six_technical_verification": "PASS",
+  "step_five_handoff": "COMPLETE",
+  "whole_learning_story": "Day 6 complete within agreed scope; 3.3 explicitly learner-confirmed; Jira unchanged",
+  "actual_learner_minutes": null,
+  "actual_assistant_minutes": null,
+  "planned_step_minutes": {
+    "1": 90,
+    "2": 60,
+    "3": 60,
+    "4": 39,
+    "5": 45
+  },
+  "planned_steps_total_minutes": 294,
+  "original_daily_cap_minutes": 360,
+  "latest_user_full_suite_raw": "/tmp/merlin-test-suite-2j54l_ma/summary.json",
+  "latest_user_full_suite": {
+    "started_utc": "2026-10-11T21:48:31.136548+00:00",
+    "stages": [
+      {
+        "stage": "python-tests",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 7.765
+      },
+      {
+        "stage": "quiz-tests",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 0.079
+      },
+      {
+        "stage": "legacy-python-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 8.013
+      },
+      {
+        "stage": "python-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "excluded_invalid_import_faults": [
+          "ast-database_connectivity_probe-21-11",
+          "ast-notes_maintenance-76-42",
+          "ast-doctor-229-52",
+          "ast-prd_lint-181-88"
+        ],
+        "seconds": 33.524
+      },
+      {
+        "stage": "database-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 24.551
+      },
+      {
+        "stage": "timestamp-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 0.961
+      },
+      {
+        "stage": "quiz-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 2.184
+      },
+      {
+        "stage": "browser-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 14.912
+      },
+      {
+        "stage": "database-lifecycle-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 12.48
+      },
+      {
+        "stage": "migration-undo-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 23.035
+      },
+      {
+        "stage": "documentation",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 0.108
+      },
+      {
+        "stage": "whitespace",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 0.01
+      }
+    ],
+    "status": "PASS",
+    "execution": {
+      "database_transport": "guarded reusable libpq session",
+      "python_fault_workers": 6,
+      "schedule": "independent Python and quiz lanes with isolated database lanes",
+      "python_fault_scope": "dependent",
+      "database_isolation": {
+        "status": "PASS",
+        "root": "/tmp/merlin-db-sandboxes-f782f3193b874f969a7ba9da0984d815",
+        "docker_operation_seconds": [
+          {
+            "operation": "diff",
+            "seconds": 0.392
+          },
+          {
+            "operation": "image",
+            "seconds": 0.19
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.091
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.1
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.115
+          },
+          {
+            "operation": "create",
+            "seconds": 0.497
+          },
+          {
+            "operation": "create",
+            "seconds": 0.499
+          },
+          {
+            "operation": "create",
+            "seconds": 0.523
+          },
+          {
+            "operation": "cp",
+            "seconds": 0.264
+          },
+          {
+            "operation": "cp",
+            "seconds": 0.329
+          },
+          {
+            "operation": "cp",
+            "seconds": 0.372
+          },
+          {
+            "operation": "cp",
+            "seconds": 0.254
+          },
+          {
+            "operation": "cp",
+            "seconds": 0.233
+          },
+          {
+            "operation": "cp",
+            "seconds": 0.243
+          },
+          {
+            "operation": "start",
+            "seconds": 0.723
+          },
+          {
+            "operation": "start",
+            "seconds": 0.732
+          },
+          {
+            "operation": "start",
+            "seconds": 0.708
+          },
+          {
+            "operation": "container",
+            "seconds": 0.165
+          },
+          {
+            "operation": "container",
+            "seconds": 0.14
+          },
+          {
+            "operation": "container",
+            "seconds": 0.165
+          },
+          {
+            "operation": "container",
+            "seconds": 0.104
+          },
+          {
+            "operation": "container",
+            "seconds": 0.078
+          },
+          {
+            "operation": "container",
+            "seconds": 0.082
+          },
+          {
+            "operation": "container",
+            "seconds": 0.074
+          },
+          {
+            "operation": "container",
+            "seconds": 0.074
+          },
+          {
+            "operation": "container",
+            "seconds": 0.06
+          },
+          {
+            "operation": "container",
+            "seconds": 0.076
+          },
+          {
+            "operation": "container",
+            "seconds": 0.082
+          },
+          {
+            "operation": "container",
+            "seconds": 0.072
+          },
+          {
+            "operation": "ps",
+            "seconds": 0.044
+          },
+          {
+            "operation": "container",
+            "seconds": 0.043
+          },
+          {
+            "operation": "rm",
+            "seconds": 0.275
+          },
+          {
+            "operation": "container",
+            "seconds": 0.087
+          },
+          {
+            "operation": "rm",
+            "seconds": 0.288
+          },
+          {
+            "operation": "container",
+            "seconds": 0.072
+          },
+          {
+            "operation": "rm",
+            "seconds": 0.298
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.085
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.074
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.095
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.073
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.083
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.047
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.07
+          },
+          {
+            "operation": "images",
+            "seconds": 0.088
+          }
+        ],
+        "runtime_cache_hit": true,
+        "runtime_image": "sha256:fde5d3b820b6bb426e0d44b18857ccea034fc78e910f1a8570f5782fdeb87a03",
+        "runtime_digest": "6c05e291e72faf0e6e7c346e0f7a704bbbc4434c086f43c6053a83c967257c7f",
+        "runtime_prepare_seconds": 1.478,
+        "backup_command_seconds": 1.103,
+        "setup_seconds": 8.736,
+        "targets": [
+          {
+            "name": "sql",
+            "container": "e2a0d98a5b468927a7e8a1fa65e0582ce84566afd74b4ae610aed0410395e9a3",
+            "data": "/tmp/merlin-db-sandboxes-f782f3193b874f969a7ba9da0984d815/sql",
+            "socket": "/tmp/merlin-db-sandboxes-f782f3193b874f969a7ba9da0984d815/sql/socket"
+          },
+          {
+            "name": "lifecycle",
+            "container": "4b7c6cabb2e1e1880e56c54703ea49a403b8d77b5a6a97e7a3f86509b85d42bf",
+            "data": "/tmp/merlin-db-sandboxes-f782f3193b874f969a7ba9da0984d815/lifecycle",
+            "socket": "/tmp/merlin-db-sandboxes-f782f3193b874f969a7ba9da0984d815/lifecycle/socket"
+          },
+          {
+            "name": "migration",
+            "container": "fbee37c3a5da8714159955f4433f7efb1fde3cce72f14288b89e5e157c5171be",
+            "data": "/tmp/merlin-db-sandboxes-f782f3193b874f969a7ba9da0984d815/migration",
+            "socket": "/tmp/merlin-db-sandboxes-f782f3193b874f969a7ba9da0984d815/migration/socket"
+          }
+        ],
+        "source_fingerprint": "37acb7647f0a140d3047bf62d64e6209",
+        "startup_timings": {
+          "backup_seconds": 0.7899820739985444
+        },
+        "controls_seconds": 5.466,
+        "controls_passed": true,
+        "cleanup_seconds": 1.905,
+        "cleanup_passed": true,
+        "source_preserved": true,
+        "wall_seconds": 41.955
+      }
+    },
+    "finished_utc": "2026-10-11T21:49:25.011593+00:00"
+  },
+  "latest_user_full_suite_seconds": 53.875045,
+  "committed_migration_report": "docs/testing/migration-undo-reapplication-results.json",
+  "secret_review_report": "docs/testing/day-six-secret-review-results.json",
+  "first_remaining_blocker": null,
+  "exact_next_action": "Begin Day 7 MER-8: reforecast within 240 minutes, check outstanding CI scope, then define the first API acceptance slice before implementation.",
+  "no_commit_push_upload_deployment_or_jira_write": true,
+  "learner_3_3_confirmation": "3.3 is done, were moving to Day 7 now."
+}

@@ -2,22 +2,22 @@
 """prd_lint.py: checks planning docs against the master prompt's rules.
 
 Usage:
-    python tools/prd_lint.py docs/planning
-    python tools/prd_lint.py docs/planning --verify-out docs/planning/VERIFY_LIST.md
+    python tools/prd_lint.py docs
+    python tools/prd_lint.py docs --verify-out docs/planning/VERIFY_LIST.md
 
 Checks (planning docs only, no application code is touched):
   R3   fenced code blocks > 15 lines in programming languages (feature code sneaking in)
   R1   headings for stories / skill cards / components / days with no 📚 or no ↩
   R2   every `🔎 verify` is collected into one list (for the Verify Pass)
   ID   duplicate story IDs (E2-US04) and skill IDs (SK-12) used as headings
-  Day  DAY 1..37 present exactly once in schedule files
+  Day  primary day entries must not repeat in the Sprint schedule Parts
 Exit code 1 if any ERROR is found. Warnings do not fail the run.
 """
 import argparse
 import re
 import sys
-from collections import Counter
 from pathlib import Path
+from urllib.parse import unquote, urlsplit
 
 CODE_LANGS = {"python", "py", "ts", "tsx", "typescript", "js", "javascript", "jsx",
               "sql", "java", "go", "cpp", "c", "rust", "yaml", "yml", "toml", "dockerfile"}
@@ -27,26 +27,71 @@ NEEDS_LINKS = re.compile(r"\b(E\d+-US\d+|SK-\d+|C-\d+(?:\.\d+)?|DAY\s+\d+)\b", r
 STORY_ID = re.compile(r"\b(E\d+-US\d+)\b")
 SKILL_ID = re.compile(r"\b(SK-\d+)\b")
 DAY_HEAD = re.compile(r"^DAY\s+(\d+)\b", re.I)
+DAY_ENTRY = re.compile(r"^DAY\s+(\d+)\s+[—–-]\s+", re.I)
+SPRINT_PART = re.compile(r"^part-(17|18|19|20|21|22)-")
+
+
+def document_root(folder):
+    """Keep the old docs/planning invocation working after topic-folder moves."""
+    if folder.name == "planning" and folder.parent.name == "docs":
+        return folder.parent
+    return folder
+
+
+def local_link_errors(path):
+    """Check file targets, not external websites or Markdown heading anchors."""
+    errors = []
+    fence = None
+    for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+        marker = re.match(r"^\s*(`{3,}|~{3,})(.*)$", line) if path.suffix == ".md" else None
+        if marker:
+            if fence is None:
+                fence = marker.group(1)
+            elif marker.group(1)[0] == fence[0] and len(marker.group(1)) >= len(fence) and not marker.group(2).strip():
+                fence = None
+            continue
+        if fence is not None:
+            continue
+        if path.suffix == ".md":
+            # Link syntax inside inline code is an example, not an active target.
+            line = re.sub(r"(`+).*?\1", "", line)
+        targets = re.findall(r"\]\(([^)]+)\)", line)
+        targets += re.findall(r"^\s*\[[^\]]+\]:\s*(<[^>]+>|\S+)", line)
+        targets += re.findall(r"\bhref=[\"']([^\"']+)[\"']", line)
+        for target in targets:
+            # Optional Markdown link titles follow the file target.
+            target = re.sub(r"\s+(?:\"[^\"]*\"|'[^']*')\s*$", "", target).strip().strip("<>")
+            parsed = urlsplit(target)
+            if parsed.scheme or parsed.netloc or not parsed.path:
+                continue
+            destination = path.parent / unquote(parsed.path)
+            if not destination.exists():
+                errors.append(f"{path}:{number} LINK: missing local target {target}")
+    return errors
 
 
 def lint_file(path, errors, warns, verify, story_ids, skill_ids, days):
     lines = path.read_text(encoding="utf-8").splitlines()
     in_code, lang, start = False, "", 0
+    fence = None
     headings = []  # (index, level, text)
     for i, line in enumerate(lines):
-        m = re.match(r"^\s*```(\w*)", line)
+        m = re.match(r"^\s*(`{3,}|~{3,})(.*)$", line)
         if m:
             if not in_code:
-                in_code, lang, start = True, m.group(1).lower(), i
-            else:
+                fence = m.group(1)
+                info = m.group(2).strip().split()
+                in_code, lang, start = True, info[0].lower() if info else "", i
+            elif m.group(1)[0] == fence[0] and len(m.group(1)) >= len(fence) and not m.group(2).strip():
                 n = i - start - 1
                 if lang in CODE_LANGS and n > MAX_CODE_LINES:
                     errors.append(f"{path}:{start+1} R3: {n}-line `{lang}` block (limit {MAX_CODE_LINES}); "
                                   "specs/hints only unless I asked for it")
                 in_code = False
+                fence = None
             continue
         if in_code:
-            if re.match(r"^DAY\s+\d+", line, re.I):
+            if SPRINT_PART.match(path.name) and re.match(r"^DAY\s+\d+", line, re.I):
                 d = DAY_HEAD.match(line)
                 if d:
                     days[int(d.group(1))].append(f"{path}:{i+1}")
@@ -62,7 +107,8 @@ def lint_file(path, errors, warns, verify, story_ids, skill_ids, days):
             kid = SKILL_ID.search(h.group(2))
             if kid and h.group(2).lower().startswith(("sk-", "skill")):
                 skill_ids[kid.group(1)].append(f"{path}:{i+1}")
-            d = DAY_HEAD.match(h.group(2))
+            # Checklist subheadings and references in other Parts are not extra days.
+            d = DAY_ENTRY.match(h.group(2)) if SPRINT_PART.match(path.name) and len(h.group(1)) == 2 else None
             if d:
                 days[int(d.group(1))].append(f"{path}:{i+1}")
     # R1: sections that need 📚 and ↩
@@ -86,8 +132,8 @@ def main():
     ap.add_argument("folder")
     ap.add_argument("--verify-out")
     a = ap.parse_args()
-    folder = Path(a.folder)
-    files = sorted(folder.glob("part-*.md"))
+    folder = document_root(Path(a.folder))
+    files = sorted(folder.rglob("part-*.md"))
     if not files:
         print(f"No part-*.md files in {folder}")
         return 1
@@ -97,6 +143,13 @@ def main():
     story_ids, skill_ids, days = defaultdict(list), defaultdict(list), defaultdict(list)
     for f in files:
         lint_file(f, errors, warns, verify, story_ids, skill_ids, days)
+    # Audit all guides as well as numbered Parts. Code examples are not links.
+    link_files = list(folder.rglob("*.md"))
+    if folder.name == "docs":
+        link_files += [p for p in (folder.parent / "README.md", folder.parent / "AGENTS.md") if p.is_file()]
+        link_files += list((folder.parent / "quizzes").glob("*.html"))
+    for path in sorted(set(link_files)):
+        errors.extend(local_link_errors(path))
     for k, v in story_ids.items():
         if len(v) > 1:
             errors.append(f"ID: story {k} defined {len(v)} times: {', '.join(v)}")

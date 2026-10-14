@@ -1,0 +1,5209 @@
+{
+  "recorded_date": "2026-10-11",
+  "decision": "Retain the fastest passing combination: three isolated disk-backed database copies, six Python fault workers, independent Python/quiz lanes, and overlapping independent prerequisites. SQL partitions and extra CPU-per-copy trials remain rejected.",
+  "requested_database_seconds": 30,
+  "target_achieved": false,
+  "fastest_known_full_seconds": 52.977871,
+  "fastest_known_summary": {
+    "started_utc": "2026-10-11T21:35:26.075999+00:00",
+    "stages": [
+      {
+        "stage": "python-tests",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 8.11
+      },
+      {
+        "stage": "quiz-tests",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 0.089
+      },
+      {
+        "stage": "legacy-python-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 8.652
+      },
+      {
+        "stage": "python-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "excluded_invalid_import_faults": [
+          "ast-database_connectivity_probe-21-11",
+          "ast-notes_maintenance-76-42",
+          "ast-doctor-229-52",
+          "ast-prd_lint-181-88"
+        ],
+        "seconds": 32.516
+      },
+      {
+        "stage": "database-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 23.257
+      },
+      {
+        "stage": "timestamp-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 1.036
+      },
+      {
+        "stage": "quiz-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 2.355
+      },
+      {
+        "stage": "browser-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 14.42
+      },
+      {
+        "stage": "database-lifecycle-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 11.573
+      },
+      {
+        "stage": "migration-undo-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 21.766
+      },
+      {
+        "stage": "documentation",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 0.107
+      },
+      {
+        "stage": "whitespace",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 0.011
+      }
+    ],
+    "status": "PASS",
+    "execution": {
+      "database_transport": "guarded reusable libpq session",
+      "python_fault_workers": 6,
+      "schedule": "independent Python and quiz lanes with isolated database lanes",
+      "python_fault_scope": "dependent",
+      "database_isolation": {
+        "status": "PASS",
+        "root": "/tmp/merlin-db-sandboxes-90aaed32e11348a982f464a5827db5d7",
+        "docker_operation_seconds": [
+          {
+            "operation": "diff",
+            "seconds": 0.365
+          },
+          {
+            "operation": "image",
+            "seconds": 0.183
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.085
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.104
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.116
+          },
+          {
+            "operation": "create",
+            "seconds": 0.41
+          },
+          {
+            "operation": "create",
+            "seconds": 0.473
+          },
+          {
+            "operation": "create",
+            "seconds": 0.487
+          },
+          {
+            "operation": "cp",
+            "seconds": 0.196
+          },
+          {
+            "operation": "cp",
+            "seconds": 0.234
+          },
+          {
+            "operation": "cp",
+            "seconds": 0.218
+          },
+          {
+            "operation": "cp",
+            "seconds": 0.31
+          },
+          {
+            "operation": "cp",
+            "seconds": 0.166
+          },
+          {
+            "operation": "cp",
+            "seconds": 0.245
+          },
+          {
+            "operation": "start",
+            "seconds": 0.614
+          },
+          {
+            "operation": "start",
+            "seconds": 0.623
+          },
+          {
+            "operation": "start",
+            "seconds": 0.638
+          },
+          {
+            "operation": "container",
+            "seconds": 0.158
+          },
+          {
+            "operation": "container",
+            "seconds": 0.172
+          },
+          {
+            "operation": "container",
+            "seconds": 0.182
+          },
+          {
+            "operation": "container",
+            "seconds": 0.131
+          },
+          {
+            "operation": "container",
+            "seconds": 0.168
+          },
+          {
+            "operation": "container",
+            "seconds": 0.225
+          },
+          {
+            "operation": "container",
+            "seconds": 0.136
+          },
+          {
+            "operation": "container",
+            "seconds": 0.12
+          },
+          {
+            "operation": "container",
+            "seconds": 0.103
+          },
+          {
+            "operation": "container",
+            "seconds": 0.093
+          },
+          {
+            "operation": "container",
+            "seconds": 0.101
+          },
+          {
+            "operation": "ps",
+            "seconds": 0.043
+          },
+          {
+            "operation": "container",
+            "seconds": 0.046
+          },
+          {
+            "operation": "rm",
+            "seconds": 0.286
+          },
+          {
+            "operation": "container",
+            "seconds": 0.107
+          },
+          {
+            "operation": "rm",
+            "seconds": 0.28
+          },
+          {
+            "operation": "container",
+            "seconds": 0.077
+          },
+          {
+            "operation": "rm",
+            "seconds": 0.258
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.075
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.042
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.072
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.053
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.068
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.036
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.071
+          },
+          {
+            "operation": "images",
+            "seconds": 0.106
+          }
+        ],
+        "runtime_cache_hit": true,
+        "runtime_image": "sha256:fde5d3b820b6bb426e0d44b18857ccea034fc78e910f1a8570f5782fdeb87a03",
+        "runtime_digest": "6c05e291e72faf0e6e7c346e0f7a704bbbc4434c086f43c6053a83c967257c7f",
+        "runtime_prepare_seconds": 1.438,
+        "backup_command_seconds": 1.089,
+        "setup_seconds": 9.028,
+        "targets": [
+          {
+            "name": "sql",
+            "container": "4017cf24c3381076104ebdda252f73d135450b3e51896e8926ddfc4da51e30d3",
+            "data": "/tmp/merlin-db-sandboxes-90aaed32e11348a982f464a5827db5d7/sql",
+            "socket": "/tmp/merlin-db-sandboxes-90aaed32e11348a982f464a5827db5d7/sql/socket"
+          },
+          {
+            "name": "lifecycle",
+            "container": "371a7fb5f0c7f1d9a6574ce6577f0a3103a3c3bd1949f4c1e471eb7da2428532",
+            "data": "/tmp/merlin-db-sandboxes-90aaed32e11348a982f464a5827db5d7/lifecycle",
+            "socket": "/tmp/merlin-db-sandboxes-90aaed32e11348a982f464a5827db5d7/lifecycle/socket"
+          },
+          {
+            "name": "migration",
+            "container": "ec5d7a43523a37be70f11ea74bdcdf658be6337fc6c545b5a9482753e342eaa0",
+            "data": "/tmp/merlin-db-sandboxes-90aaed32e11348a982f464a5827db5d7/migration",
+            "socket": "/tmp/merlin-db-sandboxes-90aaed32e11348a982f464a5827db5d7/migration/socket"
+          }
+        ],
+        "source_fingerprint": "37acb7647f0a140d3047bf62d64e6209",
+        "startup_timings": {
+          "backup_seconds": 0.7629629960283637
+        },
+        "controls_seconds": 5.087,
+        "controls_passed": true,
+        "cleanup_seconds": 1.815,
+        "cleanup_passed": true,
+        "source_preserved": true,
+        "wall_seconds": 40.562
+      }
+    },
+    "finished_utc": "2026-10-11T21:36:19.053870+00:00"
+  },
+  "coverage_reference": "/tmp/merlin-test-suite-61blqqhn",
+  "trials": [
+    {
+      "configuration": "Three postmasters in the source container; one shared CPU",
+      "raw_reports": "/tmp/merlin-test-suite-s_e22olj",
+      "status": "PASS",
+      "full_seconds": 65.088291,
+      "database_wall_seconds": 47.291,
+      "coverage_comparison": {
+        "python_case_detection_sets": true,
+        "python_fault_statuses": true,
+        "python_scope_manifests": true,
+        "quiz_case_detection_sets": true,
+        "quiz_fault_statuses": true,
+        "sql_all_case_fault_pairs": true,
+        "sql_all_baselines": true,
+        "legacy_all_faults": true,
+        "browser_cases_and_detection": true,
+        "lifecycle_cases_and_detection": true,
+        "migration_source_preserved": true,
+        "migration_roundtrips": true,
+        "migration_gates": true,
+        "migration_repairs": true,
+        "migration_concurrency": true,
+        "database_fingerprint": true
+      },
+      "isolation_controls": null,
+      "summary": {
+        "started_utc": "2026-10-11T20:12:12.808474+00:00",
+        "stages": [
+          {
+            "stage": "python-tests",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 8.22
+          },
+          {
+            "stage": "quiz-tests",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 0.096
+          },
+          {
+            "stage": "legacy-python-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 5.996
+          },
+          {
+            "stage": "python-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "excluded_invalid_import_faults": [
+              "ast-database_connectivity_probe-21-11",
+              "ast-notes_maintenance-76-42",
+              "ast-doctor-229-52",
+              "ast-prd_lint-181-88"
+            ],
+            "seconds": 23.777
+          },
+          {
+            "stage": "database-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 42.621
+          },
+          {
+            "stage": "timestamp-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 0.874
+          },
+          {
+            "stage": "quiz-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 1.362
+          },
+          {
+            "stage": "browser-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 8.398
+          },
+          {
+            "stage": "database-lifecycle-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 23.49
+          },
+          {
+            "stage": "migration-undo-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 40.749
+          },
+          {
+            "stage": "documentation",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 0.157
+          },
+          {
+            "stage": "whitespace",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 0.043
+          }
+        ],
+        "status": "PASS",
+        "execution": {
+          "database_transport": "guarded reusable libpq session",
+          "python_fault_workers": 6,
+          "schedule": "independent CPU lane and isolated database lanes",
+          "python_fault_scope": "dependent",
+          "database_isolation": {
+            "status": "PASS",
+            "root": "/tmp/merlin-db-sandboxes-bd764e351aa842cd9a540b60e9823769",
+            "setup_seconds": 2.828,
+            "targets": [
+              {
+                "name": "sql",
+                "data": "/tmp/merlin-db-sandboxes-bd764e351aa842cd9a540b60e9823769/sql",
+                "socket": "/tmp/merlin-db-sandboxes-bd764e351aa842cd9a540b60e9823769/sql/socket"
+              },
+              {
+                "name": "lifecycle",
+                "data": "/tmp/merlin-db-sandboxes-bd764e351aa842cd9a540b60e9823769/lifecycle",
+                "socket": "/tmp/merlin-db-sandboxes-bd764e351aa842cd9a540b60e9823769/lifecycle/socket"
+              },
+              {
+                "name": "migration",
+                "data": "/tmp/merlin-db-sandboxes-bd764e351aa842cd9a540b60e9823769/migration",
+                "socket": "/tmp/merlin-db-sandboxes-bd764e351aa842cd9a540b60e9823769/migration/socket"
+              }
+            ],
+            "source_fingerprint": "37acb7647f0a140d3047bf62d64e6209",
+            "startup_timings": {
+              "backup": 0.4445228819968179,
+              "sql": 0.30625770398182794,
+              "lifecycle": 0.5730019629700109,
+              "migration": 0.6572442220058292
+            },
+            "cleanup_seconds": 0.633,
+            "cleanup_passed": true,
+            "source_preserved": true,
+            "wall_seconds": 47.291
+          }
+        },
+        "finished_utc": "2026-10-11T20:13:17.896765+00:00"
+      }
+    },
+    {
+      "configuration": "Three capped containers; overlay storage; serial setup",
+      "raw_reports": "/tmp/merlin-test-suite-yoqyabqe",
+      "status": "PASS",
+      "full_seconds": 60.213488,
+      "database_wall_seconds": 40.45,
+      "coverage_comparison": {
+        "python_case_detection_sets": true,
+        "python_fault_statuses": true,
+        "python_scope_manifests": true,
+        "quiz_case_detection_sets": true,
+        "quiz_fault_statuses": true,
+        "sql_all_case_fault_pairs": true,
+        "sql_all_baselines": true,
+        "legacy_all_faults": true,
+        "browser_cases_and_detection": true,
+        "lifecycle_cases_and_detection": true,
+        "migration_source_preserved": true,
+        "migration_roundtrips": true,
+        "migration_gates": true,
+        "migration_repairs": true,
+        "migration_concurrency": true,
+        "database_fingerprint": true
+      },
+      "isolation_controls": {
+        "checks": [
+          {
+            "case": "route-sql",
+            "passed": true
+          },
+          {
+            "case": "route-lifecycle",
+            "passed": true
+          },
+          {
+            "case": "route-migration",
+            "passed": true
+          },
+          {
+            "case": "source-as-clone",
+            "passed": true
+          },
+          {
+            "case": "source-volume-path",
+            "passed": true
+          },
+          {
+            "case": "wrong-source",
+            "passed": true
+          },
+          {
+            "case": "wrong-container",
+            "passed": true
+          },
+          {
+            "case": "crossed-socket",
+            "passed": true
+          },
+          {
+            "case": "wrong-fingerprint",
+            "passed": true
+          },
+          {
+            "case": "public-manifest-refused",
+            "passed": true
+          },
+          {
+            "case": "manifest-symlink-refused",
+            "passed": true
+          },
+          {
+            "case": "changed-runtime-content-invalidates-cache",
+            "passed": true
+          },
+          {
+            "case": "missing-runtime-file-refused",
+            "passed": true
+          },
+          {
+            "case": "live-fault-isolated-from-other-copies-and-source",
+            "passed": true
+          },
+          {
+            "case": "control-fault-rolled-back",
+            "passed": true
+          }
+        ]
+      },
+      "summary": {
+        "started_utc": "2026-10-11T20:52:11.204224+00:00",
+        "stages": [
+          {
+            "stage": "python-tests",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 7.875
+          },
+          {
+            "stage": "quiz-tests",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 0.083
+          },
+          {
+            "stage": "legacy-python-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 5.877
+          },
+          {
+            "stage": "python-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "excluded_invalid_import_faults": [
+              "ast-database_connectivity_probe-21-11",
+              "ast-notes_maintenance-76-42",
+              "ast-doctor-229-52",
+              "ast-prd_lint-181-88"
+            ],
+            "seconds": 27.145
+          },
+          {
+            "stage": "database-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 23.622
+          },
+          {
+            "stage": "timestamp-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 0.937
+          },
+          {
+            "stage": "quiz-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 1.466
+          },
+          {
+            "stage": "browser-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 8.483
+          },
+          {
+            "stage": "database-lifecycle-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 10.973
+          },
+          {
+            "stage": "migration-undo-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 21.556
+          },
+          {
+            "stage": "documentation",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 0.178
+          },
+          {
+            "stage": "whitespace",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 0.023
+          }
+        ],
+        "status": "PASS",
+        "execution": {
+          "database_transport": "guarded reusable libpq session",
+          "python_fault_workers": 6,
+          "schedule": "independent CPU lane and isolated database lanes",
+          "python_fault_scope": "dependent",
+          "database_isolation": {
+            "status": "PASS",
+            "root": "/tmp/merlin-db-sandboxes-3e9a0dc27f814b5b9473525292748c19",
+            "docker_operation_seconds": [
+              {
+                "operation": "diff",
+                "seconds": 0.35
+              },
+              {
+                "operation": "image",
+                "seconds": 0.185
+              },
+              {
+                "operation": "create",
+                "seconds": 0.291
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.114
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.14
+              },
+              {
+                "operation": "start",
+                "seconds": 0.428
+              },
+              {
+                "operation": "create",
+                "seconds": 0.31
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.146
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.122
+              },
+              {
+                "operation": "start",
+                "seconds": 0.363
+              },
+              {
+                "operation": "create",
+                "seconds": 0.335
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.129
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.08
+              },
+              {
+                "operation": "start",
+                "seconds": 0.351
+              },
+              {
+                "operation": "ps",
+                "seconds": 0.039
+              },
+              {
+                "operation": "container",
+                "seconds": 0.041
+              },
+              {
+                "operation": "rm",
+                "seconds": 0.276
+              },
+              {
+                "operation": "container",
+                "seconds": 0.047
+              },
+              {
+                "operation": "rm",
+                "seconds": 0.305
+              },
+              {
+                "operation": "container",
+                "seconds": 0.05
+              },
+              {
+                "operation": "rm",
+                "seconds": 0.254
+              },
+              {
+                "operation": "images",
+                "seconds": 0.119
+              }
+            ],
+            "runtime_cache_hit": true,
+            "runtime_image": "sha256:7b6c71fac42ecb8d1c15f4cba98f5b1dca627e4146b4e03032b712f14d0e5ea3",
+            "runtime_digest": "6c05e291e72faf0e6e7c346e0f7a704bbbc4434c086f43c6053a83c967257c7f",
+            "runtime_prepare_seconds": 1.354,
+            "backup_command_seconds": 1.065,
+            "setup_seconds": 7.688,
+            "targets": [
+              {
+                "name": "sql",
+                "container": "11c5d3dedadfd7ab0591085f6b8e2c9affc1e68449a332b6c5305acf931d9f35",
+                "data": "/tmp/merlin-db-sandboxes-3e9a0dc27f814b5b9473525292748c19/sql",
+                "socket": "/tmp/merlin-db-sandboxes-3e9a0dc27f814b5b9473525292748c19/sql/socket"
+              },
+              {
+                "name": "lifecycle",
+                "container": "99ac74bb45b0c843a4d99a97896b791590d5da9f9483c010e75dd87806b84b05",
+                "data": "/tmp/merlin-db-sandboxes-3e9a0dc27f814b5b9473525292748c19/lifecycle",
+                "socket": "/tmp/merlin-db-sandboxes-3e9a0dc27f814b5b9473525292748c19/lifecycle/socket"
+              },
+              {
+                "name": "migration",
+                "container": "27698375b2a2dcedceaeb39ee5ed3a25a73e9acd2e72f757b9f0e29dbe4f2ff4",
+                "data": "/tmp/merlin-db-sandboxes-3e9a0dc27f814b5b9473525292748c19/migration",
+                "socket": "/tmp/merlin-db-sandboxes-3e9a0dc27f814b5b9473525292748c19/migration/socket"
+              }
+            ],
+            "source_fingerprint": "37acb7647f0a140d3047bf62d64e6209",
+            "startup_timings": {
+              "backup_seconds": 0.772166650975123
+            },
+            "controls_seconds": 6.555,
+            "controls_passed": true,
+            "cleanup_seconds": 1.317,
+            "cleanup_passed": true,
+            "source_preserved": true,
+            "wall_seconds": 40.45
+          }
+        },
+        "finished_utc": "2026-10-11T20:53:11.417712+00:00"
+      }
+    },
+    {
+      "configuration": "Three capped containers; overlay storage; overlapping setup",
+      "raw_reports": "/tmp/merlin-test-suite-hlkvgsbc",
+      "status": "PASS",
+      "full_seconds": 61.589222,
+      "database_wall_seconds": 39.364,
+      "coverage_comparison": {
+        "python_case_detection_sets": true,
+        "python_fault_statuses": true,
+        "python_scope_manifests": true,
+        "quiz_case_detection_sets": true,
+        "quiz_fault_statuses": true,
+        "sql_all_case_fault_pairs": true,
+        "sql_all_baselines": true,
+        "legacy_all_faults": true,
+        "browser_cases_and_detection": true,
+        "lifecycle_cases_and_detection": true,
+        "migration_source_preserved": true,
+        "migration_roundtrips": true,
+        "migration_gates": true,
+        "migration_repairs": true,
+        "migration_concurrency": true,
+        "database_fingerprint": true
+      },
+      "isolation_controls": {
+        "checks": [
+          {
+            "case": "route-sql",
+            "passed": true
+          },
+          {
+            "case": "route-lifecycle",
+            "passed": true
+          },
+          {
+            "case": "route-migration",
+            "passed": true
+          },
+          {
+            "case": "source-as-clone",
+            "passed": true
+          },
+          {
+            "case": "source-volume-path",
+            "passed": true
+          },
+          {
+            "case": "wrong-source",
+            "passed": true
+          },
+          {
+            "case": "wrong-container",
+            "passed": true
+          },
+          {
+            "case": "crossed-socket",
+            "passed": true
+          },
+          {
+            "case": "wrong-fingerprint",
+            "passed": true
+          },
+          {
+            "case": "public-manifest-refused",
+            "passed": true
+          },
+          {
+            "case": "manifest-symlink-refused",
+            "passed": true
+          },
+          {
+            "case": "changed-runtime-content-invalidates-cache",
+            "passed": true
+          },
+          {
+            "case": "missing-runtime-file-refused",
+            "passed": true
+          },
+          {
+            "case": "live-fault-isolated-from-other-copies-and-source",
+            "passed": true
+          },
+          {
+            "case": "control-fault-rolled-back",
+            "passed": true
+          }
+        ]
+      },
+      "summary": {
+        "started_utc": "2026-10-11T20:54:22.761767+00:00",
+        "stages": [
+          {
+            "stage": "python-tests",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 7.873
+          },
+          {
+            "stage": "quiz-tests",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 0.084
+          },
+          {
+            "stage": "legacy-python-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 6.175
+          },
+          {
+            "stage": "python-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "excluded_invalid_import_faults": [
+              "ast-database_connectivity_probe-21-11",
+              "ast-notes_maintenance-76-42",
+              "ast-doctor-229-52",
+              "ast-prd_lint-181-88"
+            ],
+            "seconds": 28.597
+          },
+          {
+            "stage": "database-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 26.344
+          },
+          {
+            "stage": "timestamp-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 0.954
+          },
+          {
+            "stage": "quiz-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 1.417
+          },
+          {
+            "stage": "browser-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 8.273
+          },
+          {
+            "stage": "database-lifecycle-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 12.049
+          },
+          {
+            "stage": "migration-undo-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 24.088
+          },
+          {
+            "stage": "documentation",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 0.11
+          },
+          {
+            "stage": "whitespace",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 0.01
+          }
+        ],
+        "status": "PASS",
+        "execution": {
+          "database_transport": "guarded reusable libpq session",
+          "python_fault_workers": 6,
+          "schedule": "independent CPU lane and isolated database lanes",
+          "python_fault_scope": "dependent",
+          "database_isolation": {
+            "status": "PASS",
+            "root": "/tmp/merlin-db-sandboxes-fb69625c76fe47d3b08dc87113de2f13",
+            "docker_operation_seconds": [
+              {
+                "operation": "diff",
+                "seconds": 0.352
+              },
+              {
+                "operation": "image",
+                "seconds": 0.175
+              },
+              {
+                "operation": "create",
+                "seconds": 0.444
+              },
+              {
+                "operation": "create",
+                "seconds": 0.49
+              },
+              {
+                "operation": "create",
+                "seconds": 0.504
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.133
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.099
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.176
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.196
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.184
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.184
+              },
+              {
+                "operation": "start",
+                "seconds": 0.542
+              },
+              {
+                "operation": "start",
+                "seconds": 0.48
+              },
+              {
+                "operation": "start",
+                "seconds": 0.522
+              },
+              {
+                "operation": "ps",
+                "seconds": 0.044
+              },
+              {
+                "operation": "container",
+                "seconds": 0.044
+              },
+              {
+                "operation": "rm",
+                "seconds": 0.263
+              },
+              {
+                "operation": "container",
+                "seconds": 0.046
+              },
+              {
+                "operation": "rm",
+                "seconds": 0.238
+              },
+              {
+                "operation": "container",
+                "seconds": 0.053
+              },
+              {
+                "operation": "rm",
+                "seconds": 0.28
+              },
+              {
+                "operation": "images",
+                "seconds": 0.124
+              }
+            ],
+            "runtime_cache_hit": true,
+            "runtime_image": "sha256:7b6c71fac42ecb8d1c15f4cba98f5b1dca627e4146b4e03032b712f14d0e5ea3",
+            "runtime_digest": "6c05e291e72faf0e6e7c346e0f7a704bbbc4434c086f43c6053a83c967257c7f",
+            "runtime_prepare_seconds": 1.453,
+            "backup_command_seconds": 1.031,
+            "setup_seconds": 7.584,
+            "targets": [
+              {
+                "name": "sql",
+                "container": "6ef65617d8ba75a8733ac6204c2a345c0c1b70bdb5c551da593061804ce4e6fd",
+                "data": "/tmp/merlin-db-sandboxes-fb69625c76fe47d3b08dc87113de2f13/sql",
+                "socket": "/tmp/merlin-db-sandboxes-fb69625c76fe47d3b08dc87113de2f13/sql/socket"
+              },
+              {
+                "name": "lifecycle",
+                "container": "4c028218c4315cabb1280804ecf77dac5c51c7c132f93824dceb31987c54d260",
+                "data": "/tmp/merlin-db-sandboxes-fb69625c76fe47d3b08dc87113de2f13/lifecycle",
+                "socket": "/tmp/merlin-db-sandboxes-fb69625c76fe47d3b08dc87113de2f13/lifecycle/socket"
+              },
+              {
+                "name": "migration",
+                "container": "7bf6540195208e284116a6affeb128bcd2f18530d966b0e3bab9ff4b1248a226",
+                "data": "/tmp/merlin-db-sandboxes-fb69625c76fe47d3b08dc87113de2f13/migration",
+                "socket": "/tmp/merlin-db-sandboxes-fb69625c76fe47d3b08dc87113de2f13/migration/socket"
+              }
+            ],
+            "source_fingerprint": "37acb7647f0a140d3047bf62d64e6209",
+            "startup_timings": {
+              "backup_seconds": 0.7704937160015106
+            },
+            "controls_seconds": 2.887,
+            "controls_passed": true,
+            "cleanup_seconds": 1.281,
+            "cleanup_passed": true,
+            "source_preserved": true,
+            "wall_seconds": 39.364
+          }
+        },
+        "finished_utc": "2026-10-11T20:55:24.350989+00:00"
+      }
+    },
+    {
+      "configuration": "Three capped containers; private disk volumes; four Python workers",
+      "raw_reports": "/tmp/merlin-test-suite-wk6dk92_",
+      "status": "PASS",
+      "full_seconds": 66.956206,
+      "database_wall_seconds": 34.859,
+      "coverage_comparison": {
+        "python_case_detection_sets": true,
+        "python_fault_statuses": true,
+        "python_scope_manifests": true,
+        "quiz_case_detection_sets": true,
+        "quiz_fault_statuses": true,
+        "sql_all_case_fault_pairs": true,
+        "sql_all_baselines": true,
+        "legacy_all_faults": true,
+        "browser_cases_and_detection": true,
+        "lifecycle_cases_and_detection": true,
+        "migration_source_preserved": true,
+        "migration_roundtrips": true,
+        "migration_gates": true,
+        "migration_repairs": true,
+        "migration_concurrency": true,
+        "database_fingerprint": true
+      },
+      "isolation_controls": {
+        "checks": [
+          {
+            "case": "route-sql",
+            "passed": true
+          },
+          {
+            "case": "route-lifecycle",
+            "passed": true
+          },
+          {
+            "case": "route-migration",
+            "passed": true
+          },
+          {
+            "case": "cpu-limit-changed",
+            "passed": true
+          },
+          {
+            "case": "memory-limit-changed",
+            "passed": true
+          },
+          {
+            "case": "external-network-refused",
+            "passed": true
+          },
+          {
+            "case": "shared-source-volume-refused",
+            "passed": true
+          },
+          {
+            "case": "published-port-refused",
+            "passed": true
+          },
+          {
+            "case": "stale-desktop-port-refused",
+            "passed": true
+          },
+          {
+            "case": "source-as-clone",
+            "passed": true
+          },
+          {
+            "case": "source-volume-path",
+            "passed": true
+          },
+          {
+            "case": "wrong-source",
+            "passed": true
+          },
+          {
+            "case": "wrong-container",
+            "passed": true
+          },
+          {
+            "case": "crossed-socket",
+            "passed": true
+          },
+          {
+            "case": "wrong-fingerprint",
+            "passed": true
+          },
+          {
+            "case": "public-manifest-refused",
+            "passed": true
+          },
+          {
+            "case": "manifest-symlink-refused",
+            "passed": true
+          },
+          {
+            "case": "changed-runtime-content-invalidates-cache",
+            "passed": true
+          },
+          {
+            "case": "missing-runtime-file-refused",
+            "passed": true
+          },
+          {
+            "case": "live-fault-isolated-from-other-copies-and-source",
+            "passed": true
+          },
+          {
+            "case": "control-fault-rolled-back",
+            "passed": true
+          }
+        ]
+      },
+      "summary": {
+        "started_utc": "2026-10-11T21:06:42.906568+00:00",
+        "stages": [
+          {
+            "stage": "python-tests",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 7.984
+          },
+          {
+            "stage": "quiz-tests",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 0.087
+          },
+          {
+            "stage": "legacy-python-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 6.463
+          },
+          {
+            "stage": "python-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "excluded_invalid_import_faults": [
+              "ast-database_connectivity_probe-21-11",
+              "ast-notes_maintenance-76-42",
+              "ast-doctor-229-52",
+              "ast-prd_lint-181-88"
+            ],
+            "seconds": 33.533
+          },
+          {
+            "stage": "database-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 20.233
+          },
+          {
+            "stage": "timestamp-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 1.066
+          },
+          {
+            "stage": "quiz-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 1.324
+          },
+          {
+            "stage": "browser-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 8.391
+          },
+          {
+            "stage": "database-lifecycle-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 9.5
+          },
+          {
+            "stage": "migration-undo-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 17.697
+          },
+          {
+            "stage": "documentation",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 0.122
+          },
+          {
+            "stage": "whitespace",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 0.011
+          }
+        ],
+        "status": "PASS",
+        "execution": {
+          "database_transport": "guarded reusable libpq session",
+          "python_fault_workers": 4,
+          "schedule": "independent CPU lane and isolated database lanes",
+          "python_fault_scope": "dependent",
+          "database_isolation": {
+            "status": "PASS",
+            "root": "/tmp/merlin-db-sandboxes-ac07145bbffe40b7b9355ded09f79087",
+            "docker_operation_seconds": [
+              {
+                "operation": "diff",
+                "seconds": 0.4
+              },
+              {
+                "operation": "image",
+                "seconds": 0.185
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.097
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.103
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.113
+              },
+              {
+                "operation": "create",
+                "seconds": 0.437
+              },
+              {
+                "operation": "create",
+                "seconds": 0.437
+              },
+              {
+                "operation": "create",
+                "seconds": 0.436
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.233
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.219
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.236
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.123
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.139
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.138
+              },
+              {
+                "operation": "start",
+                "seconds": 0.527
+              },
+              {
+                "operation": "start",
+                "seconds": 0.577
+              },
+              {
+                "operation": "start",
+                "seconds": 0.589
+              },
+              {
+                "operation": "container",
+                "seconds": 0.102
+              },
+              {
+                "operation": "container",
+                "seconds": 0.097
+              },
+              {
+                "operation": "container",
+                "seconds": 0.092
+              },
+              {
+                "operation": "container",
+                "seconds": 0.055
+              },
+              {
+                "operation": "container",
+                "seconds": 0.051
+              },
+              {
+                "operation": "container",
+                "seconds": 0.069
+              },
+              {
+                "operation": "container",
+                "seconds": 0.066
+              },
+              {
+                "operation": "container",
+                "seconds": 0.062
+              },
+              {
+                "operation": "container",
+                "seconds": 0.083
+              },
+              {
+                "operation": "container",
+                "seconds": 0.066
+              },
+              {
+                "operation": "container",
+                "seconds": 0.059
+              },
+              {
+                "operation": "container",
+                "seconds": 0.075
+              },
+              {
+                "operation": "container",
+                "seconds": 0.067
+              },
+              {
+                "operation": "container",
+                "seconds": 0.06
+              },
+              {
+                "operation": "container",
+                "seconds": 0.06
+              },
+              {
+                "operation": "ps",
+                "seconds": 0.054
+              },
+              {
+                "operation": "container",
+                "seconds": 0.046
+              },
+              {
+                "operation": "rm",
+                "seconds": 0.242
+              },
+              {
+                "operation": "container",
+                "seconds": 0.06
+              },
+              {
+                "operation": "rm",
+                "seconds": 0.233
+              },
+              {
+                "operation": "container",
+                "seconds": 0.06
+              },
+              {
+                "operation": "rm",
+                "seconds": 0.226
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.05
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.045
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.093
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.052
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.076
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.046
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.08
+              },
+              {
+                "operation": "images",
+                "seconds": 0.148
+              }
+            ],
+            "runtime_cache_hit": true,
+            "runtime_image": "sha256:7b6c71fac42ecb8d1c15f4cba98f5b1dca627e4146b4e03032b712f14d0e5ea3",
+            "runtime_digest": "6c05e291e72faf0e6e7c346e0f7a704bbbc4434c086f43c6053a83c967257c7f",
+            "runtime_prepare_seconds": 1.496,
+            "backup_command_seconds": 1.161,
+            "setup_seconds": 8.01,
+            "targets": [
+              {
+                "name": "sql",
+                "container": "746e630403d95eb026bb32bf7cd38b1ddee95b4b25b431ecedc5e75c0f459b59",
+                "data": "/tmp/merlin-db-sandboxes-ac07145bbffe40b7b9355ded09f79087/sql",
+                "socket": "/tmp/merlin-db-sandboxes-ac07145bbffe40b7b9355ded09f79087/sql/socket"
+              },
+              {
+                "name": "lifecycle",
+                "container": "2d61f2c792b80d3df8cb5d1c9c78213041ebfbe4faa0057aa29308e1289bc324",
+                "data": "/tmp/merlin-db-sandboxes-ac07145bbffe40b7b9355ded09f79087/lifecycle",
+                "socket": "/tmp/merlin-db-sandboxes-ac07145bbffe40b7b9355ded09f79087/lifecycle/socket"
+              },
+              {
+                "name": "migration",
+                "container": "3aac972f17c265e7f98ad6a0b51235aa675ff265d66e7e2b769c834ece55f1e3",
+                "data": "/tmp/merlin-db-sandboxes-ac07145bbffe40b7b9355ded09f79087/migration",
+                "socket": "/tmp/merlin-db-sandboxes-ac07145bbffe40b7b9355ded09f79087/migration/socket"
+              }
+            ],
+            "source_fingerprint": "37acb7647f0a140d3047bf62d64e6209",
+            "startup_timings": {
+              "backup_seconds": 0.9014764029998332
+            },
+            "controls_seconds": 3.478,
+            "controls_passed": true,
+            "cleanup_seconds": 1.71,
+            "cleanup_passed": true,
+            "source_preserved": true,
+            "wall_seconds": 34.859
+          }
+        },
+        "finished_utc": "2026-10-11T21:07:49.862774+00:00"
+      }
+    },
+    {
+      "configuration": "Four one-CPU copies; two SQL partitions; six Python workers",
+      "raw_reports": "/tmp/merlin-test-suite-28_a9gdc",
+      "status": "PASS",
+      "full_seconds": 63.920065,
+      "database_wall_seconds": 42.419,
+      "coverage_comparison": {
+        "python_case_detection_sets": true,
+        "python_fault_statuses": true,
+        "python_scope_manifests": true,
+        "quiz_case_detection_sets": true,
+        "quiz_fault_statuses": true,
+        "sql_all_case_fault_pairs": true,
+        "sql_all_baselines": true,
+        "legacy_all_faults": true,
+        "browser_cases_and_detection": true,
+        "lifecycle_cases_and_detection": true,
+        "migration_source_preserved": true,
+        "migration_roundtrips": true,
+        "migration_gates": true,
+        "migration_repairs": true,
+        "migration_concurrency": true,
+        "database_fingerprint": true
+      },
+      "isolation_controls": {
+        "checks": [
+          {
+            "case": "route-sql",
+            "passed": true
+          },
+          {
+            "case": "route-sql_second",
+            "passed": true
+          },
+          {
+            "case": "route-lifecycle",
+            "passed": true
+          },
+          {
+            "case": "route-migration",
+            "passed": true
+          },
+          {
+            "case": "cpu-limit-changed",
+            "passed": true
+          },
+          {
+            "case": "memory-limit-changed",
+            "passed": true
+          },
+          {
+            "case": "external-network-refused",
+            "passed": true
+          },
+          {
+            "case": "shared-source-volume-refused",
+            "passed": true
+          },
+          {
+            "case": "published-port-refused",
+            "passed": true
+          },
+          {
+            "case": "stale-desktop-port-refused",
+            "passed": true
+          },
+          {
+            "case": "source-as-clone",
+            "passed": true
+          },
+          {
+            "case": "source-volume-path",
+            "passed": true
+          },
+          {
+            "case": "wrong-source",
+            "passed": true
+          },
+          {
+            "case": "wrong-container",
+            "passed": true
+          },
+          {
+            "case": "crossed-socket",
+            "passed": true
+          },
+          {
+            "case": "wrong-fingerprint",
+            "passed": true
+          },
+          {
+            "case": "public-manifest-refused",
+            "passed": true
+          },
+          {
+            "case": "manifest-symlink-refused",
+            "passed": true
+          },
+          {
+            "case": "changed-runtime-content-invalidates-cache",
+            "passed": true
+          },
+          {
+            "case": "missing-runtime-file-refused",
+            "passed": true
+          },
+          {
+            "case": "live-fault-isolated-from-other-copies-and-source",
+            "passed": true
+          },
+          {
+            "case": "control-fault-rolled-back",
+            "passed": true
+          }
+        ]
+      },
+      "summary": {
+        "started_utc": "2026-10-11T21:11:57.309719+00:00",
+        "stages": [
+          {
+            "stage": "python-tests",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 8.467
+          },
+          {
+            "stage": "quiz-tests",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 0.082
+          },
+          {
+            "stage": "legacy-python-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 6.326
+          },
+          {
+            "stage": "python-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "excluded_invalid_import_faults": [
+              "ast-database_connectivity_probe-21-11",
+              "ast-notes_maintenance-76-42",
+              "ast-doctor-229-52",
+              "ast-prd_lint-181-88"
+            ],
+            "seconds": 29.757
+          },
+          {
+            "stage": "database-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 17.547
+          },
+          {
+            "stage": "timestamp-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 1.147
+          },
+          {
+            "stage": "quiz-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 1.367
+          },
+          {
+            "stage": "browser-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 8.431
+          },
+          {
+            "stage": "database-lifecycle-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 12.314
+          },
+          {
+            "stage": "migration-undo-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 22.839
+          },
+          {
+            "stage": "documentation",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 0.117
+          },
+          {
+            "stage": "whitespace",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 0.011
+          }
+        ],
+        "status": "PASS",
+        "execution": {
+          "database_transport": "guarded reusable libpq session",
+          "python_fault_workers": 6,
+          "schedule": "independent CPU lane and isolated database lanes",
+          "python_fault_scope": "dependent",
+          "database_isolation": {
+            "status": "PASS",
+            "root": "/tmp/merlin-db-sandboxes-9bc3e1cbe44e4416aa4c04944a7be9a4",
+            "docker_operation_seconds": [
+              {
+                "operation": "diff",
+                "seconds": 0.364
+              },
+              {
+                "operation": "image",
+                "seconds": 0.177
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.072
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.081
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.092
+              },
+              {
+                "operation": "create",
+                "seconds": 0.423
+              },
+              {
+                "operation": "create",
+                "seconds": 0.46
+              },
+              {
+                "operation": "create",
+                "seconds": 0.471
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.231
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.168
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.197
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.192
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.194
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.196
+              },
+              {
+                "operation": "start",
+                "seconds": 0.596
+              },
+              {
+                "operation": "start",
+                "seconds": 0.622
+              },
+              {
+                "operation": "start",
+                "seconds": 0.62
+              },
+              {
+                "operation": "container",
+                "seconds": 0.093
+              },
+              {
+                "operation": "container",
+                "seconds": 0.083
+              },
+              {
+                "operation": "container",
+                "seconds": 0.09
+              },
+              {
+                "operation": "container",
+                "seconds": 0.051
+              },
+              {
+                "operation": "container",
+                "seconds": 0.056
+              },
+              {
+                "operation": "container",
+                "seconds": 0.069
+              },
+              {
+                "operation": "container",
+                "seconds": 0.067
+              },
+              {
+                "operation": "container",
+                "seconds": 0.062
+              },
+              {
+                "operation": "container",
+                "seconds": 0.087
+              },
+              {
+                "operation": "container",
+                "seconds": 0.059
+              },
+              {
+                "operation": "container",
+                "seconds": 0.062
+              },
+              {
+                "operation": "container",
+                "seconds": 0.063
+              },
+              {
+                "operation": "container",
+                "seconds": 0.07
+              },
+              {
+                "operation": "container",
+                "seconds": 0.064
+              },
+              {
+                "operation": "container",
+                "seconds": 0.041
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.052
+              },
+              {
+                "operation": "create",
+                "seconds": 0.197
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.101
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.094
+              },
+              {
+                "operation": "start",
+                "seconds": 0.241
+              },
+              {
+                "operation": "container",
+                "seconds": 0.044
+              },
+              {
+                "operation": "container",
+                "seconds": 0.062
+              },
+              {
+                "operation": "container",
+                "seconds": 0.063
+              },
+              {
+                "operation": "container",
+                "seconds": 0.064
+              },
+              {
+                "operation": "ps",
+                "seconds": 0.043
+              },
+              {
+                "operation": "container",
+                "seconds": 0.043
+              },
+              {
+                "operation": "rm",
+                "seconds": 0.258
+              },
+              {
+                "operation": "container",
+                "seconds": 0.071
+              },
+              {
+                "operation": "rm",
+                "seconds": 0.262
+              },
+              {
+                "operation": "container",
+                "seconds": 0.059
+              },
+              {
+                "operation": "rm",
+                "seconds": 0.267
+              },
+              {
+                "operation": "container",
+                "seconds": 0.056
+              },
+              {
+                "operation": "rm",
+                "seconds": 0.223
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.076
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.04
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.067
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.042
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.067
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.041
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.086
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.059
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.068
+              },
+              {
+                "operation": "images",
+                "seconds": 0.135
+              }
+            ],
+            "runtime_cache_hit": true,
+            "runtime_image": "sha256:7b6c71fac42ecb8d1c15f4cba98f5b1dca627e4146b4e03032b712f14d0e5ea3",
+            "runtime_digest": "6c05e291e72faf0e6e7c346e0f7a704bbbc4434c086f43c6053a83c967257c7f",
+            "runtime_prepare_seconds": 1.46,
+            "backup_command_seconds": 1.161,
+            "setup_seconds": 10.353,
+            "targets": [
+              {
+                "name": "sql",
+                "container": "b214f2472ce135dfdb0d3c95d6afafdbec75c9b3d38b38088a2f00a4bf5da5a4",
+                "data": "/tmp/merlin-db-sandboxes-9bc3e1cbe44e4416aa4c04944a7be9a4/sql",
+                "socket": "/tmp/merlin-db-sandboxes-9bc3e1cbe44e4416aa4c04944a7be9a4/sql/socket"
+              },
+              {
+                "name": "sql_second",
+                "container": "ca2aed2ee6a6edcbd37f1896a157537cafcf8bd424423c4431f2e18595faf054",
+                "data": "/tmp/merlin-db-sandboxes-9bc3e1cbe44e4416aa4c04944a7be9a4/sql_second",
+                "socket": "/tmp/merlin-db-sandboxes-9bc3e1cbe44e4416aa4c04944a7be9a4/sql_second/socket"
+              },
+              {
+                "name": "lifecycle",
+                "container": "e80b8101fb57e6fe486753e0899207368ac87033d92f934e05d858bdeb253906",
+                "data": "/tmp/merlin-db-sandboxes-9bc3e1cbe44e4416aa4c04944a7be9a4/lifecycle",
+                "socket": "/tmp/merlin-db-sandboxes-9bc3e1cbe44e4416aa4c04944a7be9a4/lifecycle/socket"
+              },
+              {
+                "name": "migration",
+                "container": "3d6af35f514da852d27c06f30ea69906fa04ae7222268e6e7379989342dfe1e6",
+                "data": "/tmp/merlin-db-sandboxes-9bc3e1cbe44e4416aa4c04944a7be9a4/migration",
+                "socket": "/tmp/merlin-db-sandboxes-9bc3e1cbe44e4416aa4c04944a7be9a4/migration/socket"
+              }
+            ],
+            "source_fingerprint": "37acb7647f0a140d3047bf62d64e6209",
+            "startup_timings": {
+              "backup_seconds": 0.8608298319741152
+            },
+            "controls_seconds": 6.763,
+            "controls_passed": true,
+            "cleanup_seconds": 2.144,
+            "cleanup_passed": true,
+            "source_preserved": true,
+            "wall_seconds": 42.419
+          }
+        },
+        "finished_utc": "2026-10-11T21:13:01.229784+00:00"
+      }
+    },
+    {
+      "configuration": "Four one-CPU copies; two SQL partitions; four Python workers",
+      "raw_reports": "/tmp/merlin-test-suite-n4zgsp2d",
+      "status": "PASS",
+      "full_seconds": 68.47539,
+      "database_wall_seconds": 36.491,
+      "coverage_comparison": {
+        "python_case_detection_sets": true,
+        "python_fault_statuses": true,
+        "python_scope_manifests": true,
+        "quiz_case_detection_sets": true,
+        "quiz_fault_statuses": true,
+        "sql_all_case_fault_pairs": true,
+        "sql_all_baselines": true,
+        "legacy_all_faults": true,
+        "browser_cases_and_detection": true,
+        "lifecycle_cases_and_detection": true,
+        "migration_source_preserved": true,
+        "migration_roundtrips": true,
+        "migration_gates": true,
+        "migration_repairs": true,
+        "migration_concurrency": true,
+        "database_fingerprint": true
+      },
+      "isolation_controls": {
+        "checks": [
+          {
+            "case": "route-sql",
+            "passed": true
+          },
+          {
+            "case": "route-sql_second",
+            "passed": true
+          },
+          {
+            "case": "route-lifecycle",
+            "passed": true
+          },
+          {
+            "case": "route-migration",
+            "passed": true
+          },
+          {
+            "case": "cpu-limit-changed",
+            "passed": true
+          },
+          {
+            "case": "memory-limit-changed",
+            "passed": true
+          },
+          {
+            "case": "external-network-refused",
+            "passed": true
+          },
+          {
+            "case": "shared-source-volume-refused",
+            "passed": true
+          },
+          {
+            "case": "published-port-refused",
+            "passed": true
+          },
+          {
+            "case": "stale-desktop-port-refused",
+            "passed": true
+          },
+          {
+            "case": "source-as-clone",
+            "passed": true
+          },
+          {
+            "case": "source-volume-path",
+            "passed": true
+          },
+          {
+            "case": "wrong-source",
+            "passed": true
+          },
+          {
+            "case": "wrong-container",
+            "passed": true
+          },
+          {
+            "case": "crossed-socket",
+            "passed": true
+          },
+          {
+            "case": "wrong-fingerprint",
+            "passed": true
+          },
+          {
+            "case": "public-manifest-refused",
+            "passed": true
+          },
+          {
+            "case": "manifest-symlink-refused",
+            "passed": true
+          },
+          {
+            "case": "changed-runtime-content-invalidates-cache",
+            "passed": true
+          },
+          {
+            "case": "missing-runtime-file-refused",
+            "passed": true
+          },
+          {
+            "case": "live-fault-isolated-from-other-copies-and-source",
+            "passed": true
+          },
+          {
+            "case": "control-fault-rolled-back",
+            "passed": true
+          }
+        ]
+      },
+      "summary": {
+        "started_utc": "2026-10-11T21:16:00.837261+00:00",
+        "stages": [
+          {
+            "stage": "python-tests",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 7.942
+          },
+          {
+            "stage": "quiz-tests",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 0.084
+          },
+          {
+            "stage": "legacy-python-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 6.259
+          },
+          {
+            "stage": "python-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "excluded_invalid_import_faults": [
+              "ast-database_connectivity_probe-21-11",
+              "ast-notes_maintenance-76-42",
+              "ast-doctor-229-52",
+              "ast-prd_lint-181-88"
+            ],
+            "seconds": 35.121
+          },
+          {
+            "stage": "database-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 13.784
+          },
+          {
+            "stage": "timestamp-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 1.43
+          },
+          {
+            "stage": "quiz-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 1.358
+          },
+          {
+            "stage": "browser-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 8.35
+          },
+          {
+            "stage": "database-lifecycle-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 10.145
+          },
+          {
+            "stage": "migration-undo-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 19.128
+          },
+          {
+            "stage": "documentation",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 0.106
+          },
+          {
+            "stage": "whitespace",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 0.011
+          }
+        ],
+        "status": "PASS",
+        "execution": {
+          "database_transport": "guarded reusable libpq session",
+          "python_fault_workers": 4,
+          "schedule": "independent CPU lane and isolated database lanes",
+          "python_fault_scope": "dependent",
+          "database_isolation": {
+            "status": "PASS",
+            "root": "/tmp/merlin-db-sandboxes-a5df54b2f7a74a7180eaae4df1e2e4e0",
+            "docker_operation_seconds": [
+              {
+                "operation": "diff",
+                "seconds": 0.369
+              },
+              {
+                "operation": "image",
+                "seconds": 0.175
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.092
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.096
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.109
+              },
+              {
+                "operation": "create",
+                "seconds": 0.425
+              },
+              {
+                "operation": "create",
+                "seconds": 0.438
+              },
+              {
+                "operation": "create",
+                "seconds": 0.486
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.205
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.2
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.198
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.175
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.207
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.195
+              },
+              {
+                "operation": "start",
+                "seconds": 0.491
+              },
+              {
+                "operation": "start",
+                "seconds": 0.473
+              },
+              {
+                "operation": "start",
+                "seconds": 0.57
+              },
+              {
+                "operation": "container",
+                "seconds": 0.086
+              },
+              {
+                "operation": "container",
+                "seconds": 0.096
+              },
+              {
+                "operation": "container",
+                "seconds": 0.09
+              },
+              {
+                "operation": "container",
+                "seconds": 0.062
+              },
+              {
+                "operation": "container",
+                "seconds": 0.07
+              },
+              {
+                "operation": "container",
+                "seconds": 0.057
+              },
+              {
+                "operation": "container",
+                "seconds": 0.058
+              },
+              {
+                "operation": "container",
+                "seconds": 0.059
+              },
+              {
+                "operation": "container",
+                "seconds": 0.075
+              },
+              {
+                "operation": "container",
+                "seconds": 0.079
+              },
+              {
+                "operation": "container",
+                "seconds": 0.077
+              },
+              {
+                "operation": "container",
+                "seconds": 0.068
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.063
+              },
+              {
+                "operation": "create",
+                "seconds": 0.19
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.138
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.085
+              },
+              {
+                "operation": "start",
+                "seconds": 0.245
+              },
+              {
+                "operation": "container",
+                "seconds": 0.041
+              },
+              {
+                "operation": "container",
+                "seconds": 0.042
+              },
+              {
+                "operation": "container",
+                "seconds": 0.048
+              },
+              {
+                "operation": "container",
+                "seconds": 0.058
+              },
+              {
+                "operation": "ps",
+                "seconds": 0.043
+              },
+              {
+                "operation": "container",
+                "seconds": 0.049
+              },
+              {
+                "operation": "rm",
+                "seconds": 0.238
+              },
+              {
+                "operation": "container",
+                "seconds": 0.053
+              },
+              {
+                "operation": "rm",
+                "seconds": 0.269
+              },
+              {
+                "operation": "container",
+                "seconds": 0.059
+              },
+              {
+                "operation": "rm",
+                "seconds": 0.242
+              },
+              {
+                "operation": "container",
+                "seconds": 0.058
+              },
+              {
+                "operation": "rm",
+                "seconds": 0.265
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.053
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.046
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.08
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.046
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.073
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.044
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.075
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.045
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.071
+              },
+              {
+                "operation": "images",
+                "seconds": 0.144
+              }
+            ],
+            "runtime_cache_hit": true,
+            "runtime_image": "sha256:7b6c71fac42ecb8d1c15f4cba98f5b1dca627e4146b4e03032b712f14d0e5ea3",
+            "runtime_digest": "6c05e291e72faf0e6e7c346e0f7a704bbbc4434c086f43c6053a83c967257c7f",
+            "runtime_prepare_seconds": 1.394,
+            "backup_command_seconds": 1.112,
+            "setup_seconds": 9.586,
+            "targets": [
+              {
+                "name": "sql",
+                "container": "17bb8fb1331b2a719dfac500dc6ef944460f2121ed046371c2fd5bed937f6e13",
+                "data": "/tmp/merlin-db-sandboxes-a5df54b2f7a74a7180eaae4df1e2e4e0/sql",
+                "socket": "/tmp/merlin-db-sandboxes-a5df54b2f7a74a7180eaae4df1e2e4e0/sql/socket"
+              },
+              {
+                "name": "sql_second",
+                "container": "dd94c926b928996212a28bab7e2653b46eb82a85a88e9332e6e81dd67305bc71",
+                "data": "/tmp/merlin-db-sandboxes-a5df54b2f7a74a7180eaae4df1e2e4e0/sql_second",
+                "socket": "/tmp/merlin-db-sandboxes-a5df54b2f7a74a7180eaae4df1e2e4e0/sql_second/socket"
+              },
+              {
+                "name": "lifecycle",
+                "container": "3150ce7c5331b667dbe849d95efb1ff6f13b4feffb5abb83152487058213bbce",
+                "data": "/tmp/merlin-db-sandboxes-a5df54b2f7a74a7180eaae4df1e2e4e0/lifecycle",
+                "socket": "/tmp/merlin-db-sandboxes-a5df54b2f7a74a7180eaae4df1e2e4e0/lifecycle/socket"
+              },
+              {
+                "name": "migration",
+                "container": "1d1c2d565b991e987643f6da76cbd3716ff2721432077aa403bd48a81a2f0ad0",
+                "data": "/tmp/merlin-db-sandboxes-a5df54b2f7a74a7180eaae4df1e2e4e0/migration",
+                "socket": "/tmp/merlin-db-sandboxes-a5df54b2f7a74a7180eaae4df1e2e4e0/migration/socket"
+              }
+            ],
+            "source_fingerprint": "37acb7647f0a140d3047bf62d64e6209",
+            "startup_timings": {
+              "backup_seconds": 0.8605916519882157
+            },
+            "controls_seconds": 5.231,
+            "controls_passed": true,
+            "cleanup_seconds": 2.175,
+            "cleanup_passed": true,
+            "source_preserved": true,
+            "wall_seconds": 36.491
+          }
+        },
+        "finished_utc": "2026-10-11T21:17:09.312651+00:00"
+      }
+    },
+    {
+      "configuration": "Final attempt: four two-CPU copies; two SQL partitions; six Python workers",
+      "raw_reports": "/tmp/merlin-test-suite-4558ggwg",
+      "status": "PASS",
+      "full_seconds": 62.726125,
+      "database_wall_seconds": 40.82,
+      "coverage_comparison": {
+        "python_case_detection_sets": true,
+        "python_fault_statuses": true,
+        "python_scope_manifests": true,
+        "quiz_case_detection_sets": true,
+        "quiz_fault_statuses": true,
+        "sql_all_case_fault_pairs": true,
+        "sql_all_baselines": true,
+        "legacy_all_faults": true,
+        "browser_cases_and_detection": true,
+        "lifecycle_cases_and_detection": true,
+        "migration_source_preserved": true,
+        "migration_roundtrips": true,
+        "migration_gates": true,
+        "migration_repairs": true,
+        "migration_concurrency": true,
+        "database_fingerprint": true
+      },
+      "isolation_controls": {
+        "checks": [
+          {
+            "case": "route-sql",
+            "passed": true
+          },
+          {
+            "case": "route-sql_second",
+            "passed": true
+          },
+          {
+            "case": "route-lifecycle",
+            "passed": true
+          },
+          {
+            "case": "route-migration",
+            "passed": true
+          },
+          {
+            "case": "cpu-limit-changed",
+            "passed": true
+          },
+          {
+            "case": "memory-limit-changed",
+            "passed": true
+          },
+          {
+            "case": "external-network-refused",
+            "passed": true
+          },
+          {
+            "case": "shared-source-volume-refused",
+            "passed": true
+          },
+          {
+            "case": "published-port-refused",
+            "passed": true
+          },
+          {
+            "case": "stale-desktop-port-refused",
+            "passed": true
+          },
+          {
+            "case": "source-as-clone",
+            "passed": true
+          },
+          {
+            "case": "source-volume-path",
+            "passed": true
+          },
+          {
+            "case": "wrong-source",
+            "passed": true
+          },
+          {
+            "case": "wrong-container",
+            "passed": true
+          },
+          {
+            "case": "crossed-socket",
+            "passed": true
+          },
+          {
+            "case": "wrong-fingerprint",
+            "passed": true
+          },
+          {
+            "case": "public-manifest-refused",
+            "passed": true
+          },
+          {
+            "case": "manifest-symlink-refused",
+            "passed": true
+          },
+          {
+            "case": "changed-runtime-content-invalidates-cache",
+            "passed": true
+          },
+          {
+            "case": "missing-runtime-file-refused",
+            "passed": true
+          },
+          {
+            "case": "live-fault-isolated-from-other-copies-and-source",
+            "passed": true
+          },
+          {
+            "case": "control-fault-rolled-back",
+            "passed": true
+          }
+        ]
+      },
+      "summary": {
+        "started_utc": "2026-10-11T21:24:20.617031+00:00",
+        "stages": [
+          {
+            "stage": "python-tests",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 8.038
+          },
+          {
+            "stage": "quiz-tests",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 0.079
+          },
+          {
+            "stage": "legacy-python-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 6.316
+          },
+          {
+            "stage": "python-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "excluded_invalid_import_faults": [
+              "ast-database_connectivity_probe-21-11",
+              "ast-notes_maintenance-76-42",
+              "ast-doctor-229-52",
+              "ast-prd_lint-181-88"
+            ],
+            "seconds": 28.76
+          },
+          {
+            "stage": "database-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 16.467
+          },
+          {
+            "stage": "timestamp-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 1.726
+          },
+          {
+            "stage": "quiz-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 1.389
+          },
+          {
+            "stage": "browser-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 8.488
+          },
+          {
+            "stage": "database-lifecycle-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 11.933
+          },
+          {
+            "stage": "migration-undo-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 22.662
+          },
+          {
+            "stage": "documentation",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 0.111
+          },
+          {
+            "stage": "whitespace",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 0.01
+          }
+        ],
+        "status": "PASS",
+        "execution": {
+          "database_transport": "guarded reusable libpq session",
+          "python_fault_workers": 6,
+          "schedule": "independent CPU lane and isolated database lanes",
+          "python_fault_scope": "dependent",
+          "database_isolation": {
+            "status": "PASS",
+            "root": "/tmp/merlin-db-sandboxes-5c41f1615f96428f950edc0601c56bbc",
+            "docker_operation_seconds": [
+              {
+                "operation": "diff",
+                "seconds": 0.387
+              },
+              {
+                "operation": "image",
+                "seconds": 0.179
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.104
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.113
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.121
+              },
+              {
+                "operation": "create",
+                "seconds": 0.432
+              },
+              {
+                "operation": "create",
+                "seconds": 0.483
+              },
+              {
+                "operation": "create",
+                "seconds": 0.485
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.214
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.158
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.2
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.158
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.159
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.154
+              },
+              {
+                "operation": "start",
+                "seconds": 0.53
+              },
+              {
+                "operation": "start",
+                "seconds": 0.552
+              },
+              {
+                "operation": "start",
+                "seconds": 0.531
+              },
+              {
+                "operation": "container",
+                "seconds": 0.087
+              },
+              {
+                "operation": "container",
+                "seconds": 0.091
+              },
+              {
+                "operation": "container",
+                "seconds": 0.088
+              },
+              {
+                "operation": "container",
+                "seconds": 0.085
+              },
+              {
+                "operation": "container",
+                "seconds": 0.079
+              },
+              {
+                "operation": "container",
+                "seconds": 0.069
+              },
+              {
+                "operation": "container",
+                "seconds": 0.074
+              },
+              {
+                "operation": "container",
+                "seconds": 0.066
+              },
+              {
+                "operation": "container",
+                "seconds": 0.055
+              },
+              {
+                "operation": "container",
+                "seconds": 0.065
+              },
+              {
+                "operation": "container",
+                "seconds": 0.06
+              },
+              {
+                "operation": "container",
+                "seconds": 0.043
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.094
+              },
+              {
+                "operation": "create",
+                "seconds": 0.212
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.165
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.107
+              },
+              {
+                "operation": "start",
+                "seconds": 0.28
+              },
+              {
+                "operation": "container",
+                "seconds": 0.04
+              },
+              {
+                "operation": "container",
+                "seconds": 0.047
+              },
+              {
+                "operation": "container",
+                "seconds": 0.064
+              },
+              {
+                "operation": "container",
+                "seconds": 0.067
+              },
+              {
+                "operation": "ps",
+                "seconds": 0.041
+              },
+              {
+                "operation": "container",
+                "seconds": 0.056
+              },
+              {
+                "operation": "rm",
+                "seconds": 0.25
+              },
+              {
+                "operation": "container",
+                "seconds": 0.047
+              },
+              {
+                "operation": "rm",
+                "seconds": 0.258
+              },
+              {
+                "operation": "container",
+                "seconds": 0.053
+              },
+              {
+                "operation": "rm",
+                "seconds": 0.26
+              },
+              {
+                "operation": "container",
+                "seconds": 0.068
+              },
+              {
+                "operation": "rm",
+                "seconds": 0.233
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.068
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.037
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.071
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.045
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.069
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.04
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.073
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.037
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.069
+              },
+              {
+                "operation": "images",
+                "seconds": 0.097
+              }
+            ],
+            "runtime_cache_hit": true,
+            "runtime_image": "sha256:7b6c71fac42ecb8d1c15f4cba98f5b1dca627e4146b4e03032b712f14d0e5ea3",
+            "runtime_digest": "6c05e291e72faf0e6e7c346e0f7a704bbbc4434c086f43c6053a83c967257c7f",
+            "runtime_prepare_seconds": 1.467,
+            "backup_command_seconds": 1.244,
+            "setup_seconds": 9.518,
+            "targets": [
+              {
+                "name": "sql",
+                "container": "99e646506bfb911d19d81c3959558ff4fb2b6270ee6ba5149c159b8112cdb743",
+                "data": "/tmp/merlin-db-sandboxes-5c41f1615f96428f950edc0601c56bbc/sql",
+                "socket": "/tmp/merlin-db-sandboxes-5c41f1615f96428f950edc0601c56bbc/sql/socket"
+              },
+              {
+                "name": "sql_second",
+                "container": "eb1204c368259578cf68b2a2d2c5147f6ef3d1eae036e8d5aa0eba03651106e0",
+                "data": "/tmp/merlin-db-sandboxes-5c41f1615f96428f950edc0601c56bbc/sql_second",
+                "socket": "/tmp/merlin-db-sandboxes-5c41f1615f96428f950edc0601c56bbc/sql_second/socket"
+              },
+              {
+                "name": "lifecycle",
+                "container": "d69bb6c9832144f744eaa80d1bed8ba94d6fb478c6db2449dc97f5feccebaebc",
+                "data": "/tmp/merlin-db-sandboxes-5c41f1615f96428f950edc0601c56bbc/lifecycle",
+                "socket": "/tmp/merlin-db-sandboxes-5c41f1615f96428f950edc0601c56bbc/lifecycle/socket"
+              },
+              {
+                "name": "migration",
+                "container": "6e50f3a38e75233e352fb1bb5f90705d3fad689980f1f63541a62029a54d8fcf",
+                "data": "/tmp/merlin-db-sandboxes-5c41f1615f96428f950edc0601c56bbc/migration",
+                "socket": "/tmp/merlin-db-sandboxes-5c41f1615f96428f950edc0601c56bbc/migration/socket"
+              }
+            ],
+            "source_fingerprint": "37acb7647f0a140d3047bf62d64e6209",
+            "startup_timings": {
+              "backup_seconds": 0.933390150021296
+            },
+            "controls_seconds": 6.245,
+            "controls_passed": true,
+            "cleanup_seconds": 2.073,
+            "cleanup_passed": true,
+            "source_preserved": true,
+            "wall_seconds": 40.82
+          }
+        },
+        "finished_utc": "2026-10-11T21:25:23.343156+00:00"
+      }
+    }
+  ],
+  "failed_prototypes": [
+    {
+      "raw_reports": "/tmp/merlin-test-suite-a367cb1a",
+      "status": "FAIL",
+      "first_failed_stage": "database-isolation",
+      "failure": "Invalid captured runtime identity",
+      "source_preserved": true,
+      "cleanup_passed": true
+    },
+    {
+      "raw_reports": "/tmp/merlin-test-suite-eum5309i",
+      "status": "FAIL",
+      "first_failed_stage": "database-isolation",
+      "failure": "Command '['/home/vipra/Merlin/.venv/bin/python', 'tools/verify_database_sandboxes.py', '--targets', '/tmp/merlin-test-suite-eum5309i/database-targets', '--out', '/tmp/merlin-test-suite-eum5309i/database-isolation-controls.json']' timed out after 45 seconds",
+      "source_preserved": true,
+      "cleanup_passed": true
+    },
+    {
+      "raw_reports": "/tmp/merlin-test-suite-dm6f7wxw",
+      "status": "FAIL",
+      "first_failed_stage": "database-isolation",
+      "failure": "Command '['/home/vipra/Merlin/.venv/bin/python', 'tools/verify_database_sandboxes.py', '--targets', '/tmp/merlin-test-suite-dm6f7wxw/database-targets', '--out', '/tmp/merlin-test-suite-dm6f7wxw/database-isolation-controls.json']' timed out after 45 seconds",
+      "source_preserved": true,
+      "cleanup_passed": true
+    },
+    {
+      "raw_reports": "/tmp/merlin-test-suite-ya0oq2g_",
+      "status": "FAIL",
+      "first_failed_stage": "database-isolation",
+      "failure": "Database isolation controls failed",
+      "source_preserved": true,
+      "cleanup_passed": true
+    },
+    {
+      "raw_reports": "/tmp/merlin-test-suite-gebky625",
+      "status": "FAIL",
+      "first_failed_stage": "database-isolation",
+      "failure": "Database isolation controls failed",
+      "source_preserved": true,
+      "cleanup_passed": true
+    },
+    {
+      "raw_reports": "/tmp/merlin-test-suite-sjnqo86r",
+      "status": "FAIL",
+      "first_failed_stage": "database-isolation",
+      "failure": "Clone startup timed out",
+      "source_preserved": true,
+      "cleanup_passed": true
+    }
+  ],
+  "prototype_source_archive": "/tmp/merlin-rejected-database-prototypes-l88n8l2r",
+  "coverage": "798 baseline executions plus three subtests; all original fault recipes, detection sets, reconnects and locks retained. No application or migration source change. Four known invalid import faults remain excluded.",
+  "timing_note": "Isolated-copy database wall time includes fresh backup, runtime validation, setup, mandatory real isolation controls, all database lanes and resource cleanup. Overlapping stage durations must not be added as elapsed time. Cold runtime capture takes additional time and was not included in warm-cache passing candidate claims.",
+  "requested_complete_seconds": 54,
+  "complete_target_achieved": true,
+  "retained_combination": {
+    "raw_reports": "/tmp/merlin-test-suite-ihpvspwa",
+    "seconds": 52.977871,
+    "summary": {
+      "started_utc": "2026-10-11T21:35:26.075999+00:00",
+      "stages": [
+        {
+          "stage": "python-tests",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 8.11
+        },
+        {
+          "stage": "quiz-tests",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.089
+        },
+        {
+          "stage": "legacy-python-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 8.652
+        },
+        {
+          "stage": "python-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "excluded_invalid_import_faults": [
+            "ast-database_connectivity_probe-21-11",
+            "ast-notes_maintenance-76-42",
+            "ast-doctor-229-52",
+            "ast-prd_lint-181-88"
+          ],
+          "seconds": 32.516
+        },
+        {
+          "stage": "database-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 23.257
+        },
+        {
+          "stage": "timestamp-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 1.036
+        },
+        {
+          "stage": "quiz-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 2.355
+        },
+        {
+          "stage": "browser-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 14.42
+        },
+        {
+          "stage": "database-lifecycle-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 11.573
+        },
+        {
+          "stage": "migration-undo-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 21.766
+        },
+        {
+          "stage": "documentation",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.107
+        },
+        {
+          "stage": "whitespace",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.011
+        }
+      ],
+      "status": "PASS",
+      "execution": {
+        "database_transport": "guarded reusable libpq session",
+        "python_fault_workers": 6,
+        "schedule": "independent Python and quiz lanes with isolated database lanes",
+        "python_fault_scope": "dependent",
+        "database_isolation": {
+          "status": "PASS",
+          "root": "/tmp/merlin-db-sandboxes-90aaed32e11348a982f464a5827db5d7",
+          "docker_operation_seconds": [
+            {
+              "operation": "diff",
+              "seconds": 0.365
+            },
+            {
+              "operation": "image",
+              "seconds": 0.183
+            },
+            {
+              "operation": "volume",
+              "seconds": 0.085
+            },
+            {
+              "operation": "volume",
+              "seconds": 0.104
+            },
+            {
+              "operation": "volume",
+              "seconds": 0.116
+            },
+            {
+              "operation": "create",
+              "seconds": 0.41
+            },
+            {
+              "operation": "create",
+              "seconds": 0.473
+            },
+            {
+              "operation": "create",
+              "seconds": 0.487
+            },
+            {
+              "operation": "cp",
+              "seconds": 0.196
+            },
+            {
+              "operation": "cp",
+              "seconds": 0.234
+            },
+            {
+              "operation": "cp",
+              "seconds": 0.218
+            },
+            {
+              "operation": "cp",
+              "seconds": 0.31
+            },
+            {
+              "operation": "cp",
+              "seconds": 0.166
+            },
+            {
+              "operation": "cp",
+              "seconds": 0.245
+            },
+            {
+              "operation": "start",
+              "seconds": 0.614
+            },
+            {
+              "operation": "start",
+              "seconds": 0.623
+            },
+            {
+              "operation": "start",
+              "seconds": 0.638
+            },
+            {
+              "operation": "container",
+              "seconds": 0.158
+            },
+            {
+              "operation": "container",
+              "seconds": 0.172
+            },
+            {
+              "operation": "container",
+              "seconds": 0.182
+            },
+            {
+              "operation": "container",
+              "seconds": 0.131
+            },
+            {
+              "operation": "container",
+              "seconds": 0.168
+            },
+            {
+              "operation": "container",
+              "seconds": 0.225
+            },
+            {
+              "operation": "container",
+              "seconds": 0.136
+            },
+            {
+              "operation": "container",
+              "seconds": 0.12
+            },
+            {
+              "operation": "container",
+              "seconds": 0.103
+            },
+            {
+              "operation": "container",
+              "seconds": 0.093
+            },
+            {
+              "operation": "container",
+              "seconds": 0.101
+            },
+            {
+              "operation": "ps",
+              "seconds": 0.043
+            },
+            {
+              "operation": "container",
+              "seconds": 0.046
+            },
+            {
+              "operation": "rm",
+              "seconds": 0.286
+            },
+            {
+              "operation": "container",
+              "seconds": 0.107
+            },
+            {
+              "operation": "rm",
+              "seconds": 0.28
+            },
+            {
+              "operation": "container",
+              "seconds": 0.077
+            },
+            {
+              "operation": "rm",
+              "seconds": 0.258
+            },
+            {
+              "operation": "volume",
+              "seconds": 0.075
+            },
+            {
+              "operation": "volume",
+              "seconds": 0.042
+            },
+            {
+              "operation": "volume",
+              "seconds": 0.072
+            },
+            {
+              "operation": "volume",
+              "seconds": 0.053
+            },
+            {
+              "operation": "volume",
+              "seconds": 0.068
+            },
+            {
+              "operation": "volume",
+              "seconds": 0.036
+            },
+            {
+              "operation": "volume",
+              "seconds": 0.071
+            },
+            {
+              "operation": "images",
+              "seconds": 0.106
+            }
+          ],
+          "runtime_cache_hit": true,
+          "runtime_image": "sha256:fde5d3b820b6bb426e0d44b18857ccea034fc78e910f1a8570f5782fdeb87a03",
+          "runtime_digest": "6c05e291e72faf0e6e7c346e0f7a704bbbc4434c086f43c6053a83c967257c7f",
+          "runtime_prepare_seconds": 1.438,
+          "backup_command_seconds": 1.089,
+          "setup_seconds": 9.028,
+          "targets": [
+            {
+              "name": "sql",
+              "container": "4017cf24c3381076104ebdda252f73d135450b3e51896e8926ddfc4da51e30d3",
+              "data": "/tmp/merlin-db-sandboxes-90aaed32e11348a982f464a5827db5d7/sql",
+              "socket": "/tmp/merlin-db-sandboxes-90aaed32e11348a982f464a5827db5d7/sql/socket"
+            },
+            {
+              "name": "lifecycle",
+              "container": "371a7fb5f0c7f1d9a6574ce6577f0a3103a3c3bd1949f4c1e471eb7da2428532",
+              "data": "/tmp/merlin-db-sandboxes-90aaed32e11348a982f464a5827db5d7/lifecycle",
+              "socket": "/tmp/merlin-db-sandboxes-90aaed32e11348a982f464a5827db5d7/lifecycle/socket"
+            },
+            {
+              "name": "migration",
+              "container": "ec5d7a43523a37be70f11ea74bdcdf658be6337fc6c545b5a9482753e342eaa0",
+              "data": "/tmp/merlin-db-sandboxes-90aaed32e11348a982f464a5827db5d7/migration",
+              "socket": "/tmp/merlin-db-sandboxes-90aaed32e11348a982f464a5827db5d7/migration/socket"
+            }
+          ],
+          "source_fingerprint": "37acb7647f0a140d3047bf62d64e6209",
+          "startup_timings": {
+            "backup_seconds": 0.7629629960283637
+          },
+          "controls_seconds": 5.087,
+          "controls_passed": true,
+          "cleanup_seconds": 1.815,
+          "cleanup_passed": true,
+          "source_preserved": true,
+          "wall_seconds": 40.562
+        }
+      },
+      "finished_utc": "2026-10-11T21:36:19.053870+00:00"
+    },
+    "coverage_comparison": {
+      "python_case_detection_sets": true,
+      "python_fault_statuses": true,
+      "python_scope_manifests": true,
+      "quiz_case_detection_sets": true,
+      "quiz_fault_statuses": true,
+      "sql_all_case_fault_pairs": true,
+      "sql_all_baselines": true,
+      "legacy_all_faults": true,
+      "browser_cases_and_detection": true,
+      "lifecycle_cases_and_detection": true,
+      "migration_source_preserved": true,
+      "migration_roundtrips": true,
+      "migration_gates": true,
+      "migration_repairs": true,
+      "migration_concurrency": true,
+      "database_fingerprint": true
+    },
+    "database_wall_seconds": 40.562,
+    "isolation_controls": {
+      "checks": [
+        {
+          "case": "route-sql",
+          "passed": true
+        },
+        {
+          "case": "route-lifecycle",
+          "passed": true
+        },
+        {
+          "case": "route-migration",
+          "passed": true
+        },
+        {
+          "case": "cpu-limit-changed",
+          "passed": true
+        },
+        {
+          "case": "memory-limit-changed",
+          "passed": true
+        },
+        {
+          "case": "external-network-refused",
+          "passed": true
+        },
+        {
+          "case": "shared-source-volume-refused",
+          "passed": true
+        },
+        {
+          "case": "published-port-refused",
+          "passed": true
+        },
+        {
+          "case": "stale-desktop-port-refused",
+          "passed": true
+        },
+        {
+          "case": "source-as-clone",
+          "passed": true
+        },
+        {
+          "case": "source-volume-path",
+          "passed": true
+        },
+        {
+          "case": "wrong-source",
+          "passed": true
+        },
+        {
+          "case": "wrong-container",
+          "passed": true
+        },
+        {
+          "case": "crossed-socket",
+          "passed": true
+        },
+        {
+          "case": "wrong-fingerprint",
+          "passed": true
+        },
+        {
+          "case": "public-manifest-refused",
+          "passed": true
+        },
+        {
+          "case": "manifest-symlink-refused",
+          "passed": true
+        },
+        {
+          "case": "changed-runtime-content-invalidates-cache",
+          "passed": true
+        },
+        {
+          "case": "missing-runtime-file-refused",
+          "passed": true
+        },
+        {
+          "case": "live-fault-isolated-from-other-copies-and-source",
+          "passed": true
+        },
+        {
+          "case": "control-fault-rolled-back",
+          "passed": true
+        }
+      ]
+    }
+  },
+  "final_combination_trials": [
+    {
+      "raw_reports": "/tmp/merlin-test-suite-3waxm3lw",
+      "seconds": 56.815628,
+      "summary": {
+        "started_utc": "2026-10-11T21:32:20.902772+00:00",
+        "stages": [
+          {
+            "stage": "python-tests",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 8.006
+          },
+          {
+            "stage": "quiz-tests",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 0.081
+          },
+          {
+            "stage": "legacy-python-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 5.994
+          },
+          {
+            "stage": "python-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "excluded_invalid_import_faults": [
+              "ast-database_connectivity_probe-21-11",
+              "ast-notes_maintenance-76-42",
+              "ast-doctor-229-52",
+              "ast-prd_lint-181-88"
+            ],
+            "seconds": 28.391
+          },
+          {
+            "stage": "database-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 25.912
+          },
+          {
+            "stage": "timestamp-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 1.071
+          },
+          {
+            "stage": "quiz-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 1.569
+          },
+          {
+            "stage": "browser-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 8.436
+          },
+          {
+            "stage": "database-lifecycle-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 12.03
+          },
+          {
+            "stage": "migration-undo-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 23.562
+          },
+          {
+            "stage": "documentation",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 0.11
+          },
+          {
+            "stage": "whitespace",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 0.011
+          }
+        ],
+        "status": "PASS",
+        "execution": {
+          "database_transport": "guarded reusable libpq session",
+          "python_fault_workers": 6,
+          "schedule": "independent CPU lane and isolated database lanes",
+          "python_fault_scope": "dependent",
+          "database_isolation": {
+            "status": "PASS",
+            "root": "/tmp/merlin-db-sandboxes-04b3c17e7df249deb4e24691c0b5379a",
+            "docker_operation_seconds": [
+              {
+                "operation": "diff",
+                "seconds": 0.384
+              },
+              {
+                "operation": "image",
+                "seconds": 0.19
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.101
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.108
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.112
+              },
+              {
+                "operation": "create",
+                "seconds": 0.44
+              },
+              {
+                "operation": "create",
+                "seconds": 0.445
+              },
+              {
+                "operation": "create",
+                "seconds": 0.448
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.176
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.172
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.182
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.143
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.154
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.143
+              },
+              {
+                "operation": "start",
+                "seconds": 0.532
+              },
+              {
+                "operation": "start",
+                "seconds": 0.546
+              },
+              {
+                "operation": "start",
+                "seconds": 0.54
+              },
+              {
+                "operation": "container",
+                "seconds": 0.106
+              },
+              {
+                "operation": "container",
+                "seconds": 0.085
+              },
+              {
+                "operation": "container",
+                "seconds": 0.085
+              },
+              {
+                "operation": "container",
+                "seconds": 0.059
+              },
+              {
+                "operation": "container",
+                "seconds": 0.07
+              },
+              {
+                "operation": "container",
+                "seconds": 0.074
+              },
+              {
+                "operation": "container",
+                "seconds": 0.057
+              },
+              {
+                "operation": "container",
+                "seconds": 0.055
+              },
+              {
+                "operation": "container",
+                "seconds": 0.06
+              },
+              {
+                "operation": "container",
+                "seconds": 0.053
+              },
+              {
+                "operation": "container",
+                "seconds": 0.061
+              },
+              {
+                "operation": "container",
+                "seconds": 0.05
+              },
+              {
+                "operation": "container",
+                "seconds": 0.052
+              },
+              {
+                "operation": "container",
+                "seconds": 0.066
+              },
+              {
+                "operation": "container",
+                "seconds": 0.059
+              },
+              {
+                "operation": "ps",
+                "seconds": 0.046
+              },
+              {
+                "operation": "container",
+                "seconds": 0.044
+              },
+              {
+                "operation": "rm",
+                "seconds": 0.306
+              },
+              {
+                "operation": "container",
+                "seconds": 0.064
+              },
+              {
+                "operation": "rm",
+                "seconds": 0.226
+              },
+              {
+                "operation": "container",
+                "seconds": 0.064
+              },
+              {
+                "operation": "rm",
+                "seconds": 0.26
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.057
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.04
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.071
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.057
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.093
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.059
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.081
+              },
+              {
+                "operation": "images",
+                "seconds": 0.093
+              }
+            ],
+            "runtime_cache_hit": true,
+            "runtime_image": "sha256:fde5d3b820b6bb426e0d44b18857ccea034fc78e910f1a8570f5782fdeb87a03",
+            "runtime_digest": "6c05e291e72faf0e6e7c346e0f7a704bbbc4434c086f43c6053a83c967257c7f",
+            "runtime_prepare_seconds": 1.487,
+            "backup_command_seconds": 1.061,
+            "setup_seconds": 7.265,
+            "targets": [
+              {
+                "name": "sql",
+                "container": "2d134a15336339b1608839aba74476efdf7f8c1a237a7c985a6694f21a8d67dd",
+                "data": "/tmp/merlin-db-sandboxes-04b3c17e7df249deb4e24691c0b5379a/sql",
+                "socket": "/tmp/merlin-db-sandboxes-04b3c17e7df249deb4e24691c0b5379a/sql/socket"
+              },
+              {
+                "name": "lifecycle",
+                "container": "2b1dfaf2843a477b9b5326a936ce9a1770c6b03dfb35c0a265d8b4528ecfe25a",
+                "data": "/tmp/merlin-db-sandboxes-04b3c17e7df249deb4e24691c0b5379a/lifecycle",
+                "socket": "/tmp/merlin-db-sandboxes-04b3c17e7df249deb4e24691c0b5379a/lifecycle/socket"
+              },
+              {
+                "name": "migration",
+                "container": "e0a7208e4585cac8f1b9734f28ecbf172fa14280a6f5240bbfca3c8c294373dc",
+                "data": "/tmp/merlin-db-sandboxes-04b3c17e7df249deb4e24691c0b5379a/migration",
+                "socket": "/tmp/merlin-db-sandboxes-04b3c17e7df249deb4e24691c0b5379a/migration/socket"
+              }
+            ],
+            "source_fingerprint": "37acb7647f0a140d3047bf62d64e6209",
+            "startup_timings": {
+              "backup_seconds": 0.7802296860027127
+            },
+            "controls_seconds": 4.859,
+            "controls_passed": true,
+            "cleanup_seconds": 1.749,
+            "cleanup_passed": true,
+            "source_preserved": true,
+            "wall_seconds": 41.211
+          }
+        },
+        "finished_utc": "2026-10-11T21:33:17.718400+00:00"
+      },
+      "coverage_comparison": {
+        "python_case_detection_sets": true,
+        "python_fault_statuses": true,
+        "python_scope_manifests": true,
+        "quiz_case_detection_sets": true,
+        "quiz_fault_statuses": true,
+        "sql_all_case_fault_pairs": true,
+        "sql_all_baselines": true,
+        "legacy_all_faults": true,
+        "browser_cases_and_detection": true,
+        "lifecycle_cases_and_detection": true,
+        "migration_source_preserved": true,
+        "migration_roundtrips": true,
+        "migration_gates": true,
+        "migration_repairs": true,
+        "migration_concurrency": true,
+        "database_fingerprint": true
+      },
+      "database_wall_seconds": 41.211,
+      "isolation_controls": {
+        "checks": [
+          {
+            "case": "route-sql",
+            "passed": true
+          },
+          {
+            "case": "route-lifecycle",
+            "passed": true
+          },
+          {
+            "case": "route-migration",
+            "passed": true
+          },
+          {
+            "case": "cpu-limit-changed",
+            "passed": true
+          },
+          {
+            "case": "memory-limit-changed",
+            "passed": true
+          },
+          {
+            "case": "external-network-refused",
+            "passed": true
+          },
+          {
+            "case": "shared-source-volume-refused",
+            "passed": true
+          },
+          {
+            "case": "published-port-refused",
+            "passed": true
+          },
+          {
+            "case": "stale-desktop-port-refused",
+            "passed": true
+          },
+          {
+            "case": "source-as-clone",
+            "passed": true
+          },
+          {
+            "case": "source-volume-path",
+            "passed": true
+          },
+          {
+            "case": "wrong-source",
+            "passed": true
+          },
+          {
+            "case": "wrong-container",
+            "passed": true
+          },
+          {
+            "case": "crossed-socket",
+            "passed": true
+          },
+          {
+            "case": "wrong-fingerprint",
+            "passed": true
+          },
+          {
+            "case": "public-manifest-refused",
+            "passed": true
+          },
+          {
+            "case": "manifest-symlink-refused",
+            "passed": true
+          },
+          {
+            "case": "changed-runtime-content-invalidates-cache",
+            "passed": true
+          },
+          {
+            "case": "missing-runtime-file-refused",
+            "passed": true
+          },
+          {
+            "case": "live-fault-isolated-from-other-copies-and-source",
+            "passed": true
+          },
+          {
+            "case": "control-fault-rolled-back",
+            "passed": true
+          }
+        ]
+      }
+    },
+    {
+      "raw_reports": "/tmp/merlin-test-suite-lc8taczk",
+      "seconds": 53.412888,
+      "summary": {
+        "started_utc": "2026-10-11T21:34:11.347687+00:00",
+        "stages": [
+          {
+            "stage": "python-tests",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 8.084
+          },
+          {
+            "stage": "quiz-tests",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 0.082
+          },
+          {
+            "stage": "legacy-python-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 7.99
+          },
+          {
+            "stage": "python-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "excluded_invalid_import_faults": [
+              "ast-database_connectivity_probe-21-11",
+              "ast-notes_maintenance-76-42",
+              "ast-doctor-229-52",
+              "ast-prd_lint-181-88"
+            ],
+            "seconds": 32.754
+          },
+          {
+            "stage": "database-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 23.315
+          },
+          {
+            "stage": "timestamp-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 1.005
+          },
+          {
+            "stage": "quiz-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 2.549
+          },
+          {
+            "stage": "browser-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 14.905
+          },
+          {
+            "stage": "database-lifecycle-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 11.689
+          },
+          {
+            "stage": "migration-undo-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 21.854
+          },
+          {
+            "stage": "documentation",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 0.107
+          },
+          {
+            "stage": "whitespace",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 0.013
+          }
+        ],
+        "status": "PASS",
+        "execution": {
+          "database_transport": "guarded reusable libpq session",
+          "python_fault_workers": 6,
+          "schedule": "independent Python and quiz lanes with isolated database lanes",
+          "python_fault_scope": "dependent",
+          "database_isolation": {
+            "status": "PASS",
+            "root": "/tmp/merlin-db-sandboxes-49718947eab7492b8d6f3ac73fd9c3ac",
+            "docker_operation_seconds": [
+              {
+                "operation": "diff",
+                "seconds": 0.382
+              },
+              {
+                "operation": "image",
+                "seconds": 0.175
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.091
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.106
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.109
+              },
+              {
+                "operation": "create",
+                "seconds": 0.418
+              },
+              {
+                "operation": "create",
+                "seconds": 0.453
+              },
+              {
+                "operation": "create",
+                "seconds": 0.475
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.241
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.249
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.28
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.153
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.176
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.167
+              },
+              {
+                "operation": "start",
+                "seconds": 0.481
+              },
+              {
+                "operation": "start",
+                "seconds": 0.584
+              },
+              {
+                "operation": "start",
+                "seconds": 0.552
+              },
+              {
+                "operation": "container",
+                "seconds": 0.188
+              },
+              {
+                "operation": "container",
+                "seconds": 0.229
+              },
+              {
+                "operation": "container",
+                "seconds": 0.132
+              },
+              {
+                "operation": "container",
+                "seconds": 0.131
+              },
+              {
+                "operation": "container",
+                "seconds": 0.11
+              },
+              {
+                "operation": "container",
+                "seconds": 0.133
+              },
+              {
+                "operation": "container",
+                "seconds": 0.11
+              },
+              {
+                "operation": "container",
+                "seconds": 0.117
+              },
+              {
+                "operation": "container",
+                "seconds": 0.131
+              },
+              {
+                "operation": "ps",
+                "seconds": 0.041
+              },
+              {
+                "operation": "container",
+                "seconds": 0.042
+              },
+              {
+                "operation": "rm",
+                "seconds": 0.326
+              },
+              {
+                "operation": "container",
+                "seconds": 0.074
+              },
+              {
+                "operation": "rm",
+                "seconds": 0.26
+              },
+              {
+                "operation": "container",
+                "seconds": 0.068
+              },
+              {
+                "operation": "rm",
+                "seconds": 0.288
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.07
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.039
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.068
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.055
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.076
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.051
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.073
+              },
+              {
+                "operation": "images",
+                "seconds": 0.099
+              }
+            ],
+            "runtime_cache_hit": true,
+            "runtime_image": "sha256:fde5d3b820b6bb426e0d44b18857ccea034fc78e910f1a8570f5782fdeb87a03",
+            "runtime_digest": "6c05e291e72faf0e6e7c346e0f7a704bbbc4434c086f43c6053a83c967257c7f",
+            "runtime_prepare_seconds": 1.457,
+            "backup_command_seconds": 1.137,
+            "setup_seconds": 8.925,
+            "targets": [
+              {
+                "name": "sql",
+                "container": "0ab256906f1827c1555de50d24894fa4ad6009b4f25f3433ba2b9057801be06f",
+                "data": "/tmp/merlin-db-sandboxes-49718947eab7492b8d6f3ac73fd9c3ac/sql",
+                "socket": "/tmp/merlin-db-sandboxes-49718947eab7492b8d6f3ac73fd9c3ac/sql/socket"
+              },
+              {
+                "name": "lifecycle",
+                "container": "501c6822aa57c1806a96badbe9980e75a869ff27e6f8045b75a09c902f7f2b79",
+                "data": "/tmp/merlin-db-sandboxes-49718947eab7492b8d6f3ac73fd9c3ac/lifecycle",
+                "socket": "/tmp/merlin-db-sandboxes-49718947eab7492b8d6f3ac73fd9c3ac/lifecycle/socket"
+              },
+              {
+                "name": "migration",
+                "container": "9555bf1eab19236252f1885fb3d2c00737fe3c1002ed7c01dd0ff668ae607d4b",
+                "data": "/tmp/merlin-db-sandboxes-49718947eab7492b8d6f3ac73fd9c3ac/migration",
+                "socket": "/tmp/merlin-db-sandboxes-49718947eab7492b8d6f3ac73fd9c3ac/migration/socket"
+              }
+            ],
+            "source_fingerprint": "37acb7647f0a140d3047bf62d64e6209",
+            "startup_timings": {
+              "backup_seconds": 0.8512612350168638
+            },
+            "controls_seconds": 5.44,
+            "controls_passed": true,
+            "cleanup_seconds": 1.807,
+            "cleanup_passed": true,
+            "source_preserved": true,
+            "wall_seconds": 40.816
+          }
+        },
+        "finished_utc": "2026-10-11T21:35:04.760575+00:00"
+      },
+      "coverage_comparison": {
+        "python_case_detection_sets": true,
+        "python_fault_statuses": true,
+        "python_scope_manifests": true,
+        "quiz_case_detection_sets": true,
+        "quiz_fault_statuses": true,
+        "sql_all_case_fault_pairs": true,
+        "sql_all_baselines": true,
+        "legacy_all_faults": true,
+        "browser_cases_and_detection": true,
+        "lifecycle_cases_and_detection": true,
+        "migration_source_preserved": true,
+        "migration_roundtrips": true,
+        "migration_gates": true,
+        "migration_repairs": true,
+        "migration_concurrency": true,
+        "database_fingerprint": true
+      },
+      "database_wall_seconds": 40.816,
+      "isolation_controls": {
+        "checks": [
+          {
+            "case": "route-sql",
+            "passed": true
+          },
+          {
+            "case": "route-lifecycle",
+            "passed": true
+          },
+          {
+            "case": "route-migration",
+            "passed": true
+          },
+          {
+            "case": "cpu-limit-changed",
+            "passed": true
+          },
+          {
+            "case": "memory-limit-changed",
+            "passed": true
+          },
+          {
+            "case": "external-network-refused",
+            "passed": true
+          },
+          {
+            "case": "shared-source-volume-refused",
+            "passed": true
+          },
+          {
+            "case": "published-port-refused",
+            "passed": true
+          },
+          {
+            "case": "stale-desktop-port-refused",
+            "passed": true
+          },
+          {
+            "case": "source-as-clone",
+            "passed": true
+          },
+          {
+            "case": "source-volume-path",
+            "passed": true
+          },
+          {
+            "case": "wrong-source",
+            "passed": true
+          },
+          {
+            "case": "wrong-container",
+            "passed": true
+          },
+          {
+            "case": "crossed-socket",
+            "passed": true
+          },
+          {
+            "case": "wrong-fingerprint",
+            "passed": true
+          },
+          {
+            "case": "public-manifest-refused",
+            "passed": true
+          },
+          {
+            "case": "manifest-symlink-refused",
+            "passed": true
+          },
+          {
+            "case": "changed-runtime-content-invalidates-cache",
+            "passed": true
+          },
+          {
+            "case": "missing-runtime-file-refused",
+            "passed": true
+          },
+          {
+            "case": "live-fault-isolated-from-other-copies-and-source",
+            "passed": true
+          },
+          {
+            "case": "control-fault-rolled-back",
+            "passed": true
+          }
+        ]
+      }
+    },
+    {
+      "raw_reports": "/tmp/merlin-test-suite-ihpvspwa",
+      "seconds": 52.977871,
+      "summary": {
+        "started_utc": "2026-10-11T21:35:26.075999+00:00",
+        "stages": [
+          {
+            "stage": "python-tests",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 8.11
+          },
+          {
+            "stage": "quiz-tests",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 0.089
+          },
+          {
+            "stage": "legacy-python-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 8.652
+          },
+          {
+            "stage": "python-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "excluded_invalid_import_faults": [
+              "ast-database_connectivity_probe-21-11",
+              "ast-notes_maintenance-76-42",
+              "ast-doctor-229-52",
+              "ast-prd_lint-181-88"
+            ],
+            "seconds": 32.516
+          },
+          {
+            "stage": "database-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 23.257
+          },
+          {
+            "stage": "timestamp-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 1.036
+          },
+          {
+            "stage": "quiz-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 2.355
+          },
+          {
+            "stage": "browser-case-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 14.42
+          },
+          {
+            "stage": "database-lifecycle-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 11.573
+          },
+          {
+            "stage": "migration-undo-faults",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 21.766
+          },
+          {
+            "stage": "documentation",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 0.107
+          },
+          {
+            "stage": "whitespace",
+            "status": "PASS",
+            "exit": 0,
+            "seconds": 0.011
+          }
+        ],
+        "status": "PASS",
+        "execution": {
+          "database_transport": "guarded reusable libpq session",
+          "python_fault_workers": 6,
+          "schedule": "independent Python and quiz lanes with isolated database lanes",
+          "python_fault_scope": "dependent",
+          "database_isolation": {
+            "status": "PASS",
+            "root": "/tmp/merlin-db-sandboxes-90aaed32e11348a982f464a5827db5d7",
+            "docker_operation_seconds": [
+              {
+                "operation": "diff",
+                "seconds": 0.365
+              },
+              {
+                "operation": "image",
+                "seconds": 0.183
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.085
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.104
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.116
+              },
+              {
+                "operation": "create",
+                "seconds": 0.41
+              },
+              {
+                "operation": "create",
+                "seconds": 0.473
+              },
+              {
+                "operation": "create",
+                "seconds": 0.487
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.196
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.234
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.218
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.31
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.166
+              },
+              {
+                "operation": "cp",
+                "seconds": 0.245
+              },
+              {
+                "operation": "start",
+                "seconds": 0.614
+              },
+              {
+                "operation": "start",
+                "seconds": 0.623
+              },
+              {
+                "operation": "start",
+                "seconds": 0.638
+              },
+              {
+                "operation": "container",
+                "seconds": 0.158
+              },
+              {
+                "operation": "container",
+                "seconds": 0.172
+              },
+              {
+                "operation": "container",
+                "seconds": 0.182
+              },
+              {
+                "operation": "container",
+                "seconds": 0.131
+              },
+              {
+                "operation": "container",
+                "seconds": 0.168
+              },
+              {
+                "operation": "container",
+                "seconds": 0.225
+              },
+              {
+                "operation": "container",
+                "seconds": 0.136
+              },
+              {
+                "operation": "container",
+                "seconds": 0.12
+              },
+              {
+                "operation": "container",
+                "seconds": 0.103
+              },
+              {
+                "operation": "container",
+                "seconds": 0.093
+              },
+              {
+                "operation": "container",
+                "seconds": 0.101
+              },
+              {
+                "operation": "ps",
+                "seconds": 0.043
+              },
+              {
+                "operation": "container",
+                "seconds": 0.046
+              },
+              {
+                "operation": "rm",
+                "seconds": 0.286
+              },
+              {
+                "operation": "container",
+                "seconds": 0.107
+              },
+              {
+                "operation": "rm",
+                "seconds": 0.28
+              },
+              {
+                "operation": "container",
+                "seconds": 0.077
+              },
+              {
+                "operation": "rm",
+                "seconds": 0.258
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.075
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.042
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.072
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.053
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.068
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.036
+              },
+              {
+                "operation": "volume",
+                "seconds": 0.071
+              },
+              {
+                "operation": "images",
+                "seconds": 0.106
+              }
+            ],
+            "runtime_cache_hit": true,
+            "runtime_image": "sha256:fde5d3b820b6bb426e0d44b18857ccea034fc78e910f1a8570f5782fdeb87a03",
+            "runtime_digest": "6c05e291e72faf0e6e7c346e0f7a704bbbc4434c086f43c6053a83c967257c7f",
+            "runtime_prepare_seconds": 1.438,
+            "backup_command_seconds": 1.089,
+            "setup_seconds": 9.028,
+            "targets": [
+              {
+                "name": "sql",
+                "container": "4017cf24c3381076104ebdda252f73d135450b3e51896e8926ddfc4da51e30d3",
+                "data": "/tmp/merlin-db-sandboxes-90aaed32e11348a982f464a5827db5d7/sql",
+                "socket": "/tmp/merlin-db-sandboxes-90aaed32e11348a982f464a5827db5d7/sql/socket"
+              },
+              {
+                "name": "lifecycle",
+                "container": "371a7fb5f0c7f1d9a6574ce6577f0a3103a3c3bd1949f4c1e471eb7da2428532",
+                "data": "/tmp/merlin-db-sandboxes-90aaed32e11348a982f464a5827db5d7/lifecycle",
+                "socket": "/tmp/merlin-db-sandboxes-90aaed32e11348a982f464a5827db5d7/lifecycle/socket"
+              },
+              {
+                "name": "migration",
+                "container": "ec5d7a43523a37be70f11ea74bdcdf658be6337fc6c545b5a9482753e342eaa0",
+                "data": "/tmp/merlin-db-sandboxes-90aaed32e11348a982f464a5827db5d7/migration",
+                "socket": "/tmp/merlin-db-sandboxes-90aaed32e11348a982f464a5827db5d7/migration/socket"
+              }
+            ],
+            "source_fingerprint": "37acb7647f0a140d3047bf62d64e6209",
+            "startup_timings": {
+              "backup_seconds": 0.7629629960283637
+            },
+            "controls_seconds": 5.087,
+            "controls_passed": true,
+            "cleanup_seconds": 1.815,
+            "cleanup_passed": true,
+            "source_preserved": true,
+            "wall_seconds": 40.562
+          }
+        },
+        "finished_utc": "2026-10-11T21:36:19.053870+00:00"
+      },
+      "coverage_comparison": {
+        "python_case_detection_sets": true,
+        "python_fault_statuses": true,
+        "python_scope_manifests": true,
+        "quiz_case_detection_sets": true,
+        "quiz_fault_statuses": true,
+        "sql_all_case_fault_pairs": true,
+        "sql_all_baselines": true,
+        "legacy_all_faults": true,
+        "browser_cases_and_detection": true,
+        "lifecycle_cases_and_detection": true,
+        "migration_source_preserved": true,
+        "migration_roundtrips": true,
+        "migration_gates": true,
+        "migration_repairs": true,
+        "migration_concurrency": true,
+        "database_fingerprint": true
+      },
+      "database_wall_seconds": 40.562,
+      "isolation_controls": {
+        "checks": [
+          {
+            "case": "route-sql",
+            "passed": true
+          },
+          {
+            "case": "route-lifecycle",
+            "passed": true
+          },
+          {
+            "case": "route-migration",
+            "passed": true
+          },
+          {
+            "case": "cpu-limit-changed",
+            "passed": true
+          },
+          {
+            "case": "memory-limit-changed",
+            "passed": true
+          },
+          {
+            "case": "external-network-refused",
+            "passed": true
+          },
+          {
+            "case": "shared-source-volume-refused",
+            "passed": true
+          },
+          {
+            "case": "published-port-refused",
+            "passed": true
+          },
+          {
+            "case": "stale-desktop-port-refused",
+            "passed": true
+          },
+          {
+            "case": "source-as-clone",
+            "passed": true
+          },
+          {
+            "case": "source-volume-path",
+            "passed": true
+          },
+          {
+            "case": "wrong-source",
+            "passed": true
+          },
+          {
+            "case": "wrong-container",
+            "passed": true
+          },
+          {
+            "case": "crossed-socket",
+            "passed": true
+          },
+          {
+            "case": "wrong-fingerprint",
+            "passed": true
+          },
+          {
+            "case": "public-manifest-refused",
+            "passed": true
+          },
+          {
+            "case": "manifest-symlink-refused",
+            "passed": true
+          },
+          {
+            "case": "changed-runtime-content-invalidates-cache",
+            "passed": true
+          },
+          {
+            "case": "missing-runtime-file-refused",
+            "passed": true
+          },
+          {
+            "case": "live-fault-isolated-from-other-copies-and-source",
+            "passed": true
+          },
+          {
+            "case": "control-fault-rolled-back",
+            "passed": true
+          }
+        ]
+      }
+    }
+  ],
+  "restored_serial_verification": {
+    "recorded_date": "2026-10-11",
+    "raw_reports": "/tmp/merlin-test-suite-ivqyhura",
+    "comparison_reports": "/tmp/merlin-test-suite-61blqqhn",
+    "seconds": 61.823263,
+    "summary": {
+      "started_utc": "2026-10-11T21:26:40.313067+00:00",
+      "stages": [
+        {
+          "stage": "python-tests",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 8.09
+        },
+        {
+          "stage": "quiz-tests",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.084
+        },
+        {
+          "stage": "legacy-python-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 5.545
+        },
+        {
+          "stage": "python-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "excluded_invalid_import_faults": [
+            "ast-database_connectivity_probe-21-11",
+            "ast-notes_maintenance-76-42",
+            "ast-doctor-229-52",
+            "ast-prd_lint-181-88"
+          ],
+          "seconds": 24.575
+        },
+        {
+          "stage": "database-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 24.676
+        },
+        {
+          "stage": "timestamp-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.939
+        },
+        {
+          "stage": "quiz-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 1.326
+        },
+        {
+          "stage": "browser-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 8.004
+        },
+        {
+          "stage": "database-lifecycle-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 8.418
+        },
+        {
+          "stage": "migration-undo-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 13.301
+        },
+        {
+          "stage": "documentation",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.106
+        },
+        {
+          "stage": "whitespace",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.01
+        }
+      ],
+      "status": "PASS",
+      "execution": {
+        "database_transport": "guarded reusable libpq session",
+        "python_fault_workers": 6,
+        "schedule": "independent CPU lane and serial database lane",
+        "python_fault_scope": "dependent"
+      },
+      "finished_utc": "2026-10-11T21:27:42.136330+00:00"
+    },
+    "coverage_comparison": {
+      "python_case_detection_sets": true,
+      "python_fault_statuses": true,
+      "python_scope_manifests": true,
+      "quiz_case_detection_sets": true,
+      "quiz_fault_statuses": true,
+      "sql_all_case_fault_pairs": true,
+      "sql_all_baselines": true,
+      "legacy_all_faults": true,
+      "browser_cases_and_detection": true,
+      "lifecycle_cases_and_detection": true,
+      "migration_source_preserved": true,
+      "migration_roundtrips": true,
+      "migration_gates": true,
+      "migration_repairs": true,
+      "migration_concurrency": true,
+      "database_fingerprint": true
+    }
+  },
+  "earlier_rejected_image_cleanup": {
+    "removed_experimental_image_ids": [
+      "sha256:75ef6bd7b1fc4dcc0135fcadbc806d0c13e2212c5208bc0738cac0a729fa3932",
+      "sha256:7b6c71fac42ecb8d1c15f4cba98f5b1dca627e4146b4e03032b712f14d0e5ea3",
+      "sha256:d50e516740f70a43e9bc3b46fa4719d2bd30922d1341804abaa1142355d5611a",
+      "sha256:fb40272dff09a6cc0b5184133879011254180774f44b3908e936be31192a7370"
+    ],
+    "experimental_resources_remaining": {
+      "containers": [],
+      "volumes": [],
+      "latency_containers": []
+    },
+    "source_running": true,
+    "source_cpu_limit": 1,
+    "source_memory_bytes": 1073741824,
+    "source_fingerprint_preserved_by_final_suite": true
+  },
+  "retained_runtime_cache_note": "The new, content-verified runtime image remains available for this retained configuration. Each run takes a fresh database backup; no database state, test results or fault outcomes are cached. Cold image capture costs additional time.",
+  "combination_restoration_failure": {
+    "raw_reports": "/tmp/merlin-test-suite-uw49g3pv",
+    "first_failed_stage": "database-isolation",
+    "reason": "An isolation control retained a reference to the removed fourth SQL copy. The control now checks every other configured copy dynamically; the failed run rolled back its live fault, cleaned up and preserved the source.",
+    "summary": {
+      "started_utc": "2026-10-11T21:30:52.385969+00:00",
+      "stages": [
+        {
+          "stage": "python-tests",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 7.838
+        },
+        {
+          "stage": "quiz-tests",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.085
+        },
+        {
+          "stage": "legacy-python-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 5.747
+        },
+        {
+          "stage": "python-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "excluded_invalid_import_faults": [
+            "ast-database_connectivity_probe-21-11",
+            "ast-notes_maintenance-76-42",
+            "ast-doctor-229-52",
+            "ast-prd_lint-181-88"
+          ],
+          "seconds": 26.437
+        },
+        {
+          "stage": "database-case-faults",
+          "status": "PENDING",
+          "exit": null
+        },
+        {
+          "stage": "timestamp-case-faults",
+          "status": "PENDING",
+          "exit": null
+        },
+        {
+          "stage": "quiz-case-faults",
+          "status": "PENDING",
+          "exit": null
+        },
+        {
+          "stage": "browser-case-faults",
+          "status": "PENDING",
+          "exit": null
+        },
+        {
+          "stage": "database-lifecycle-faults",
+          "status": "PENDING",
+          "exit": null
+        },
+        {
+          "stage": "migration-undo-faults",
+          "status": "PENDING",
+          "exit": null
+        },
+        {
+          "stage": "documentation",
+          "status": "PENDING",
+          "exit": null
+        },
+        {
+          "stage": "whitespace",
+          "status": "PENDING",
+          "exit": null
+        }
+      ],
+      "status": "FAIL",
+      "execution": {
+        "database_transport": "guarded reusable libpq session",
+        "python_fault_workers": 6,
+        "schedule": "independent CPU lane and isolated database lanes",
+        "python_fault_scope": "dependent",
+        "database_isolation": {
+          "status": "PASS",
+          "root": "/tmp/merlin-db-sandboxes-ca420de77a2845a88ddd32ba34fbb6c4",
+          "docker_operation_seconds": [
+            {
+              "operation": "diff",
+              "seconds": 0.371
+            },
+            {
+              "operation": "commit",
+              "seconds": 14.72
+            },
+            {
+              "operation": "image",
+              "seconds": 0.149
+            },
+            {
+              "operation": "volume",
+              "seconds": 0.078
+            },
+            {
+              "operation": "volume",
+              "seconds": 0.084
+            },
+            {
+              "operation": "volume",
+              "seconds": 0.091
+            },
+            {
+              "operation": "create",
+              "seconds": 0.388
+            },
+            {
+              "operation": "create",
+              "seconds": 0.439
+            },
+            {
+              "operation": "create",
+              "seconds": 0.453
+            },
+            {
+              "operation": "cp",
+              "seconds": 0.166
+            },
+            {
+              "operation": "cp",
+              "seconds": 0.238
+            },
+            {
+              "operation": "cp",
+              "seconds": 0.178
+            },
+            {
+              "operation": "cp",
+              "seconds": 0.114
+            },
+            {
+              "operation": "cp",
+              "seconds": 0.128
+            },
+            {
+              "operation": "cp",
+              "seconds": 0.123
+            },
+            {
+              "operation": "start",
+              "seconds": 0.416
+            },
+            {
+              "operation": "start",
+              "seconds": 0.466
+            },
+            {
+              "operation": "start",
+              "seconds": 0.485
+            },
+            {
+              "operation": "container",
+              "seconds": 0.113
+            },
+            {
+              "operation": "container",
+              "seconds": 0.113
+            },
+            {
+              "operation": "container",
+              "seconds": 0.11
+            },
+            {
+              "operation": "container",
+              "seconds": 0.103
+            },
+            {
+              "operation": "container",
+              "seconds": 0.091
+            },
+            {
+              "operation": "container",
+              "seconds": 0.09
+            },
+            {
+              "operation": "container",
+              "seconds": 0.118
+            },
+            {
+              "operation": "container",
+              "seconds": 0.1
+            },
+            {
+              "operation": "container",
+              "seconds": 0.112
+            },
+            {
+              "operation": "container",
+              "seconds": 0.094
+            },
+            {
+              "operation": "container",
+              "seconds": 0.089
+            },
+            {
+              "operation": "container",
+              "seconds": 0.082
+            },
+            {
+              "operation": "ps",
+              "seconds": 0.06
+            },
+            {
+              "operation": "container",
+              "seconds": 0.064
+            },
+            {
+              "operation": "rm",
+              "seconds": 0.312
+            },
+            {
+              "operation": "container",
+              "seconds": 0.072
+            },
+            {
+              "operation": "rm",
+              "seconds": 0.35
+            },
+            {
+              "operation": "container",
+              "seconds": 0.084
+            },
+            {
+              "operation": "rm",
+              "seconds": 0.326
+            },
+            {
+              "operation": "volume",
+              "seconds": 0.077
+            },
+            {
+              "operation": "volume",
+              "seconds": 0.061
+            },
+            {
+              "operation": "volume",
+              "seconds": 0.101
+            },
+            {
+              "operation": "volume",
+              "seconds": 0.077
+            },
+            {
+              "operation": "volume",
+              "seconds": 0.1
+            },
+            {
+              "operation": "volume",
+              "seconds": 0.069
+            },
+            {
+              "operation": "volume",
+              "seconds": 0.101
+            },
+            {
+              "operation": "images",
+              "seconds": 0.203
+            }
+          ],
+          "runtime_cache_hit": false,
+          "runtime_image": "sha256:fde5d3b820b6bb426e0d44b18857ccea034fc78e910f1a8570f5782fdeb87a03",
+          "runtime_digest": "6c05e291e72faf0e6e7c346e0f7a704bbbc4434c086f43c6053a83c967257c7f",
+          "runtime_prepare_seconds": 16.087,
+          "backup_command_seconds": 1.04,
+          "setup_seconds": 22.274,
+          "targets": [
+            {
+              "name": "sql",
+              "container": "e089ff71c589da5cd50efc10d3a7a8b1e37751b23919af201b3e88e50c1791a5",
+              "data": "/tmp/merlin-db-sandboxes-ca420de77a2845a88ddd32ba34fbb6c4/sql",
+              "socket": "/tmp/merlin-db-sandboxes-ca420de77a2845a88ddd32ba34fbb6c4/sql/socket"
+            },
+            {
+              "name": "lifecycle",
+              "container": "7d62dbd64a02695c088cb365d739577ab495c5b11489923b36bc78c1012e3fc4",
+              "data": "/tmp/merlin-db-sandboxes-ca420de77a2845a88ddd32ba34fbb6c4/lifecycle",
+              "socket": "/tmp/merlin-db-sandboxes-ca420de77a2845a88ddd32ba34fbb6c4/lifecycle/socket"
+            },
+            {
+              "name": "migration",
+              "container": "dde118d36c64a4c8f6a68419e8478daff25a3c3c10aa6e39286d92b5e04845d5",
+              "data": "/tmp/merlin-db-sandboxes-ca420de77a2845a88ddd32ba34fbb6c4/migration",
+              "socket": "/tmp/merlin-db-sandboxes-ca420de77a2845a88ddd32ba34fbb6c4/migration/socket"
+            }
+          ],
+          "source_fingerprint": "37acb7647f0a140d3047bf62d64e6209",
+          "startup_timings": {
+            "backup_seconds": 0.8072854619822465
+          },
+          "cleanup_seconds": 2.376,
+          "cleanup_passed": true,
+          "source_preserved": true,
+          "wall_seconds": 28.921
+        }
+      },
+      "failure": "Database isolation controls failed",
+      "first_failed_stage": "database-isolation",
+      "finished_utc": "2026-10-11T21:31:41.653852+00:00"
+    }
+  },
+  "final_source_verification": {
+    "fingerprint": "37acb7647f0a140d3047bf62d64e6209",
+    "identity_and_empty_tables_preserved": true,
+    "temporary_resources_remaining": {
+      "containers": [],
+      "volumes": [],
+      "latency_containers": []
+    },
+    "source_running": true,
+    "source_cpu_limit": 1,
+    "source_memory_bytes": 1073741824,
+    "runtime_image_retained_for_verified_code_only": true
+  },
+  "final_execution_controls": {
+    "checks": [
+      {
+        "scenario": "pass",
+        "passed": true,
+        "runner_exit": 0
+      },
+      {
+        "scenario": "serial",
+        "passed": true,
+        "runner_exit": 0
+      },
+      {
+        "scenario": "failure",
+        "passed": true,
+        "runner_exit": 1
+      },
+      {
+        "scenario": "setup-failure",
+        "passed": true,
+        "runner_exit": 1
+      },
+      {
+        "scenario": "interrupt",
+        "passed": true,
+        "runner_exit": 1
+      },
+      {
+        "scenario": "preflight-pass",
+        "passed": true
+      },
+      {
+        "scenario": "preflight-failure",
+        "passed": true
+      },
+      {
+        "scenario": "preflight-timeout",
+        "passed": true
+      }
+    ]
+  }
+}

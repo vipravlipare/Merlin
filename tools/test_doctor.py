@@ -19,20 +19,23 @@ class DoctorTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             output = io.StringIO()
             with patch('doctor.subprocess.run', return_value=self.result(1, 'password=secret', 'secret')) as called:
-                with contextlib.redirect_stdout(output):
+                with contextlib.redirect_stdout(output), contextlib.redirect_stderr(output):
                     result = doctor.run(['example'], Path(directory))
             self.assertEqual(result.returncode, 1)
             self.assertEqual(output.getvalue(), '')
             self.assertTrue(called.call_args.kwargs['capture_output'])
+            self.assertTrue(called.call_args.kwargs['text'])
             self.assertEqual(called.call_args.kwargs['cwd'], Path(directory))
+            self.assertEqual(called.call_args.kwargs['timeout'], 30)
+            self.assertFalse(called.call_args.kwargs['check'])
 
     def test_timeout_does_not_print_partial_secret(self):
         output = io.StringIO()
         with patch('doctor.subprocess.run', side_effect=subprocess.TimeoutExpired('secret', 30, output='secret')):
-            with contextlib.redirect_stdout(output):
+            with contextlib.redirect_stdout(output), contextlib.redirect_stderr(output):
                 result = doctor.run(['example'])
         self.assertNotEqual(result.returncode, 0)
-        self.assertNotIn('secret', output.getvalue())
+        self.assertEqual(output.getvalue(), '')
 
     def test_wrong_password_requires_authentication_rejection(self):
         for negative, succeeds in ((self.result(2, err='connection refused secret'), False),
@@ -100,11 +103,12 @@ class DoctorTests(unittest.TestCase):
             return self.result(0, args[-1] + '\n' + values[args[-1]] + '\n')
         infos = []
         for service, port, memory, cpus, target in [('postgres', '5432', 1073741824, 1000000000, '/var/lib/postgresql/data'), ('redis', '6379', 268435456, 500000000, '/data')]:
-            infos.append(('healthy', {'PortBindings': {port + '/tcp': [{'HostIp': '127.0.0.1', 'HostPort': '15432'}]}, 'Memory': memory, 'NanoCpus': cpus, 'LogConfig': {'Type': 'json-file', 'Config': {'max-size': '10m', 'max-file': '3'}}}, [{'Destination': target, 'Type': 'volume', 'Name': 'clone42_' + service + '_data'}], {'com.docker.compose.project': 'clone42'}))
+            infos.append(('healthy', {'PortBindings': {port + '/tcp': [{'HostIp': '127.0.0.1', 'HostPort': '15432' if service == 'postgres' else '16379'}]}, 'Memory': memory, 'NanoCpus': cpus, 'LogConfig': {'Type': 'json-file', 'Config': {'max-size': '10m', 'max-file': '3'}}}, [{'Destination': target, 'Type': 'volume', 'Name': 'clone42_' + service + '_data'}], {'com.docker.compose.project': 'clone42'}))
         with patch.object(instance, 'compose', side_effect=compose), patch.object(instance, 'inspect', side_effect=infos), patch.object(instance, 'postgres_checks'), patch.object(instance, 'host_checks'):
             with contextlib.redirect_stdout(io.StringIO()):
                 instance.runtime_checks()
         self.assertEqual(instance.failures, 0)
+        self.assertEqual(instance.host_ports, {'postgres': '15432', 'redis': '16379'})
 
 
 if __name__ == '__main__':

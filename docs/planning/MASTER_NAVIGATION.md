@@ -1,10 +1,10 @@
 # Merlin Master Navigation Guide
 
-This guide is the working map for the project. Repo rules require planning files under `docs/planning/`; this is the closest allowed location to a repo-level master guide.
+This guide is the working map for the project. Topic documents are organized under `docs/`; session control files remain in `docs/planning/`. See [the document index](../README.md).
 
 ## Daily commands and learning
 
-Open [Terminal commands and Ubuntu Explorer access](TERMINAL_COMMANDS.md) for daily commands, including `codex -C /home/vipra/Merlin`. Public [README](../../README.md) and [SETUP](../SETUP.md) describe the actual setup. [Sprint 0 learning](SPRINT0_LEARNING.md) explains each design choice and the remaining short explain-back. Current acceptance evidence is at the top of [Part 17](part-17-sprint0.md); dated historical blockers below are superseded there.
+Open [Terminal commands and Ubuntu Explorer access](../setup/terminal-commands.md) for daily commands, including `codex -C /home/vipra/Merlin`. Public [README](../../README.md) and [SETUP](../setup/local-setup.md) describe the actual setup. [Sprint 0 learning](../learning/sprint-0-learning.md) explains each design choice and the remaining short explain-back. Current acceptance evidence is at the top of [Part 17](../sprints/part-17-sprint0.md); dated historical blockers below are superseded there.
 
 ## Current working location
 
@@ -19,7 +19,7 @@ Current environment already verified:
 
 ## Windows access to this same checkout
 
-Open `\\wsl$\Ubuntu\home\vipra\Merlin` in Windows Explorer; use VS Code WSL for development. Follow [single-checkout steps](part-04-environment-setup.md). This exposes the Ubuntu files directly; the old `C:\Users\vipra\Merlin` copy remains stale and should not receive active edits. No automatic sync is needed or configured.
+Open `\\wsl$\Ubuntu\home\vipra\Merlin` in Windows Explorer; use VS Code WSL for development. Follow [single-checkout steps](../setup/part-04-environment-setup.md). This exposes the Ubuntu files directly; the old `C:\Users\vipra\Merlin` copy remains stale and should not receive active edits. No automatic sync is needed or configured.
 
 ## Read order for every work session
 
@@ -39,15 +39,15 @@ Sprint 0 Days 1–3 operational setup passes. Use the Windows desktop **Merlin U
 
 ### A. Section 8 — operationally complete
 
-Read [final Day 3 evidence](part-04-environment-setup.md). October 6: corrected services postgres/redis are running and healthy; images are digest-pinned; secret boundary, host/container positive/negative auth, PING, non-root processes, resource/logging policies and storage retention pass. PostgreSQL volume and cluster identity are preserved. Do not rerun the transition without a concrete reason. Part 04 contains the reproduction steps.
+Read [final Day 3 evidence](../setup/part-04-environment-setup.md). October 6: corrected services postgres/redis are running and healthy; images are digest-pinned; secret boundary, host/container positive/negative auth, PING, non-root processes, resource/logging policies and storage retention pass. PostgreSQL volume and cluster identity are preserved. Do not rerun the transition without a concrete reason. Part 04 contains the reproduction steps.
 
 ### B. Accounts and next-day boundary
 
-Public MER Free/Scrum project setup and Jira team-managed type are learner-confirmed; AWS remains deferred. Repository public visibility was observed through GitHub. Personal verification, MFA, sign-in and recovery evidence is withheld; no personal account setting was changed by the mentor. DSA is learner-deferred. Actual minutes, mastery/re-quiz and whiteboard remain unreported. Requested Day 4 documentation and doctor/CI specifications are delivered in [Part 17](part-17-sprint0.md). Learner learning/time and fresh-clone execution remain open; no workflow/script implementation is claimed.
+Jira MER Free/Scrum project setup and team-managed type are learner-confirmed; repository public visibility was observed through GitHub. Personal account verification, MFA, sign-in, recovery and credential-validation details are kept private; no personal account setting was changed by the mentor. AWS and DSA remain learner-deferred. Actual minutes, mastery/re-quiz and whiteboard remain unreported. Requested Day 4 documentation and doctor/CI specifications are delivered in [Part 17](../sprints/part-17-sprint0.md). Learner learning/time and fresh-clone execution remain open; no workflow/script implementation is claimed.
 
 ### C. Keep Section 9 deferred
 
-Read the optional-tools table in `part-04-environment-setup.md`. Do not install Ollama, models, MongoDB, Java, kind, kubectl, n8n, Chroma/Qdrant, Hugging Face, Colab/Kaggle, Playwright, or k6 until the scheduled day and gate.
+Read the optional-tools table in `../setup/part-04-environment-setup.md`. Do not install Ollama, models, MongoDB, Java, kind, kubectl, n8n, Chroma/Qdrant, Hugging Face, Colab/Kaggle, Playwright, or k6 until the scheduled day and gate.
 
 ## Planning documents: what exists and what it means
 
@@ -81,7 +81,7 @@ After Day 4/5 setup gates, story expansion starts with E0/E1 and Day 6 checklist
 
 For each day, use this order:
 
-1. Sprint file: `part-17-sprint0.md` for Days 1–5, then `part-18` through `part-22`.
+1. Sprint file: `../sprints/part-17-sprint0.md` for Days 1–5, then `part-18` through `part-22`.
 2. Part 5 component entry for the component.
 3. Part 6 or 7 checklist item.
 4. Relevant skill card in Part 14 or 15.
@@ -101,9 +101,9 @@ Section 8 is complete only after S8-01 through S8-05 pass with dated sanitized e
 
 Historical Day 4 update: retention passed and services were stopped. Setup inputs were later committed and an isolated adapted clone passed. October 6 services are running; public unmodified clone, doctor and hosted setup CI now pass. Learner explain-back/whiteboard/re-quiz remain separate. Continue at STATE NEXT.
 
-Sprint 0 audit: [Part 17 S0-CLOSE](part-17-sprint0.md#s0-close--concrete-route-to-full-completion) defines remaining implementation/clone/personal gates. Operational Sprint0 PASS: Section8, unmodified reproduction and hosted CI proof now exist in the current Part17 closure table. Day5 review delivered; learner learning evidence remains qualified.
+Sprint 0 audit: [Part 17 S0-CLOSE](../sprints/part-17-sprint0.md#s0-close--concrete-route-to-full-completion) defines remaining implementation/clone/personal gates. Operational Sprint0 PASS: Section8, unmodified reproduction and hosted CI proof now exist in the current Part17 closure table. Day5 review delivered; learner learning evidence remains qualified.
 
 ## Start coding — October 6
 
-📚 Learn first: [current environment audit](part-04-environment-setup.md#current-coding-readiness-audit--october-6-2026), current versus historical evidence; stop before optional installers.
-↩ Return: open [Day 6](part-18-sprint1.md#day-6--tuesday-october-6--first-database-foundation), then C-04.01/.02 in Part 6. Local foundations are ready; dependency compatibility and isolated migration prerequisites must pass before C-04.03. The first users/notes slice is not an instruction to build every backend component today.
+📚 Learn first: [current environment audit](../setup/part-04-environment-setup.md#current-coding-readiness-audit--october-6-2026), current versus historical evidence; stop before optional installers.
+↩ Return: open [Day 6](../sprints/part-18-sprint1.md#day-6--tuesday-october-6--first-database-foundation), then C-04.01/.02 in Part 6. Local foundations are ready; dependency compatibility and isolated migration prerequisites must pass before C-04.03. The first users/notes slice is not an instruction to build every backend component today.

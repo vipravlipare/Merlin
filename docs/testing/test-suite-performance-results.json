@@ -1,0 +1,130 @@
+{
+  "old_seconds": 791.151679,
+  "new_seconds": 184.906056,
+  "speedup": 4.278668293049309,
+  "reduction_percent": 76.6282419783628,
+  "summary": {
+    "started_utc": "2026-10-11T18:09:10.647283+00:00",
+    "stages": [
+      {
+        "stage": "python-tests",
+        "exit": 0,
+        "status": "PASS",
+        "seconds": 8.765
+      },
+      {
+        "stage": "quiz-tests",
+        "exit": 0,
+        "status": "PASS",
+        "seconds": 0.094
+      },
+      {
+        "stage": "legacy-python-faults",
+        "exit": 0,
+        "status": "PASS",
+        "seconds": 8.38
+      },
+      {
+        "stage": "python-case-faults",
+        "exit": 0,
+        "status": "PASS",
+        "seconds": 91.554,
+        "excluded_invalid_import_faults": [
+          "ast-database_connectivity_probe-21-11",
+          "ast-notes_maintenance-76-42",
+          "ast-doctor-229-52",
+          "ast-prd_lint-181-88"
+        ]
+      },
+      {
+        "stage": "database-case-faults",
+        "exit": 0,
+        "status": "PASS",
+        "seconds": 14.74
+      },
+      {
+        "stage": "timestamp-case-faults",
+        "exit": 0,
+        "status": "PASS",
+        "seconds": 0.589
+      },
+      {
+        "stage": "quiz-case-faults",
+        "exit": 0,
+        "status": "PASS",
+        "seconds": 1.3
+      },
+      {
+        "stage": "browser-case-faults",
+        "exit": 0,
+        "status": "PASS",
+        "seconds": 8.621
+      },
+      {
+        "stage": "database-lifecycle-faults",
+        "exit": 0,
+        "status": "PASS",
+        "seconds": 19.518
+      },
+      {
+        "stage": "migration-undo-faults",
+        "exit": 0,
+        "status": "PASS",
+        "seconds": 29.414
+      },
+      {
+        "stage": "documentation",
+        "exit": 0,
+        "status": "PASS",
+        "seconds": 0.112
+      },
+      {
+        "stage": "whitespace",
+        "exit": 0,
+        "status": "PASS",
+        "seconds": 0.011
+      }
+    ],
+    "status": "PASS",
+    "finished_utc": "2026-10-11T18:12:15.553339+00:00"
+  },
+  "coverage_comparisons": {
+    "merlin-python-effectiveness-final.json": {
+      "cases": 349,
+      "faults": 239,
+      "case_inventory_and_exact_detection_sets_match": true
+    },
+    "merlin-quiz-effectiveness.json": {
+      "cases": 42,
+      "faults": 35,
+      "case_inventory_and_exact_detection_sets_match": true
+    },
+    "merlin-sql-effectiveness-final.json": {
+      "cases": 389,
+      "case_fault_pairs": 653,
+      "exact_fault_recipes_and_detection_statuses_match": true
+    },
+    "merlin-sql-F077-final.json": {
+      "cases": 1,
+      "case_fault_pairs": 1,
+      "exact_fault_recipes_and_detection_statuses_match": true
+    },
+    "merlin-browser-effectiveness.json": {
+      "cases": 16,
+      "case_inventory_matches": true
+    },
+    "merlin-lifecycle-effectiveness.json": {
+      "cases": 5,
+      "case_inventory_matches": true
+    },
+    "legacy-python-faults.json": {
+      "faults": 55,
+      "exact_results_match": true
+    },
+    "migration-undo-results.json": {
+      "roundtrip_case_executions": 776,
+      "focused_checks": 36,
+      "same_migration_source_and_check_inventory": true
+    }
+  }
+}

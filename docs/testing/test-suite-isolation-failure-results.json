@@ -1,0 +1,14 @@
+{
+  "initial_experiment": "/tmp/merlin-python-fork-results.json",
+  "failure": [
+    {
+      "fault": "ast-prd_lint-154-425",
+      "file": "tools/prd_lint.py",
+      "status": "INVALID",
+      "cases": {},
+      "reason": "ngs.py\", line 119, in pytest_sessionfinish\n    return (yield)\n            ^^^^^\n  File \"/home/vipra/Merlin/.venv/lib/python3.12/site-packages/pluggy/_callers.py\", line 121, in _multicall\n    res = hook_impl.function(*args)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/vipra/Merlin/.venv/lib/python3.12/site-packages/_pytest/tmpdir.py\", line 340, in pytest_sessionfinish\n    tmp_path_factory._exit_stack.close()\n  File \"/home/vipra/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/contextlib.py\", line 618, in close\n    self.__exit__(None, None, None)\n  File \"/home/vipra/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/contextlib.py\", line 610, in __exit__\n    raise exc_details[1]\n  File \"/home/vipra/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/contextlib.py\", line 595, in __exit__\n    if cb(*exc_details):\n       ^^^^^^^^^^^^^^^^\n  File \"/home/vipra/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/contextlib.py\", line 478, in _exit_wrapper\n    callback(*args, **kwds)\n  File \"/home/vipra/Merlin/.venv/lib/python3.12/site-packages/_pytest/pathlib.py\", line 371, in cleanup_numbered_dir\n    cleanup_dead_symlinks(root)\n  File \"/home/vipra/Merlin/.venv/lib/python3.12/site-packages/_pytest/pathlib.py\", line 357, in cleanup_dead_symlinks\n    left_dir.unlink()\n  File \"/home/vipra/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/pathlib.py\", line 1342, in unlink\n    os.unlink(self)\nFileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-vipra/pytest-current'\n"
+    }
+  ],
+  "resolution": "Unique pytest --basetemp per experiment. No new invalid exclusion. Final complete suite detects the fault and preserves every per-case detection set.",
+  "verified_results": "test-suite-fast-run-results.json"
+}

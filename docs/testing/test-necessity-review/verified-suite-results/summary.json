@@ -1,0 +1,309 @@
+{
+  "started_utc": "2026-10-13T02:09:58.576335+00:00",
+  "stages": [
+    {
+      "stage": "python-tests",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 7.907
+    },
+    {
+      "stage": "quiz-tests",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0.105
+    },
+    {
+      "stage": "python-case-faults",
+      "status": "PASS",
+      "exit": 0,
+      "excluded_invalid_import_faults": [
+        "ast-database_connectivity_probe-21-11",
+        "ast-notes_maintenance-76-42",
+        "ast-doctor-229-52",
+        "ast-prd_lint-181-88"
+      ],
+      "fault_aliases": {
+        "text-whitespace-body-trimmed": "body-stripped",
+        "ast-notes_maintenance-25-60": "identity-or-changed-to-and"
+      },
+      "seconds": 27.787
+    },
+    {
+      "stage": "database-case-faults",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 22.197
+    },
+    {
+      "stage": "quiz-case-faults",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 1.574
+    },
+    {
+      "stage": "browser-case-faults",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 6.973
+    },
+    {
+      "stage": "database-lifecycle-faults",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 9.958
+    },
+    {
+      "stage": "migration-undo-faults",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 20.343
+    },
+    {
+      "stage": "documentation",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0.163
+    },
+    {
+      "stage": "whitespace",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0.012
+    }
+  ],
+  "status": "PASS",
+  "execution": {
+    "database_transport": "guarded reusable libpq session",
+    "python_fault_workers": 6,
+    "schedule": "independent Python and quiz lanes with isolated database lanes",
+    "python_fault_scope": "dependent",
+    "database_isolation": {
+      "status": "PASS",
+      "root": "/tmp/merlin-db-sandboxes-2605aff001584c3b885d3200a6c73eb1",
+      "docker_operation_seconds": [
+        {
+          "operation": "diff",
+          "seconds": 0.45
+        },
+        {
+          "operation": "volume",
+          "seconds": 0.072
+        },
+        {
+          "operation": "volume",
+          "seconds": 0.08
+        },
+        {
+          "operation": "volume",
+          "seconds": 0.089
+        },
+        {
+          "operation": "create",
+          "seconds": 0.4
+        },
+        {
+          "operation": "create",
+          "seconds": 0.412
+        },
+        {
+          "operation": "create",
+          "seconds": 0.415
+        },
+        {
+          "operation": "cp",
+          "seconds": 0.168
+        },
+        {
+          "operation": "cp",
+          "seconds": 0.217
+        },
+        {
+          "operation": "cp",
+          "seconds": 0.104
+        },
+        {
+          "operation": "cp",
+          "seconds": 0.257
+        },
+        {
+          "operation": "cp",
+          "seconds": 0.122
+        },
+        {
+          "operation": "cp",
+          "seconds": 0.147
+        },
+        {
+          "operation": "start",
+          "seconds": 0.377
+        },
+        {
+          "operation": "start",
+          "seconds": 0.36
+        },
+        {
+          "operation": "start",
+          "seconds": 0.349
+        },
+        {
+          "operation": "container",
+          "seconds": 0.063
+        },
+        {
+          "operation": "container",
+          "seconds": 0.061
+        },
+        {
+          "operation": "container",
+          "seconds": 0.077
+        },
+        {
+          "operation": "container",
+          "seconds": 0.071
+        },
+        {
+          "operation": "container",
+          "seconds": 0.07
+        },
+        {
+          "operation": "container",
+          "seconds": 0.057
+        },
+        {
+          "operation": "container",
+          "seconds": 0.063
+        },
+        {
+          "operation": "container",
+          "seconds": 0.064
+        },
+        {
+          "operation": "container",
+          "seconds": 0.11
+        },
+        {
+          "operation": "container",
+          "seconds": 0.062
+        },
+        {
+          "operation": "container",
+          "seconds": 0.069
+        },
+        {
+          "operation": "container",
+          "seconds": 0.082
+        },
+        {
+          "operation": "container",
+          "seconds": 0.072
+        },
+        {
+          "operation": "container",
+          "seconds": 0.072
+        },
+        {
+          "operation": "container",
+          "seconds": 0.089
+        },
+        {
+          "operation": "ps",
+          "seconds": 0.044
+        },
+        {
+          "operation": "container",
+          "seconds": 0.047
+        },
+        {
+          "operation": "rm",
+          "seconds": 0.257
+        },
+        {
+          "operation": "container",
+          "seconds": 0.079
+        },
+        {
+          "operation": "rm",
+          "seconds": 0.288
+        },
+        {
+          "operation": "container",
+          "seconds": 0.077
+        },
+        {
+          "operation": "rm",
+          "seconds": 0.285
+        },
+        {
+          "operation": "volume",
+          "seconds": 0.066
+        },
+        {
+          "operation": "volume",
+          "seconds": 0.038
+        },
+        {
+          "operation": "volume",
+          "seconds": 0.081
+        },
+        {
+          "operation": "volume",
+          "seconds": 0.053
+        },
+        {
+          "operation": "volume",
+          "seconds": 0.072
+        },
+        {
+          "operation": "volume",
+          "seconds": 0.048
+        },
+        {
+          "operation": "volume",
+          "seconds": 0.071
+        },
+        {
+          "operation": "images",
+          "seconds": 0.091
+        }
+      ],
+      "backup_command_seconds": 0.808,
+      "runtime_cache_hit": true,
+      "runtime_image": "sha256:fde5d3b820b6bb426e0d44b18857ccea034fc78e910f1a8570f5782fdeb87a03",
+      "runtime_digest": "6c05e291e72faf0e6e7c346e0f7a704bbbc4434c086f43c6053a83c967257c7f",
+      "runtime_prepare_seconds": 1.167,
+      "setup_seconds": 5.728,
+      "targets": [
+        {
+          "name": "sql",
+          "container": "c6a7c597226d07f1f3f5a1d0603aa8cc5426357d432e1f23ffef51b2aec46d5f",
+          "data": "/tmp/merlin-db-sandboxes-2605aff001584c3b885d3200a6c73eb1/sql",
+          "socket": "/tmp/merlin-db-sandboxes-2605aff001584c3b885d3200a6c73eb1/sql/socket"
+        },
+        {
+          "name": "lifecycle",
+          "container": "3e95a110b4712adffafd68ad0a0c20cbb28aa5ec90585ba64aa607b2fb83cb12",
+          "data": "/tmp/merlin-db-sandboxes-2605aff001584c3b885d3200a6c73eb1/lifecycle",
+          "socket": "/tmp/merlin-db-sandboxes-2605aff001584c3b885d3200a6c73eb1/lifecycle/socket"
+        },
+        {
+          "name": "migration",
+          "container": "df2f75cd1bad50f6feba4e489c6551058ac811936a646fcee5856c1908a1c067",
+          "data": "/tmp/merlin-db-sandboxes-2605aff001584c3b885d3200a6c73eb1/migration",
+          "socket": "/tmp/merlin-db-sandboxes-2605aff001584c3b885d3200a6c73eb1/migration/socket"
+        }
+      ],
+      "source_fingerprint": "37acb7647f0a140d3047bf62d64e6209",
+      "startup_timings": {
+        "backup_seconds": 0.5936088640009984
+      },
+      "controls_seconds": 4.428,
+      "controls_passed": true,
+      "cleanup_seconds": 1.795,
+      "cleanup_passed": true,
+      "source_preserved": true,
+      "wall_seconds": 34.482
+    }
+  },
+  "finished_utc": "2026-10-13T02:10:45.043204+00:00"
+}

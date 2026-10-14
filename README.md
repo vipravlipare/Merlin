@@ -4,12 +4,12 @@ Merlin is a beginner learning project for building a local-first notes/tasks and
 
 The development environment is Ubuntu under WSL, Python 3.12 managed by uv, Node 24/pnpm 12, and Docker Compose with pinned PostgreSQL 17 and Redis 8 images. PostgreSQL is intended to hold durable relational data. Redis currently provides a disposable local smoke-test service; application caching is not implemented.
 
-- [Setup and five-command fresh-clone path](docs/SETUP.md)
-- [Terminal commands and Windows Explorer location](docs/planning/TERMINAL_COMMANDS.md)
-- [Sprint 0 evidence and current limits](docs/planning/part-17-sprint0.md)
-- [Sprint 1: first learner-owned backend slice](docs/planning/part-18-sprint1.md)
-- [Sprint 0 engineering lessons](docs/planning/SPRINT0_LEARNING.md)
-- [Interactive Sprint 0 quiz](Quizzes/sprint-0-quiz.html)
+- [Setup and five-command fresh-clone path](docs/setup/local-setup.md)
+- [Terminal commands and Windows Explorer location](docs/setup/terminal-commands.md)
+- [Sprint 0 evidence and current limits](docs/sprints/part-17-sprint0.md)
+- [Sprint 1: first learner-owned backend slice](docs/sprints/part-18-sprint1.md)
+- [Sprint 0 engineering lessons](docs/learning/sprint-0-learning.md)
+- [Interactive Sprint 0 quiz](quizzes/sprint-0-quiz.html)
 
 Run `uv run --locked python tools/doctor.py` to inspect your setup. The doctor does not start services, repair databases, rotate credentials or delete volumes. Required failures return a nonzero status; application tests are explicitly not applicable until application code exists.
 

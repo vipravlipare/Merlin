@@ -1,0 +1,228 @@
+{
+  "checks": [
+    {
+      "scenario": "pass",
+      "passed": true,
+      "runner_exit": 0
+    },
+    {
+      "scenario": "serial",
+      "passed": true,
+      "runner_exit": 0
+    },
+    {
+      "scenario": "failure",
+      "passed": true,
+      "runner_exit": 1
+    },
+    {
+      "scenario": "setup-failure",
+      "passed": true,
+      "runner_exit": 1
+    },
+    {
+      "scenario": "interrupt",
+      "passed": true,
+      "runner_exit": 1
+    },
+    {
+      "scenario": "baseline-failure",
+      "passed": true,
+      "runner_exit": 1
+    },
+    {
+      "scenario": "interrupt-setup",
+      "passed": true,
+      "runner_exit": 1
+    },
+    {
+      "scenario": "prerequisite-failure",
+      "passed": true,
+      "runner_exit": 1
+    },
+    {
+      "scenario": "preflight-pass",
+      "passed": true
+    },
+    {
+      "scenario": "preflight-failure",
+      "passed": true
+    },
+    {
+      "scenario": "preflight-timeout",
+      "passed": true
+    },
+    {
+      "scenario": "migration-undo-faults-complete-positive",
+      "passed": true
+    },
+    {
+      "scenario": "migration-undo-faults-contradictory-schema",
+      "passed": true
+    },
+    {
+      "scenario": "migration-undo-faults-contradictory-runtime",
+      "passed": true
+    },
+    {
+      "scenario": "migration-undo-faults-wrong-target",
+      "passed": true
+    },
+    {
+      "scenario": "migration-undo-faults-missing-source",
+      "passed": true
+    },
+    {
+      "scenario": "migration-undo-faults-false-validation",
+      "passed": true
+    },
+    {
+      "scenario": "migration-undo-faults-malformed-schema-digest",
+      "passed": true
+    },
+    {
+      "scenario": "migration-undo-faults-wrong-replay-count",
+      "passed": true
+    },
+    {
+      "scenario": "migration-undo-faults-wrong-replay-mode",
+      "passed": true
+    },
+    {
+      "scenario": "migration-undo-faults-missing-branch",
+      "passed": true
+    },
+    {
+      "scenario": "legacy-python-faults-complete-positive",
+      "passed": true
+    },
+    {
+      "scenario": "legacy-python-faults-truncated",
+      "passed": true
+    },
+    {
+      "scenario": "legacy-python-faults-duplicate",
+      "passed": true
+    },
+    {
+      "scenario": "python-case-faults-complete-positive",
+      "passed": true
+    },
+    {
+      "scenario": "python-case-faults-truncated",
+      "passed": true
+    },
+    {
+      "scenario": "python-case-faults-duplicate",
+      "passed": true
+    },
+    {
+      "scenario": "python-case-faults-missing-fault",
+      "passed": true
+    },
+    {
+      "scenario": "python-case-faults-missing-source-manifest",
+      "passed": true
+    },
+    {
+      "scenario": "python-case-faults-contradictory-baseline",
+      "passed": true
+    },
+    {
+      "scenario": "python-case-faults-missing-scope-proof",
+      "passed": true
+    },
+    {
+      "scenario": "python-case-faults-invented-detection",
+      "passed": true
+    },
+    {
+      "scenario": "database-case-faults-complete-positive",
+      "passed": true
+    },
+    {
+      "scenario": "database-case-faults-truncated",
+      "passed": true
+    },
+    {
+      "scenario": "database-case-faults-duplicate",
+      "passed": true
+    },
+    {
+      "scenario": "database-case-faults-missing-source-manifest",
+      "passed": true
+    },
+    {
+      "scenario": "database-case-faults-contradictory-preservation",
+      "passed": true
+    },
+    {
+      "scenario": "database-case-faults-missing-pair",
+      "passed": true
+    },
+    {
+      "scenario": "quiz-case-faults-complete-positive",
+      "passed": true
+    },
+    {
+      "scenario": "quiz-case-faults-truncated",
+      "passed": true
+    },
+    {
+      "scenario": "quiz-case-faults-duplicate",
+      "passed": true
+    },
+    {
+      "scenario": "quiz-case-faults-missing-fault",
+      "passed": true
+    },
+    {
+      "scenario": "quiz-case-faults-missing-source-manifest",
+      "passed": true
+    },
+    {
+      "scenario": "quiz-case-faults-contradictory-baseline",
+      "passed": true
+    },
+    {
+      "scenario": "quiz-case-faults-invented-detection",
+      "passed": true
+    },
+    {
+      "scenario": "browser-case-faults-complete-positive",
+      "passed": true
+    },
+    {
+      "scenario": "browser-case-faults-truncated",
+      "passed": true
+    },
+    {
+      "scenario": "browser-case-faults-duplicate",
+      "passed": true
+    },
+    {
+      "scenario": "browser-case-faults-missing-source-manifest",
+      "passed": true
+    },
+    {
+      "scenario": "browser-case-faults-contradictory-mutation",
+      "passed": true
+    },
+    {
+      "scenario": "database-lifecycle-faults-complete-positive",
+      "passed": true
+    },
+    {
+      "scenario": "database-lifecycle-faults-truncated",
+      "passed": true
+    },
+    {
+      "scenario": "database-lifecycle-faults-duplicate",
+      "passed": true
+    },
+    {
+      "scenario": "database-lifecycle-faults-contradictory-mutation",
+      "passed": true
+    }
+  ]
+}

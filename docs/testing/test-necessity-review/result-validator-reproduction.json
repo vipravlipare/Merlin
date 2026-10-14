@@ -1,0 +1,29 @@
+{
+  "method": "Actual validator called with fabricated truncated reports; no database or product mutation",
+  "checks": [
+    {
+      "stage": "python-case-faults",
+      "incorrectly_accepted": true
+    },
+    {
+      "stage": "database-case-faults",
+      "incorrectly_accepted": true
+    },
+    {
+      "stage": "quiz-case-faults",
+      "incorrectly_accepted": true
+    },
+    {
+      "stage": "browser-case-faults",
+      "incorrectly_accepted": true
+    },
+    {
+      "stage": "database-lifecycle-faults",
+      "incorrectly_accepted": true
+    },
+    {
+      "stage": "legacy-python-faults",
+      "incorrectly_accepted": true
+    }
+  ]
+}

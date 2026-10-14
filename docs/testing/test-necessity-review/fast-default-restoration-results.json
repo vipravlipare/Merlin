@@ -1,0 +1,360 @@
+{
+  "confirmed_configuration_error": "The 43.109247-second trial used eight workers; the final 55.648254-second run left six workers as the default. Restored eight in runner metadata and both execution paths.",
+  "remaining_uncertainty": "SQL, lifecycle and browser stages also slowed. Exact SQL implementations/statuses and cached runtime digest match the 43.11-second run. Current evidence does not establish why these independently slower stages took longer; no unmeasured host-load cause is claimed.",
+  "controls_retained": true,
+  "trials": [
+    {
+      "directory": "/tmp/merlin-test-suite-e6lywnp0",
+      "status": "PASS",
+      "seconds": 43.109247,
+      "workers": 8,
+      "stages": [
+        {
+          "stage": "python-tests",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 8.072
+        },
+        {
+          "stage": "quiz-tests",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.079
+        },
+        {
+          "stage": "python-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "excluded_invalid_import_faults": [
+            "ast-database_connectivity_probe-21-11",
+            "ast-notes_maintenance-76-42",
+            "ast-doctor-229-52",
+            "ast-prd_lint-181-88"
+          ],
+          "fault_aliases": {
+            "text-whitespace-body-trimmed": "body-stripped",
+            "ast-notes_maintenance-25-60": "identity-or-changed-to-and",
+            "ast-doctor-208-1251": "doctor-cluster-always-refuses"
+          },
+          "seconds": 23.338
+        },
+        {
+          "stage": "database-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 24.23
+        },
+        {
+          "stage": "quiz-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 1.811
+        },
+        {
+          "stage": "browser-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 7.38
+        },
+        {
+          "stage": "database-lifecycle-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 11.422
+        },
+        {
+          "stage": "migration-undo-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 18.14
+        },
+        {
+          "stage": "documentation",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.156
+        },
+        {
+          "stage": "whitespace",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.012
+        }
+      ],
+      "copy_metrics": {
+        "runtime_digest": "6c05e291e72faf0e6e7c346e0f7a704bbbc4434c086f43c6053a83c967257c7f",
+        "runtime_cache_hit": true,
+        "setup_seconds": 6.225,
+        "controls_seconds": 3.323,
+        "cleanup_seconds": 1.752,
+        "source_preserved": true,
+        "cleanup_passed": true
+      }
+    },
+    {
+      "directory": "/tmp/merlin-test-suite-sihzqbro",
+      "status": "PASS",
+      "seconds": 55.648254,
+      "workers": 6,
+      "stages": [
+        {
+          "stage": "python-tests",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 10.809
+        },
+        {
+          "stage": "quiz-tests",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.092
+        },
+        {
+          "stage": "python-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "excluded_invalid_import_faults": [
+            "ast-database_connectivity_probe-21-11",
+            "ast-notes_maintenance-76-42",
+            "ast-doctor-229-52",
+            "ast-prd_lint-181-88"
+          ],
+          "fault_aliases": {
+            "text-whitespace-body-trimmed": "body-stripped",
+            "ast-notes_maintenance-25-60": "identity-or-changed-to-and",
+            "ast-doctor-208-1251": "doctor-cluster-always-refuses"
+          },
+          "seconds": 36.182
+        },
+        {
+          "stage": "database-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 30.759
+        },
+        {
+          "stage": "quiz-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 2.72
+        },
+        {
+          "stage": "browser-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 9.351
+        },
+        {
+          "stage": "database-lifecycle-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 14.049
+        },
+        {
+          "stage": "migration-undo-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 21.021
+        },
+        {
+          "stage": "documentation",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.226
+        },
+        {
+          "stage": "whitespace",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.039
+        }
+      ],
+      "copy_metrics": {
+        "runtime_digest": "6c05e291e72faf0e6e7c346e0f7a704bbbc4434c086f43c6053a83c967257c7f",
+        "runtime_cache_hit": true,
+        "setup_seconds": 11.55,
+        "controls_seconds": 4.483,
+        "cleanup_seconds": 1.681,
+        "source_preserved": true,
+        "cleanup_passed": true
+      }
+    },
+    {
+      "directory": "/tmp/merlin-test-suite-7o3cd0kb",
+      "status": "PASS",
+      "seconds": 51.608032,
+      "workers": 8,
+      "stages": [
+        {
+          "stage": "python-tests",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 8.192
+        },
+        {
+          "stage": "quiz-tests",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.083
+        },
+        {
+          "stage": "python-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "excluded_invalid_import_faults": [
+            "ast-database_connectivity_probe-21-11",
+            "ast-notes_maintenance-76-42",
+            "ast-doctor-229-52",
+            "ast-prd_lint-181-88"
+          ],
+          "fault_aliases": {
+            "text-whitespace-body-trimmed": "body-stripped",
+            "ast-notes_maintenance-25-60": "identity-or-changed-to-and",
+            "ast-doctor-208-1251": "doctor-cluster-always-refuses"
+          },
+          "seconds": 32.068
+        },
+        {
+          "stage": "database-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 30.608
+        },
+        {
+          "stage": "quiz-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 2.692
+        },
+        {
+          "stage": "browser-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 9.183
+        },
+        {
+          "stage": "database-lifecycle-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 14.656
+        },
+        {
+          "stage": "migration-undo-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 23.178
+        },
+        {
+          "stage": "documentation",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.164
+        },
+        {
+          "stage": "whitespace",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.01
+        }
+      ],
+      "copy_metrics": {
+        "runtime_digest": "6c05e291e72faf0e6e7c346e0f7a704bbbc4434c086f43c6053a83c967257c7f",
+        "runtime_cache_hit": true,
+        "setup_seconds": 6.95,
+        "controls_seconds": 4.172,
+        "cleanup_seconds": 1.722,
+        "source_preserved": true,
+        "cleanup_passed": true
+      }
+    },
+    {
+      "directory": "/tmp/merlin-test-suite-gdzcymit",
+      "status": "PASS",
+      "seconds": 53.079328,
+      "workers": 8,
+      "stages": [
+        {
+          "stage": "python-tests",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 8.572
+        },
+        {
+          "stage": "quiz-tests",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.088
+        },
+        {
+          "stage": "python-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "excluded_invalid_import_faults": [
+            "ast-database_connectivity_probe-21-11",
+            "ast-notes_maintenance-76-42",
+            "ast-doctor-229-52",
+            "ast-prd_lint-181-88"
+          ],
+          "fault_aliases": {
+            "text-whitespace-body-trimmed": "body-stripped",
+            "ast-notes_maintenance-25-60": "identity-or-changed-to-and",
+            "ast-doctor-208-1251": "doctor-cluster-always-refuses"
+          },
+          "seconds": 32.17
+        },
+        {
+          "stage": "database-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 30.756
+        },
+        {
+          "stage": "quiz-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 2.758
+        },
+        {
+          "stage": "browser-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 9.165
+        },
+        {
+          "stage": "database-lifecycle-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 14.607
+        },
+        {
+          "stage": "migration-undo-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 22.94
+        },
+        {
+          "stage": "documentation",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.164
+        },
+        {
+          "stage": "whitespace",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.012
+        }
+      ],
+      "copy_metrics": {
+        "runtime_digest": "6c05e291e72faf0e6e7c346e0f7a704bbbc4434c086f43c6053a83c967257c7f",
+        "runtime_cache_hit": true,
+        "setup_seconds": 7.424,
+        "controls_seconds": 4.433,
+        "cleanup_seconds": 1.872,
+        "source_preserved": true,
+        "cleanup_passed": true
+      }
+    }
+  ],
+  "default_workers": 8
+}

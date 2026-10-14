@@ -1,0 +1,17 @@
+{
+  "source": "/tmp/merlin-test-suite-e6lywnp0/migration-undo-results.json",
+  "counterfactuals": [
+    {
+      "changed": "schema",
+      "accepted_before_fix": true
+    },
+    {
+      "changed": "runtime",
+      "accepted_before_fix": true
+    },
+    {
+      "changed": "target",
+      "accepted_before_fix": true
+    }
+  ]
+}

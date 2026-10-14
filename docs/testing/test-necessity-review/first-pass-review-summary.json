@@ -1,0 +1,111 @@
+{
+  "scope": "Exhaustive original-case/fault review plus current repairs and verified consolidation. No application or migration source changed.",
+  "original_complete_review_rows": 801,
+  "original_fault_pairs_reviewed": 653,
+  "source_run": "/tmp/merlin-test-suite-y0i5_1fz",
+  "verified_seconds": 46.466869,
+  "database_seconds": 34.482,
+  "target_under_52_seconds": true,
+  "baseline_counts": {
+    "python_case_rows": 332,
+    "python_ordinary_cases": 329,
+    "python_subtests": 3,
+    "sql_cases": 385,
+    "quiz_cases": 40,
+    "browser_cases": 16,
+    "lifecycle_cases": 5,
+    "total_case_rows": 778,
+    "canonical_python_faults": 233,
+    "python_aliases": 2,
+    "excluded_import_diagnostics": 4,
+    "sql_pairs": 607,
+    "sql_distinct_implementations_including_reconnect": 126,
+    "quiz_faults": 37,
+    "browser_faults": 16,
+    "lifecycle_faults": 5,
+    "migration_controls": 36,
+    "infrastructure_controls": 93
+  },
+  "sql_pair_statuses": {
+    "DETECTED_ASSERTION": 581,
+    "DETECTED_BEHAVIOR_ERROR": 26
+  },
+  "final_case_dispositions": {
+    "KEEP": 723,
+    "KEEP DISTINCT INPUT": 9,
+    "MERGED": 25,
+    "REPAIRED": 46
+  },
+  "inventory_completeness": {
+    "all original Python case/subtest rows": {
+      "passed": true,
+      "count": 349
+    },
+    "all original SQL cases": {
+      "passed": true,
+      "count": 389
+    },
+    "all original JS cases": {
+      "passed": true,
+      "count": 42
+    },
+    "all original browser cases": {
+      "passed": true,
+      "count": 16
+    },
+    "all original lifecycle cases": {
+      "passed": true,
+      "count": 5
+    },
+    "all original Python faults": {
+      "passed": true,
+      "count": 239
+    },
+    "all original JS faults": {
+      "passed": true,
+      "count": 35
+    },
+    "all original SQL fault pairs": {
+      "passed": true,
+      "count": 653
+    },
+    "all original migration controls": {
+      "passed": true,
+      "count": 36
+    },
+    "current Python inventory": {
+      "passed": true,
+      "count": 332
+    },
+    "current SQL inventory": {
+      "passed": true,
+      "count": 385
+    },
+    "current JS inventory": {
+      "passed": true,
+      "count": 40
+    },
+    "current browser inventory": {
+      "passed": true,
+      "count": 16
+    },
+    "current lifecycle inventory": {
+      "passed": true,
+      "count": 5
+    },
+    "every current case has final disposition": {
+      "passed": true,
+      "count": 778
+    }
+  },
+  "source_preserved": true,
+  "cleanup_passed": true,
+  "limits": [
+    "Finite tests cannot guarantee every possible present or future defect.",
+    "Authenticated API cross-user denial remains pending until the API ownership boundary exists.",
+    "Print control verifies invocation, not printed layout.",
+    "Browser storage/cache mutations establish uncaught-error containment, not every storage failure mode.",
+    "Migration undo/reapply routine exercises synthetic historical permission branches; original historical PUBLIC CREATE remains unknown.",
+    "Complete-module unique mutations are useful regression probes, not a claim of a mathematically minimal fault catalogue."
+  ]
+}

@@ -1,0 +1,137 @@
+{
+  "recorded_date": "2026-10-11",
+  "raw_reports": "/tmp/merlin-test-suite-fyhssnxa",
+  "comparison_reports": "/tmp/merlin-test-suite-61blqqhn",
+  "seconds": 82.677408,
+  "previous_seconds": 184.906056,
+  "original_seconds": 791.151679,
+  "summary": {
+    "started_utc": "2026-10-11T18:44:22.909097+00:00",
+    "stages": [
+      {
+        "stage": "python-tests",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 8.589
+      },
+      {
+        "stage": "quiz-tests",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 0.083
+      },
+      {
+        "stage": "legacy-python-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 9.1
+      },
+      {
+        "stage": "python-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "excluded_invalid_import_faults": [
+          "ast-database_connectivity_probe-21-11",
+          "ast-notes_maintenance-76-42",
+          "ast-doctor-229-52",
+          "ast-prd_lint-181-88"
+        ],
+        "seconds": 28.627
+      },
+      {
+        "stage": "database-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 28.694
+      },
+      {
+        "stage": "timestamp-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 1.241
+      },
+      {
+        "stage": "quiz-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 1.361
+      },
+      {
+        "stage": "browser-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 8.702
+      },
+      {
+        "stage": "database-lifecycle-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 16.975
+      },
+      {
+        "stage": "migration-undo-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 23.457
+      },
+      {
+        "stage": "documentation",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 0.109
+      },
+      {
+        "stage": "whitespace",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 0.011
+      }
+    ],
+    "status": "PASS",
+    "execution": {
+      "database_transport": "guarded reusable libpq session",
+      "python_fault_workers": 8,
+      "schedule": "independent CPU lane and serial database lane",
+      "python_fault_scope": "dependent"
+    },
+    "finished_utc": "2026-10-11T18:45:45.586505+00:00"
+  },
+  "coverage_comparison": {
+    "python_case_detection_sets": true,
+    "python_fault_statuses": true,
+    "python_scope_manifests": true,
+    "quiz_case_detection_sets": true,
+    "quiz_fault_statuses": true,
+    "sql_all_case_fault_pairs": true,
+    "sql_all_baselines": true,
+    "legacy_all_faults": true,
+    "browser_cases_and_detection": true,
+    "lifecycle_cases_and_detection": true,
+    "migration_source_preserved": true,
+    "migration_roundtrips": true,
+    "migration_gates": true,
+    "migration_repairs": true,
+    "migration_concurrency": true,
+    "database_fingerprint": true
+  },
+  "execution_controls": {
+    "checks": [
+      {
+        "scenario": "pass",
+        "passed": true,
+        "runner_exit": 0
+      },
+      {
+        "scenario": "failure",
+        "passed": true,
+        "runner_exit": 1
+      },
+      {
+        "scenario": "interrupt",
+        "passed": true,
+        "runner_exit": 1
+      }
+    ]
+  },
+  "scope_note": "All baseline cases and all faults retained. Dependent Python modules run for each fault; unknown or changed scopes run all. Unrelated Python case/fault repetitions are reduced. Explicit all-pairs mode remains available."
+}

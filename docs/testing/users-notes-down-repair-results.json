@@ -1,0 +1,266 @@
+{
+  "source_sha256": "22cd8805e287303999c4aac8b084f6d7e08bf209950ede4b3f6038a7e0ca3275",
+  "roundtrips": [
+    {
+      "baseline_public_create": false,
+      "exit": 0,
+      "stderr": "",
+      "case_count": 388,
+      "down_completed": true,
+      "roundtrip_completed": true,
+      "semantic_schema_match": true,
+      "preserved": true
+    },
+    {
+      "baseline_public_create": true,
+      "exit": 0,
+      "stderr": "",
+      "case_count": 388,
+      "down_completed": true,
+      "roundtrip_completed": true,
+      "semantic_schema_match": true,
+      "preserved": true
+    }
+  ],
+  "initial_regression_run": [
+    {
+      "case": "extra-index",
+      "passed": true,
+      "exit": 3,
+      "stderr": "ERROR:  Refusing undo: unexpected or missing table-owned artifact\nCONTEXT:  PL/pgSQL function inline_code_block line 157 at RAISE",
+      "preserved": true
+    },
+    {
+      "case": "extra-trigger",
+      "passed": true,
+      "exit": 3,
+      "stderr": "ERROR:  Refusing undo: unexpected or missing table-owned artifact\nCONTEXT:  PL/pgSQL function inline_code_block line 157 at RAISE",
+      "preserved": true
+    },
+    {
+      "case": "extra-constraint",
+      "passed": true,
+      "exit": 3,
+      "stderr": "ERROR:  Refusing undo: unexpected or missing table-owned artifact\nCONTEXT:  PL/pgSQL function inline_code_block line 157 at RAISE",
+      "preserved": true
+    },
+    {
+      "case": "extra-policy",
+      "passed": true,
+      "exit": 3,
+      "stderr": "ERROR:  Refusing undo: unexpected or missing table-owned artifact\nCONTEXT:  PL/pgSQL function inline_code_block line 157 at RAISE",
+      "preserved": true
+    },
+    {
+      "case": "extra-column",
+      "passed": true,
+      "exit": 3,
+      "stderr": "ERROR:  Refusing undo: unexpected or missing table-owned artifact\nCONTEXT:  PL/pgSQL function inline_code_block line 157 at RAISE",
+      "preserved": true
+    },
+    {
+      "case": "extra-rule",
+      "passed": true,
+      "exit": 3,
+      "stderr": "ERROR:  Refusing undo: unexpected or missing table-owned artifact\nCONTEXT:  PL/pgSQL function inline_code_block line 157 at RAISE",
+      "preserved": true
+    },
+    {
+      "case": "missing-index",
+      "passed": true,
+      "exit": 3,
+      "stderr": "ERROR:  Refusing undo: unexpected or missing table-owned artifact\nCONTEXT:  PL/pgSQL function inline_code_block line 157 at RAISE",
+      "preserved": true
+    },
+    {
+      "case": "missing-trigger",
+      "passed": true,
+      "exit": 3,
+      "stderr": "ERROR:  Refusing undo: unexpected or missing table-owned artifact\nCONTEXT:  PL/pgSQL function inline_code_block line 157 at RAISE",
+      "preserved": true
+    },
+    {
+      "case": "missing-constraint",
+      "passed": true,
+      "exit": 3,
+      "stderr": "ERROR:  Refusing undo: unexpected or missing table-owned artifact\nCONTEXT:  PL/pgSQL function inline_code_block line 157 at RAISE",
+      "preserved": true
+    },
+    {
+      "case": "missing-policy",
+      "passed": true,
+      "exit": 3,
+      "stderr": "ERROR:  Refusing undo: unexpected or missing table-owned artifact\nCONTEXT:  PL/pgSQL function inline_code_block line 157 at RAISE",
+      "preserved": true
+    },
+    {
+      "case": "missing-column",
+      "passed": false,
+      "exit": 3,
+      "stderr": "ERROR:  cannot drop column device_created_at of table notes because other objects depend on it\nDETAIL:  view active_notes depends on column device_created_at of table notes\nHINT:  Use DROP ... CASCADE to drop the dependent objects too.",
+      "preserved": true
+    },
+    {
+      "case": "wrong-public-create",
+      "passed": true,
+      "exit": 3,
+      "stderr": "ERROR:  Undo verification failed: PUBLIC CREATE does not match baseline\nCONTEXT:  PL/pgSQL function inline_code_block line 52 at RAISE",
+      "preserved": true
+    },
+    {
+      "case": "lost-public-usage",
+      "passed": true,
+      "exit": 3,
+      "stderr": "ERROR:  Undo verification failed: unrelated schema grants changed\nCONTEXT:  PL/pgSQL function inline_code_block line 59 at RAISE",
+      "preserved": true
+    },
+    {
+      "case": "changed-schema-owner",
+      "passed": true,
+      "exit": 3,
+      "stderr": "ERROR:  Undo verification failed: public schema changed\nCONTEXT:  PL/pgSQL function inline_code_block line 36 at RAISE",
+      "preserved": true
+    },
+    {
+      "case": "lost-extension",
+      "passed": true,
+      "exit": 3,
+      "stderr": "ERROR:  Undo verification failed: PL/Python prerequisite changed\nCONTEXT:  PL/pgSQL function inline_code_block line 40 at RAISE",
+      "preserved": true
+    },
+    {
+      "case": "changed-login",
+      "passed": true,
+      "exit": 3,
+      "stderr": "ERROR:  Undo verification failed: connection login changed\nCONTEXT:  PL/pgSQL function inline_code_block line 46 at RAISE",
+      "preserved": true
+    },
+    {
+      "case": "inventory-guard-removal-detected",
+      "passed": true,
+      "explanation": "Disabled gate admits extra index, violating refusal assertion; no live fault retained",
+      "preserved": true
+    }
+  ],
+  "corrected_regression_run": [
+    {
+      "case": "extra-index",
+      "passed": true,
+      "exit": 3,
+      "stderr": "ERROR:  Refusing undo: unexpected or missing table-owned artifact\nCONTEXT:  PL/pgSQL function inline_code_block line 157 at RAISE",
+      "preserved": true
+    },
+    {
+      "case": "extra-trigger",
+      "passed": true,
+      "exit": 3,
+      "stderr": "ERROR:  Refusing undo: unexpected or missing table-owned artifact\nCONTEXT:  PL/pgSQL function inline_code_block line 157 at RAISE",
+      "preserved": true
+    },
+    {
+      "case": "extra-constraint",
+      "passed": true,
+      "exit": 3,
+      "stderr": "ERROR:  Refusing undo: unexpected or missing table-owned artifact\nCONTEXT:  PL/pgSQL function inline_code_block line 157 at RAISE",
+      "preserved": true
+    },
+    {
+      "case": "extra-policy",
+      "passed": true,
+      "exit": 3,
+      "stderr": "ERROR:  Refusing undo: unexpected or missing table-owned artifact\nCONTEXT:  PL/pgSQL function inline_code_block line 157 at RAISE",
+      "preserved": true
+    },
+    {
+      "case": "extra-column",
+      "passed": true,
+      "exit": 3,
+      "stderr": "ERROR:  Refusing undo: unexpected or missing table-owned artifact\nCONTEXT:  PL/pgSQL function inline_code_block line 157 at RAISE",
+      "preserved": true
+    },
+    {
+      "case": "extra-rule",
+      "passed": true,
+      "exit": 3,
+      "stderr": "ERROR:  Refusing undo: unexpected or missing table-owned artifact\nCONTEXT:  PL/pgSQL function inline_code_block line 157 at RAISE",
+      "preserved": true
+    },
+    {
+      "case": "missing-index",
+      "passed": true,
+      "exit": 3,
+      "stderr": "ERROR:  Refusing undo: unexpected or missing table-owned artifact\nCONTEXT:  PL/pgSQL function inline_code_block line 157 at RAISE",
+      "preserved": true
+    },
+    {
+      "case": "missing-trigger",
+      "passed": true,
+      "exit": 3,
+      "stderr": "ERROR:  Refusing undo: unexpected or missing table-owned artifact\nCONTEXT:  PL/pgSQL function inline_code_block line 157 at RAISE",
+      "preserved": true
+    },
+    {
+      "case": "missing-constraint",
+      "passed": true,
+      "exit": 3,
+      "stderr": "ERROR:  Refusing undo: unexpected or missing table-owned artifact\nCONTEXT:  PL/pgSQL function inline_code_block line 157 at RAISE",
+      "preserved": true
+    },
+    {
+      "case": "missing-policy",
+      "passed": true,
+      "exit": 3,
+      "stderr": "ERROR:  Refusing undo: unexpected or missing table-owned artifact\nCONTEXT:  PL/pgSQL function inline_code_block line 157 at RAISE",
+      "preserved": true
+    },
+    {
+      "case": "missing-column",
+      "passed": true,
+      "exit": 3,
+      "stderr": "ERROR:  Refusing undo: unexpected or missing table-owned artifact\nCONTEXT:  PL/pgSQL function inline_code_block line 157 at RAISE",
+      "preserved": true
+    },
+    {
+      "case": "wrong-public-create",
+      "passed": true,
+      "exit": 3,
+      "stderr": "ERROR:  Undo verification failed: PUBLIC CREATE does not match baseline\nCONTEXT:  PL/pgSQL function inline_code_block line 52 at RAISE",
+      "preserved": true
+    },
+    {
+      "case": "lost-public-usage",
+      "passed": true,
+      "exit": 3,
+      "stderr": "ERROR:  Undo verification failed: unrelated schema grants changed\nCONTEXT:  PL/pgSQL function inline_code_block line 59 at RAISE",
+      "preserved": true
+    },
+    {
+      "case": "changed-schema-owner",
+      "passed": true,
+      "exit": 3,
+      "stderr": "ERROR:  Undo verification failed: public schema changed\nCONTEXT:  PL/pgSQL function inline_code_block line 36 at RAISE",
+      "preserved": true
+    },
+    {
+      "case": "lost-extension",
+      "passed": true,
+      "exit": 3,
+      "stderr": "ERROR:  Undo verification failed: PL/Python prerequisite changed\nCONTEXT:  PL/pgSQL function inline_code_block line 40 at RAISE",
+      "preserved": true
+    },
+    {
+      "case": "changed-login",
+      "passed": true,
+      "exit": 3,
+      "stderr": "ERROR:  Undo verification failed: connection login changed\nCONTEXT:  PL/pgSQL function inline_code_block line 46 at RAISE",
+      "preserved": true
+    },
+    {
+      "case": "inventory-guard-removal-detected",
+      "passed": true,
+      "explanation": "Disabled gate admits extra index, violating refusal assertion; no live fault retained",
+      "preserved": true
+    }
+  ],
+  "note": "Initial missing-column fixture failed before reaching the gate because active_notes referenced it. Corrected fixture recreates the view after column removal, inside the rollback-only transaction; refusal expectation unchanged."
+}

@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-11",
+  "profile_seconds": 14.241530114999987,
+  "profile_function_calls": 1188339,
+  "database_experiments": 1042,
+  "all_389_cases_demonstrated": true,
+  "preserved": true,
+  "fingerprint": "37acb7647f0a140d3047bf62d64e6209",
+  "host_wait_seconds": 12.03,
+  "host_wait_note": "epoll wait includes database execution and transport; it does not isolate server function costs.",
+  "container_limits": {
+    "cpus": 1,
+    "memory_bytes": 1073741824
+  },
+  "audit_cpu_delta_seconds": 12.070333,
+  "audit_throttle_delta_seconds": 0.091905,
+  "table_sizes_bytes": {
+    "notes": 1744896,
+    "users": 557056
+  },
+  "reported_live_rows": 0,
+  "reported_dead_rows": 0,
+  "unicode_function_1000_distinct_calls_ms": 1000.86,
+  "microbenchmark": {
+    "iterations": 1000,
+    "emoji_version": "2.16.0",
+    "regex_version": "2026.9.29",
+    "two_version_lookups_ms": 954.5820230268873,
+    "grapheme_counting_ms": 6.246081029530615,
+    "scope": "Short varying ASCII strings. This does not establish total suite attribution or long-text performance."
+  },
+  "final_read_only_preservation": "37acb7647f0a140d3047bf62d64e6209",
+  "sources": [
+    "https://www.postgresql.org/docs/17/plpython-sharing.html",
+    "https://docs.python.org/3.12/library/importlib.metadata.html",
+    "https://www.postgresql.org/docs/17/routine-vacuuming.html"
+  ],
+  "raw_profile": "/tmp/merlin-db-profile.pstats",
+  "raw_case_report": "/tmp/merlin-db-profile-results.json"
+}

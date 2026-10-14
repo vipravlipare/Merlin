@@ -1,0 +1,395 @@
+{
+  "scope": "Second-pass source-based necessity review; reports existing evidence, not a new full-suite execution.",
+  "changed_tool_sha256": "2c1ee8ccc2ddff6b09537fde92301bebd6ff3964627f45ac085ec80c7e49938b",
+  "semantic_alias": {
+    "fault": "ast-doctor-208-1251",
+    "canonical_fault": "doctor-cluster-always-refuses",
+    "proof": "observed is cluster.stdout.strip(), a str. If expect_cluster is None, observed == None is false; otherwise expect_cluster is None is false. The conjunction and valid AND conjunction always return False.",
+    "guard": "Exact reviewed Doctor source SHA256 plus exact faulty AST SHA256; changed source/fault or absence of canonical selection executes normally."
+  },
+  "counts_after_change": {
+    "python_catalog": 239,
+    "canonical_executions": 232,
+    "aliases": 3,
+    "excluded_invalid_import_diagnostics": 4
+  },
+  "conditional_keep_cases": [
+    {
+      "group": "setup",
+      "id": "tools/test_doctor.py::DoctorTests::test_command_errors_are_captured_and_not_relayed",
+      "decision": "IMPROVE",
+      "final_disposition": "KEEP",
+      "rationale": "Captured subprocess failures must retain status without printing credentials; bounded subprocess invocation is part of diagnostic safety. Keep empty-output/status evidence; consider asserting bounded positive timeout rather than exact optional keyword values unless 30 seconds/check=False are fixed public contracts.",
+      "final_reason": "The existing diagnostic subprocess contract specifies captured status, no secret output, the documented 30-second bound and check=False so nonzero status is inspected safely. This assertion protects that operational contract.",
+      "artifact": "setup-documentation-review.json"
+    },
+    {
+      "group": "quiz",
+      "id": "the bank has 35 distinct questions and valid choice indexes",
+      "decision": "IMPROVE",
+      "final_disposition": "KEEP",
+      "rationale": "Real bank invariants matter; exact35/ordering/critical IDs are editorial contract. Generic scoring fixtures assume every correct index0; document content contract and distinguish maintenance coupling.",
+      "final_reason": "Real bank invariants matter; exact35/ordering/critical IDs are editorial contract. Generic scoring fixtures assume every correct index0; document content contract and distinguish maintenance coupling.",
+      "artifact": "quiz-review.json"
+    },
+    {
+      "group": "quiz",
+      "id": "empty attempts cannot pass and unknown questions reject",
+      "decision": "IMPROVE",
+      "final_disposition": "KEEP",
+      "rationale": "Split two independent negative contracts for case-level proof.",
+      "final_reason": "Split two independent negative contracts for case-level proof.",
+      "artifact": "quiz-review.json"
+    },
+    {
+      "group": "quiz",
+      "id": "saved state rejects short permutation",
+      "decision": "IMPROVE",
+      "final_disposition": "KEEP",
+      "rationale": "Three choices fail distinct-count too; length-removal fault does not kill this case. Do not claim independent length guard proof.",
+      "final_reason": "Three choices fail distinct-count too; length-removal fault does not kill this case. Do not claim independent length guard proof.",
+      "artifact": "quiz-review.json"
+    },
+    {
+      "group": "quiz",
+      "id": "shuffling preserves choices and uses the injected random source",
+      "decision": "IMPROVE",
+      "final_disposition": "KEEP",
+      "rationale": "Exact shuffle sequence/three calls pins Fisher\u2013Yates; retain permutation/random-source contract and document algorithm requirement.",
+      "final_reason": "Exact shuffle sequence/three calls pins Fisher\u2013Yates; retain permutation/random-source contract and document algorithm requirement.",
+      "artifact": "quiz-review.json"
+    },
+    {
+      "group": "browser",
+      "id": "fresh quiz renders 35 questions and 140 choices",
+      "decision": "IMPROVE",
+      "final_disposition": "KEEP",
+      "rationale": "Rendering invariant matters;35/140 couples to content edits. Separate editorial count from generic per-question rendering.",
+      "final_reason": "Rendering invariant matters;35/140 couples to content edits. Separate editorial count from generic per-question rendering.",
+      "artifact": "quiz-review.json"
+    },
+    {
+      "group": "browser",
+      "id": "storage unavailable still allows completing a quiz",
+      "decision": "IMPROVE",
+      "final_disposition": "KEEP",
+      "rationale": "Baseline proves completion with blocked storage. Mutant also completes; generic pageErrors assertion alone kills it. Label containment evidence precisely.",
+      "final_reason": "Baseline proves completion with blocked storage. Mutant also completes; generic pageErrors assertion alone kills it. Label containment evidence precisely.",
+      "artifact": "quiz-review.json"
+    },
+    {
+      "group": "browser",
+      "id": "print control invokes the browser print action once",
+      "decision": "IMPROVE",
+      "final_disposition": "KEEP",
+      "rationale": "Stub proves exactly one window.print call only; does not prove print layout or readability.",
+      "final_reason": "Stub proves exactly one window.print call only; does not prove print layout or readability.",
+      "artifact": "quiz-review.json"
+    }
+  ],
+  "quiz_faults": [
+    {
+      "id": "script-syntax-error",
+      "original_expression": "render();if(submitted)showResults(false);",
+      "replacement_expression": "render(;if(submitted)showResults(false);",
+      "behavior": "The full browser script must parse, including UI startup that pure-function tests omit.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "bank-duplicate-id",
+      "original_expression": "\"id\": 2,",
+      "replacement_expression": "\"id\": 1,",
+      "behavior": "Every bank question has a unique stable ID; exact35/order is an editorial contract rather than generic scoring necessity.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "critical-question-15-ignored",
+      "original_expression": "if(q.critical)",
+      "replacement_expression": "if(q.critical&&id!==15)",
+      "behavior": "Each designated secret/authentication/storage critical mistake independently blocks passing even above the percentage threshold.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "critical-question-17-ignored",
+      "original_expression": "if(q.critical)",
+      "replacement_expression": "if(q.critical&&id!==17)",
+      "behavior": "Each designated secret/authentication/storage critical mistake independently blocks passing even above the percentage threshold.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "critical-question-21-ignored",
+      "original_expression": "if(q.critical)",
+      "replacement_expression": "if(q.critical&&id!==21)",
+      "behavior": "Each designated secret/authentication/storage critical mistake independently blocks passing even above the percentage threshold.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "answers-always-wrong",
+      "original_expression": "answers[id]===q.correct",
+      "replacement_expression": "false",
+      "behavior": "Grading or cache validation must reject missing/wrongly typed/out-of-range answers instead of accepting them as complete answers. The exact expression below identifies the separate range/type guard.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "answers-always-correct",
+      "original_expression": "answers[id]===q.correct",
+      "replacement_expression": "true",
+      "behavior": "Grading or cache validation must reject missing/wrongly typed/out-of-range answers instead of accepting them as complete answers. The exact expression below identifies the separate range/type guard.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "threshold-too-strict",
+      "original_expression": "correct/ids.length>=.8",
+      "replacement_expression": "correct/ids.length>.8",
+      "behavior": "The 80 percent threshold is inclusive; distinguish exactly80 percent from below80 percent.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "threshold-too-permissive",
+      "original_expression": "correct/ids.length>=.8",
+      "replacement_expression": "correct/ids.length>=.7",
+      "behavior": "The 80 percent threshold is inclusive; distinguish exactly80 percent from below80 percent.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "critical-errors-ignored",
+      "original_expression": "criticalMissed.length===0",
+      "replacement_expression": "true",
+      "behavior": "Each designated secret/authentication/storage critical mistake independently blocks passing even above the percentage threshold.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "invalid-answers-accepted",
+      "original_expression": "!Number.isInteger(answers[id])||answers[id]<0||answers[id]>3",
+      "replacement_expression": "false",
+      "behavior": "Grading or cache validation must reject missing/wrongly typed/out-of-range answers instead of accepting them as complete answers. The exact expression below identifies the separate range/type guard.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "negative-answer-accepted",
+      "original_expression": "answers[id]<0",
+      "replacement_expression": "false",
+      "behavior": "Grading or cache validation must reject missing/wrongly typed/out-of-range answers instead of accepting them as complete answers. The exact expression below identifies the separate range/type guard.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "too-large-answer-accepted",
+      "original_expression": "answers[id]>3",
+      "replacement_expression": "false",
+      "behavior": "Grading or cache validation must reject missing/wrongly typed/out-of-range answers instead of accepting them as complete answers. The exact expression below identifies the separate range/type guard.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "integer-check-removed",
+      "original_expression": "!Number.isInteger(answers[id])",
+      "replacement_expression": "false",
+      "behavior": "Saved-state schema must preserve valid partial progress and reject the concrete absent, malformed, duplicate or out-of-domain field targeted by this expression.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "empty-attempt-passes",
+      "original_expression": "ids.length>0&&missing.length===0&&correct/ids.length>=.8&&criticalMissed.length===0",
+      "replacement_expression": "ids.length===0||(ids.length>0&&missing.length===0&&correct/ids.length>=.8&&criticalMissed.length===0)",
+      "behavior": "An empty attempt cannot pass; this is independent of unknown-question rejection.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "unknown-question-ignored",
+      "original_expression": "if(!q)throw new Error('Unknown question');",
+      "replacement_expression": "if(!q)continue;",
+      "behavior": "Unknown IDs must reject explicitly rather than silently disappear from scoring.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "full-bank-denominator",
+      "original_expression": "total:ids.length",
+      "replacement_expression": "total:QUESTIONS.length",
+      "behavior": "Retry totals must use selected questions rather than all35 bank questions.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "caller-answers-overwritten",
+      "original_expression": "const ok=answers[id]===q.correct;",
+      "replacement_expression": "answers[id]=q.correct;const ok=answers[id]===q.correct;",
+      "behavior": "Pure validation/grading must not mutate caller-owned answer maps, including wrong answers and partial progress.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "topic-totals-not-counted",
+      "original_expression": "topics[q.topic].total++",
+      "replacement_expression": "topics[q.topic].total+=0",
+      "behavior": "Per-topic total/correct counts must reflect selected answers; fixtures derived from the bank verify aggregation, not factual topic classification.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "topic-correct-not-counted",
+      "original_expression": "topics[q.topic].correct+=ok?1:0",
+      "replacement_expression": "topics[q.topic].correct+=0",
+      "behavior": "Per-topic total/correct counts must reflect selected answers; fixtures derived from the bank verify aggregation, not factual topic classification.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "saved-states-all-rejected",
+      "original_expression": "function validSaved(saved){",
+      "replacement_expression": "function validSaved(saved){return false;",
+      "behavior": "Saved-state schema must preserve valid partial progress and reject the concrete absent, malformed, duplicate or out-of-domain field targeted by this expression.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "saved-states-all-accepted",
+      "original_expression": "function validSaved(saved){",
+      "replacement_expression": "function validSaved(saved){return true;",
+      "behavior": "Saved-state schema must preserve valid partial progress and reject the concrete absent, malformed, duplicate or out-of-domain field targeted by this expression.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "empty-ids-accepted",
+      "original_expression": "!saved.ids.length",
+      "replacement_expression": "false",
+      "behavior": "Saved-state schema must preserve valid partial progress and reject the concrete absent, malformed, duplicate or out-of-domain field targeted by this expression.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "duplicate-ids-accepted",
+      "original_expression": "new Set(saved.ids).size!==saved.ids.length",
+      "replacement_expression": "false",
+      "behavior": "Saved-state schema must preserve valid partial progress and reject the concrete absent, malformed, duplicate or out-of-domain field targeted by this expression.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "unknown-ids-accepted",
+      "original_expression": "saved.ids.some(id=>!ids.has(id))",
+      "replacement_expression": "false",
+      "behavior": "Saved-state schema must preserve valid partial progress and reject the concrete absent, malformed, duplicate or out-of-domain field targeted by this expression.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "answers-not-required",
+      "original_expression": "!saved.answers||typeof saved.answers!=='object'||Array.isArray(saved.answers)",
+      "replacement_expression": "false",
+      "behavior": "Grading or cache validation must reject missing/wrongly typed/out-of-range answers instead of accepting them as complete answers. The exact expression below identifies the separate range/type guard.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "answer-arrays-accepted",
+      "original_expression": "Array.isArray(saved.answers)",
+      "replacement_expression": "false",
+      "behavior": "Grading or cache validation must reject missing/wrongly typed/out-of-range answers instead of accepting them as complete answers. The exact expression below identifies the separate range/type guard.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "order-not-required",
+      "original_expression": "!saved.order||typeof saved.order!=='object'",
+      "replacement_expression": "false",
+      "behavior": "Saved-state schema must preserve valid partial progress and reject the concrete absent, malformed, duplicate or out-of-domain field targeted by this expression.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "permutation-length-ignored",
+      "original_expression": "saved.order[id].length===4",
+      "replacement_expression": "true",
+      "behavior": "Saved choice order must contain exactly four distinct integer indexes from0 through3. Short order is rejected by distinct count too; long duplicate-appended order independently tests the length guard.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "permutation-duplicates-ignored",
+      "original_expression": "new Set(saved.order[id]).size===4",
+      "replacement_expression": "true",
+      "behavior": "Saved choice order must contain exactly four distinct integer indexes from0 through3. Short order is rejected by distinct count too; long duplicate-appended order independently tests the length guard.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "permutation-bounds-ignored",
+      "original_expression": "saved.order[id].every(v=>Number.isInteger(v)&&v>=0&&v<=3)",
+      "replacement_expression": "saved.order[id].every(v=>Number.isInteger(v))",
+      "behavior": "Saved choice order must contain exactly four distinct integer indexes from0 through3. Short order is rejected by distinct count too; long duplicate-appended order independently tests the length guard.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "permutation-integers-ignored",
+      "original_expression": "saved.order[id].every(v=>Number.isInteger(v)&&v>=0&&v<=3)",
+      "replacement_expression": "saved.order[id].every(v=>v>=0&&v<=3)",
+      "behavior": "Saved choice order must contain exactly four distinct integer indexes from0 through3. Short order is rejected by distinct count too; long duplicate-appended order independently tests the length guard.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "saved-answer-types-ignored",
+      "original_expression": "Object.values(saved.answers).every(v=>Number.isInteger(v)&&v>=0&&v<=3)",
+      "replacement_expression": "true",
+      "behavior": "Saved-state schema must preserve valid partial progress and reject the concrete absent, malformed, duplicate or out-of-domain field targeted by this expression.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "partial-submitted-cache-accepted",
+      "original_expression": "if(saved.submitted===true&&saved.ids.some(id=>!Object.hasOwn(saved.answers,id)))return false;",
+      "replacement_expression": "",
+      "behavior": "Submitted cached attempts must answer every selected question; otherwise restore must reset usable progress.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "shuffle-disabled",
+      "original_expression": "const j=Math.floor(random()*(i+1))",
+      "replacement_expression": "const j=i",
+      "behavior": "Choice permutation preserves all indexes and uses injected randomness. Exact sequence and three random calls additionally pin Fisher\u2013Yates; they require an explicit algorithm contract.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "shuffle-loses-choice",
+      "original_expression": "return a;}",
+      "replacement_expression": "return [0,0,2,3];}",
+      "behavior": "Choice permutation preserves all indexes and uses injected randomness. Exact sequence and three random calls additionally pin Fisher\u2013Yates; they require an explicit algorithm contract.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    },
+    {
+      "id": "partial-saved-state-modified",
+      "original_expression": "return saved.ids.every",
+      "replacement_expression": "saved.answers[1]=3;return saved.ids.every",
+      "behavior": "Pure validation/grading must not mutate caller-owned answer maps, including wrong answers and partial progress.",
+      "decision": "contract witness retained; universal necessity unproven",
+      "rationale_limit": "Current individual detection evidence establishes effectiveness only. No deletion based on detection-set equality."
+    }
+  ],
+  "limits": [
+    "No fixed finite mutation set proves universal necessity or redundancy. Distinct ASTs can be semantically equivalent.",
+    "Quiz correct-answer fixtures use the actual stored answer key, so they verify scoring against the key without independently proving factual answer correctness.",
+    "Print control asserts window.print invocation, not print layout; blocked-storage mutation tests pageerror containment in addition to completion.",
+    "Fresh PostgreSQL backup must follow baseline completion and empty/fingerprint preservation gates. Static inventory/source preparation can overlap baselines; fault execution cannot.",
+    "Prior measured46.47s is not a guarantee of a future runtime below38s. No Docker or full-suite run performed in this second pass."
+  ]
+}

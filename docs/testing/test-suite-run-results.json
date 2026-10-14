@@ -1,0 +1,80 @@
+{
+  "started_utc": "2026-10-11T17:27:24.006085+00:00",
+  "stages": [
+    {
+      "stage": "python-tests",
+      "exit": 0,
+      "status": "PASS"
+    },
+    {
+      "stage": "quiz-tests",
+      "exit": 0,
+      "status": "PASS"
+    },
+    {
+      "stage": "legacy-python-faults",
+      "exit": 0,
+      "status": "PASS"
+    },
+    {
+      "stage": "python-case-faults",
+      "exit": 0,
+      "status": "PASS",
+      "excluded_invalid_import_faults": [
+        "ast-database_connectivity_probe-21-11",
+        "ast-notes_maintenance-76-42",
+        "ast-doctor-229-52",
+        "ast-prd_lint-181-88"
+      ]
+    },
+    {
+      "stage": "database-case-faults",
+      "exit": 0,
+      "status": "PASS"
+    },
+    {
+      "stage": "timestamp-case-faults",
+      "exit": 0,
+      "status": "PASS"
+    },
+    {
+      "stage": "quiz-case-faults",
+      "exit": 0,
+      "status": "PASS"
+    },
+    {
+      "stage": "browser-case-faults",
+      "exit": 0,
+      "status": "PASS"
+    },
+    {
+      "stage": "database-lifecycle-faults",
+      "exit": 0,
+      "status": "PASS"
+    },
+    {
+      "stage": "migration-undo-faults",
+      "exit": 0,
+      "status": "PASS"
+    },
+    {
+      "stage": "documentation",
+      "exit": 0,
+      "status": "PASS"
+    },
+    {
+      "stage": "whitespace",
+      "exit": 0,
+      "status": "PASS"
+    }
+  ],
+  "status": "PASS",
+  "finished_utc": "2026-10-11T17:40:26.241227+00:00",
+  "results_directory": "/tmp/merlin-test-suite-7igv087_",
+  "limitations": {
+    "invalid_python_import_mutations_excluded": 4,
+    "planning_warnings": 1,
+    "planning_verify_items": 27,
+    "migration_permission_baseline": "PENDING; synthetic rehearsal only"
+  }
+}

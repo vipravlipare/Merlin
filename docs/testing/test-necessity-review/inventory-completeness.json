@@ -1,0 +1,62 @@
+{
+  "all original Python case/subtest rows": {
+    "passed": true,
+    "count": 349
+  },
+  "all original SQL cases": {
+    "passed": true,
+    "count": 389
+  },
+  "all original JS cases": {
+    "passed": true,
+    "count": 42
+  },
+  "all original browser cases": {
+    "passed": true,
+    "count": 16
+  },
+  "all original lifecycle cases": {
+    "passed": true,
+    "count": 5
+  },
+  "all original Python faults": {
+    "passed": true,
+    "count": 239
+  },
+  "all original JS faults": {
+    "passed": true,
+    "count": 35
+  },
+  "all original SQL fault pairs": {
+    "passed": true,
+    "count": 653
+  },
+  "all original migration controls": {
+    "passed": true,
+    "count": 36
+  },
+  "current Python inventory": {
+    "passed": true,
+    "count": 332
+  },
+  "current SQL inventory": {
+    "passed": true,
+    "count": 383
+  },
+  "current JS inventory": {
+    "passed": true,
+    "count": 40
+  },
+  "current browser inventory": {
+    "passed": true,
+    "count": 16
+  },
+  "current lifecycle inventory": {
+    "passed": true,
+    "count": 5
+  },
+  "every current case has final disposition": {
+    "passed": true,
+    "count": 776
+  }
+}
