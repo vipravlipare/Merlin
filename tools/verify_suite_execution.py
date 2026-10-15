@@ -521,35 +521,51 @@ def check_compressor_privacy():
 
 def check_runtime_commit_compatibility():
     from tools.database_sandboxes import DatabaseSandboxes
-    sandbox = DatabaseSandboxes('/unused-control-output')
-    sandbox.source = 'a' * 64
-    image = 'sha256:' + 'b' * 64
-    digest = 'c' * 64
-    commits = []
-    def docker(arguments, timeout=20):
-        if arguments[0] == 'diff':
-            return ''
-        if arguments[0] == 'commit':
-            # An older Docker CLI rejects the newer --no-pause flag.
-            assert '--no-pause' not in arguments
-            commits.append(arguments)
-            return image
-        assert arguments == ['image', 'inspect', image]
-        return json.dumps([{'Config': {'Labels': {}}}])
-    def run(command, **kwargs):
-        if command[:3] == ['docker', 'image', 'inspect']:
-            return subprocess.CompletedProcess(command, 1, '', '')
-        assert command[:3] == ['docker', 'exec', '-i']
-        return subprocess.CompletedProcess(command, 0, digest, '')
-    try:
-        with patch.object(sandbox, 'docker', side_effect=docker), patch('subprocess.run', side_effect=run):
-            sandbox.prepare_runtime()
-        assert len(commits) == 1 and sandbox.image == image
-        assert sandbox.evidence['runtime_digest'] == digest
-    finally:
-        if sandbox.temporary is not None:
-            sandbox.temporary.cleanup()
-    return [{'scenario': 'runtime-commit-older-docker-compatible', 'passed': True}]
+    rows = []
+    for help_text, expected in [('  -p, --pause bool   Pause container during commit', '--pause=false'),
+                                ('      --no-pause   Disable pausing container during commit', '--no-pause'),
+                                ('Usage: docker commit', None)]:
+        sandbox = DatabaseSandboxes('/unused-control-output')
+        sandbox.source = 'a' * 64
+        image, digest = 'sha256:' + 'b' * 64, 'c' * 64
+        commits = []
+        def docker(arguments, timeout=20):
+            if arguments == ['commit', '--help']:
+                return help_text
+            if arguments[0] == 'diff':
+                return ''
+            if arguments[0] == 'commit':
+                # Model each real CLI: reject the other version's spelling and
+                # default pausing, which races concurrent source verification.
+                assert expected is not None and arguments[1] == expected
+                commits.append(arguments)
+                return image
+            assert arguments == ['image', 'inspect', image]
+            return json.dumps([{'Config': {'Labels': {}}}])
+        def run(command, **kwargs):
+            if command[:3] == ['docker', 'image', 'inspect']:
+                return subprocess.CompletedProcess(command, 1, '', '')
+            assert command[:3] == ['docker', 'exec', '-i']
+            return subprocess.CompletedProcess(command, 0, digest, '')
+        try:
+            with patch.object(sandbox, 'docker', side_effect=docker), patch('subprocess.run', side_effect=run):
+                if expected is None:
+                    try:
+                        sandbox.prepare_runtime()
+                    except RuntimeError as error:
+                        assert str(error) == 'Docker commit has no supported non-pausing option'
+                    else:
+                        raise AssertionError('Unknown Docker commit options accepted')
+                    assert not commits
+                else:
+                    sandbox.prepare_runtime()
+                    assert len(commits) == 1 and sandbox.image == image
+                    assert sandbox.evidence['runtime_digest'] == digest
+        finally:
+            if sandbox.temporary is not None:
+                sandbox.temporary.cleanup()
+        rows.append({'scenario': 'runtime-commit-' + (expected or 'unsupported-refused'), 'passed': True})
+    return rows
 
 
 def main():

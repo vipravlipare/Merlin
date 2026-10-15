@@ -321,9 +321,16 @@ class DatabaseSandboxes:
             if labels.get('merlin.audit.runtime')!=self.runtime_hash or labels.get('merlin.audit.source')!=self.source:
                 raise RuntimeError('Runtime cache provenance differs')
         else:
-            # Keep Docker's default pause behavior: older hosted CLIs do not
-            # support --no-pause. Database data lives in excluded volumes.
-            commit=self.docker(['commit',
+            # Capture overlaps native transport checks on the live source.
+            # Never pause it; Docker renamed this option between CLI versions.
+            help_text=self.docker(['commit','--help'])
+            if re.search(r'(?m)^\s+--no-pause\b',help_text):
+                pause_option='--no-pause'
+            elif re.search(r'(?m)^\s+(?:-p,\s+)?--pause\b',help_text):
+                pause_option='--pause=false'
+            else:
+                raise RuntimeError('Docker commit has no supported non-pausing option')
+            commit=self.docker(['commit',pause_option,
                                '--change','ENV POSTGRES_PASSWORD=unused_for_existing_copy',
                                '--change','LABEL com.docker.compose.project=merlin-audit-runtime',
                                '--change','LABEL com.docker.compose.service=postgres-sandbox',
