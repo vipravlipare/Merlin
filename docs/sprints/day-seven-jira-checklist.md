@@ -25,7 +25,7 @@ Goal: understand HTTP and implement one small, tested local health endpoint afte
 
 ### 3. Build the first scratch API — 65 min
 
-- [ ] 3.1 Resolve the CI scope decision first (15 min): cumulative CI through Day 6 is mandatory before Day 7 API implementation. Decision: repair CI first, using the remaining section 3 allocation and carrying the API forward. Follow [the cumulative CI gate](../delivery/cumulative-ci-gate.md); require the full cases/faults and disposable migration verification, then observed GitHub results for the exact commit. Never add invisible time or claim unexecuted CI coverage.
+- [x] 3.1 Resolve the CI scope decision first (15 min): cumulative CI through Day 6 is mandatory before Day 7 API implementation. Decision: repair CI first, using the remaining section 3 allocation and carrying the API forward. Follow [the cumulative CI gate](../delivery/cumulative-ci-gate.md); require the full cases/faults and disposable migration verification, then observed GitHub results for the exact commit. Never add invisible time or claim unexecuted CI coverage.
 - [ ] 3.2 Personally write the minimal HTTP handler/server using the existing Python 3.12 standard library (35 min). Bind only to 127.0.0.1; implement the agreed route/status/error contract without serving files or adding database writes.
 - [ ] 3.3 Start the server, make one real HTTP request, and verify shutdown/restart (15 min). Record commands, response and actual authored changes; dependency/startup delays reduce coding time inside this block.
 
@@ -64,4 +64,4 @@ Definition of Done: explain the HTTP boundary; the agreed local endpoint and neg
 
 Official documentation links opened October 11, 2026. Context7 was unavailable. Existing runtime pins: Python 3.12.14, pytest 9.1.1; no new framework dependency is introduced by this planning change.
 
-The local setup workflow currently runs setup/doctor checks, not the full Day 6 fault suite. Record that gap rather than claiming complete CI coverage. Any remote green run must be attributed to its actual commit.
+The cumulative workflow now includes setup, the complete Day 6 case/fault suite and committed migration roundtrip verification. Hosted PASS: commit `177e755d23f8705adf208cb13aa666e3818fb3f0`, [run 38746965661](https://github.com/vipravlipare/Merlin/actions/runs/38746965661). See [verification and limitations](../testing/cumulative-ci-verification.md). Check the latest commit before advancing; API implementation remains pending.

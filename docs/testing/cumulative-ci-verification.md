@@ -21,7 +21,7 @@ First integration failure: Compose discovery did not recognize the fresh source 
 
 ## Publication status
 
-GitHub execution is **PENDING** until the reviewed changes are committed, published with the approved exact remote-tip lease, and the resulting workflow is observed. Do not fetch the older unsanitized history. Publication-file-review.json records the earlier publication audit snapshot; the CI additions require the final precommit scan as well.
+GitHub execution **PASSED** for commit `177e755d23f8705adf208cb13aa666e3818fb3f0`: [run 38746965661](https://github.com/vipravlipare/Merlin/actions/runs/38746965661). The approved exact-lease publication completed; follow-up fixes were normal descendant pushes. Do not fetch the older unsanitized history. Publication-file-review.json records the earlier publication audit snapshot; the CI additions require the final precommit scan as well.
 
 The workflow uses read-only repository permissions and does not deploy. A successful finite suite does not establish universal security or implement future requirements. Cross-user API authorization remains pending an implemented ownership boundary.
 
@@ -39,3 +39,11 @@ The diagnostic run [38740202327](https://github.com/vipravlipare/Merlin/actions/
 Local immutable-input verification of commit `7a91e6adee3c4cede54ea7fe4a6f82f1d470ad87` passed in 105.447 seconds, including all three required phases and cleanup. An earlier local attempt passed the full suite but correctly failed its enclosing integrity check after documentation changed mid-run; that attempt is not a complete CI pass.
 
 Run [38742987389](https://github.com/vipravlipare/Merlin/actions/runs/38742987389) failed the scheduling-control prerequisite. A local run had independently reproduced `Independent Python audits did not overlap`: the control used 100-millisecond jobs and assumed the host would schedule all workers within that window. The repaired controls keep workers alive until their independent peers start, with a bounded deadline. A serialized scheduler still fails. The initial preflight probes likewise synchronize their starts rather than depending on a 30-millisecond scheduling window. Ordering, failure propagation and cancellation assertions remain required. The final non-pausing implementation also passed complete local CI on unchanged commit `c2bb852a8c5e5576b8f60b5c74b17d4a670a5a52` in 86.972 seconds, including cleanup. Hosted verification remains pending the synchronized controls.
+
+## Hosted gate completed
+
+[Run 38746965661](https://github.com/vipravlipare/Merlin/actions/runs/38746965661) completed successfully for `177e755d23f8705adf208cb13aa666e3818fb3f0`. Every required setup step, all ten application/fault suite stages, committed migration roundtrip (383 cases), artifact retention and cleanup passed. The CI verification command took 93.927 seconds, excluding earlier dependency installation and image build. [The synthetic hosted report](cumulative-ci-hosted-results.json) preserves exact commit, job/step outcomes, full suite results and migration evidence.
+
+The 93 scheduler/infrastructure controls passed, including both Docker option spellings and refusal of unsupported options. Five complete control runs restricted to two CPUs also passed. No application behavior, original case/fault inventory, ownership guard or security assertion was weakened. The failures found were test-infrastructure portability, concurrency-control timing and documentation portability; no application defect was established by these failures. Finite successful verification cannot guarantee absence of all bugs.
+
+Day 7 section 3.1's CI repair is complete for the verified commit. The scratch API remains learner-owned and unimplemented; resume the API learning work only after checking the latest commit's CI. This handoff changes documentation only and will trigger another cumulative run; its outcome must be observed independently. Actual minutes remain unknown.

@@ -1,0 +1,1186 @@
+{
+  "run_url": "https://github.com/vipravlipare/Merlin/actions/runs/38746965661",
+  "commit": "177e755d23f8705adf208cb13aa666e3818fb3f0",
+  "conclusion": "success",
+  "ci": {
+    "status": "PASS",
+    "steps": [
+      {
+        "name": "original-python-sources",
+        "status": "PASS"
+      },
+      {
+        "name": "complete-suite",
+        "status": "PASS"
+      },
+      {
+        "name": "committed-migration-roundtrip",
+        "status": "PASS"
+      }
+    ],
+    "source_commit": "177e755d23f8705adf208cb13aa666e3818fb3f0",
+    "includes_uncommitted_inputs": false,
+    "target": {
+      "container": "911f32af9a63dc03511391f33fee7df78b2077a91c24e0959c5608edfe3ca335",
+      "cluster": "7696893369616289838",
+      "project": "merlin-ci-c3f78a86aca3480398e366e8440d6f01",
+      "network": "none"
+    },
+    "seconds": 93.927,
+    "cleanup_passed": true
+  },
+  "suite": {
+    "started_utc": "2026-10-15T13:57:22.269691+00:00",
+    "stages": [
+      {
+        "stage": "python-tests",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 5.866
+      },
+      {
+        "stage": "quiz-tests",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 0.071
+      },
+      {
+        "stage": "python-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "excluded_invalid_import_faults": [
+          "ast-database_connectivity_probe-21-11",
+          "ast-notes_maintenance-76-42",
+          "ast-doctor-229-52",
+          "ast-prd_lint-181-88"
+        ],
+        "fault_aliases": {
+          "text-whitespace-body-trimmed": "body-stripped",
+          "ast-notes_maintenance-25-60": "identity-or-changed-to-and",
+          "ast-doctor-208-1251": "doctor-cluster-always-refuses"
+        },
+        "seconds": 64.113
+      },
+      {
+        "stage": "database-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 15.808
+      },
+      {
+        "stage": "quiz-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 3.134
+      },
+      {
+        "stage": "browser-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 19.268
+      },
+      {
+        "stage": "database-lifecycle-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 14.555
+      },
+      {
+        "stage": "migration-undo-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 16.752
+      },
+      {
+        "stage": "documentation",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 0.151
+      },
+      {
+        "stage": "whitespace",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 0.004
+      }
+    ],
+    "status": "PASS",
+    "execution": {
+      "database_transport": "guarded reusable libpq session",
+      "python_fault_workers": 4,
+      "schedule": "independent Python and quiz lanes with isolated database lanes",
+      "python_fault_scope": "dependent",
+      "sql_shards": 2,
+      "database_isolation": {
+        "status": "PASS",
+        "root": "/tmp/merlin-db-sandboxes-bfe72dccb1654e5499b0408dc9968aaa",
+        "docker_operation_seconds": [
+          {
+            "operation": "diff",
+            "seconds": 0.868
+          },
+          {
+            "operation": "commit",
+            "seconds": 0.055
+          },
+          {
+            "operation": "commit",
+            "seconds": 0.724
+          },
+          {
+            "operation": "image",
+            "seconds": 0.021
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.022
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.023
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.024
+          },
+          {
+            "operation": "create",
+            "seconds": 0.043
+          },
+          {
+            "operation": "create",
+            "seconds": 0.045
+          },
+          {
+            "operation": "create",
+            "seconds": 0.046
+          },
+          {
+            "operation": "cp",
+            "seconds": 0.044
+          },
+          {
+            "operation": "cp",
+            "seconds": 0.05
+          },
+          {
+            "operation": "cp",
+            "seconds": 0.051
+          },
+          {
+            "operation": "cp",
+            "seconds": 0.039
+          },
+          {
+            "operation": "cp",
+            "seconds": 0.036
+          },
+          {
+            "operation": "cp",
+            "seconds": 0.037
+          },
+          {
+            "operation": "start",
+            "seconds": 0.191
+          },
+          {
+            "operation": "start",
+            "seconds": 0.197
+          },
+          {
+            "operation": "start",
+            "seconds": 0.223
+          },
+          {
+            "operation": "container",
+            "seconds": 0.14
+          },
+          {
+            "operation": "container",
+            "seconds": 0.163
+          },
+          {
+            "operation": "container",
+            "seconds": 0.077
+          },
+          {
+            "operation": "container",
+            "seconds": 0.049
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.04
+          },
+          {
+            "operation": "create",
+            "seconds": 0.048
+          },
+          {
+            "operation": "cp",
+            "seconds": 0.048
+          },
+          {
+            "operation": "cp",
+            "seconds": 0.029
+          },
+          {
+            "operation": "start",
+            "seconds": 0.109
+          },
+          {
+            "operation": "container",
+            "seconds": 0.02
+          },
+          {
+            "operation": "container",
+            "seconds": 0.015
+          },
+          {
+            "operation": "container",
+            "seconds": 0.02
+          },
+          {
+            "operation": "ps",
+            "seconds": 0.014
+          },
+          {
+            "operation": "container",
+            "seconds": 0.013
+          },
+          {
+            "operation": "rm",
+            "seconds": 0.086
+          },
+          {
+            "operation": "container",
+            "seconds": 0.015
+          },
+          {
+            "operation": "rm",
+            "seconds": 0.062
+          },
+          {
+            "operation": "container",
+            "seconds": 0.014
+          },
+          {
+            "operation": "rm",
+            "seconds": 0.063
+          },
+          {
+            "operation": "container",
+            "seconds": 0.014
+          },
+          {
+            "operation": "rm",
+            "seconds": 0.053
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.013
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.013
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.093
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.013
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.1
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.013
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.098
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.013
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.098
+          },
+          {
+            "operation": "images",
+            "seconds": 0.017
+          }
+        ],
+        "runtime_cache_hit": false,
+        "backup_command_seconds": 1.756,
+        "runtime_image": "sha256:5fe2de873b80ee9335af51da3536034e6dc680462324ec1076b8948059f32b2e",
+        "runtime_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "runtime_prepare_seconds": 1.881,
+        "setup_seconds": 5.262,
+        "targets": [
+          {
+            "name": "sql",
+            "container": "97a2894c17cd6727a51d92f7d281803c3bf5c39ee39284e55ecd5068380b42a1",
+            "data": "/tmp/merlin-db-sandboxes-bfe72dccb1654e5499b0408dc9968aaa/sql",
+            "socket": "/tmp/merlin-db-sandboxes-bfe72dccb1654e5499b0408dc9968aaa/sql/socket"
+          },
+          {
+            "name": "lifecycle",
+            "container": "e94e695bda6683767e201f6bf01a60c024a4b6e13e6e4f37947ae32f5605d90f",
+            "data": "/tmp/merlin-db-sandboxes-bfe72dccb1654e5499b0408dc9968aaa/lifecycle",
+            "socket": "/tmp/merlin-db-sandboxes-bfe72dccb1654e5499b0408dc9968aaa/lifecycle/socket"
+          },
+          {
+            "name": "migration",
+            "container": "a8e3aaa73c9fff3517f067b998cb588b7271ce40c33050833a6d79624e8d2113",
+            "data": "/tmp/merlin-db-sandboxes-bfe72dccb1654e5499b0408dc9968aaa/migration",
+            "socket": "/tmp/merlin-db-sandboxes-bfe72dccb1654e5499b0408dc9968aaa/migration/socket"
+          },
+          {
+            "name": "sql-second",
+            "container": "c02cc4c0e0e8151467f736d722d8f8b0adeb6aa85484498e6b7774573d0ff5a7",
+            "data": "/tmp/merlin-db-sandboxes-bfe72dccb1654e5499b0408dc9968aaa/sql-second",
+            "socket": "/tmp/merlin-db-sandboxes-bfe72dccb1654e5499b0408dc9968aaa/sql-second/socket"
+          }
+        ],
+        "source_fingerprint": "8c23818a98b72b3d725d64d703c0e22f",
+        "startup_timings": {
+          "backup_seconds": 0.7557963229999984
+        },
+        "controls_seconds": 4.433,
+        "controls_passed": true,
+        "wall_seconds": 76.723,
+        "cleanup_seconds": 0.976,
+        "cleanup_passed": true,
+        "source_preserved": true
+      }
+    },
+    "finished_utc": "2026-10-15T13:58:39.150021+00:00"
+  },
+  "migration": {
+    "status": "PASS",
+    "checks": [
+      {
+        "case": "fresh-database-and-external-prerequisite",
+        "passed": true
+      },
+      {
+        "case": "initial-up-001-and-002-committed",
+        "passed": true
+      },
+      {
+        "case": "down-002-committed",
+        "passed": true
+      },
+      {
+        "case": "down-001-committed-and-verified-after-reconnect",
+        "passed": true
+      },
+      {
+        "case": "up-001-and-002-committed-semantic-equivalence",
+        "passed": true
+      },
+      {
+        "case": "all-rebuilt-database-cases-382",
+        "passed": true
+      },
+      {
+        "case": "rebuilt-failed-write-and-real-reconnect",
+        "passed": true
+      },
+      {
+        "case": "reconnected-empty-tables-and-unrelated-data-preserved",
+        "passed": true
+      },
+      {
+        "case": "source-preservation-and-disposable-cleanup",
+        "passed": true
+      }
+    ],
+    "scope": "Fresh disposable database only; committed down/up with authentic captured pre-001 baseline",
+    "source_fingerprint": "8c23818a98b72b3d725d64d703c0e22f",
+    "migration_sha256": {
+      "001_users_notes.up.sql": "be5ad5b27d3a21637bfcf7f070dba6480263f9feb580bfff0587e9ade487db3b",
+      "001_users_notes.down.sql": "a1297581309e9ff84f4e3f3221b1f3e47b776cac219c5d5774816cad6b4df44e",
+      "002_whitespace_parity.up.sql": "f1af1890eef9453492c54e43c73147653db5f04fd699a1ae32478bffe45f763f",
+      "002_whitespace_parity.down.sql": "de9d3147ca1d9052c6b50d38174bb98e5cf9e8b5093f3312c2d7e75741ce8f08"
+    },
+    "target": {
+      "name": "migration",
+      "container": "235f09b253365781fa0beb8cfc777d954b81963dfaaea088680bc86c85d69cda",
+      "data": "/tmp/merlin-db-sandboxes-1734e63084c040468ca89959ed6b922d/migration",
+      "socket": "/tmp/merlin-db-sandboxes-1734e63084c040468ca89959ed6b922d/migration/socket",
+      "root": "/tmp/merlin-db-sandboxes-1734e63084c040468ca89959ed6b922d",
+      "source": "911f32af9a63dc03511391f33fee7df78b2077a91c24e0959c5608edfe3ca335",
+      "fingerprint": "8c23818a98b72b3d725d64d703c0e22f"
+    },
+    "captured_pre_001_baseline": {
+      "public_create": false,
+      "source": "Actual query of fresh template0 database before first migration 001 application in this private container",
+      "schema_snapshot": {
+        "schema": [
+          {
+            "acl": "{pg_database_owner=UC/pg_database_owner,=U/pg_database_owner}",
+            "owner": "6171",
+            "schema": "public"
+          },
+          {
+            "role": "merlin_d6",
+            "login": true,
+            "super": true,
+            "bypass": true,
+            "config": null,
+            "inherit": true,
+            "createdb": true,
+            "createrole": true,
+            "replication": true,
+            "valid_until": null,
+            "connection_limit": -1
+          },
+          {
+            "def": null,
+            "view": "active_notes"
+          }
+        ],
+        "extensions": [
+          {
+            "name": "plpgsql",
+            "owner": "10",
+            "version": "1.0"
+          },
+          {
+            "name": "plpython3u",
+            "owner": "10",
+            "version": "1.0"
+          }
+        ]
+      }
+    },
+    "rebuilt_cases": [
+      "F015-plain",
+      "F015-emoji",
+      "F015-family",
+      "F015-skin",
+      "F015-flag",
+      "F015-keycap",
+      "F015-accent",
+      "F015-cjk",
+      "F015-empty",
+      "limit-title-174",
+      "limit-title-175",
+      "limit-title-176",
+      "F020",
+      "draft-title-overflow",
+      "emoji-title-overflow",
+      "limit-body-6999",
+      "limit-body-7000",
+      "limit-body-7001",
+      "F021",
+      "draft-body-overflow",
+      "emoji-body-overflow",
+      "F031",
+      "F033",
+      "F034",
+      "F036",
+      "F037",
+      "F038",
+      "F039",
+      "F040",
+      "F049-F050",
+      "F051",
+      "email-insert-duplicate",
+      "email-blank",
+      "email-spaces",
+      "email-leading",
+      "email-trailing",
+      "username-null",
+      "username-upper",
+      "username-empty",
+      "username-twenty-one",
+      "username-punctuation",
+      "username-twenty",
+      "username-duplicate",
+      "F059",
+      "F061-user",
+      "F061-note",
+      "uuid-users-version",
+      "uuid-users-variant",
+      "uuid-notes-version",
+      "uuid-notes-variant",
+      "F064",
+      "F065",
+      "F066",
+      "F067",
+      "F068",
+      "F069",
+      "F070",
+      "F078",
+      "F079",
+      "F080",
+      "F071",
+      "F072",
+      "F073",
+      "F074",
+      "F075-role",
+      "app-column-id",
+      "app-column-user_id",
+      "app-column-created_at",
+      "app-column-updated_at",
+      "app-column-blank_body_expires_at",
+      "app-own-edit",
+      "app-saved-delete",
+      "app-blank-draft-delete",
+      "F076",
+      "F077",
+      "F081",
+      "F082",
+      "F083",
+      "F084",
+      "F085",
+      "F086",
+      "F087",
+      "F088",
+      "F089",
+      "F090",
+      "F092",
+      "F093",
+      "F094",
+      "F095",
+      "F096",
+      "F097",
+      "F098",
+      "F099",
+      "F100",
+      "F102",
+      "F103",
+      "F104",
+      "F106",
+      "F107",
+      "F108",
+      "F109",
+      "F110",
+      "F112",
+      "F113",
+      "F115",
+      "purge-overdue",
+      "F116",
+      "F117",
+      "F118",
+      "sql-batch-cleanup_expired_blank_notes-NULL",
+      "sql-batch-cleanup_expired_blank_notes-0",
+      "sql-batch-cleanup_expired_blank_notes-1001",
+      "sql-batch-purge_deleted_notes-NULL",
+      "sql-batch-purge_deleted_notes-0",
+      "sql-batch-purge_deleted_notes-1001",
+      "maintenance-fresh-delete",
+      "maintenance-active-read",
+      "maintenance-overdue-purge",
+      "maintenance-expiry",
+      "F045-nbsp",
+      "F053-nbsp",
+      "F091",
+      "F101",
+      "F114",
+      "app-own-insert",
+      "app-crossuser-delete",
+      "app-unset-actor",
+      "app-active-view",
+      "required-body",
+      "required-device_created_at",
+      "required-is_draft",
+      "permission-groups",
+      "rls-forced",
+      "app-no-cleanup-grant",
+      "app-no-purge-grant",
+      "app-no-schema-create",
+      "index-created",
+      "index-edited",
+      "index-device",
+      "index-draft",
+      "app-delete-account-cascade",
+      "sql-valid-batch-cleanup_expired_blank_notes-1000",
+      "sql-valid-batch-purge_deleted_notes-1000",
+      "expiry-batch-one",
+      "purge-batch-one",
+      "note-body-default",
+      "user-id-duplicate",
+      "user-clock-forged",
+      "blank-body-U+0009",
+      "blank-body-U+000A",
+      "blank-body-U+000B",
+      "blank-body-U+000C",
+      "blank-body-U+000D",
+      "blank-body-U+001C",
+      "blank-body-U+001D",
+      "blank-body-U+001E",
+      "blank-body-U+001F",
+      "blank-body-U+0020",
+      "blank-body-U+0085",
+      "blank-body-U+1680",
+      "blank-body-U+2000",
+      "blank-body-U+2001",
+      "blank-body-U+2002",
+      "blank-body-U+2003",
+      "blank-body-U+2004",
+      "blank-body-U+2005",
+      "blank-body-U+2006",
+      "blank-body-U+2007",
+      "blank-body-U+2008",
+      "blank-body-U+2009",
+      "blank-body-U+200A",
+      "blank-body-U+2028",
+      "blank-body-U+2029",
+      "blank-body-U+202F",
+      "blank-body-U+205F",
+      "blank-body-U+3000",
+      "parity-U+0009-title",
+      "parity-U+0009-countdown",
+      "parity-U+0009-email-leading",
+      "parity-U+0009-email-trailing",
+      "parity-U+0009-email-blank",
+      "parity-U+0009-draft-delete",
+      "parity-U+0009-maintenance",
+      "parity-U+000A-title",
+      "parity-U+000A-countdown",
+      "parity-U+000A-email-leading",
+      "parity-U+000A-email-trailing",
+      "parity-U+000A-email-blank",
+      "parity-U+000A-draft-delete",
+      "parity-U+000A-maintenance",
+      "parity-U+000B-title",
+      "parity-U+000B-countdown",
+      "parity-U+000B-email-leading",
+      "parity-U+000B-email-trailing",
+      "parity-U+000B-email-blank",
+      "parity-U+000B-draft-delete",
+      "parity-U+000B-maintenance",
+      "parity-U+000C-title",
+      "parity-U+000C-countdown",
+      "parity-U+000C-email-leading",
+      "parity-U+000C-email-trailing",
+      "parity-U+000C-email-blank",
+      "parity-U+000C-draft-delete",
+      "parity-U+000C-maintenance",
+      "parity-U+000D-title",
+      "parity-U+000D-countdown",
+      "parity-U+000D-email-leading",
+      "parity-U+000D-email-trailing",
+      "parity-U+000D-email-blank",
+      "parity-U+000D-draft-delete",
+      "parity-U+000D-maintenance",
+      "parity-U+001C-title",
+      "parity-U+001C-countdown",
+      "parity-U+001C-email-leading",
+      "parity-U+001C-email-trailing",
+      "parity-U+001C-email-blank",
+      "parity-U+001C-draft-delete",
+      "parity-U+001C-maintenance",
+      "parity-U+001D-title",
+      "parity-U+001D-countdown",
+      "parity-U+001D-email-leading",
+      "parity-U+001D-email-trailing",
+      "parity-U+001D-email-blank",
+      "parity-U+001D-draft-delete",
+      "parity-U+001D-maintenance",
+      "parity-U+001E-title",
+      "parity-U+001E-countdown",
+      "parity-U+001E-email-leading",
+      "parity-U+001E-email-trailing",
+      "parity-U+001E-email-blank",
+      "parity-U+001E-draft-delete",
+      "parity-U+001E-maintenance",
+      "parity-U+001F-title",
+      "parity-U+001F-countdown",
+      "parity-U+001F-email-leading",
+      "parity-U+001F-email-trailing",
+      "parity-U+001F-email-blank",
+      "parity-U+001F-draft-delete",
+      "parity-U+001F-maintenance",
+      "parity-U+0020-title",
+      "parity-U+0020-countdown",
+      "parity-U+0020-email-leading",
+      "parity-U+0020-email-trailing",
+      "parity-U+0020-email-blank",
+      "parity-U+0020-draft-delete",
+      "parity-U+0020-maintenance",
+      "parity-U+0085-title",
+      "parity-U+0085-countdown",
+      "parity-U+0085-email-leading",
+      "parity-U+0085-email-trailing",
+      "parity-U+0085-email-blank",
+      "parity-U+0085-draft-delete",
+      "parity-U+0085-maintenance",
+      "parity-U+00A0-title",
+      "parity-U+00A0-countdown",
+      "parity-U+00A0-email-leading",
+      "parity-U+00A0-email-trailing",
+      "parity-U+00A0-email-blank",
+      "parity-U+00A0-draft-delete",
+      "parity-U+00A0-maintenance",
+      "parity-U+1680-title",
+      "parity-U+1680-countdown",
+      "parity-U+1680-email-leading",
+      "parity-U+1680-email-trailing",
+      "parity-U+1680-email-blank",
+      "parity-U+1680-draft-delete",
+      "parity-U+1680-maintenance",
+      "parity-U+2000-title",
+      "parity-U+2000-countdown",
+      "parity-U+2000-email-leading",
+      "parity-U+2000-email-trailing",
+      "parity-U+2000-email-blank",
+      "parity-U+2000-draft-delete",
+      "parity-U+2000-maintenance",
+      "parity-U+2001-title",
+      "parity-U+2001-countdown",
+      "parity-U+2001-email-leading",
+      "parity-U+2001-email-trailing",
+      "parity-U+2001-email-blank",
+      "parity-U+2001-draft-delete",
+      "parity-U+2001-maintenance",
+      "parity-U+2002-title",
+      "parity-U+2002-countdown",
+      "parity-U+2002-email-leading",
+      "parity-U+2002-email-trailing",
+      "parity-U+2002-email-blank",
+      "parity-U+2002-draft-delete",
+      "parity-U+2002-maintenance",
+      "parity-U+2003-title",
+      "parity-U+2003-countdown",
+      "parity-U+2003-email-leading",
+      "parity-U+2003-email-trailing",
+      "parity-U+2003-email-blank",
+      "parity-U+2003-draft-delete",
+      "parity-U+2003-maintenance",
+      "parity-U+2004-title",
+      "parity-U+2004-countdown",
+      "parity-U+2004-email-leading",
+      "parity-U+2004-email-trailing",
+      "parity-U+2004-email-blank",
+      "parity-U+2004-draft-delete",
+      "parity-U+2004-maintenance",
+      "parity-U+2005-title",
+      "parity-U+2005-countdown",
+      "parity-U+2005-email-leading",
+      "parity-U+2005-email-trailing",
+      "parity-U+2005-email-blank",
+      "parity-U+2005-draft-delete",
+      "parity-U+2005-maintenance",
+      "parity-U+2006-title",
+      "parity-U+2006-countdown",
+      "parity-U+2006-email-leading",
+      "parity-U+2006-email-trailing",
+      "parity-U+2006-email-blank",
+      "parity-U+2006-draft-delete",
+      "parity-U+2006-maintenance",
+      "parity-U+2007-title",
+      "parity-U+2007-countdown",
+      "parity-U+2007-email-leading",
+      "parity-U+2007-email-trailing",
+      "parity-U+2007-email-blank",
+      "parity-U+2007-draft-delete",
+      "parity-U+2007-maintenance",
+      "parity-U+2008-title",
+      "parity-U+2008-countdown",
+      "parity-U+2008-email-leading",
+      "parity-U+2008-email-trailing",
+      "parity-U+2008-email-blank",
+      "parity-U+2008-draft-delete",
+      "parity-U+2008-maintenance",
+      "parity-U+2009-title",
+      "parity-U+2009-countdown",
+      "parity-U+2009-email-leading",
+      "parity-U+2009-email-trailing",
+      "parity-U+2009-email-blank",
+      "parity-U+2009-draft-delete",
+      "parity-U+2009-maintenance",
+      "parity-U+200A-title",
+      "parity-U+200A-countdown",
+      "parity-U+200A-email-leading",
+      "parity-U+200A-email-trailing",
+      "parity-U+200A-email-blank",
+      "parity-U+200A-draft-delete",
+      "parity-U+200A-maintenance",
+      "parity-U+2028-title",
+      "parity-U+2028-countdown",
+      "parity-U+2028-email-leading",
+      "parity-U+2028-email-trailing",
+      "parity-U+2028-email-blank",
+      "parity-U+2028-draft-delete",
+      "parity-U+2028-maintenance",
+      "parity-U+2029-title",
+      "parity-U+2029-countdown",
+      "parity-U+2029-email-leading",
+      "parity-U+2029-email-trailing",
+      "parity-U+2029-email-blank",
+      "parity-U+2029-draft-delete",
+      "parity-U+2029-maintenance",
+      "parity-U+202F-title",
+      "parity-U+202F-countdown",
+      "parity-U+202F-email-leading",
+      "parity-U+202F-email-trailing",
+      "parity-U+202F-email-blank",
+      "parity-U+202F-draft-delete",
+      "parity-U+202F-maintenance",
+      "parity-U+205F-title",
+      "parity-U+205F-countdown",
+      "parity-U+205F-email-leading",
+      "parity-U+205F-email-trailing",
+      "parity-U+205F-email-blank",
+      "parity-U+205F-draft-delete",
+      "parity-U+205F-maintenance",
+      "parity-U+3000-title",
+      "parity-U+3000-countdown",
+      "parity-U+3000-email-leading",
+      "parity-U+3000-email-trailing",
+      "parity-U+3000-email-blank",
+      "parity-U+3000-draft-delete",
+      "parity-U+3000-maintenance",
+      "parity-nonwhitespace-U+200B",
+      "parity-nonwhitespace-U+FEFF",
+      "parity-nonwhitespace-U+2060"
+    ],
+    "rebuilt_case_count": 383,
+    "source_preserved": true,
+    "disposable_evidence": {
+      "status": "PASS",
+      "root": "/tmp/merlin-db-sandboxes-1734e63084c040468ca89959ed6b922d",
+      "docker_operation_seconds": [
+        {
+          "operation": "diff",
+          "seconds": 0.503
+        },
+        {
+          "operation": "volume",
+          "seconds": 0.018
+        },
+        {
+          "operation": "volume",
+          "seconds": 0.019
+        },
+        {
+          "operation": "volume",
+          "seconds": 0.019
+        },
+        {
+          "operation": "create",
+          "seconds": 0.037
+        },
+        {
+          "operation": "create",
+          "seconds": 0.037
+        },
+        {
+          "operation": "create",
+          "seconds": 0.039
+        },
+        {
+          "operation": "cp",
+          "seconds": 0.04
+        },
+        {
+          "operation": "cp",
+          "seconds": 0.044
+        },
+        {
+          "operation": "cp",
+          "seconds": 0.047
+        },
+        {
+          "operation": "cp",
+          "seconds": 0.031
+        },
+        {
+          "operation": "cp",
+          "seconds": 0.027
+        },
+        {
+          "operation": "cp",
+          "seconds": 0.024
+        },
+        {
+          "operation": "start",
+          "seconds": 0.123
+        },
+        {
+          "operation": "start",
+          "seconds": 0.136
+        },
+        {
+          "operation": "start",
+          "seconds": 0.134
+        },
+        {
+          "operation": "container",
+          "seconds": 0.024
+        },
+        {
+          "operation": "container",
+          "seconds": 0.03
+        },
+        {
+          "operation": "container",
+          "seconds": 0.023
+        },
+        {
+          "operation": "container",
+          "seconds": 0.019
+        },
+        {
+          "operation": "container",
+          "seconds": 0.027
+        },
+        {
+          "operation": "container",
+          "seconds": 0.021
+        },
+        {
+          "operation": "container",
+          "seconds": 0.019
+        },
+        {
+          "operation": "container",
+          "seconds": 0.016
+        },
+        {
+          "operation": "container",
+          "seconds": 0.017
+        },
+        {
+          "operation": "volume",
+          "seconds": 0.019
+        },
+        {
+          "operation": "create",
+          "seconds": 0.031
+        },
+        {
+          "operation": "cp",
+          "seconds": 0.029
+        },
+        {
+          "operation": "cp",
+          "seconds": 0.019
+        },
+        {
+          "operation": "start",
+          "seconds": 0.085
+        },
+        {
+          "operation": "container",
+          "seconds": 0.016
+        },
+        {
+          "operation": "container",
+          "seconds": 0.016
+        },
+        {
+          "operation": "container",
+          "seconds": 0.014
+        },
+        {
+          "operation": "ps",
+          "seconds": 0.013
+        },
+        {
+          "operation": "container",
+          "seconds": 0.012
+        },
+        {
+          "operation": "rm",
+          "seconds": 0.063
+        },
+        {
+          "operation": "container",
+          "seconds": 0.013
+        },
+        {
+          "operation": "rm",
+          "seconds": 0.056
+        },
+        {
+          "operation": "container",
+          "seconds": 0.014
+        },
+        {
+          "operation": "rm",
+          "seconds": 0.061
+        },
+        {
+          "operation": "container",
+          "seconds": 0.013
+        },
+        {
+          "operation": "rm",
+          "seconds": 0.054
+        },
+        {
+          "operation": "volume",
+          "seconds": 0.012
+        },
+        {
+          "operation": "volume",
+          "seconds": 0.012
+        },
+        {
+          "operation": "volume",
+          "seconds": 0.094
+        },
+        {
+          "operation": "volume",
+          "seconds": 0.012
+        },
+        {
+          "operation": "volume",
+          "seconds": 0.094
+        },
+        {
+          "operation": "volume",
+          "seconds": 0.013
+        },
+        {
+          "operation": "volume",
+          "seconds": 0.095
+        },
+        {
+          "operation": "volume",
+          "seconds": 0.012
+        },
+        {
+          "operation": "volume",
+          "seconds": 0.091
+        },
+        {
+          "operation": "images",
+          "seconds": 0.017
+        }
+      ],
+      "runtime_cache_hit": true,
+      "runtime_image": "sha256:5fe2de873b80ee9335af51da3536034e6dc680462324ec1076b8948059f32b2e",
+      "runtime_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_prepare_seconds": 0.606,
+      "backup_command_seconds": 0.913,
+      "setup_seconds": 3.555,
+      "targets": [
+        {
+          "name": "sql",
+          "container": "352ef1cf2aee97fa64891f78f521f1e95f8b3f5df321da10a21efe18e79a0460",
+          "data": "/tmp/merlin-db-sandboxes-1734e63084c040468ca89959ed6b922d/sql",
+          "socket": "/tmp/merlin-db-sandboxes-1734e63084c040468ca89959ed6b922d/sql/socket"
+        },
+        {
+          "name": "lifecycle",
+          "container": "b56975fba99a87286a33169c9350af26ccf2a1207eb6d28f8bb0ee2b8d0a1629",
+          "data": "/tmp/merlin-db-sandboxes-1734e63084c040468ca89959ed6b922d/lifecycle",
+          "socket": "/tmp/merlin-db-sandboxes-1734e63084c040468ca89959ed6b922d/lifecycle/socket"
+        },
+        {
+          "name": "migration",
+          "container": "235f09b253365781fa0beb8cfc777d954b81963dfaaea088680bc86c85d69cda",
+          "data": "/tmp/merlin-db-sandboxes-1734e63084c040468ca89959ed6b922d/migration",
+          "socket": "/tmp/merlin-db-sandboxes-1734e63084c040468ca89959ed6b922d/migration/socket"
+        },
+        {
+          "name": "sql-second",
+          "container": "c56c759301328c11659d5b80a7647d1bf57ff56ea084132c59648227d1898d19",
+          "data": "/tmp/merlin-db-sandboxes-1734e63084c040468ca89959ed6b922d/sql-second",
+          "socket": "/tmp/merlin-db-sandboxes-1734e63084c040468ca89959ed6b922d/sql-second/socket"
+        }
+      ],
+      "source_fingerprint": "8c23818a98b72b3d725d64d703c0e22f",
+      "startup_timings": {
+        "backup_seconds": 0.3277601370000127
+      },
+      "cleanup_seconds": 0.92,
+      "cleanup_passed": true,
+      "source_preserved": true
+    },
+    "seconds": 10.947
+  },
+  "jobs": [
+    {
+      "name": "setup",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38",
+          "conclusion": "success"
+        },
+        {
+          "name": "Host clients and pinned package manager",
+          "conclusion": "success"
+        },
+        {
+          "name": "Locked environments",
+          "conclusion": "success"
+        },
+        {
+          "name": "Doctor regression tests",
+          "conclusion": "success"
+        },
+        {
+          "name": "Isolated services from committed inputs",
+          "conclusion": "success"
+        },
+        {
+          "name": "Static and runtime acceptance",
+          "conclusion": "success"
+        },
+        {
+          "name": "Pinned browser runtime",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build isolated PostgreSQL test runtime",
+          "conclusion": "success"
+        },
+        {
+          "name": "All prior application cases, faults and migration verification",
+          "conclusion": "success"
+        },
+        {
+          "name": "Retain only CI-owned synthetic verification reports",
+          "conclusion": "success"
+        },
+        {
+          "name": "Remove only runner-owned disposable resources",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 
 - [Parallel SQL performance: 36.83-second full verification and coverage proof](testing/test-suite-parallel-sql-performance.md)
 - [Final second review: every case/fault, repairs and observed results](testing/test-suite-second-review.md)
-Current work: [Day 7 health API contract and learning guide](architecture/health-api-contract.md), step 2.1 of the [Day 7 Jira checklist](sprints/day-seven-jira-checklist.md). Section 1 is learner-confirmed complete. Previous evidence: [Day 6 handoff](planning/day-six-handoff.md) and [test-suite necessity review](testing/test-suite-necessity-review.md).
+Current work: [cumulative CI repair and hosted verification](testing/cumulative-ci-verification.md), then the [Day 7 health API contract and learning guide](architecture/health-api-contract.md), step 2.1 of the [Day 7 Jira checklist](sprints/day-seven-jira-checklist.md). Section 1 is learner-confirmed complete. Previous evidence: [Day 6 handoff](planning/day-six-handoff.md) and [test-suite necessity review](testing/test-suite-necessity-review.md).
 
 For a beginner explanation of the current implementation, read [How Merlin works today](learning/current-app-setup-walkthrough.md).
 

@@ -23,7 +23,7 @@ Use the existing 15-minute decision block to record this gap. Reassign the remai
 
 ## Workflow gaps identified before repair
 
-Reviewed `.github/workflows/setup.yml` and the suite entry points on October 14, 2026. The table records the starting gaps. The repair is now implemented and locally verified; GitHub execution remains pending publication.
+Reviewed `.github/workflows/setup.yml` and the suite entry points on October 14, 2026. The table records the starting gaps. The repair is implemented and verified locally and on GitHub; see the exact commit/run evidence below.
 
 | Area | Current state | Requirement before Day 7 API implementation |
 |---|---|---|
@@ -40,11 +40,11 @@ The database portability gap means a one-line workflow addition is insufficient.
 
 ## Acceptance and handoff
 
-- [ ] A clean environment can provision every required dependency and synthetic target without personal credentials or a reused local database.
-- [ ] Existing setup checks, all retained Day 6 cases/faults, runner controls and standalone migration roundtrip execute and validate their full inventories.
-- [ ] A deliberately failing required check makes the job fail; missing dependencies or required cases cannot become a green skip.
-- [ ] Owned resources are cleaned after success and failure; output and artifacts contain no compromising information.
-- [ ] Required GitHub jobs pass for the exact reviewed commit; record the run URL and first failure if any. Current status: PENDING.
+- [x] A clean environment can provision every required dependency and synthetic target without personal credentials or a reused local database.
+- [x] Existing setup checks, all retained Day 6 cases/faults, runner controls and standalone migration roundtrip execute and validate their full inventories.
+- [x] A deliberately failing required check makes the job fail; missing dependencies or required cases cannot become a green skip.
+- [x] Owned resources are cleaned after success and failure; output and artifacts contain no compromising information.
+- [x] Required GitHub jobs pass for the exact reviewed commit; record the run URL and first failure if any. PASS: commit `177e755d23f8705adf208cb13aa666e3818fb3f0`, [run 38746965661](https://github.com/vipravlipare/Merlin/actions/runs/38746965661).
 
 📚 Learn first: [the complete suite commands](../testing/test-suite-commands.md), prerequisites and safety boundaries; [the latest publication/refactor review](../testing/documentation-publication-security-review.md), limitations and remote-history state.
-↩ Return: inspect [implementation verification](../testing/cumulative-ci-verification.md), then verify the published commit in GitHub Actions. The learner explicitly authorized AI implementation and the guarded publication of reviewed changes. Local execution passed; the remote day-start gate remains pending.
+↩ Return: inspect [implementation verification](../testing/cumulative-ci-verification.md), then verify the published commit in GitHub Actions. The learner explicitly authorized AI implementation and the guarded publication of reviewed changes. Local and hosted execution passed for the recorded commit. Always inspect the latest commit before advancing.
