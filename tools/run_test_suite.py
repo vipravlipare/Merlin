@@ -90,7 +90,10 @@ def preflight(env):
             result = subprocess.run(command, cwd=ROOT, env=env, capture_output=True, text=True, timeout=45)
             if result.returncode:
                 # Do not dump connection/configuration environment or private errors.
-                raise RuntimeError('Prerequisite check failed: ' + ('browser runtime' if command[0] == 'node' and '--input-type=module' in command else ' '.join(command[:3])) + '; see the command guide')
+                safe_details = [line for line in result.stdout.splitlines()
+                                if re.fullmatch(r'Native psql failed checks: [a-z0-9_, -]+', line)]
+                detail = '; ' + safe_details[0] if safe_details else ''
+                raise RuntimeError('Prerequisite check failed: ' + ('browser runtime' if command[0] == 'node' and '--input-type=module' in command else ' '.join(command[:3])) + '; see the command guide' + detail)
             if result.stdout.strip():
                 print(result.stdout.strip(), flush=True)
 

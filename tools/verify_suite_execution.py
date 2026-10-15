@@ -172,12 +172,14 @@ def check_preflight():
             with guard:events.append({'name':name,'start':start,'end':time.monotonic()})
             selected = 'ci-guards' if mode.startswith('ci-guards-') else 'native'
             if name==selected and mode.endswith('timeout'):raise subprocess.TimeoutExpired(command,45)
-            return subprocess.CompletedProcess(command,1 if name==selected and mode.endswith('failure') else 0,'','private-secret-error')
+            return subprocess.CompletedProcess(command,1 if name==selected and mode.endswith('failure') else 0,('Native psql failed checks: native_equivalence_1\nprivate-secret-output\n' if name==selected and mode.endswith('failure') else ''),'private-secret-error')
         with patch.object(suite.subprocess,'run',side_effect=probe):
             try:suite.preflight({})
             except (RuntimeError,subprocess.TimeoutExpired) as error:
                 assert mode!='pass'
-                assert 'private-secret-error' not in str(error)
+                assert 'private-secret-error' not in str(error) and 'private-secret-output' not in str(error)
+                if mode == 'failure':
+                    assert 'Native psql failed checks: native_equivalence_1' in str(error)
             else:assert mode=='pass','Failed prerequisite was accepted'
         if mode=='pass':
             by_name={event['name']:event for event in events}

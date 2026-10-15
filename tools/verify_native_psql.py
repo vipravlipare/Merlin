@@ -94,7 +94,8 @@ def verify():
                 child.kill(); child.wait()
         checks['preserved'] = preservation(module) == original
         if not all(checks.values()):
-            raise RuntimeError('Native psql verification failed: ' + str(checks))
+            print('Native psql failed checks: ' + ','.join(name for name, passed in checks.items() if not passed), flush=True)
+            raise RuntimeError('Native psql verification failed')
         return checks
     finally:
         close()
@@ -104,7 +105,17 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--out', type=Path)
     args = parser.parse_args()
-    checks = verify()
+    try:
+        checks = verify()
+    except Exception as error:
+        known = {
+            'Interrupt control did not start its server query': 'interrupt_query_not_started',
+            'Native psql transport readiness failed': 'transport_not_ready',
+            'Native psql transport ended unexpectedly': 'transport_ended',
+        }
+        name = known.get(str(error), 'execution_' + type(error).__name__.lower())
+        print('Native psql failed checks: ' + name, flush=True)
+        raise
     if args.out:
         args.out.write_text(json.dumps(checks, indent=2) + '\n')
     print('Native psql equivalence, fresh connections, cancellation and preservation PASS')
