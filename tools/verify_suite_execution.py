@@ -54,6 +54,14 @@ def stages(directory):
  for name in names:
   delay=1 if (mode=='interrupt' and name in ['quiz-case-faults','python-case-faults','migration-undo-faults','database-case-faults','database-lifecycle-faults']) or mode=='interrupt-setup' else .1
   code="import json,os,time;from pathlib import Path;p=Path("+repr(str(folder/'trace'))+");name="+repr(name)+";\ndef event(action):\n with p.open('a') as f:f.write(json.dumps({'stage':name,'action':action,'pid':os.getpid(),'time':time.monotonic(),'target':os.environ.get('MERLIN_DB_SANDBOX')})+'\\n')\nevent('start')\ntry:time.sleep("+repr(delay)+")\nfinally:event('end')"
+  if mode in {'pass','serial'}:
+   peers=['quiz-case-faults','python-case-faults','migration-undo-faults']
+   if mode=='pass':peers+=['database-case-faults','database-lifecycle-faults']
+   if name in peers:
+    # Hold each worker until its independent peers have actually started.
+    # A serialized scheduler still fails; CPU contention cannot fake failure.
+    barrier="root=Path("+repr(str(folder))+");(root/(name+'.started')).touch();deadline=time.monotonic()+5\nwhile not all((root/(peer+'.started')).exists() for peer in "+repr(peers)+"):\n if time.monotonic()>deadline:raise RuntimeError('Independent workers did not start')\n time.sleep(.005)\n"
+    code=code.replace("try:time.sleep(","try:\n "+barrier.replace("\n","\n ")+" time.sleep(")
   rows.append((name,[sys.executable,'-c',code]))
  return rows
 suite.stages=stages
@@ -157,6 +165,7 @@ def check_preflight():
     for mode in ['pass','failure','timeout','ci-guards-failure','ci-guards-timeout']:
         events=[]
         guard=threading.Lock()
+        initial_probes=threading.Barrier(3)
         def probe(command, **kwargs):
             assert kwargs['timeout']==45 and kwargs['capture_output'] and kwargs['text']
             if command[1:2]==['tools/verify_suite_execution.py']:name='scheduling'
@@ -168,6 +177,8 @@ def check_preflight():
             elif 'DatabaseTestSession' in command[-1]:name='transport'
             else:name='preservation'
             start=time.monotonic()
+            if name in {'scheduling','native','imports'}:
+                initial_probes.wait(timeout=5)
             time.sleep(.03)
             with guard:events.append({'name':name,'start':start,'end':time.monotonic()})
             selected = 'ci-guards' if mode.startswith('ci-guards-') else 'native'
