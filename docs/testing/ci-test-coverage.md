@@ -48,3 +48,7 @@ For a focused Python unit/regression run without the live PostgreSQL module:
 ```
 
 The focused command does not replace the full suite. See [all suite commands](test-suite-commands.md) for prerequisites and [observed CI results](cumulative-ci-verification.md) for actual hosted evidence.
+
+## Observed verification
+
+[GitHub run 38756597293](https://github.com/vipravlipare/Merlin/actions/runs/38756597293) passed for commit `35607dee40a3df10670c13074d9638f80692f930`, including the complete required hosted job after removing workflow cancellation. Local verification passed 329 Python tests plus three subtests, documentation validation and whitespace checks. Structural comparison confirmed the workflow's tests, faults, permissions and artifact rules were unchanged. The publication scan inspected 339 current files and 440 historical blobs, expanding compressed evidence, and reported no findings within its pattern/local-value scope. This is not a universal confidentiality guarantee. Actual minutes are unknown.
