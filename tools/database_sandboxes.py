@@ -321,7 +321,9 @@ class DatabaseSandboxes:
             if labels.get('merlin.audit.runtime')!=self.runtime_hash or labels.get('merlin.audit.source')!=self.source:
                 raise RuntimeError('Runtime cache provenance differs')
         else:
-            commit=self.docker(['commit','--no-pause',
+            # Keep Docker's default pause behavior: older hosted CLIs do not
+            # support --no-pause. Database data lives in excluded volumes.
+            commit=self.docker(['commit',
                                '--change','ENV POSTGRES_PASSWORD=unused_for_existing_copy',
                                '--change','LABEL com.docker.compose.project=merlin-audit-runtime',
                                '--change','LABEL com.docker.compose.service=postgres-sandbox',

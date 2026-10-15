@@ -517,6 +517,39 @@ def check_compressor_privacy():
     return [{'scenario': name, 'passed': True} for name in checks]
 
 
+def check_runtime_commit_compatibility():
+    from tools.database_sandboxes import DatabaseSandboxes
+    sandbox = DatabaseSandboxes('/unused-control-output')
+    sandbox.source = 'a' * 64
+    image = 'sha256:' + 'b' * 64
+    digest = 'c' * 64
+    commits = []
+    def docker(arguments, timeout=20):
+        if arguments[0] == 'diff':
+            return ''
+        if arguments[0] == 'commit':
+            # An older Docker CLI rejects the newer --no-pause flag.
+            assert '--no-pause' not in arguments
+            commits.append(arguments)
+            return image
+        assert arguments == ['image', 'inspect', image]
+        return json.dumps([{'Config': {'Labels': {}}}])
+    def run(command, **kwargs):
+        if command[:3] == ['docker', 'image', 'inspect']:
+            return subprocess.CompletedProcess(command, 1, '', '')
+        assert command[:3] == ['docker', 'exec', '-i']
+        return subprocess.CompletedProcess(command, 0, digest, '')
+    try:
+        with patch.object(sandbox, 'docker', side_effect=docker), patch('subprocess.run', side_effect=run):
+            sandbox.prepare_runtime()
+        assert len(commits) == 1 and sandbox.image == image
+        assert sandbox.evidence['runtime_digest'] == digest
+    finally:
+        if sandbox.temporary is not None:
+            sandbox.temporary.cleanup()
+    return [{'scenario': 'runtime-commit-older-docker-compatible', 'passed': True}]
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--out',type=Path)
@@ -532,6 +565,7 @@ def main():
     rows.extend(check_sql_shards())
     rows.extend(check_migration_schema_normalization())
     rows.extend(check_compressor_privacy())
+    rows.extend(check_runtime_commit_compatibility())
     if args.out:args.out.write_text(json.dumps({'checks':rows},indent=2)+'\n')
     print('Suite scheduling, first failure and interrupt cleanup controls PASS')
 

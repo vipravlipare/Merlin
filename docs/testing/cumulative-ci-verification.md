@@ -24,3 +24,12 @@ First integration failure: Compose discovery did not recognize the fresh source 
 GitHub execution is **PENDING** until the reviewed changes are committed, published with the approved exact remote-tip lease, and the resulting workflow is observed. Do not fetch the older unsanitized history. Publication-file-review.json records the earlier publication audit snapshot; the CI additions require the final precommit scan as well.
 
 The workflow uses read-only repository permissions and does not deploy. A successful finite suite does not establish universal security or implement future requirements. Cross-user API authorization remains pending an implemented ownership boundary.
+
+## First hosted execution and compatibility repair
+
+The first published run, [38665906998](https://github.com/vipravlipare/Merlin/actions/runs/38665906998), failed for commit `787af8a24d444b8d8bd0df69858f295eccd617ae`. Setup, browser provisioning and image build passed. Original Python sources passed, followed by the complete suite's ordinary Python/database and quiz baseline stages. The first failure was `database-isolation`: `Disposable Docker operation failed: commit`. CI cleanup and source preservation passed; subsequent fault stages were pending, not passed.
+
+The runtime capture used `docker commit --no-pause`. That option exists in the local Docker CLI but not in the official Docker CLI v28 source. The narrow repair uses the default pause behavior, supported across these versions. Mounted database volumes remain excluded from image capture. A regression exercises the actual runtime-preparation method with a CLI double that rejects the unsupported option. Hosted re-execution is required to confirm this mechanism rather than infer success from local tests.
+
+📚 Learn first: [Docker commit](https://docs.docker.com/reference/cli/docker/container/commit/), default pausing and excluded mounted volumes; [Docker CLI v28 implementation](https://github.com/docker/cli/blob/v28.0.4/cli/command/container/commit.go), its supported flags. Checked October 15, 2026.
+↩ Return: inspect the repaired commit's hosted run and record the first remaining failure or a successful required job.
