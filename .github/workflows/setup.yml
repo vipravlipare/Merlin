@@ -1,4 +1,4 @@
-name: Sprint 0 setup
+name: Cumulative verification
 
 on:
   push:
@@ -15,7 +15,7 @@ concurrency:
 jobs:
   setup:
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
@@ -53,6 +53,35 @@ jobs:
             cat "$RUNNER_TEMP/doctor-safe.log"
           done
           git diff --check
+      - name: Pinned browser runtime
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: ${{ runner.temp }}/merlin-browser-binaries
+        run: |
+          npm ci --prefix .github/ci/browser --ignore-scripts --no-audit --no-fund
+          node .github/ci/browser/node_modules/playwright/cli.js install --with-deps --only-shell chromium
+      - name: Build isolated PostgreSQL test runtime
+        run: |
+          docker build --iidfile "$RUNNER_TEMP/merlin-ci-image" -f .github/ci/postgres.Dockerfile .github/ci
+          docker image inspect --format '{{.Id}}' "$(cat "$RUNNER_TEMP/merlin-ci-image")" > "$RUNNER_TEMP/merlin-ci-runtime-id"
+      - name: All prior application cases, faults and migration verification
+        env:
+          MERLIN_PLAYWRIGHT_MODULE: ${{ github.workspace }}/.github/ci/browser/node_modules/playwright/index.mjs
+          PLAYWRIGHT_BROWSERS_PATH: ${{ runner.temp }}/merlin-browser-binaries
+          PLAYWRIGHT_HOST_PLATFORM_OVERRIDE: ubuntu24.04-x64
+        run: |
+          uv run --locked python tools/run_ci.py --image "$(cat "$RUNNER_TEMP/merlin-ci-runtime-id")" --out "$RUNNER_TEMP/merlin-ci-results"
+      - name: Retain only CI-owned synthetic verification reports
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: cumulative-verification
+          retention-days: 7
+          if-no-files-found: warn
+          path: |
+            ${{ runner.temp }}/merlin-ci-results/ci-summary.json
+            ${{ runner.temp }}/merlin-ci-results/source-inputs.json
+            ${{ runner.temp }}/merlin-ci-results/suite/summary.json
+            ${{ runner.temp }}/merlin-ci-results/migration.json
       - name: Remove only runner-owned disposable resources
         if: always()
         run: |

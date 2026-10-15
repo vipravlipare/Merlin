@@ -35,8 +35,6 @@ def dependencies(file, visited=None):
     tree = ast.parse((ROOT / file).read_text())
     uncertain = False
     package = file.split('/')[:-1]
-    if file.endswith('/__init__.py'):
-        package = file.split('/')[:-1]
     imports = set()
     aliases = {}
     subprocess_calls = []

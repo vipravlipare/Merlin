@@ -1,5 +1,19 @@
 # Security
 
+## Local privacy corrections
+
+The Merlin copy keeps YAML frontmatter and preserved code blocks local during
+both the initial compression request and a validation repair. CLI failures use
+a generic error rather than printing raw external diagnostics. These are local
+changes to the bundled skill; an upstream reinstall may overwrite them.
+
+The remaining prose is still sent to an external provider when this skill is
+explicitly invoked. Sensitive filenames are rejected by a heuristic, not a
+complete content-classification system. Never use it on private account records,
+credentials or documents containing sensitive prose. Public documentation must
+use synthetic examples before any compression request. No external request was
+made by the privacy regression checks.
+
 ## Snyk High Risk Rating
 
 `caveman-compress` receives a Snyk High Risk rating due to static analysis heuristics. This document explains what the skill does and does not do.

@@ -41,7 +41,7 @@ docker compose ps
 Stop safely when finished: `docker compose stop --timeout 30 postgres redis`. Do not use `down --volumes`, delete the working database, expose ports publicly, or test authorization as an administrative database role. No installation of optional models, pgvector, AWS or gateway services is required for the first users/notes slice.
 
 
-One environment guide consolidates the setup documents; [Part 17](../sprints/part-17-sprint0.md) separately owns the Sprint 0 calendar and Day 4 deliverables. Original details are recoverable in [the verified archive](archive/sprint-0-original-setup.tar.gz). Canonical calendar: October 1–5, 2026; Days 1–5, **no separate Day 0**. Latest learner authorization permits assistant setup changes; application features remain learner-owned.
+One environment guide consolidates the setup documents; [Part 17](../sprints/part-17-sprint0.md) separately owns the Sprint 0 calendar and Day 4 deliverables. Historical planning is retained in [the privacy-sanitized archive](archive/sprint-0-original-setup.tar.gz); [its preservation note](archive/README.md) explains the authorized redactions. Canonical calendar: October 1–5, 2026; Days 1–5, **no separate Day 0**. Latest learner authorization permits assistant setup changes; application features remain learner-owned.
 
 ## Acceptance through Day 3
 

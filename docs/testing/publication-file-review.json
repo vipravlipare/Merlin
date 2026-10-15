@@ -1,0 +1,3295 @@
+{
+  "date": "2026-10-14",
+  "scope": "Every current tracked and non-ignored file, including hidden skills; generated data is processed in full, not claimed manually read line-by-line. Historical blobs and archive members reviewed separately.",
+  "files": [
+    {
+      "file": ".agents/skills/cavecrew/README.md",
+      "bytes": 2873,
+      "sha256": "42e9972951719548b83402c726e8c07a01305e609c3d49626d1cab7dc5af7315",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/cavecrew/SKILL.md",
+      "bytes": 3606,
+      "sha256": "c05f8e8d16bd8ae1c8d0b0abf6e8b9671051bde61653c4986304c2de3a1cf5d4",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/caveman-commit/README.md",
+      "bytes": 1226,
+      "sha256": "a2e82924b487fc1845114c247b47c2d3c2d1bd60f90bbfa60e9831319eb964fa",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/caveman-commit/SKILL.md",
+      "bytes": 2371,
+      "sha256": "c788a282fc75b981b421dfdad5d84ea7f83f946c126daa39cfc7d3f97845e193",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/caveman-compress/README.md",
+      "bytes": 5672,
+      "sha256": "66cbda47987e9a90eb485a8c63d65f78494a023e37e84031a782a4e7bc379a24",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/caveman-compress/SECURITY.md",
+      "bytes": 2497,
+      "sha256": "2a1cc9919a82aabea5d90ba9fd2fadce2f5e2085dc89911cdaaed33f935f917d",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/caveman-compress/SKILL.md",
+      "bytes": 4697,
+      "sha256": "377b0b8682d9db1a832c20ee6732ed0f19f55e4f7048955296128244c869c916",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/caveman-compress/scripts/__init__.py",
+      "bytes": 224,
+      "sha256": "429c3e1c5cc5b9705f28d77f303c728304ae68693913ad3d5ce9b5a44c8ee40f",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review",
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/caveman-compress/scripts/__main__.py",
+      "bytes": 30,
+      "sha256": "6d8b7d7846a845059d7a3107143f11131f63c5511d669b44085b15ec5e3d2279",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review",
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/caveman-compress/scripts/benchmark.py",
+      "bytes": 2491,
+      "sha256": "6ff5098db623154161503595e3ef513516d1d47bed7c264c7e0378581945767b",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review",
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/caveman-compress/scripts/cli.py",
+      "bytes": 2471,
+      "sha256": "04d615a66dbf204e3a883b53706320c0c48e0a4c717b0516d41f647a7cfafeb2",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review",
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/caveman-compress/scripts/compress.py",
+      "bytes": 35038,
+      "sha256": "8d41606a0af3ee3fe79241c5658f4d20b6ac038c23b0940173592ced4a6e9288",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review",
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/caveman-compress/scripts/detect.py",
+      "bytes": 5169,
+      "sha256": "8dbdce1df5b6ccb049cd2c84b16f3409ac5551abb9fbc07ddd1616393b78b8f5",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review",
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/caveman-compress/scripts/validate.py",
+      "bytes": 15236,
+      "sha256": "ca18ee71e206063077de128bc1e6569d01f8b2c0d52e071430d5a138edcec879",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review",
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/caveman-discover/SKILL.md",
+      "bytes": 5276,
+      "sha256": "0483d17fce14ca5bbfcf1e085c180412dc20a672f5e8e4171fd0bbbb6f42b81a",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/caveman-evidence-review/SKILL.md",
+      "bytes": 3734,
+      "sha256": "05bd896c76a41918fe7b87113dabe852117727a579a7e445891aa41391ed57c2",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/caveman-explore/SKILL.md",
+      "bytes": 1970,
+      "sha256": "908f504ce45f5f8517ac7b64dc89fef57c4519d26f92b0b1843febf4b6fe2ac8",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/caveman-explore/package.json",
+      "bytes": 354,
+      "sha256": "ab6c6186b9b87d4a68183625d23ef422e05e99aeab9228cac2924fc5391dc7a6",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/caveman-explore/tests/skill-file.test.mjs",
+      "bytes": 2157,
+      "sha256": "dad62b37f948351424438b3ae272e8b4c8462a78b5ace86ded9f0f7d136edb5c",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review",
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/caveman-help/README.md",
+      "bytes": 976,
+      "sha256": "5fcfa700fbf6c07259db74bc6bb602f4590623c86b754b153061cf82b59c48ee",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/caveman-help/SKILL.md",
+      "bytes": 2266,
+      "sha256": "3effbc5b8943900c7500da48f73ab9de297866705c105df1b324d4337dec3a9a",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/caveman-learn/CLAUDE.md",
+      "bytes": 1886,
+      "sha256": "d954541f8cd9805a5ffaa3b0e078109f355067795b129e7c01071a94fd7ca700",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/caveman-learn/README.md",
+      "bytes": 1829,
+      "sha256": "ddfc56c25014003ef38de2e15fb712872183ab16c05db47aa342e775b13d3fe4",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/caveman-learn/SKILL.md",
+      "bytes": 11370,
+      "sha256": "466ce607aebff17df2fb0d4ec5fba9b0ab61b1f6a0fd7ae03f4f5ea4aa5627b9",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/caveman-learn/package.json",
+      "bytes": 530,
+      "sha256": "8a6b98d06c1b12a7b0378a33f16d12432095bc80526338b7d0bb42f3ccd734f9",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/caveman-learn/tests/index.js",
+      "bytes": 32,
+      "sha256": "93e0e2e9f6f2ec9ebf0c1ef494ecc0a083f82317aca074e20a1b0b2e50da2e05",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review",
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/caveman-learn/tests/skill-file.test.mjs",
+      "bytes": 2654,
+      "sha256": "77f8e246c2cf426d324186db6408c5376028956d3f42d6adb78b64e3ef417088",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review",
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/caveman-manage/SKILL.md",
+      "bytes": 3916,
+      "sha256": "3404a3c8651d63b6a7c02ccda17fcb4fca2489e931bb814580979a9ff548a48e",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/caveman-optimize/SKILL.md",
+      "bytes": 4723,
+      "sha256": "93f391beb93198b5bf9c0c21bc8b7b194e57cb7855fbf05384a4a5d6dd8c06cb",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/caveman-review/README.md",
+      "bytes": 1210,
+      "sha256": "a06403b2722a069a9a2b0011772ae73296e68b4e46ace2f4b42b4ea546052b64",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/caveman-review/SKILL.md",
+      "bytes": 2567,
+      "sha256": "599330563f19b5c59c3efddffcd7e8d9098b74c29817ab422ccd3253b103fcb8",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/caveman-setup/SKILL.md",
+      "bytes": 10524,
+      "sha256": "42c8b8eeba19c6d4ffd3c421be60a7e8b5c0e5108fd4496f0be3c7ced90bfd5f",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/caveman-stats/README.md",
+      "bytes": 2521,
+      "sha256": "8da1a84ea911894e1e32784a8c1ad2bfe8be6e18cf3e768c778f8d70965ddde5",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/caveman-stats/SKILL.md",
+      "bytes": 1964,
+      "sha256": "4632f1611a56483df7851a0dabcc1e0c1952393cd8f5d08ddeda17f81a4e1e50",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/caveman/README.md",
+      "bytes": 1896,
+      "sha256": "e59aba7147058f0b90e9961a50ccd2e76a6883524711567c0d9348bd1f9cd74d",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/caveman/SKILL.md",
+      "bytes": 7061,
+      "sha256": "0bf09a0a9a017d004a81d4b693e5a2d830e1a28230a5885df773e1ed9c0571cc",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/cli-a2a/SKILL.md",
+      "bytes": 1692,
+      "sha256": "0a19e329dae2a4ba0186110adc7273d50aa8fe4fbe6ec6d6affb440bc48db5a0",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/cli-backup-sync/SKILL.md",
+      "bytes": 3791,
+      "sha256": "8d93e5c2816896796b552f58e4ea1f946d095775d7468d4e2acc0f431a991d27",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/cli-batches/SKILL.md",
+      "bytes": 2260,
+      "sha256": "e33f6b80d2747e51f853427352c74ce7a77f12511a12bd2d69c42303b25f50ed",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/cli-chat/SKILL.md",
+      "bytes": 1377,
+      "sha256": "f10cc2b18169e7d8dabfa0c5eba5d540046936cad6754ca31b37368e1eff9385",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/cli-compression/SKILL.md",
+      "bytes": 2084,
+      "sha256": "9e095519b1f0718a8f12a24e7add0dbbdfdc72562c72c3defa4ad0b0e8f1b97f",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/cli-contexts/SKILL.md",
+      "bytes": 4666,
+      "sha256": "37bb29812150e9351b57856b0db9288e5c06ca424c87845ee5ddd708777f2868",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/cli-cost-usage/SKILL.md",
+      "bytes": 2772,
+      "sha256": "352d93689291fb418bb892657e94ed5e9e530907430984c40147d3fd64d75b30",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/cli-eval/SKILL.md",
+      "bytes": 5295,
+      "sha256": "f42f846a4471d0ebc815b3705b7b368d7b7085c8a225c93e4448bbf937735887",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/cli-health/SKILL.md",
+      "bytes": 1307,
+      "sha256": "c0909091fb2807b9c53d3bb2685793cbce609df988afc1f6203dad11b751aa3f",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/cli-keys/SKILL.md",
+      "bytes": 2483,
+      "sha256": "509eca0858a8e85ccdafd13de600852f7d2edceff044fc8214ab716f468d32e6",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/cli-mcp/SKILL.md",
+      "bytes": 1217,
+      "sha256": "0e66b0ff74d161b0f50de8fb625b2682f25af1d4fe3b0bfb482dd33387103589",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/cli-models/SKILL.md",
+      "bytes": 2214,
+      "sha256": "e30f639190f605a65a27fe4ce90760483dd2a4f0af31b6865f259b31a2d6c7c0",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/cli-plugins-skills/SKILL.md",
+      "bytes": 4195,
+      "sha256": "a3a42c34d49831917366d6c1473db0eff446469b48b75ab497dda1c079ef6bcb",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/cli-policy-audit/SKILL.md",
+      "bytes": 2932,
+      "sha256": "6dce35c2ccaf83abb30c82c55216fc353f77036196f6171cb06aa36e00599fec",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/cli-providers/SKILL.md",
+      "bytes": 8633,
+      "sha256": "a5c3016335aa2e2855bcfb4c5694cf5e4f6c9d0653268d3e52a43405207f69c1",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/cli-resilience/SKILL.md",
+      "bytes": 2495,
+      "sha256": "8d8e69b53f32517b634e35143e1a1b8996bdf9ac32e6ca5b48cde5642f13ad24",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/cli-routing/SKILL.md",
+      "bytes": 1368,
+      "sha256": "baee339081241a6632dfac27eeb5ba27e9412fe89c179c8f6a536fa0b79a3365",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/cli-serve/SKILL.md",
+      "bytes": 10461,
+      "sha256": "1abb2541d683826584882b7cd42dc43d7ed67d9d3d6f5200ad986f6483bffa46",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/cli-setup/SKILL.md",
+      "bytes": 3155,
+      "sha256": "54f1115fc410772d70868cf2a7ab9e3bf087f0d4a7a9a64dfca9acb302b4a84d",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/cli-skill-collector/SKILL.md",
+      "bytes": 8476,
+      "sha256": "0b1c2d892d92df7d9cdf32d5e98d5a0c67439ac0a5ea45a237eb4a87dc70ca40",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/cli-tunnel/SKILL.md",
+      "bytes": 1355,
+      "sha256": "47396f604441cd4e53663b24a9ed0e0b6ebd2c0bfa0ee91449e9d3e2f34c2ad5",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/config-codex-cli/SKILL.md",
+      "bytes": 2760,
+      "sha256": "2a85801bb36355c3a49b4e547ab8b8beef8e377b13ab770c3117c0eb46478806",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/investigate-first/SKILL.md",
+      "bytes": 688,
+      "sha256": "7cc19dd2fc457eb20d65c44dee4d1b72dcdfcd1617182f5bff666700f2a055d8",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/investigate-first/agents/openai.yaml",
+      "bytes": 202,
+      "sha256": "9836c3e7e71564810abb1eeb66341e8ef180c457d4e121fe772cbf53e41a9268",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/lean-build/SKILL.md",
+      "bytes": 1090,
+      "sha256": "4d498073c6312858b220e9a04b7456c2485c734edb077f6bb17d88a7ed96ad7a",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/lean-build/agents/openai.yaml",
+      "bytes": 190,
+      "sha256": "8eb3226d28dae6e1d301bee89919e1309574e41b871761155547b1b510500335",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/migration/SKILL.md",
+      "bytes": 784,
+      "sha256": "fe7cf96a58b0521130fbb886dab2a326869d6ed0001e0306fd244014ba7a9662",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/migration/agents/openai.yaml",
+      "bytes": 203,
+      "sha256": "ca7090ae9c9465fb7075eb650d530757bd73530437a02ae1ed22e41e3bf0ba79",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/omni-agents-a2a/SKILL.md",
+      "bytes": 3184,
+      "sha256": "e8ff6db32c7fcf9ba9e6cd034220c62ebcf0311612e72f85675e4b29a3b9c820",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/omni-api-keys/SKILL.md",
+      "bytes": 4942,
+      "sha256": "862f384e6209e7e2a66b735879c9874f0baebcf374a1ca22997d6911114e24fd",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/omni-auth/SKILL.md",
+      "bytes": 7408,
+      "sha256": "04d93074456991c1e52e4da601d0cd37b117d8c4950a160e56897671370434d1",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/omni-budget/SKILL.md",
+      "bytes": 1185,
+      "sha256": "865f885dc76d82af97bcead5aa75c06f905442ed2cd6bfead42ff46b5e979671",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/omni-cache/SKILL.md",
+      "bytes": 2122,
+      "sha256": "b7f2005ed8fd99c19b561bcd2506d85a5c48a8a1eb394f2693962b6a4ead8222",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/omni-cli-tools/SKILL.md",
+      "bytes": 8139,
+      "sha256": "2280e3c1b36de7458511f17d192682858733243074f1e46a39c4a2aba2f5eaac",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/omni-cli-tools/references/endpoints.md",
+      "bytes": 23384,
+      "sha256": "46d969b0cdded90b59af1adfd55df79defb6c058ceb97824b059e66db3d9c6b5",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/omni-combos-routing/SKILL.md",
+      "bytes": 8575,
+      "sha256": "b2ce1329550bdc07c96fea490a99ed643808634e4d9d476fcecb3a4f4a20c4ed",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/omni-compression/SKILL.md",
+      "bytes": 6481,
+      "sha256": "921ff9455c5d8702ab75abc3f7f5ef0e649eb409275a03116b33fd010d53babe",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/omni-context-rtk/SKILL.md",
+      "bytes": 2478,
+      "sha256": "f4f3220edb12e3e04471206b6effb2147ab024a833a4856db9e5803cefd8abd4",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/omni-db-backups/SKILL.md",
+      "bytes": 1589,
+      "sha256": "c67b29535cd5cce69ece6545b8dd1b6336b5cda55e99547ac4ee7d8d83ff16f8",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/omni-github-skills/SKILL.md",
+      "bytes": 1287,
+      "sha256": "6cdd1be9e6f2fd8c4ebec5f7808d399dde1010735c571916e1ae9a9326ac4ba4",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/omni-inference/SKILL.md",
+      "bytes": 21925,
+      "sha256": "9e1b943f0ac8782a4399808ae814c9a3c1fda80ceaddb918ae2c3254c7ab8516",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/omni-inference/references/endpoints.md",
+      "bytes": 42175,
+      "sha256": "7c5464f63c8cc6a2d79feec8fc3e27cd0b13048e03bc2ad60a530bdddd9c90d0",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/omni-mcp/SKILL.md",
+      "bytes": 5233,
+      "sha256": "1bccf30954689088c28c3625ae60d776694f7d71723d7917cf6fead7e4696ec2",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/omni-models/SKILL.md",
+      "bytes": 2363,
+      "sha256": "138039d9777fc5a763300dda3729737ae00a0a53790d42ad867ea4c126607806",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/omni-providers/SKILL.md",
+      "bytes": 9661,
+      "sha256": "67e978fe38777ee18dd6fe3fc2f8aff225643ffaf77fb12ac5dffa2e715e9211",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/omni-providers/references/endpoints.md",
+      "bytes": 25019,
+      "sha256": "269c7d1b92d7fc74e42fd1ba581ada30b66844c6cf7bd8cf0af92615371f6123",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/omni-proxies/SKILL.md",
+      "bytes": 825,
+      "sha256": "d94d0dbd85ebc0feda69446b12bb65ad467fd1bde7f331fb8ffa6e2b24009ed1",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/omni-resilience/SKILL.md",
+      "bytes": 4844,
+      "sha256": "5030662419a2225e044da12314c3d0f52813bdf41ccef253a031ad1ae4b76f27",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/omni-settings/SKILL.md",
+      "bytes": 14305,
+      "sha256": "404ced7430d5d3116c2d00609e47ed43b2e5fb853bc85e3198d5cf071b7e8d0a",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/omni-settings/references/endpoints.md",
+      "bytes": 41289,
+      "sha256": "2661a0abf7185749371992f4136a139e7fca838cdc61f42aec44c976df124d94",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/omni-sync-cloud/SKILL.md",
+      "bytes": 3163,
+      "sha256": "dfeaba11fd4b136272787705dbb3a68ca198b4f891eebf705e681c4d5d8ccd5b",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/omni-tunnels/SKILL.md",
+      "bytes": 833,
+      "sha256": "53576f475424a4b2fe0674dacd61ef94774f78bdb3c2797666897ea09948bd80",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/omni-usage-logs/SKILL.md",
+      "bytes": 8138,
+      "sha256": "fea1ad907306942a061ea735f56d788bef4a2a68a0baa886219e40efe3e3d8e2",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/omni-version-manager/SKILL.md",
+      "bytes": 6820,
+      "sha256": "2a63c2a6d33e6013e8e56487395aa43bfa3e9872ca4fc0c6a67c4e47ebeaea24",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/omni-version-manager/references/endpoints.md",
+      "bytes": 27144,
+      "sha256": "598b24b5d72497a31e734187f2b8ca6b006438f49b249305f44db692afc87fbb",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/omni-webhooks/SKILL.md",
+      "bytes": 2392,
+      "sha256": "4d36bf2039b136bb75812afd17c2ed449d4526a330012878adb2bdcc7761caa4",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/ponytail/SKILL.md",
+      "bytes": 7421,
+      "sha256": "cb36c9f060acc1e03dcb530670da06c945eba32caecc839b2ecb943c29fa6c81",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/safe-refactor/SKILL.md",
+      "bytes": 705,
+      "sha256": "cd52867aba26aafb53379d43068cef9b2feca3a3fff850f877a99f710ccd02c0",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/safe-refactor/agents/openai.yaml",
+      "bytes": 201,
+      "sha256": "df608465dc32de1926bfc91ea0beabe9bc61198c121ff1eef0d2e6d74dd67ac1",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/surgical-patch/SKILL.md",
+      "bytes": 664,
+      "sha256": "81ea9f7b51409970099e04b98875dd65806cd35472f9a774b847030328187387",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/surgical-patch/agents/openai.yaml",
+      "bytes": 194,
+      "sha256": "269d7ea7ce5a40499236f7b70d711727f5650a94686283b657076e3cbd56d92f",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/verify-and-stop/SKILL.md",
+      "bytes": 704,
+      "sha256": "3d5599f49771b864eba94f27f456fda295c48c1a37fa6ba2f65fdcb13cc32acb",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".agents/skills/verify-and-stop/agents/openai.yaml",
+      "bytes": 197,
+      "sha256": "9efaaae6ffe812827c1c70af326ebc58b75455f99512f11dc3afccd0298cb45d",
+      "classification": "bundled skill",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".env.example",
+      "bytes": 384,
+      "sha256": "9244cc50d470c95e4218d4f37eae0eb9377f00a9be50dbe649ffbf7ce86e9942",
+      "classification": "development/dependency configuration",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".github/workflows/setup.yml",
+      "bytes": 1970,
+      "sha256": "4d7a7b7d48408b5bac0b386322e56b1aef553b2110a749d0a6dea4c271b32730",
+      "classification": "development/dependency configuration",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".gitignore",
+      "bytes": 83,
+      "sha256": "6d54c130e9052273670141107f54be439420e0b223e39459e6b75ababfb9b8d1",
+      "classification": "development/dependency configuration",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": ".python-version",
+      "bytes": 5,
+      "sha256": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d",
+      "classification": "development/dependency configuration",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "AGENTS.md",
+      "bytes": 8158,
+      "sha256": "5002bbea28de41fc8c21389de3acd500460085578cc07b6b606272b2f9610b11",
+      "classification": "documentation/evidence",
+      "review": [
+        "full instructions reviewed; publication and authorization rules retained"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "README.md",
+      "bytes": 2867,
+      "sha256": "5433c7f53970e41397552e1a4a1b151176472dda135b9d8fb2dc990d29185817",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "app/database_connectivity_probe.py",
+      "bytes": 765,
+      "sha256": "2f79dc55f18135a555071197417b58985fd59eab1505f2526f612807d6fd2fd3",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "app/note_rules.py",
+      "bytes": 2427,
+      "sha256": "44c19fcd536d06c887e6e9a1600b63ca4f21074b32dee93ec7874810eae3b538",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "app/notes_maintenance.py",
+      "bytes": 3546,
+      "sha256": "dbbde39d5996296adc0244f74d1e4a606b5de08d0b05497a47373edbf207dffb",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docker-compose.yml",
+      "bytes": 1684,
+      "sha256": "93507416d4d969d2af70859fa3148f4c1203915e5b2eea033e127d8d77c5edb7",
+      "classification": "development/dependency configuration",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/README.md",
+      "bytes": 4328,
+      "sha256": "37957a35c6f4b3ff5a86b144e56f91ed6c274fdbedb168a2c2b89ce3dc7e0e8a",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/architecture/archive/users-notes-migration-audit.md",
+      "bytes": 8191,
+      "sha256": "e9b1268d5be71b81fca50cc8eacdd9703c1b0ce5cc134b707f8b612d64304d2e",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/architecture/archive/users-notes-schema-restore-review.md",
+      "bytes": 4975,
+      "sha256": "c2de0a405078c6815a8089a2487bf805f100be9514fa1422a366b976009a0d51",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/architecture/health-api-contract.md",
+      "bytes": 21121,
+      "sha256": "b08842271e56fb52b102b2e2b4ce217f0c2059970c60eb3fe410e337aad73098",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/architecture/part-10-threat-architecture-adrs.md",
+      "bytes": 1420,
+      "sha256": "b911562a4fe7033dc414bf6a3d027c69731c4bc41108ca767747c612a5a6d4df",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/architecture/part-11-schema-ai-architecture.md",
+      "bytes": 5486,
+      "sha256": "f3d33e62783da4c1d941a6babc85fcf5291fc8b9e2d775bb172bc56e54cdd8eb",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/architecture/users-notes-design.md",
+      "bytes": 5731,
+      "sha256": "0732cb017db9db8f942621752fb8b65fd625cca009a5176bcc89107fb304360d",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/checklists/database-code-review-checklist.md",
+      "bytes": 3809,
+      "sha256": "c2cd75ebaac4229943a2cd18c591fc0bd9a3e91629fff53d2f2c9aab9f609c64",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/checklists/part-06-checklists-first-half.md",
+      "bytes": 6332,
+      "sha256": "7298ebfb2c4784989b6afe1703e3eef60cd8a8abd86be8ef9335e1e6b34b6f4a",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/checklists/part-07-checklists-second-half.md",
+      "bytes": 2444,
+      "sha256": "67a5a82642c0aee8e2e5435cf39b84b350abb2814dd17a66534664c3c723b7f8",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/delivery/part-12-sdlc-p0-p4.md",
+      "bytes": 1329,
+      "sha256": "e635459f984d9f05972f18c56fb53af265b45af81f36b245a74ffd4a532570cb",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/delivery/part-13-sdlc-p5-p12-parity.md",
+      "bytes": 1449,
+      "sha256": "025f56b9a1c003121cfa0d04cfa0d79b8f1f5533eddf6c6bb213db87a5d54c37",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/delivery/part-23-jira-pack.md",
+      "bytes": 2275,
+      "sha256": "1ddf7d56ac2f9ae18a76c44b4b7cddf25a50796a92439996d34bf8eaa809a2c4",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/delivery/part-24-audit-readiness.md",
+      "bytes": 1116,
+      "sha256": "9b8e1b06cbbe9991053813626efd962aa67f49d533c244f7c2bfe0de9d4ef1e6",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/delivery/part-25-portfolio-share-pack.md",
+      "bytes": 1421,
+      "sha256": "367ca11a342776c1af41f2ac1e9f57e1b589dbcae9603496780357def6e6e14c",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/learning/current-app-setup-walkthrough.md",
+      "bytes": 50970,
+      "sha256": "8d3d96fe82b460966e8acde1789420272f74ca47d11597a0a39a342cbb193bd7",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/learning/docker-and-database-migrations.md",
+      "bytes": 9423,
+      "sha256": "43bbf6b707b33f129c6b5389da15874518ea997ecf99ca71710da1b6e83a2ffa",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/learning/input-type-validation-fixes.md",
+      "bytes": 3349,
+      "sha256": "fa75cfae48b143fec653747e82826a4a2a3c227c3d6051a30607c9cde6129742",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/learning/part-14-skill-cards-first-half.md",
+      "bytes": 1134,
+      "sha256": "0d8427d354c7e2aac4b5d7105531fe4c92ab59dac48aa97141c83e6f6df88953",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/learning/part-15-skill-cards-second-half-dsa.md",
+      "bytes": 1125,
+      "sha256": "ed356e868ec496ab342ba2b413fabd94aec8d7699c1faec35bb42de111fa68be",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/learning/part-16-interview-guide.md",
+      "bytes": 1440,
+      "sha256": "b8687d8e67b318766e1ea8b4f4a759eedf6d4b701ff5338f6fc62c95dc389649",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/learning/sprint-0-learning.md",
+      "bytes": 25303,
+      "sha256": "b4ea855a204a3b4c7df498ced02a6d8712c2439572e28219ab61e4adbcf3ec2b",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/learning/unicode-text-validation-fix.md",
+      "bytes": 3174,
+      "sha256": "723b7d5e8e5762d47dab99880ad5f3263399c38c12697d781f3e304b7a854ed4",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/learning/users-notes-down-migration-guide.md",
+      "bytes": 16635,
+      "sha256": "8912df629dbd95e18cf4a250a57e652bc2261a1b619aa2810264cc6161233c4c",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/planning/MASTER_NAVIGATION.md",
+      "bytes": 8428,
+      "sha256": "2c02d0e571b1ada7a7ee65bf3afc7ac918daf03b9b5c68b00a2fca4257f4233b",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/planning/MASTER_PROMPT.md",
+      "bytes": 64292,
+      "sha256": "48f27a53bcbb5d6e7d910424e499425d31af075a1a38e0d5ba90f6fb6bd7b438",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/planning/STATE.md",
+      "bytes": 6543,
+      "sha256": "30e8572e62e227655b4df0f3954e97dddc6ef000841411c653a4642feae7b7d1",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/planning/VERIFY_LIST.md",
+      "bytes": 7717,
+      "sha256": "872996acba652d5f51dd82d9c0aaadc4ebd3b6f85824013beee5b1cb772ee896",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/planning/day-seven-jira-expansion-results.json",
+      "bytes": 10848,
+      "sha256": "49425ad1a3cc6343440d806fb4672c6f8af906bd6315cb37603c3816e649774a",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/planning/day-six-handoff-results.json",
+      "bytes": 9079,
+      "sha256": "ff2f08ea8a155fe95166f466e535555a756fe15871fd4fe0ebdebfc68966bdfb",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/planning/day-six-handoff.md",
+      "bytes": 12602,
+      "sha256": "b274774d914d5d594f960bacda6e3f774849366d0bc14be05785b09811f476ed",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/planning/file-naming-review.md",
+      "bytes": 13576,
+      "sha256": "130586086e7f63d1b782a958b6dad97488bad71b78b7a526fd4b87b6ef7202f8",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/planning/historical-failure-repair-guide.md",
+      "bytes": 6110,
+      "sha256": "30101bebb3874c65969c67b4c1c0f28b5cf8e1060a970b2f0c193b966e2e4d07",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/project/part-01-waterfall-and-assumptions.md",
+      "bytes": 129229,
+      "sha256": "cafe89b30ecc511bfbde7094ef2a86df2c40e20f0e2994f99c404aededd5c3a6",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/project/part-02-project-charter.md",
+      "bytes": 26318,
+      "sha256": "e5c82eb1657ef6d5082d37a7523eb9eb8a7edced4e2f46c31238457d2903c6b2",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/project/part-03-workflow-bible.md",
+      "bytes": 14651,
+      "sha256": "35450cee69c2427f3da177621d23d83e9df18ab8b44abe402d52a2bca1747983",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/project/part-05-component-breakdown.md",
+      "bytes": 9471,
+      "sha256": "622e143e0158b8a625a3a66320eb40701e291694f921749cc62e6fbb8d0317dd",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/project/part-08-prd-epics-e0-e2.md",
+      "bytes": 1660,
+      "sha256": "cc09347e78550a36b90744217101c62997bc6cbf10e0f29135bb7544db957092",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/project/part-09-prd-epics-e3-e10.md",
+      "bytes": 1195,
+      "sha256": "a2508cebcb967c3cdeb7d9ea5ecc572a11cc7d0972668728036a871a34178dcf",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/setup/archive/README.md",
+      "bytes": 1236,
+      "sha256": "5e40a8479b5bf02f02c1bc58ba7e27b65e38679ab3b6743d0e88ae8f2d30f760",
+      "classification": "documentation/evidence",
+      "review": [
+        "new artifact reviewed in full; included in final publication scan"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/setup/archive/sprint-0-original-setup.tar.gz",
+      "bytes": 38820,
+      "sha256": "a79002a884cab8e42469c04556b7ba495a2ec2a1dd48217b718135571c23ff33",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/setup/codex-global-skills.md",
+      "bytes": 7287,
+      "sha256": "b259173fd7eb4883e83905929e08190fd588dc7dc8d3a8981e7cb61edcff890a",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/setup/local-setup.md",
+      "bytes": 8008,
+      "sha256": "2faa4b2512730806056730992e656a061824313bb55f07e37f692493272cc239",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/setup/part-04-environment-setup.md",
+      "bytes": 27712,
+      "sha256": "fc001f6c230e90dc0dfebd86419cb8205923de2e605a8855b74bad427aacf26e",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/setup/postgres-python-runtime-setup.md",
+      "bytes": 9095,
+      "sha256": "56b29211ae70dde497a7ba8cd85815a95205a423c7286f6a25962ff8bc598659",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/setup/terminal-commands.md",
+      "bytes": 9587,
+      "sha256": "af7ead61281ef0edb9f5533c44f75cd54ac010b6975d1594610dd37619a81a40",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/sprints/database-foundation-jira-guide.md",
+      "bytes": 9258,
+      "sha256": "b75e8c3b68e7f0869239e2d316ec086e93093e9db69a355faa35948f415660c1",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/sprints/database-foundation-progress.md",
+      "bytes": 10899,
+      "sha256": "5f74963d6e7600929e8db852b4f608e7300f4676855b949b7494312b2a9e0e8d",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/sprints/database-foundation-start.md",
+      "bytes": 25697,
+      "sha256": "cb16fea7b14f8372ef64e287df848745d972769ec2fc4e2762ec9687352908ed",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/sprints/day-seven-jira-checklist.md",
+      "bytes": 8671,
+      "sha256": "0408e1068e7dc9a56c39449112b61acfdd320d5237ea00c83a102e677e3b72cd",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/sprints/part-17-sprint0.md",
+      "bytes": 66781,
+      "sha256": "d47abfc28bbb8ed6376b82e7912b19701a457a17264aa95dab3d1f38cb2e4584",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/sprints/part-18-sprint1.md",
+      "bytes": 24512,
+      "sha256": "43c3df9f94cc91f91e0bf0b3ee1bdb153e779c999b787935238c6bd7ac3782e7",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/sprints/part-19-sprint2.md",
+      "bytes": 776,
+      "sha256": "047c3fa30762a4674ea0e8f691eaf8ef0ff8ca275354b079d64b67b221027260",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/sprints/part-20-sprint3.md",
+      "bytes": 790,
+      "sha256": "c73b506b3711d1bd6e48766675555fe74e8c5d56e609213932b85c341f324b0b",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/sprints/part-21-sprint4.md",
+      "bytes": 828,
+      "sha256": "47d69b763ae722128fdd5d56b3e026b53c28dc6ce02eb670af96399ae2c1d14b",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/sprints/part-22-sprint5.md",
+      "bytes": 805,
+      "sha256": "598645422361e9049a178f006b96aa4c6589b07a87141ba1f39ad564af853a07",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/case-effectiveness-audit.md",
+      "bytes": 16304,
+      "sha256": "8136750e2f7538f30c401aa443e8ad86278882897471cbe8db05052be3bb8ab6",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/case-effectiveness-evidence/audit-summary.json",
+      "bytes": 414,
+      "sha256": "9492a6dad26a678465758eed12d4250ffec31416c18273db29b60491cdb8a996",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/case-effectiveness-evidence/database-cases.md",
+      "bytes": 37478,
+      "sha256": "4a35b895a9758c9d518184a4001505ee3cc1ff7fa36aeb534f94ae1b69a740c5",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/case-effectiveness-evidence/database-lifecycle-cases.md",
+      "bytes": 804,
+      "sha256": "f210dfc8977195e2710ee2e598acf9cef4909231684fca46cb4e0050495dfa74",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/case-effectiveness-evidence/database-lifecycle-results.json.gz",
+      "bytes": 765,
+      "sha256": "f6fcbe6e249fa3f33387d07dba11d6393345e9a9be168d4a904254e797bdc5de",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/case-effectiveness-evidence/database-test-results.json.gz",
+      "bytes": 14774,
+      "sha256": "880fdf35c5bcee776420a689512aa78eb2f618adecbaaa472196e1da016250aa",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/case-effectiveness-evidence/fault-catalogue.md",
+      "bytes": 70865,
+      "sha256": "5942d1ad6bf8767be7df852ec3dcfe4336c70aebc6e83855b6cc3f3f8f1f6cd9",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/case-effectiveness-evidence/python-cases.md",
+      "bytes": 85288,
+      "sha256": "4f3cdee323c7ea955c354b199525f5d83cca8790d7645e3eb28d6691341e1d15",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/case-effectiveness-evidence/python-test-results.json.gz",
+      "bytes": 1334969,
+      "sha256": "4dd9d3037d125f021a65656495ba759d463ac904b7b690e71d3ae854ae671380",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/case-effectiveness-evidence/quiz-browser-cases.md",
+      "bytes": 2055,
+      "sha256": "449aaee0d048abe589c9251276f2415a7ba334d3d6c2c9290822f68430b7c90e",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/case-effectiveness-evidence/quiz-browser-results.json.gz",
+      "bytes": 1508,
+      "sha256": "a724b7a9625283afcd85495097e8cc579ff19f5d4574955ac6d31dc8aeeb5bfa",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/case-effectiveness-evidence/quiz-logic-cases.md",
+      "bytes": 5005,
+      "sha256": "cbb00a665e138422acac18a3a8a9e2f5c6d94773eeca91670edfc3d1637d9dc6",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/case-effectiveness-evidence/quiz-logic-results.json.gz",
+      "bytes": 20123,
+      "sha256": "7317c7eaa48a95bae04101e72c88540346f55e619e1e1e7ce16a05c4c939b781",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/case-effectiveness-evidence/timestamp-case-results.json.gz",
+      "bytes": 664,
+      "sha256": "288bf998bf34d0e2a4ede01325eaff6aa7f253c28136942fd2f9948b7032fb6a",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/database-optimization-trial-results.json",
+      "bytes": 151358,
+      "sha256": "9b27e93a579b7089978d80276fcde1e31471af0c0d85d9044587edc5ae56733a",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/database-stage-profile-results.json",
+      "bytes": 1464,
+      "sha256": "8daabc137b8e577657475659061d93532cd7805e016f4c4db06beb75f0f99ebf",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/database-step-four-verification.md",
+      "bytes": 13524,
+      "sha256": "df18c816dd78fe269a2795fafd0c2384bdad7afe859f1d30d15f4cdccd8cec3d",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/day-six-secret-review-results.json",
+      "bytes": 4763,
+      "sha256": "266d6145b80417480e1998730198f8d269b49b3a6c57bbdc5c608ed7e0be4530",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/documentation-publication-security-review.md",
+      "bytes": 11389,
+      "sha256": "a097a559a6af42414f8a73a07a065da6eb2e13c4a14f06bde22f3058d370522d",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/mer-1-completion-audit.md",
+      "bytes": 15854,
+      "sha256": "a878b407a17f032e3799b9ffb030421339d74db0585b8502b77b3cd9eb6214e0",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/migration-undo-reapplication-results.json",
+      "bytes": 41239,
+      "sha256": "ad6e1be6e1aadbb893584b8e65f21e4c1abd36106a88cfd6af0a304e2d62763d",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/notes-unit-test-audit.md",
+      "bytes": 14186,
+      "sha256": "9b715be6756ae7a33fc7c3358f18660bd80562270c29d15aafd7697f0af96849",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/notes-unit-test-deep-audit.md",
+      "bytes": 23736,
+      "sha256": "35872ff357bd2054b942a047875d806c5b6187c444032f7a31e6a24f1b2c1c48",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/pre-repair-verification-results.md",
+      "bytes": 4998,
+      "sha256": "8ca7202e08ecc32036cbb6130582eca92b8e5761ff3eaaf3c8e0844e42b8c4b2",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/publication-refactor-controls.json",
+      "bytes": 7926,
+      "sha256": "99250240a65bb8929bd531a804871122eb3d359e4bdc3f261b97959075c488cb",
+      "classification": "documentation/evidence",
+      "review": [
+        "new artifact reviewed in full; included in final publication scan"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/publication-refactor-verification.json",
+      "bytes": 5243,
+      "sha256": "c706cceb9431cad81b683d6722fc26900cfcfb7a73626238c542ccdb8b9ded3f",
+      "classification": "documentation/evidence",
+      "review": [
+        "new artifact reviewed in full; included in final publication scan"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/publication-review-suite-results.json",
+      "bytes": 1065,
+      "sha256": "81254b2bcb14ae55b7a52de7fb3d9998d93f8e949ee16f3679b346410c518e7e",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/terminal-fault-isolation-results.json",
+      "bytes": 25816,
+      "sha256": "9d8f478158266f981ee3d30cbbe78c142fb471e7587d45f2a21e8d5d43939edf",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-hardening-and-repairs.md",
+      "bytes": 10245,
+      "sha256": "ea1ade9d2c71bbfa041d8b6990f4e46ed6ecfb908cb6318763dd3d7713539d34",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/complete-case-index.csv",
+      "bytes": 360067,
+      "sha256": "ddedf5ba2caa0047bcdde18c65589ad93ae020240879a51b5b9161c35ccac6ef",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/contradictory-baseline-reproduction.json",
+      "bytes": 234,
+      "sha256": "3f93c976d82c2c4d033901bae4e673f42be5fade746490e15ae7a00edecc96bb",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/current-python-fault-review.json",
+      "bytes": 12024843,
+      "sha256": "e427378989c55685a0550cc9b532f3c5a38eeb30e16505a8670383fda8075677",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/current-quiz-fault-review.json",
+      "bytes": 504006,
+      "sha256": "978371a7ae1361acf5e043d86fd53cd409bdd385df20f5ec93a260208c9ac709",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/current-sql-review.json",
+      "bytes": 1100097,
+      "sha256": "f36197f248debad7c5d29710db1c6aaed6fcb4f4255404796b9dc291f0da908e",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/fast-default-restoration-results.json",
+      "bytes": 9871,
+      "sha256": "3d2288daea4de2b34e4a1834f1cefe619844d2ec4561613f5d8a11fc594e609f",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/fast-default-verified-suite-results/database-isolation-controls.json.gz",
+      "bytes": 365,
+      "sha256": "5e143a1389380e72fafba8f4c840b745355a0ed4063aa9ca634ead52339c9671",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/fast-default-verified-suite-results/merlin-browser-effectiveness.json.gz",
+      "bytes": 1754,
+      "sha256": "508a35222f6a78995a53973e94c159f93fcc892d83553d5ad785a419d7f8430f",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/fast-default-verified-suite-results/merlin-lifecycle-effectiveness.json.gz",
+      "bytes": 766,
+      "sha256": "c446f880f3c8c4d1b7e39e4a892b35007cf046463302e68670b500a5503621d2",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/fast-default-verified-suite-results/merlin-python-effectiveness-final.json.gz",
+      "bytes": 385924,
+      "sha256": "915e81eebd143ec6e672757285e7d244a5123c547417c50fc73a8f78f239cbfe",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/fast-default-verified-suite-results/merlin-quiz-effectiveness.json.gz",
+      "bytes": 20593,
+      "sha256": "1b6136711d27abbe13f4552803ad775cd3d842e3ea7ac15b59056c5fc74c7702",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/fast-default-verified-suite-results/merlin-sql-effectiveness-final.json.gz",
+      "bytes": 14053,
+      "sha256": "cae98fb58be9f9aa55a7d348860865ca376c06b82234f7ff4ab705b644e0ea3f",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/fast-default-verified-suite-results/migration-undo-results.json.gz",
+      "bytes": 1902,
+      "sha256": "075bb51ae88e57110862542b68508d49939c9923a462b1ede62cdb8610d1919d",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/fast-default-verified-suite-results/summary.json",
+      "bytes": 7244,
+      "sha256": "996a2fb19dc5b1203eb9fc31141477dadcd98f54f49a410cb85cb940214a465a",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/first-pass-review-summary.json",
+      "bytes": 3135,
+      "sha256": "0a8092fe7e9f0a27777ffeeba89ce291c4e30472286d475c8c384e8f6009f8b1",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/independent-integration-review.json",
+      "bytes": 1519,
+      "sha256": "ea978bef532aca1d6655fd2ab51d260db4d917637bc6dd489037b1cfd9183ad8",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/inventory-completeness.json",
+      "bytes": 1141,
+      "sha256": "fdefe25008bfebb15258d5f0c03976f915f2d81bcd30a6596bdc807e84fc1316",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/migration-replay-equivalence-review.json",
+      "bytes": 5838,
+      "sha256": "522ac8725caba683b03d0f45c77001f288a9c70953b0fef89b384594a1807b3c",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/migration-replay-equivalence-review.md",
+      "bytes": 5583,
+      "sha256": "915569487e19fcdb0296df1977c5ffcafec7045ab225324924767ee3bbf43165",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/migration-result-gate-reproduction.json",
+      "bytes": 328,
+      "sha256": "369ee3856fe4c15571d2dd7695f1de95dcfabb6daacf645f9b0835930e68f4f8",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/parallel-sql-independent-review.json",
+      "bytes": 861,
+      "sha256": "b9a1bb679b72bc1e2dc84e38873feef1fdaf632d37f8a8395c18bfbfee4ff53e",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/parallel-sql-performance-results.json",
+      "bytes": 16127,
+      "sha256": "8eb47497afe1d18881ed35aa804df265d90bc0d54b471176d12c5c14eeeffd25",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/parallel-sql-verified-suite-results/database-isolation-controls.json.gz",
+      "bytes": 372,
+      "sha256": "3a1fb1fc35cce19f2af7e5943d58f59fb3491a28ce9b91b0ab2bc45563aed84f",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/parallel-sql-verified-suite-results/focused-execution-controls.json",
+      "bytes": 6702,
+      "sha256": "afe8960b651b4b31d46948fdd656d7292bc6a21485045b77b88c8b5648ad7987",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/parallel-sql-verified-suite-results/merlin-browser-effectiveness.json.gz",
+      "bytes": 1754,
+      "sha256": "c284049ee90b6817e50639a551a989b0795c92270d8e15e073b9c104a58b301d",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/parallel-sql-verified-suite-results/merlin-lifecycle-effectiveness.json.gz",
+      "bytes": 766,
+      "sha256": "65ca63e0cf9e20bb89abee12168c91a4774ce0f34be9f746696e6ff072912dc8",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/parallel-sql-verified-suite-results/merlin-python-effectiveness-final.json.gz",
+      "bytes": 386001,
+      "sha256": "91bfc4a1f75d69c3fb1ce3c59193a1e0be5277e451ba01c72e7a862deb2005bd",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/parallel-sql-verified-suite-results/merlin-quiz-effectiveness.json.gz",
+      "bytes": 20278,
+      "sha256": "748e4e7c37271a22ee7207c9804a2fed40b8b988f276145db15f68e8e2cbafa0",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/parallel-sql-verified-suite-results/merlin-sql-effectiveness-final.json.gz",
+      "bytes": 16173,
+      "sha256": "3b3da15bf470a33b0c6e37f87353f63b5a0c07f119a74bfddcc1d889bfb9d954",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/parallel-sql-verified-suite-results/merlin-sql-shard-0.json.gz",
+      "bytes": 9362,
+      "sha256": "08a9545fc5a3ca7b53639505d97b761aa82a8db686d063031f598a2894192078",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/parallel-sql-verified-suite-results/merlin-sql-shard-1.json.gz",
+      "bytes": 9699,
+      "sha256": "958189373813499bb2b7499317695ffecec2686cbecdbec914dc9bfc4491009b",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/parallel-sql-verified-suite-results/migration-undo-results.json.gz",
+      "bytes": 1901,
+      "sha256": "e0b75d7e7bbd2f74b28eafa7b8715780d04a79c9592c33f2b135e1a6fc9d3552",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/parallel-sql-verified-suite-results/summary.json",
+      "bytes": 8903,
+      "sha256": "1b3859fc0498b3c42339c8b37fb54a2c6debbc2cf75289f947dec4c2d6003923",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/pre-parallel-review-summary.json",
+      "bytes": 5193,
+      "sha256": "debfc952fbb9fb9e4840a022f5c9ad3c3ef4f1e73080d368d0a85242ed445244",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/python-application-review.json",
+      "bytes": 1025206,
+      "sha256": "2d4a4b1eece9975e0ef1748f8c51a9aa2e9e141c14fa774044755f0c7225f8a9",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/python-application-review.md",
+      "bytes": 323220,
+      "sha256": "b9330190d34c9948bac88974de7811f870ef8d977b83221fb87294b280158102",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/python-reporting-equivalence.json",
+      "bytes": 287,
+      "sha256": "6d250801d531f883e5aab054fec3389e88387435c6f1fe9fb6a6d7b49cbf63f4",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/quiz-focused-verification.json",
+      "bytes": 507676,
+      "sha256": "e12928d2dd968fdf02bd84e014f6dd634c75b602845bd39929e2a87f415f81ce",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/quiz-review.json",
+      "bytes": 101256,
+      "sha256": "1b64493ddaf963734cac7d7803d5d2fa1f32a4a8bf9307dbd7fffc6b7dcb2ca4",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/quiz-review.md",
+      "bytes": 62518,
+      "sha256": "440cccc47690b0f338a1e9dd7938d37cbece911a09532344d99ceac696dc101b",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/result-validator-reproduction.json",
+      "bytes": 647,
+      "sha256": "63a1933fb863f86f4cfb90d24271d75f7ae168888499e5ffc7af55e619d732b9",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/review-summary.json",
+      "bytes": 5271,
+      "sha256": "ff5a9dfaa29adfd66ef8b0cf815759f735f9e813f5cbdd29808f41e1473170b0",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/second-pass-independent-gate-review.json",
+      "bytes": 848,
+      "sha256": "6ea83e5d5e8f3bb922fb27133ca637925ab42d27dd4d3c9c01aebccc003dd997",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/second-pass-necessity-review.json",
+      "bytes": 27079,
+      "sha256": "64778e2783051c3a9cba18beec9a9848a93cea1efdab33d8616e9001426fbb7b",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/second-pass-necessity-review.md",
+      "bytes": 2763,
+      "sha256": "da23b3f9ba1f083756c0b604760333a1401fc1650f2350d9a6aba71563f5a945",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/second-pass-sql-review.json",
+      "bytes": 8164,
+      "sha256": "26f4a36d6e66bbc9a83d58a151fa23ecb476af2fd2a7054025fc88ba6deab074",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/second-pass-sql-review.md",
+      "bytes": 3653,
+      "sha256": "c553abfc11f5c59a17afb58ac35c41691fde6cce0ac14f4b7930a601b6015e24",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/second-pass-verified-suite-results/database-isolation-controls.json.gz",
+      "bytes": 365,
+      "sha256": "1df91fd15d9c5be5f01256fbcb3776ea5150201e650d4444eeeeeab77c4bd032",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/second-pass-verified-suite-results/focused-execution-controls.json",
+      "bytes": 4940,
+      "sha256": "02b4b138e989ff05899e55a65138d76140636d0ebc790012305889e59fdc7318",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/second-pass-verified-suite-results/merlin-browser-effectiveness.json.gz",
+      "bytes": 1754,
+      "sha256": "c5872946ad841ca7f9184d19285a991cb2d98ff2eb2153e1f3ae03a10393b87b",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/second-pass-verified-suite-results/merlin-lifecycle-effectiveness.json.gz",
+      "bytes": 766,
+      "sha256": "58846ea5faddd913d6f202fa0226045d4e55e8e3121d6d86f31e9210f718b09b",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/second-pass-verified-suite-results/merlin-python-effectiveness-final.json.gz",
+      "bytes": 385931,
+      "sha256": "39c8d64c21d330fbb1aa283236a3334e76ee526849abb363b1c4729d155ffbfd",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/second-pass-verified-suite-results/merlin-quiz-effectiveness.json.gz",
+      "bytes": 20512,
+      "sha256": "172e5d3d957a9e4bc811b256c4a16ac38b4ccc71ff95fe318530d994c1f9254a",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/second-pass-verified-suite-results/merlin-sql-effectiveness-final.json.gz",
+      "bytes": 14047,
+      "sha256": "75d96f3848057a43f438a2bc1dd221c33244feb928eaefcfbe0a038195b82c62",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/second-pass-verified-suite-results/migration-undo-results.json.gz",
+      "bytes": 1902,
+      "sha256": "dfb209b1ff2729c6ec29ddcc0d5c20327e14a77f9972ed1f699e63474c8d036b",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/second-pass-verified-suite-results/summary.json",
+      "bytes": 8590,
+      "sha256": "63dd9ae21110868548e55e7e532e7e611e0930482905fda66a1651fce83ed42a",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/setup-documentation-review.json",
+      "bytes": 763581,
+      "sha256": "5f9801594fcae7491197567e2e793d90732c72ba117f6ddff0363ab2e3c93bfe",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/setup-documentation-review.md",
+      "bytes": 148806,
+      "sha256": "539f05432377a65567e59a0473862ba2408b69a86e3d1bf7d2a339b711c84c00",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/six-worker-review-summary.json",
+      "bytes": 5195,
+      "sha256": "4bf51ba47af538a9e26d9570343fc4400733b2f75c5cc9914ae83160b03672a9",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/sql-repair-note.md",
+      "bytes": 4931,
+      "sha256": "60b8584d94c07a7966b5b422a1dbea66956a9b212a3e47bbe828e801d95a76e2",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/sql-review.json",
+      "bytes": 1266182,
+      "sha256": "74c4811001a632aeff143034e30ceb9c6ffd8a3611a62001aab61c1d0779f535",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/sql-review.md",
+      "bytes": 190801,
+      "sha256": "0b95bbb27a0d59270dca4c1017c5e26cbecc6fd5f09fa580f65362c5072530b3",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/suite-controls-review.json",
+      "bytes": 87115,
+      "sha256": "74b70c36021a9cb225b0aebf5b4c898d31fb85e7d6b5d335c1b5979eaa9c4c3d",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/suite-controls-review.md",
+      "bytes": 40938,
+      "sha256": "93d13f1a673d2fa9e67b9eae4331c45b08d17aaff1cf775a727fdcc9caa14544",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/verified-suite-results/database-isolation-controls.json.gz",
+      "bytes": 365,
+      "sha256": "6f7b93e9a7dc6272de175cd843e9679978f07481a0c5c66d962fc4d2cd99fa4d",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/verified-suite-results/merlin-browser-effectiveness.json.gz",
+      "bytes": 1754,
+      "sha256": "4f2d6452db5f25adf4d1133da212e40595603987cf9c44acbbfd6b0305d5087e",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/verified-suite-results/merlin-lifecycle-effectiveness.json.gz",
+      "bytes": 766,
+      "sha256": "91cf010efdc61868dd40d81b1e9ceefa72a6dc01e363310c4b1a7c8abaadd276",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/verified-suite-results/merlin-python-effectiveness-final.json.gz",
+      "bytes": 386024,
+      "sha256": "3a7b565329081ad254d726f19173faec342abf354765ec185c49e8dc9638f78e",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/verified-suite-results/merlin-quiz-effectiveness.json.gz",
+      "bytes": 20134,
+      "sha256": "b962cd7ab22a131a2f198ae34521cc1e23d11896ef3efa5b524745063c16a795",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/verified-suite-results/merlin-sql-effectiveness-final.json.gz",
+      "bytes": 14057,
+      "sha256": "7cca34216cb2eb947d8ba4585a941fe0febc25e67673ab6376aebae43dbd3f17",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/verified-suite-results/migration-undo-results.json.gz",
+      "bytes": 1243,
+      "sha256": "c92da01508c0bd8e3725c434a4743a219220e37a76adccfb447d40857acc594e",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-necessity-review/verified-suite-results/summary.json",
+      "bytes": 7431,
+      "sha256": "342372718119e3f65f984da679dd06baacfa067a2cf85831dab10e01f3f39270",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-suite-additional-run-results.json",
+      "bytes": 11260,
+      "sha256": "05bc5fed1b5a062a9ec66b864e255eea820d0a1bfb23169408677cfc08675bfa",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-suite-commands.md",
+      "bytes": 18035,
+      "sha256": "5830d03b136d079a6e13debb032394fdb0a5789f250055bd5b73072f9d700238",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-suite-database-scheduling-results.json",
+      "bytes": 6156,
+      "sha256": "e93fea71da7f2e70fedebe3643208c389ccce9d40ea235544afd56760a75ba92",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-suite-database-worker-trial-results.json",
+      "bytes": 6169,
+      "sha256": "7e0a1d1814d5adb3f7bf1e99e40186ab8389cdb0a208fa1998d48c6966b9de35",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-suite-failure-results.json",
+      "bytes": 1288,
+      "sha256": "aac11aa0a866536d9992a31b62b9f8ff462491251e1d677408e7a90a446c4d8f",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-suite-fast-run-results.json",
+      "bytes": 3535,
+      "sha256": "f3dbe5c79c32af1fa7e04bcdfaa5228cbc425f169659b676bc593072c53f1840",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-suite-isolation-failure-results.json",
+      "bytes": 2108,
+      "sha256": "5f7335c043762d2f5c21740369c082676c88de2b32e4023a681b0946abc94f43",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-suite-native-run-results.json",
+      "bytes": 12879,
+      "sha256": "a628659930a6b45bd2cfe2b3dd7ef92e3141151cc50e073036a0a4eb6c7d43ac",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-suite-necessity-review.md",
+      "bytes": 13435,
+      "sha256": "3306d2896de7a296f7014a9451735178c08aea328d2b67d52aaede7f67167f58",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-suite-parallel-sql-performance.md",
+      "bytes": 8025,
+      "sha256": "0855667eb0b656bb91ceb59da73d62fbc31744628c2f3e259d4b0de6f67e0463",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-suite-performance-results.json",
+      "bytes": 3149,
+      "sha256": "2bab7fa064b65f7074470cbcf90fc66cbe45825003d713b947da35127161d87a",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-suite-performance.md",
+      "bytes": 35626,
+      "sha256": "e4b2e7e94ce43830f7f2ab8892eb5ea467b860d50c23842a99cd1c6c122c200e",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-suite-run-results.json",
+      "bytes": 1682,
+      "sha256": "ac42c4347e8d4a16c381b2fe7363d2a38c584ae5c4b6dbfe3a25e6e415033309",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/test-suite-second-review.md",
+      "bytes": 15768,
+      "sha256": "c2508fc0f8d7898e67279f26809153fa3d9205335e42261704886deeb1473a68",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/testing-policy-and-fault-catalogue.md",
+      "bytes": 27033,
+      "sha256": "8fd7582b627a983708c0a04fa7292e5ee6401c32118ba25289b1ebad8b8af5cd",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/unicode-boundary-fault-catalogue.md",
+      "bytes": 49476,
+      "sha256": "41257cc512d05a0542895884fdc6a7d5397d52eb1e3bd0bdec309df277b397de",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/users-notes-database-verification.md",
+      "bytes": 14955,
+      "sha256": "4ed10b6c4fa856c8f0ae5eeeef8bd0606f2bb74b69d8ebef502c60c3303b25d1",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/users-notes-down-gate-verification.md",
+      "bytes": 5348,
+      "sha256": "850bbc7041f830f69096752217723a85871a65ef0893ce7b1fb13c08fb8c4600",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/users-notes-down-migration-review.md",
+      "bytes": 11440,
+      "sha256": "8b4fcbbc9ed6cc10bebaf12fcda3ec29063e70f60adf887037bf16abc75eced9",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/users-notes-down-repair-results.json",
+      "bytes": 9683,
+      "sha256": "c8a819bcb2767eea33b82f083531c69af4fcb2d52955a8a36074964f5cd3db51",
+      "classification": "documentation/evidence",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "migrations/001_users_notes.down.sql",
+      "bytes": 17738,
+      "sha256": "22cd8805e287303999c4aac8b084f6d7e08bf209950ede4b3f6038a7e0ca3275",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "migrations/001_users_notes.up.sql",
+      "bytes": 19949,
+      "sha256": "be5ad5b27d3a21637bfcf7f070dba6480263f9feb580bfff0587e9ade487db3b",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "migrations/002_whitespace_parity.down.sql",
+      "bytes": 4734,
+      "sha256": "43f6af51c7d0fd43b9abe7e12aad55426d72b70b6a20faee4c79fb62fcf1761b",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "migrations/002_whitespace_parity.up.sql",
+      "bytes": 5590,
+      "sha256": "41b5351a3474b4f3232bdce7af1fa1674f8413cd17e459c77dcb734fd1f492c7",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "package.json",
+      "bytes": 413,
+      "sha256": "5269606bee85373c01736836f19919fc6bd2606af14754cc030ff12ed4fc5838",
+      "classification": "development/dependency configuration",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "pnpm-lock.yaml",
+      "bytes": 4674,
+      "sha256": "947a38bb55b73558e5dbfe4a8ef1156cbb8c6751c31f4dca9618b2d7e64ceb06",
+      "classification": "development/dependency configuration",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "pyproject.toml",
+      "bytes": 223,
+      "sha256": "a6be95b0d1f73c26260b253841e497e0682a3643ff066bf442724f591de63509",
+      "classification": "development/dependency configuration",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "quizzes/sprint-0-quiz.html",
+      "bytes": 50245,
+      "sha256": "1f43c0e04def801c3edaf5b77bcb60c3da285712f91ed8a7290d7ec590cdd57d",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "skills-lock.json",
+      "bytes": 18953,
+      "sha256": "0e6c7c81c681713d489789a9d244c26b1505ca505fa3201d414133a03dc3e2cc",
+      "classification": "development/dependency configuration",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "tests/quiz.test.js",
+      "bytes": 8868,
+      "sha256": "afd757a1e90f3b9a2963e092025816733dbec4f20d95c96640c0df0e4d54a3e1",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "tests/suite-inventory.json",
+      "bytes": 163406,
+      "sha256": "55aa49c355866e03276d3f5819aea3ca7fc94e449bdfbdffa9c550e97f650c4c",
+      "classification": "development/dependency configuration",
+      "review": [
+        "complete structured inventory inspected; unchanged case/fault catalogue verified by full suite"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "tests/test_database_connectivity_probe.py",
+      "bytes": 5644,
+      "sha256": "ba296ed12baab295aea9b44c5915a88082fe163968ea9a2596ac82ca380a3063",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "tests/test_doctor_failure_cases.py",
+      "bytes": 13908,
+      "sha256": "6c8c06d6285fe2950912692838ae692763b5c28f4e9454f83af4b200a3c8df97",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "bytes": 25022,
+      "sha256": "0a3dcf4b2e7c9b07e93d9e33f25d444b3b4b309f7020d075840617c28a6fa4ef",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "tests/test_prd_lint.py",
+      "bytes": 8379,
+      "sha256": "ea5d16d419ed3c93a68e8ee3e3a211c4b0a6e7ae3efc262dfb62d3698815a995",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "tests/test_users_notes_database.py",
+      "bytes": 43463,
+      "sha256": "94515aef520ccd6675f2a1352c200f85fab9ee6944fd971cd50cb44599e8d6a5",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "tools/audit_database_cases.py",
+      "bytes": 31224,
+      "sha256": "936985fa1b8daf20a78deae1d392cd1c0fa681180273fe267b1651aff4c5d773",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "tools/audit_database_lifecycle.py",
+      "bytes": 8086,
+      "sha256": "874245fab5d2d97a6a57c5ec0df9f8e8d0802d6dfab00ca24dc30a3729302205",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "tools/audit_migration_undo.py",
+      "bytes": 21835,
+      "sha256": "6c60e3b0e7e8763b30faaeb81272067bb9b103c7d580787acab3cf885a10715e",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "tools/audit_python_cases.py",
+      "bytes": 21714,
+      "sha256": "bf986dbf8b3075c445a7fe435a9bc52f44ab1171eef7263fa4da8cebb01aba91",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "tools/audit_quiz_browser.mjs",
+      "bytes": 11214,
+      "sha256": "1d83d8b22baec5a2cac20042dd7b46e7d31b3c32104a69e6810dc784c8f9b773",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "tools/audit_quiz_cases.py",
+      "bytes": 7059,
+      "sha256": "78bb4f5ce94f9689509cbd074e3a61534d0703c2c5b34a0d6152c21107901700",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "tools/check_mutations.py",
+      "bytes": 8773,
+      "sha256": "bc27f20769efc386e9b085e43341c737cdedce2615f1fff08ea9d05a78a608b8",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "tools/database_sandboxes.py",
+      "bytes": 20223,
+      "sha256": "e04539b10c1fab59b74ad472d04b48cd66eb2bc104e9d4461ac2899261b43338",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "tools/database_test_session.py",
+      "bytes": 16231,
+      "sha256": "07f6dd2923ff28f7de3b2e3ac7728937833a0c930ba8b8dd9ec0312f0a62adcd",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "tools/doctor.py",
+      "bytes": 14864,
+      "sha256": "4cf276effb197aad39ce94f652e01a558ca39ad3bbebe8af5ce9ce4693fae26f",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "tools/isolated_python.py",
+      "bytes": 5796,
+      "sha256": "58ed3a306fe3c89820ffefef1668301471b07dcbe5319d76f4caeef0d5e8cf7c",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "tools/native_psql.py",
+      "bytes": 4411,
+      "sha256": "38e31ee8838cab63446f472c861d1bc8ef7d40ab55ad09b16a34b81d2e467ed5",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "tools/prd_lint.py",
+      "bytes": 8111,
+      "sha256": "e2817ce78253d736fb8e6b74086f48dc1ee4686415fe3f7fb1678a51aaa8a0e8",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "tools/run_sql_shards.py",
+      "bytes": 3569,
+      "sha256": "7ad207492f5c8bc99fb686aca6399040c10d3df0022c46d2f1ba68aa8e1c9691",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "tools/run_test_suite.py",
+      "bytes": 32404,
+      "sha256": "aaf547f4709100d34a365dece56e971ed375db5ab7c0da766081801f26d4d59b",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "tools/setup_local.py",
+      "bytes": 2211,
+      "sha256": "7cbbe7a498c3089162bc03545ff82f9eca956e15463afb1882a06f74b9ba7d6b",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "tools/test_dependencies.py",
+      "bytes": 5701,
+      "sha256": "f2481fea46f51b43e4a8a2efc0eaea9167c27d40a22ac480b40a8d61150efb5d",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "tools/test_doctor.py",
+      "bytes": 7020,
+      "sha256": "25522e95c32b8ceea080984ee800b2b8a82c3a0c169cac52e9732c0fce3d44b7",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "tools/verify_database_sandboxes.py",
+      "bytes": 9035,
+      "sha256": "acfba186204f223b71f7e54d4c9ad12ce8611c28f23f40533a3a361d0128bea9",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "tools/verify_migration_roundtrip.py",
+      "bytes": 10079,
+      "sha256": "4d6b0b315209b612dc6682e20a22b17fc8f2d023671993d7a30a3d65da20e23d",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "tools/verify_native_psql.py",
+      "bytes": 6342,
+      "sha256": "d2e77b496b84700ed1f49504b9e75af9484fa6f7a9d75c182ea7a9145b012bb1",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "tools/verify_python_isolation.py",
+      "bytes": 3206,
+      "sha256": "ba0191b30e496c7e94e652d4726e8a67a76cd68a248c233b37e11b369c94de8c",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "tools/verify_suite_execution.py",
+      "bytes": 35972,
+      "sha256": "4ac3eb8f77c062fdca307d1ee6d9ce5cd2375b6715f89b218926d238db76077c",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "tools/write_test_audit.py",
+      "bytes": 9039,
+      "sha256": "eaceddefc9bc37aafe3a725ad63b140f8299da9cbe06c9228bfa026e2ec99dfe",
+      "classification": "application/migration/test/tool source",
+      "review": [
+        "full source/caller review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "uv.lock",
+      "bytes": 17356,
+      "sha256": "ac9123f3505d5f3cfabfabb562112fafc0aedc5f6fc4264591ecc6fa003bf13b",
+      "classification": "development/dependency configuration",
+      "review": [
+        "complete decoded-content scan and contextual candidate review"
+      ],
+      "disposition": "retain; identified private records sanitized; no matching live credential found"
+    },
+    {
+      "file": "docs/testing/publication-file-review.json",
+      "classification": "review inventory",
+      "sha256": null,
+      "review": [
+        "inventory generated from current file contents; included in final publication scan"
+      ],
+      "disposition": "retain; its own content hash is omitted to avoid a circular self-reference"
+    }
+  ]
+}

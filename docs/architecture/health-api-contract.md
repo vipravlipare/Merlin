@@ -1,6 +1,6 @@
 # Day 7: GET /health contract and learning guide
 
-This document covers MER-8 step 2.1. A contract is a written agreement about what a client sends and what the server promises to return. Writing it first gives your implementation and your tests the same target. This is an assistant-authored draft for you to review and explain; it is not an implemented endpoint.
+This document covers MER-8 steps 2.1–2.3. A contract is a written agreement about what a client sends and what the server promises to return. Writing it first gives your implementation and your tests the same target. This is an assistant-authored draft for you to review and explain; it is not an implemented endpoint.
 
 Tracker: [Day 7 checklist](../sprints/day-seven-jira-checklist.md), section 2; [MER-8](https://vipravlipare.atlassian.net/browse/MER-8).
 
@@ -97,12 +97,97 @@ A listening entry means the port is occupied. Do not terminate an unfamiliar pro
 Your answers:
 
 - Question 1: pending your explanation.
+    - Yes, the endpoint should still return 200 because the server connection is valid, and the request has succeeded.
 - Question 2: pending your explanation.
+    - The '200' or any number is to return how the server connection is, good or erroneous. The content type is to set the return content type, for example JSON. The status is to interpret the number and return the meaning of the number.
 - Question 3: pending your explanation.
+    - Replies with how the application data is doing according to the status.
 
-## What happens after this step
+## 2.2 — Expected results for requests and errors
 
-Step 2.2 uses this contract to write expected results for valid requests, unknown paths including `/.env`, unsupported `POST`/`PUT` methods and a forced handler error. Step 2.3 defines fixtures and cleanup. These take the remaining 15 + 10 minutes of section 2's 40-minute budget. Write those expectations before implementing the server in section 3.
+This is the test-case part of the contract. Each row describes an input and the response that future tests must require. These are expected results, not observations from a running application.
+
+📚 Learn first: [HTTP semantics, RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html), read sections 15.3.1 (200), 15.5.5 (404), 15.5.6 (405), 10.2.1 (Allow) and 15.6.1 (500); stop after those sections. Link opened October 14, 2026. A 405 response identifies a method unsupported by the target resource and includes its allowed methods. The particular JSON error messages below are our design decisions.
+↩ Return: read the table and explain why an unknown path, an unsupported method and a handler failure have different results. Use these expectations when you later write the API and its tests.
+
+All responses below use `Content-Type: application/json` and a UTF-8 JSON body. Compare parsed JSON objects exactly, allowing JSON formatting differences. Ordinary protocol headers are permitted. Error bodies contain only the specified `error` field.
+
+| ID | Request or controlled condition | Expected HTTP status | Expected parsed JSON body | Additional requirement / error this catches |
+|---|---|---|---|---|
+| API-01 | `GET /health`, normal handler | `200` | `{"status":"ok"}` | Checks the successful route, status, content type and complete body; an arbitrary successful request is insufficient. |
+| API-02 | `GET /missing`, an unrecognized route | `404` | `{"error":"Not found"}` | No fallback healthy response, redirect, directory listing or file content. |
+| API-03 | `GET /.env`, an unrecognized sensitive-looking route | `404` | `{"error":"Not found"}` | Must not read or disclose an environment file. This explicit security regression remains separate from the ordinary unknown-path case. |
+| API-04 | `POST /health`, no request body | `405` | `{"error":"Method not allowed"}` | Must include `Allow: GET`; must not run the healthy GET handler or write data. |
+| API-05 | `PUT /health`, no request body | `405` | `{"error":"Method not allowed"}` | Must include `Allow: GET`; exercises the PUT dispatch separately from POST. |
+| API-06 | `GET /health`, with an isolated test replacement that raises an exception containing `HEALTH_PRIVATE_SENTINEL` before response headers are sent | `500` | `{"error":"Internal server error"}` | Client receives a generic response, not a traceback, exception message, sentinel or partial healthy response. |
+| API-07 | A normal `GET /health` after the API-06 test replacement has been removed | `200` | `{"status":"ok"}` | Confirms the failure did not terminate the server or leave the test replacement installed. |
+
+### Decisions that prevent ambiguous tests
+
+The routing decision comes first: an unrecognized path returns the generic 404 response, including when requested with POST or PUT. For the recognized `/health` path, GET is supported and POST/PUT return 405. The listed unsupported-method cases do not specify behavior for every HTTP method; broader method coverage must be designed explicitly rather than claimed from these two cases.
+
+The forced error is created only inside an isolated test fixture. Do not add a public `/crash` route, special request header or query parameter to trigger it. The fixture and cleanup mechanism are designed in step 2.3; application code follows in section 3.
+
+API-06 covers an exception before the HTTP response starts. Once a success status and headers have been sent, the server cannot replace them with a new 500 status. Keep health computation and JSON preparation before sending response headers. Handling errors during a partially written network response is a separate concern, not proof provided by this case.
+
+For all cases, response headers and bodies must not expose credentials, environment values, private exception details or local file contents. Later disclosure tests should use synthetic fixture values and fake files, never real credentials or your actual `.env`. Exact JSON equality checks catch unexpected body fields; also inspect response headers for the synthetic sentinel. A correct status alone does not demonstrate non-disclosure.
+
+Publication safety: `GET /.env` is a generic request used to test rejection of a sensitive-looking path. It does not disclose a real file, its contents or any credential. Keep this case in public documentation and tests; publish only synthetic fixture values and never copy private configuration into examples or evidence. The security requirement is that the server rejects the request and returns no file contents.
+
+In later fault checks, deliberately change the healthy status/body, make an unknown path return health or serve a fake file, allow POST or PUT, omit `Allow`, or expose the synthetic exception message. The matching case must fail for the intended assertion. Keep these faults isolated and restore the working behavior; no executable tests or faults have been authored in this step.
+
+Planned review budget: understand statuses (3 minutes), review the table (8 minutes), explain rejection/error differences (4 minutes), total 15 minutes. Actual minutes are unknown. The contract table is authored; implementation, test execution and fault-detection results are all PENDING.
+
+## 2.3 — Test fixture, fault isolation and cleanup plan
+
+A fixture prepares a controlled environment for a test and reliably removes it afterward. For this API, it provides a temporary local server, its actual URL and a way to replace the health computation safely. This section is a design, not executable fixture code.
+
+📚 Learn first: [Python HTTP server](https://docs.python.org/3.12/library/http.server.html), review `HTTPServer` and request handlers; [Python socket servers](https://docs.python.org/3.12/library/socketserver.html), read `shutdown` and `server_close`; [pytest fixture cleanup](https://docs.pytest.org/en/stable/how-to/fixtures.html), read yield fixtures and safe teardown. Links verified October 14, 2026.
+↩ Return: use the responsibilities and lifecycle below when you write the server and tests. Explain why shutdown must run outside the thread executing `serve_forever`.
+
+### Files and responsibilities
+
+| Planned filename | Responsibility |
+|---|---|
+| `app/health_api.py` | Route decisions, agreed JSON responses and request-handler construction. Accept a health-computation callable so tests can replace it for one isolated server. Importing this module must not open sockets or start threads. |
+| `app/health_server.py` | Executable entry point: construct the real handler, bind development address `127.0.0.1:8000`, run the server and close it on interruption. No duplicated route logic. |
+| `tests/test_health_api.py` | API-01–07 assertions, controlled loopback-server fixture, non-disclosure checks and shutdown/restart verification. Keep the fixture here initially rather than adding shared infrastructure without a second consumer. |
+| Existing `tools/audit_python_cases.py` | Integrate the new cases and isolated API fault candidates into the existing case-effectiveness audit after implementation. Reuse the harness and complete-suite runner; do not create a second API fault framework. |
+
+### Fixture lifecycle
+
+1. Construct a fresh handler with the normal health callable or an explicitly injected test callable. Avoid mutable global fault flags.
+2. Bind an `HTTPServer` to `127.0.0.1` and port `0`. Port zero asks the operating system to choose an available port atomically; read the assigned port from the server. The test URL uses this port, while the manual development contract retains port 8000.
+3. Run `serve_forever` in a dedicated thread. Use explicit startup coordination and a bounded wait, not a fixed sleep or an unbounded retry loop. A startup failure must fail the fixture; it must not skip the tests.
+4. Give the test its server URL and use a bounded HTTP client timeout, initially 3 seconds. Bound accepted-connection reads as well: a client timeout alone cannot stop a handler waiting for input. Read the complete response and close each client connection, including on assertion failure.
+5. In teardown, call `shutdown` from the controlling test thread while the serving thread is active. Calling it from the serving thread can deadlock. Then call `server_close`, join the thread with a bounded timeout and fail cleanup if the thread remains alive. Close a bound socket even when startup fails; do not call a blocking shutdown on a loop that never started.
+6. Prove the released address/port can be rebound and a fresh normal server can answer after shutdown. Test cleanup also when a request/assertion fails, not just after the happy path. Preserve the first functional failure and report any cleanup failure as additional evidence.
+
+Use the server's own thread and socket only. Do not kill unrelated processes, delete real files, stop PostgreSQL or alter either existing database volume. Any synthetic file or private-looking sentinel belongs in pytest temporary storage and is removed by its fixture.
+
+### Existing fault injections and new API coverage
+
+The current suite already has Python, SQL, JavaScript, browser, database-lifecycle and migration fault audits. Those audits protect existing behavior; they do not prove coverage of an API that does not yet exist. The Python audit must explicitly inventory the new cases and applicable faults when they are implemented. A green run with no API cases is not API verification.
+
+| Planned isolated fault | Required case detection |
+|---|---|
+| Healthy response has wrong status, JSON value/shape or content type | API-01 fails the corresponding response assertion. |
+| Unknown route returns health instead of 404 | API-02 fails; API-03 also rejects sensitive-path fallback. |
+| Unknown sensitive path serves a synthetic file | API-03 fails the body/non-disclosure assertion. Use no real private file. |
+| POST or PUT is accepted, or 405 omits/wrongly sets `Allow` | API-04 or API-05 fails its method/status/header assertion. |
+| Handler exception escapes, healthy response survives the error, or synthetic exception details appear in headers/body | API-06 fails its generic-response/non-disclosure assertion. |
+| Fault replacement persists or server terminates after the exception | API-07 fails its recovery assertion. |
+| Server binds broadly, leaks its socket or leaves its thread running | Fixture/binding and teardown checks fail independently of response cases. |
+
+Each fault must apply to an isolated copy or that test server's handler dependency, restore in teardown, and be detected by the intended assertion. Setup failures, unexecuted cases, invalid mutations and timeouts are not substitutes for demonstrated detection. Integrate actual inventory and report validation into `tools/run_test_suite.py` in Day 7 section 4; do not merely add files that the audit never collects.
+
+Retain the existing audit's subprocess timeout boundary around fault executions. Socket timeouts do not stop arbitrary faulty Python code, and `shutdown` itself waits for the serving loop. A stuck fault must be terminated within its owned subprocess and reported as a timeout, never left as an unbounded thread or mislabeled as a detected assertion failure.
+
+Planned budget: responsibilities (3 minutes), lifecycle (4 minutes), fault/cleanup review (3 minutes), total 10 minutes. Actual minutes are unknown. All three section 2 design artifacts are now authored; learner understanding, application code and API fault verification remain pending.
+
+## What happens after these design steps
+
+Steps 2.2 and 2.3 are specified above. Section 2 totals 15 + 15 + 10 = 40 planned minutes. Review these expectations before implementing the server in section 3, including its CI scope decision first.
 
 The standard-library approach will use a request handler, not a file-serving handler. Python's `SimpleHTTPRequestHandler` serves files and therefore is unsuitable for this small route contract. The standard-library HTTP server is a local learning prototype; the later FastAPI comparison follows scratch implementation and verification.
 
@@ -115,7 +200,7 @@ curl --include --max-time 3 http://127.0.0.1:8000/health
 That command sends a GET and displays response headers and body. A connection failure before any server exists is expected; it is not evidence that this unimplemented endpoint has failed its contract. A successful smoke request also does not replace the later negative cases and fault injections.
 
 📚 Learn first: [Python JSON](https://docs.python.org/3.12/library/json.html), read `dumps` and `loads` when you reach implementation; the link was opened October 14, 2026.
-↩ Return: complete your three explanations here, then move to [Day 7 step 2.2](../sprints/day-seven-jira-checklist.md). Keep implementation and runtime results pending until evidence exists.
+↩ Return: correct your three explanations here, review the 2.2 table, then review the fixture plan before [Day 7 section 3](../sprints/day-seven-jira-checklist.md). Keep implementation and runtime results pending until evidence exists.
 
 ## Current evidence
 
@@ -125,5 +210,7 @@ That command sends a GET and displays response headers and body. A connection fa
 | Contract draft | Authored by the assistant; learner review and explain-back pending. |
 | Port selection | PASS: brief loopback bind succeeded and was closed; availability is not reserved. |
 | API implementation and runtime behavior | PENDING: no API feature code was written for this step. |
-| Negative cases, fixtures and fault checks | PENDING: subsequent Day 7 steps. |
+| Step 2.2 expected-result table | Authored by the assistant at your request; learner review pending. No cases executed. |
+| Step 2.3 fixture and cleanup plan | Authored by the assistant; implementation and execution PENDING. |
+| Executable API tests/fault checks | PENDING: API implementation does not yet exist. |
 | Actual learner minutes | Unknown. |

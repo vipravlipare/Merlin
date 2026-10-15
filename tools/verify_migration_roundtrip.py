@@ -23,13 +23,18 @@ from tools.database_test_session import database_target
 
 
 def normalize(value,roles):
-    if isinstance(value,list):return sorted([normalize(item,roles) for item in value],key=lambda item:json.dumps(item,sort_keys=True))
+    if isinstance(value,list):return [normalize(item,roles) for item in value]
     if isinstance(value,dict):return {key:normalize(item,roles) for key,item in value.items()}
     if isinstance(value,int) and not isinstance(value,bool) and str(value) in roles:return roles[str(value)]
     if isinstance(value,str):
         value=re.sub(r'RI_ConstraintTrigger_([ac])_\d+',r'RI_ConstraintTrigger_\1_GENERATED',value)
         for oid,name in roles.items():value=re.sub(r'(?<![0-9])'+oid+r'(?![0-9])',name,value)
     return value
+
+
+def canonical_schema(schema, roles):
+    """Ignore inventory row order while retaining ordered schema arrays."""
+    return sorted(normalize(schema, roles), key=lambda item: json.dumps(item, sort_keys=True))
 
 
 def main():
@@ -81,7 +86,7 @@ def main():
                     sql=re.sub(r"'([^']+)'::regclass",r"to_regclass('\1')",sql)
                     sql=re.sub(r"'([^']+)'::regrole",r"to_regrole('\1')",sql)
                     prerequisites=json.loads(query("SELECT jsonb_agg(jsonb_build_object('name',extname,'version',extversion,'owner',extowner) ORDER BY extname)::text FROM pg_extension;"))
-                    return {'schema':normalize(json.loads(query(sql)),roles),'extensions':prerequisites}
+                    return {'schema':canonical_schema(json.loads(query(sql)),roles),'extensions':prerequisites}
                 baseline=snapshot()
                 public_create=query("SELECT EXISTS(SELECT 1 FROM pg_namespace n,LATERAL aclexplode(n.nspacl) a WHERE n.nspname='public' AND a.grantee=0 AND a.privilege_type='CREATE');")
                 assert public_create in {'t','f'}

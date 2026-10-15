@@ -154,7 +154,7 @@ def check_preflight():
     sys.path.insert(0,str(ROOT))
     from tools import run_test_suite as suite
     rows=[]
-    for mode in ['pass','failure','timeout']:
+    for mode in ['pass','failure','timeout','ci-guards-failure','ci-guards-timeout']:
         events=[]
         guard=threading.Lock()
         def probe(command, **kwargs):
@@ -162,6 +162,7 @@ def check_preflight():
             if command[1:2]==['tools/verify_suite_execution.py']:name='scheduling'
             elif command[1:2]==['tools/verify_native_psql.py']:name='native'
             elif command[1:2]==['tools/verify_python_isolation.py']:name='python-isolation'
+            elif command[1:2]==['tools/run_ci.py']:name='ci-guards'
             elif command[0]=='node':name='browser' if '--input-type=module' in command else 'node'
             elif 'import sys,pytest' in command[-1]:name='imports'
             elif 'DatabaseTestSession' in command[-1]:name='transport'
@@ -169,8 +170,9 @@ def check_preflight():
             start=time.monotonic()
             time.sleep(.03)
             with guard:events.append({'name':name,'start':start,'end':time.monotonic()})
-            if name=='native' and mode=='timeout':raise subprocess.TimeoutExpired(command,45)
-            return subprocess.CompletedProcess(command,1 if name=='native' and mode=='failure' else 0,'','private-secret-error')
+            selected = 'ci-guards' if mode.startswith('ci-guards-') else 'native'
+            if name==selected and mode.endswith('timeout'):raise subprocess.TimeoutExpired(command,45)
+            return subprocess.CompletedProcess(command,1 if name==selected and mode.endswith('failure') else 0,'','private-secret-error')
         with patch.object(suite.subprocess,'run',side_effect=probe):
             try:suite.preflight({})
             except (RuntimeError,subprocess.TimeoutExpired) as error:
@@ -179,7 +181,9 @@ def check_preflight():
             else:assert mode=='pass','Failed prerequisite was accepted'
         if mode=='pass':
             by_name={event['name']:event for event in events}
-            assert len(events)==8 and set(by_name)=={'scheduling','native','imports','node','transport','preservation','browser','python-isolation'}
+            # CI ownership checks are now a mandatory ninth prerequisite.
+            assert len(events)==9 and set(by_name)=={'scheduling','native','imports','node','transport','preservation','browser','python-isolation','ci-guards'}
+            assert by_name['scheduling']['end']<=by_name['ci-guards']['start']
             assert by_name['native']['end']<=by_name['transport']['start']
             assert by_name['transport']['end']<=by_name['preservation']['start']
             assert max(by_name[name]['start'] for name in ['scheduling','native','imports'])<min(by_name[name]['end'] for name in ['scheduling','native','imports'])
@@ -413,6 +417,106 @@ def check_sql_shards():
     return rows
 
 
+def check_migration_schema_normalization():
+    """Reject semantic changes while allowing inventory and generated OID changes."""
+    from tools.verify_migration_roundtrip import canonical_schema, normalize
+
+    original = [
+        {'kind': 'index', 'keys': ['owner_id', 'created_at'], 'owner': 81234},
+        {'kind': 'trigger', 'name': 'RI_ConstraintTrigger_a_92345'},
+    ]
+    roles = {'81234': 'synthetic_owner'}
+    expected = [
+        {'kind': 'index', 'keys': ['owner_id', 'created_at'], 'owner': 'synthetic_owner'},
+        {'kind': 'trigger', 'name': 'RI_ConstraintTrigger_a_GENERATED'},
+    ]
+    canonical = canonical_schema(original, roles)
+    changed = json.loads(json.dumps(original))
+    changed[0]['keys'].reverse()
+    missing = [original[0]]
+    changed_owner = json.loads(json.dumps(original))
+    changed_owner[0]['owner'] = 81235
+    regenerated = json.loads(json.dumps(original))
+    regenerated[1]['name'] = 'RI_ConstraintTrigger_a_99999'
+    checks = {
+        'migration-schema-literal-normalization': canonical == expected,
+        'migration-schema-outer-order-equivalent': canonical_schema(original[::-1], roles) == canonical,
+        'migration-schema-nested-order-change-rejected': canonical_schema(changed, roles) != canonical,
+        'migration-schema-missing-row-rejected': canonical_schema(missing, roles) != canonical,
+        'migration-schema-owner-change-rejected': canonical_schema(changed_owner, roles) != canonical,
+        'migration-schema-generated-trigger-equivalent': canonical_schema(regenerated, roles) == canonical,
+        'migration-schema-boolean-not-role-oid': normalize(True, {'1': 'synthetic_owner'}) is True,
+    }
+    for name, passed in checks.items():
+        assert passed, name
+    return [{'scenario': name, 'passed': True} for name in checks]
+
+
+def check_compressor_privacy():
+    """Exercise the bundled compressor without contacting an external provider."""
+    import contextlib
+    import importlib
+    import importlib.util
+    import io
+
+    package_name = '_merlin_compressor_privacy_check'
+    scripts = ROOT / '.agents/skills/caveman-compress/scripts'
+    spec = importlib.util.spec_from_file_location(
+        package_name, scripts / '__init__.py', submodule_search_locations=[str(scripts)])
+    package = importlib.util.module_from_spec(spec)
+    sys.modules[package_name] = package
+    spec.loader.exec_module(package)
+    compressor = importlib.import_module(package_name + '.compress')
+    checks = {}
+    with tempfile.TemporaryDirectory(prefix='merlin-compressor-privacy-') as directory:
+        root = Path(directory)
+        source = root / 'public-guide.md'
+        frontmatter = '---\nprivate_fixture: SYNTHETIC_FRONTMATTER_SENTINEL\n---\n'
+        first_code = '```text\nSYNTHETIC_CODE_SENTINEL\n```\n'
+        last_code = '```text\nSYNTHETIC_SECOND_CODE_SENTINEL\n```\n'
+        code = first_code + '\n' + last_code
+        original = frontmatter + '# Title\n\n## Required\n\n' + ('Detailed public explanation. ' * 12) + '\n\n' + code
+        source.write_text(original)
+        masked, blocks = compressor.mask_code_blocks(compressor.split_frontmatter(original)[1])
+        first_marker, last_marker = blocks[0][0], blocks[1][0]
+        candidates = ['# Title\n\nBrief.\n\n' + last_marker + '\n\n' + first_marker + '\n',
+                      '# Title\n\n## Required\n\nBrief.\n\n' + first_marker + '\n\n' + last_marker + '\n']
+        prompts = []
+        def response(prompt):
+            prompts.append(prompt)
+            return candidates[len(prompts) - 1]
+        with patch.object(compressor, 'backup_dir_for', return_value=root / 'backups'), \
+             patch.dict(os.environ, {'XDG_DATA_HOME': str(root / 'data')}), \
+             patch.object(compressor, 'call_claude', side_effect=response), \
+             contextlib.redirect_stdout(io.StringIO()):
+            checks['compressor-repair-succeeds'] = compressor.compress_file(source)
+        checks['compressor-real-validation-retry-exercised'] = len(prompts) == 2
+        checks['compressor-code-and-frontmatter-stay-local'] = all(
+            sentinel not in prompt for prompt in prompts
+            for sentinel in ['SYNTHETIC_FRONTMATTER_SENTINEL', 'SYNTHETIC_CODE_SENTINEL', 'SYNTHETIC_SECOND_CODE_SENTINEL'])
+        checks['compressor-protected-content-restored'] = (
+            source.read_text().startswith(frontmatter) and source.read_text().endswith(code)
+            and (root / 'backups/public-guide.original.md').read_text() == original)
+        retry_candidate = prompts[1].partition('COMPRESSED (fix this):')[2] if len(prompts) == 2 else ''
+        checks['compressor-reordered-code-repair-retained'] = (
+            0 <= retry_candidate.find(last_marker) < retry_candidate.find(first_marker)
+            and source.read_text().index(first_code) < source.read_text().index(last_code))
+        with patch.dict(os.environ, {'ANTHROPIC_API_KEY': ''}), \
+             patch.object(compressor.subprocess, 'run', side_effect=subprocess.CalledProcessError(
+                 1, ['claude'], stderr='SYNTHETIC_EXTERNAL_ERROR_SENTINEL')):
+            try:
+                compressor.call_claude('Public fixture')
+            except RuntimeError as error:
+                import traceback
+                checks['compressor-cli-error-redacted'] = (
+                    'SYNTHETIC_EXTERNAL_ERROR_SENTINEL' not in ''.join(traceback.format_exception(error)))
+            else:
+                checks['compressor-cli-error-redacted'] = False
+    for name, passed in checks.items():
+        assert passed, name
+    return [{'scenario': name, 'passed': True} for name in checks]
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--out',type=Path)
@@ -426,6 +530,8 @@ def main():
     rows.extend(check_preflight())
     rows.extend(check_result_validation())
     rows.extend(check_sql_shards())
+    rows.extend(check_migration_schema_normalization())
+    rows.extend(check_compressor_privacy())
     if args.out:args.out.write_text(json.dumps({'checks':rows},indent=2)+'\n')
     print('Suite scheduling, first failure and interrupt cleanup controls PASS')
 

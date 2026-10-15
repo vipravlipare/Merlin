@@ -1,0 +1,52 @@
+{
+  "status": "PASS",
+  "started_utc": "2026-10-14T22:16:39.658009+00:00",
+  "finished_utc": "2026-10-14T22:17:20.599001+00:00",
+  "elapsed_seconds": 40.940992,
+  "stages": [
+    {
+      "name": "python-tests",
+      "status": "PASS"
+    },
+    {
+      "name": "quiz-tests",
+      "status": "PASS"
+    },
+    {
+      "name": "python-case-faults",
+      "status": "PASS"
+    },
+    {
+      "name": "database-case-faults",
+      "status": "PASS"
+    },
+    {
+      "name": "quiz-case-faults",
+      "status": "PASS"
+    },
+    {
+      "name": "browser-case-faults",
+      "status": "PASS"
+    },
+    {
+      "name": "database-lifecycle-faults",
+      "status": "PASS"
+    },
+    {
+      "name": "migration-undo-faults",
+      "status": "PASS"
+    },
+    {
+      "name": "documentation",
+      "status": "PASS"
+    },
+    {
+      "name": "whitespace",
+      "status": "PASS"
+    }
+  ],
+  "source_report": "/tmp/merlin-test-suite-cvg7jznq/summary.json",
+  "api_coverage": "PENDING; API not implemented",
+  "isolation_cleanup_passed": true,
+  "source_preserved": true
+}

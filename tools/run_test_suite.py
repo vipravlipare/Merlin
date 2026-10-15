@@ -83,6 +83,7 @@ def preflight(env):
         ['node', '--input-type=module', '-e', "import {pathToFileURL} from 'node:url'; const fs=await import('node:fs'); const path=await import('node:path'); const pkg=JSON.parse(fs.readFileSync(path.join(path.dirname(process.env.MERLIN_PLAYWRIGHT_MODULE),'package.json'),'utf8')); if(pkg.version!=='1.58.2') throw Error('Playwright differs from audited pin'); const {chromium}=await import(pathToFileURL(process.env.MERLIN_PLAYWRIGHT_MODULE).href); const b=await chromium.launch({headless:true}); try {if(b.version()!=='145.0.7632.6') throw Error('Browser differs from audited pin'); console.log('Chromium launch verified');} finally {await b.close();}"],
     ]
     probes.append([str(PYTHON), 'tools/verify_python_isolation.py'])
+    probes.append([str(PYTHON), 'tools/run_ci.py', '--self-check'])
     def check_group(indexes):
         for index in indexes:
             command = probes[index]
@@ -98,7 +99,7 @@ def preflight(env):
     # before starting baselines; a failed or timed-out prerequisite still aborts.
     with ThreadPoolExecutor(max_workers=3) as pool:
         jobs = [pool.submit(check_group, indexes) for indexes in
-                [(0,), (1, 4, 5), (2, 3, 6, 7)]]
+                [(0, 8), (1, 4, 5), (2, 3, 6, 7)]]
         for job in as_completed(jobs):
             job.result()
 

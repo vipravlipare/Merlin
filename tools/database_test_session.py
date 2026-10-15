@@ -220,10 +220,6 @@ def split_sql(sql):
             elif pair == '*/':
                 block_depth -= 1
                 index += 1
-        elif dollar:
-            if sql.startswith(dollar, index):
-                index += len(dollar) - 1
-                dollar = None
         elif quote:
             if escaped and char == '\\':
                 index += 1

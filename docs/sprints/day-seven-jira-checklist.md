@@ -25,7 +25,7 @@ Goal: understand HTTP and implement one small, tested local health endpoint afte
 
 ### 3. Build the first scratch API — 65 min
 
-- [ ] 3.1 Resolve the CI scope decision first (15 min): review the existing setup workflow against current work and record gaps. If CI repair is the blocking priority, swap the API block for that repair and carry the API forward; never add invisible time or claim unexecuted CI coverage.
+- [ ] 3.1 Resolve the CI scope decision first (15 min): cumulative CI through Day 6 is mandatory before Day 7 API implementation. Decision: repair CI first, using the remaining section 3 allocation and carrying the API forward. Follow [the cumulative CI gate](../delivery/cumulative-ci-gate.md); require the full cases/faults and disposable migration verification, then observed GitHub results for the exact commit. Never add invisible time or claim unexecuted CI coverage.
 - [ ] 3.2 Personally write the minimal HTTP handler/server using the existing Python 3.12 standard library (35 min). Bind only to 127.0.0.1; implement the agreed route/status/error contract without serving files or adding database writes.
 - [ ] 3.3 Start the server, make one real HTTP request, and verify shutdown/restart (15 min). Record commands, response and actual authored changes; dependency/startup delays reduce coding time inside this block.
 

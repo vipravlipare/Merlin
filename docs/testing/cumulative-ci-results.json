@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "steps": [
+    {
+      "name": "original-python-sources",
+      "status": "PASS"
+    },
+    {
+      "name": "complete-suite",
+      "status": "PASS"
+    },
+    {
+      "name": "committed-migration-roundtrip",
+      "status": "PASS"
+    }
+  ],
+  "source_commit": "4ca8cd83b7d4bd21249da6eac6b7c980c9224b88",
+  "includes_uncommitted_inputs": true,
+  "target": {
+    "container": "89328f23c7c1129db1f05e5fb6c636ea34c4d6c9f0b1b11b03823bdcf805a6e4",
+    "cluster": "7696699077219090472",
+    "project": "merlin-ci-b45729635fc642e18a0bb4dbe1ea674f",
+    "network": "none"
+  },
+  "seconds": 90.457,
+  "cleanup_passed": true
+}

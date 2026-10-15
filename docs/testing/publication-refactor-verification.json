@@ -1,0 +1,201 @@
+{
+  "baseline": {
+    "status": "PASS",
+    "elapsed_seconds": 43.11579,
+    "stages": [
+      {
+        "name": "python-tests",
+        "status": "PASS"
+      },
+      {
+        "name": "quiz-tests",
+        "status": "PASS"
+      },
+      {
+        "name": "python-case-faults",
+        "status": "PASS"
+      },
+      {
+        "name": "database-case-faults",
+        "status": "PASS"
+      },
+      {
+        "name": "quiz-case-faults",
+        "status": "PASS"
+      },
+      {
+        "name": "browser-case-faults",
+        "status": "PASS"
+      },
+      {
+        "name": "database-lifecycle-faults",
+        "status": "PASS"
+      },
+      {
+        "name": "migration-undo-faults",
+        "status": "PASS"
+      },
+      {
+        "name": "documentation",
+        "status": "PASS"
+      },
+      {
+        "name": "whitespace",
+        "status": "PASS"
+      }
+    ],
+    "source_preserved": true,
+    "cleanup_passed": true
+  },
+  "after_changes": {
+    "status": "PASS",
+    "elapsed_seconds": 40.321674,
+    "stages": [
+      {
+        "name": "python-tests",
+        "status": "PASS"
+      },
+      {
+        "name": "quiz-tests",
+        "status": "PASS"
+      },
+      {
+        "name": "python-case-faults",
+        "status": "PASS"
+      },
+      {
+        "name": "database-case-faults",
+        "status": "PASS"
+      },
+      {
+        "name": "quiz-case-faults",
+        "status": "PASS"
+      },
+      {
+        "name": "browser-case-faults",
+        "status": "PASS"
+      },
+      {
+        "name": "database-lifecycle-faults",
+        "status": "PASS"
+      },
+      {
+        "name": "migration-undo-faults",
+        "status": "PASS"
+      },
+      {
+        "name": "documentation",
+        "status": "PASS"
+      },
+      {
+        "name": "whitespace",
+        "status": "PASS"
+      }
+    ],
+    "source_preserved": true,
+    "cleanup_passed": true
+  },
+  "standalone_migration": {
+    "status": "PASS",
+    "seconds": 20.436,
+    "rebuilt_case_count": 383,
+    "source_preserved": true,
+    "checks": [
+      {
+        "case": "fresh-database-and-external-prerequisite",
+        "passed": true
+      },
+      {
+        "case": "initial-up-001-and-002-committed",
+        "passed": true
+      },
+      {
+        "case": "down-002-committed",
+        "passed": true
+      },
+      {
+        "case": "down-001-committed-and-verified-after-reconnect",
+        "passed": true
+      },
+      {
+        "case": "up-001-and-002-committed-semantic-equivalence",
+        "passed": true
+      },
+      {
+        "case": "all-rebuilt-database-cases-382",
+        "passed": true
+      },
+      {
+        "case": "rebuilt-failed-write-and-real-reconnect",
+        "passed": true
+      },
+      {
+        "case": "reconnected-empty-tables-and-unrelated-data-preserved",
+        "passed": true
+      },
+      {
+        "case": "source-preservation-and-disposable-cleanup",
+        "passed": true
+      }
+    ],
+    "migration_sha256": {
+      "001_users_notes.up.sql": "be5ad5b27d3a21637bfcf7f070dba6480263f9feb580bfff0587e9ade487db3b",
+      "001_users_notes.down.sql": "22cd8805e287303999c4aac8b084f6d7e08bf209950ede4b3f6038a7e0ca3275",
+      "002_whitespace_parity.up.sql": "41b5351a3474b4f3232bdce7af1fa1674f8413cd17e459c77dcb734fd1f492c7",
+      "002_whitespace_parity.down.sql": "43f6af51c7d0fd43b9abe7e12aad55426d72b70b6a20faee4c79fb62fcf1761b"
+    }
+  },
+  "counterfactuals": [
+    {
+      "fault": "repair-private-content-leak",
+      "status": "DETECTED",
+      "assertion": "compressor-code-and-frontmatter-stay-local"
+    },
+    {
+      "fault": "raw-cli-error-leak",
+      "status": "DETECTED",
+      "assertion": "compressor-cli-error-redacted"
+    },
+    {
+      "fault": "nested-array-sort-hides-order",
+      "status": "DETECTED",
+      "assertion": "migration-schema-literal-normalization"
+    }
+  ],
+  "history": {
+    "status": "PASS",
+    "reachable_commits": 18,
+    "unique_blobs_changed": 28,
+    "total_exact_redactions_in_unique_blobs": 138,
+    "affected_paths": {
+      "docs/planning/part-01-waterfall-and-assumptions.md": 16,
+      "docs/planning/part-04-environment-setup.md": 16,
+      "docs/planning/MASTER_NAVIGATION.md": 16,
+      "docs/planning/VERIFY_LIST.md": 16,
+      "docs/planning/archive/setup-sprint0-originals-2026-10-02.tar.gz": 15,
+      "docs/planning/part-17-sprint0.md": 15,
+      "docs/SETUP.md": 6,
+      "docs/planning/SPRINT0_LEARNING.md": 1,
+      "docs/planning/STATE.md": 1,
+      "docs/project/part-01-waterfall-and-assumptions.md": 1,
+      "docs/setup/archive/sprint-0-original-setup.tar.gz": 1,
+      "docs/setup/local-setup.md": 1,
+      "docs/setup/part-04-environment-setup.md": 1,
+      "docs/sprints/part-17-sprint0.md": 1
+    },
+    "remote_changed": false,
+    "private_backup_created": true,
+    "rewritten_commits": 17,
+    "updated_refs": {
+      "refs/heads/setup/E0-US01-environment": {
+        "old": "d7d0c2780473eca96423624e164e9536cc56dfe3",
+        "new": "4ca8cd83b7d4bd21249da6eac6b7c980c9224b88"
+      },
+      "refs/remotes/origin/setup/E0-US01-environment": {
+        "old": "f8799f78a788c56f080436fb8a4f0026e37e25ed",
+        "new": "068972c57ecba8ba3923e98f6cbf0a9e81ae9bad"
+      }
+    }
+  },
+  "api_implementation_and_faults": "PENDING"
+}

@@ -452,8 +452,8 @@ def call_claude(prompt: str) -> str:
             timeout=CLAUDE_CALL_TIMEOUT_SECONDS,
         )
         return strip_llm_wrapper(result.stdout.strip())
-    except subprocess.CalledProcessError as e:
-        raise RuntimeError(f"Claude call failed:\n{e.stderr}")
+    except subprocess.CalledProcessError:
+        raise RuntimeError("Claude call failed; review private CLI diagnostics locally.") from None
     except subprocess.TimeoutExpired:
         raise RuntimeError(
             f"Claude CLI call timed out after {CLAUDE_CALL_TIMEOUT_SECONDS}s "
@@ -728,13 +728,38 @@ def _compress_file_locked(filepath: Path) -> bool:
             return False
 
         print("Fixing with Claude...")
+        # Retry uses the same data boundary as the initial call: frontmatter and
+        # preserved code stay local, including details echoed in validation errors.
+        _, candidate_body = split_frontmatter(compressed)
+        masked_candidate, candidate_blocks = mask_code_blocks(candidate_body)
+        available = {}
+        for marker, block in reversed(code_blocks):
+            available.setdefault(block, []).append(marker)
+        markers = {}
+        for marker, block in candidate_blocks:
+            if not available.get(block):
+                raise ValueError("Preserved code changed before repair; refusing external retry")
+            markers[marker] = available[block].pop()
+        if any(available.values()):
+            raise ValueError("Preserved code missing before repair; refusing external retry")
+        # Preserve original identities even when a candidate reordered blocks.
+        masked_candidate = re.sub(
+            re.escape(CODE_MARKER_PREFIX) + r"\d+_[a-f0-9]{16}@@",
+            lambda match: markers[match.group()], masked_candidate)
         fixed = call_claude(
-            build_fix_prompt(original_text, compressed, result.errors)
+            build_fix_prompt(masked_body, masked_candidate,
+                             [error.partition(":")[0] for error in result.errors])
         )
 
         if fixed is None or not fixed.strip():
             print("❌ Fix attempt aborted: Claude returned an empty response.")
             print("   Skipping this attempt.")
+            continue
+
+        try:
+            fixed = frontmatter + restore_code_blocks(fixed, code_blocks)
+        except ValueError:
+            print("❌ Fix attempt aborted: preserved code markers changed.")
             continue
 
         # Guard against a prose preamble smuggled in ahead of the real fixed
@@ -752,8 +777,7 @@ def _compress_file_locked(filepath: Path) -> bool:
         # non-expansion invariant has to hold for it too — a repair that
         # restores the structure validate() asked for by padding the prose back
         # out is exactly the "compression" #776 is about. `fixed` is a whole
-        # file (build_fix_prompt is given one, and the anchor check above
-        # requires it to start with the original's first line), so its
+        # file after local frontmatter/code restoration, so its
         # frontmatter is split off to compare like against like.
         _, fixed_body = split_frontmatter(fixed)
         if not _is_smaller_than_body(fixed_body, body):
