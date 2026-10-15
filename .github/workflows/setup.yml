@@ -8,10 +8,8 @@ on:
 permissions:
   contents: read
 
-concurrency:
-  group: setup-${{ github.ref }}
-  cancel-in-progress: true
-
+# Each triggered run verifies its own revision on independently owned storage.
+# Do not cancel older pushed revisions when a newer push arrives.
 jobs:
   setup:
     runs-on: ubuntu-24.04

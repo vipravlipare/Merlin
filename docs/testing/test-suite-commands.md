@@ -2,6 +2,10 @@
 
 This reference covers the current automated tests and fault-injection audits. Run it in Ubuntu/WSL, from the repository root. It does not advance MER-1 step 4.3 or commit a migration undo to your source database.
 
+## Automatic GitHub verification
+
+The same complete suite, all required faults and an additional committed migration roundtrip run on pushes and pull requests. Existing unit tests remain unit tests; real database/browser checks retain their integration coverage. See [the execution map and confidentiality boundary](ci-test-coverage.md). GitHub does not observe local-only commits.
+
 ## One command
 
 ```bash
