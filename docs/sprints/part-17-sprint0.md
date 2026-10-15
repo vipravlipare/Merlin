@@ -438,7 +438,7 @@ The user service can be stopped with `systemctl --user stop omniroute.service`, 
 
 ### Live gateway verification — October 6 follow-up
 
-📚 Learn first: [OmniRoute inference skill](/home/vipra/.agents/skills/omni-inference/SKILL.md), chat versus Responses endpoints; [authentication skill](/home/vipra/.agents/skills/omni-auth/SKILL.md), management versus inference credentials; stop before adding providers.
+📚 Learn first: [OmniRoute inference skill](../../.agents/skills/omni-inference/SKILL.md), chat versus Responses endpoints; [authentication skill](../../.agents/skills/omni-auth/SKILL.md), management versus inference credentials; stop before adding providers.
 ↩ Return: use the results below to select the next failed gate. A valid provider credential or a listed model is not a passing model/tool-call test. No permanent client routing was changed.
 
 | Observed test | Result |
