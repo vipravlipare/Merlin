@@ -75,7 +75,8 @@ def fork_jobs(jobs, *, workers=8, timeout=45):
         importlib.import_module("_pytest." + plugin)
     for dependency in ["emoji", "regex", "psycopg", "unittest.mock", "tomllib"]:
         importlib.import_module(dependency)
-    forbidden = ['app.note_rules', 'app.notes_maintenance', 'app.database_connectivity_probe',
+    forbidden = ['app.health_api', 'app.health_server', 'test_health_api', 'tests.test_health_api',
+                 'app.note_rules', 'app.notes_maintenance', 'app.database_connectivity_probe',
                  'tools.doctor', 'doctor', 'tools.prd_lint']
     if any(name in sys.modules for name in forbidden):
         raise RuntimeError('Fork parent must not contain application modules')

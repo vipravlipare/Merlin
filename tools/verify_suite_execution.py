@@ -219,6 +219,15 @@ def check_result_validation():
                       'detected_by':python_cases if name==valid_python_faults[0] else python_cases[:1],
                       'cases':{case:{'outcome':'failed'} for case in (python_cases if name==valid_python_faults[0] else python_cases[:1])}}
                      for name in inventory['python_faults']]
+    from tools.audit_python_cases import HEALTH_API_DETECTIONS
+    for row in python_faults:
+        if row['fault'] in HEALTH_API_DETECTIONS:
+            test, assertion = HEALTH_API_DETECTIONS[row['fault']]
+            node = 'tests/test_health_api.py::' + test
+            row.update(intended_detection=True, expected_detection=node, expected_assertion=assertion)
+            if node not in row['detected_by']:
+                row['detected_by'].append(node)
+            row['cases'][node] = {'outcome': 'failed', 'failure': assertion}
     python_report = {'baseline':{'exit':0,'errors':[],'cases':{case:{'outcome':'passed'} for case in python_cases}},
                      'matrix':[{'case':case,'outcome':'passed','detects':[r['fault'] for r in python_faults if case in r.get('detected_by',[])]} for case in python_cases],
                      'faults':python_faults,'source_sha256':hashes}
@@ -323,6 +332,11 @@ def check_result_validation():
                 variants['contradictory-baseline']=faulty
                 faulty=json.loads(json.dumps(report));next(r for r in faulty['faults'] if r['status']=='DETECTED').pop('scope_manifest_matches')
                 variants['missing-scope-proof']=faulty
+                for field in ['intended_detection', 'expected_detection', 'expected_assertion']:
+                    faulty=json.loads(json.dumps(report))
+                    api=next(row for row in faulty['faults'] if row['fault'] in HEALTH_API_DETECTIONS)
+                    api.pop(field)
+                    variants['missing-api-'+field]=faulty
                 faulty=json.loads(json.dumps(report));faulty['matrix'][0]['detects']=['invented-fault']
                 variants['invented-detection']=faulty
             if stage=='quiz-case-faults':
@@ -579,6 +593,67 @@ def check_runtime_commit_compatibility():
     return rows
 
 
+def check_api_fault_attribution():
+    """A random red test or setup error must not certify an API fault."""
+    from copy import deepcopy
+    from tools.audit_python_cases import outcome
+    node = "tests/test_health_api.py::test_health_endpoint_success"
+    other = "tests/test_health_api.py::test_unrelated_synthetic_case"
+    baseline = {"exit": 1, "errors": [], "cases": {
+        node: {"outcome": "failed", "failure": "assert actual == status"},
+        other: {"outcome": "passed"}}}
+    rows = []
+    with tempfile.TemporaryDirectory(prefix="merlin-api-attribution-") as directory:
+        output = Path(directory) / "result.json"
+        job = {"name": "health-api-wrong-status", "file": "app/health_api.py",
+               "output": output, "expected_cases": {node, other}}
+        for name in ["intended-assertion", "wrong-case", "wrong-assertion", "setup-error"]:
+            data = deepcopy(baseline)
+            if name == "wrong-case":
+                data["cases"][node] = {"outcome": "passed"}
+                data["cases"][other] = {"outcome": "failed", "failure": "assert actual == status"}
+            elif name == "wrong-assertion":
+                data["cases"][node]["failure"] = "assert unrelated_fixture"
+            elif name == "setup-error":
+                data["errors"] = [{"stage": "setup", "failure": "Synthetic fixture failure"}]
+            output.write_text(json.dumps(data))
+            result = outcome(job, 1, "")
+            assert result["intended_detection"] is (name == "intended-assertion")
+            expected = "DETECTED" if name == "intended-assertion" else (
+                "INVALID" if name == "setup-error" else "SURVIVED")
+            assert result["status"] == expected
+            rows.append({"scenario": "api-fault-attribution-" + name, "passed": True})
+    return rows
+
+
+def check_api_dependency_scopes():
+    from tools import test_dependencies as dependencies
+    inventory = json.loads((ROOT / 'tests/suite-inventory.json').read_text())
+    baseline = {'cases': {node: {'file': node.split('::')[0]} for node in inventory['python_cases']}}
+    api = 'tests/test_health_api.py'
+    scopes = dependencies.scopes(baseline)
+    assert api in scopes['app/health_api.py'] and api in scopes['app/health_server.py']
+    assert all(api not in scopes[target] for target in dependencies.TARGETS if 'health_api' not in target and 'health_server' not in target)
+    rows = [{'scenario': 'reviewed-api-scope-preserves-dependencies', 'passed': True}]
+    with patch.dict(dependencies.REVIEWED_TESTS, {api: 'changed-source'}):
+        scopes = dependencies.scopes(baseline)
+        assert all(api in selected for selected in scopes.values())
+    rows.append({'scenario': 'changed-api-source-restores-conservative-scope', 'passed': True})
+    with patch.object(dependencies, 'dependencies', return_value=({api}, True)):
+        scopes = dependencies.scopes(baseline)
+        assert all(api in selected for selected in scopes.values())
+    rows.append({'scenario': 'opaque-api-import-restores-conservative-scope', 'passed': True})
+    class SharedFixtures:
+        def glob(self, pattern):
+            assert pattern == 'tests/**/conftest.py'
+            return [Path('synthetic-shared-fixture')]
+    with patch.object(dependencies, 'ROOT', SharedFixtures()):
+        scopes = dependencies.scopes(baseline)
+        assert all(set(selected) == {row['file'] for row in baseline['cases'].values()} for selected in scopes.values())
+    rows.append({'scenario': 'shared-fixture-restores-all-python-scope', 'passed': True})
+    return rows
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--out',type=Path)
@@ -595,6 +670,8 @@ def main():
     rows.extend(check_migration_schema_normalization())
     rows.extend(check_compressor_privacy())
     rows.extend(check_runtime_commit_compatibility())
+    rows.extend(check_api_fault_attribution())
+    rows.extend(check_api_dependency_scopes())
     if args.out:args.out.write_text(json.dumps({'checks':rows},indent=2)+'\n')
     print('Suite scheduling, first failure and interrupt cleanup controls PASS')
 

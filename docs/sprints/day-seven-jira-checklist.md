@@ -26,18 +26,18 @@ Goal: understand HTTP and implement one small, tested local health endpoint afte
 ### 3. Build the first scratch API — 65 min
 
 - [x] 3.1 Resolve the CI scope decision first (15 min): cumulative CI through Day 6 is mandatory before Day 7 API implementation. Decision: repair CI first, using the remaining section 3 allocation and carrying the API forward. Follow [the cumulative CI gate](../delivery/cumulative-ci-gate.md); require the full cases/faults and disposable migration verification, then observed GitHub results for the exact commit. Never add invisible time or claim unexecuted CI coverage.
-- [ ] 3.2 Personally write the minimal HTTP handler/server using the existing Python 3.12 standard library (35 min). Bind only to 127.0.0.1; implement the agreed route/status/error contract without serving files or adding database writes.
-- [ ] 3.3 Start the server, make one real HTTP request, and verify shutdown/restart (15 min). Record commands, response and actual authored changes; dependency/startup delays reduce coding time inside this block.
+- [x] 3.2 Personally write the minimal HTTP handler/server using the existing Python 3.12 standard library (35 min). Bind only to 127.0.0.1; implement the agreed route/status/error contract without serving files or adding database writes.
+- [x] 3.3 Start the server, make one real HTTP request, and verify shutdown/restart (15 min). Record commands, response and actual authored changes; dependency/startup delays reduce coding time inside this block.
 
 📚 Learn first: [Python HTTP server](https://docs.python.org/3.12/library/http.server.html) — use the documented handler/server lifecycle; [Python JSON](https://docs.python.org/3.12/library/json.html) — read dumps/loads.
 ↩ Return: Show one real request/response and explain request routing through your own code. The standard-library server is a local learning prototype, not a production server. A FastAPI version and comparison ADR come after scratch acceptance in a separately budgeted slice.
 
 ### 4. Verify behavior and test effectiveness — 45 min
 
-- [ ] 4.1 Write/run focused API cases for correct status, JSON shape/content type, unknown-path non-disclosure, unsupported methods and generic failure; check loopback binding and server cleanup (15 min). Check observations against the contract, not only that a request succeeds.
-- [ ] 4.2 Inject isolated faults such as wrong healthy status/body, accepting POST, serving an unknown file path, and leaking a sentinel error value (15 min). Each corresponding test must fail for its intended reason. Do not install faulty code in the running app or weaken assertions.
-- [ ] 4.3 Integrate the new cases and applicable faults into the complete suite, then run .venv/bin/python tools/run_test_suite.py (10 min). Preserve all Day 6 cases/faults; ensure new baseline cases demonstrate relevant fault detection rather than silently passing with no audit coverage.
-- [ ] 4.4 Record actual PASS/FAIL/PENDING, first failure and measured runtime (5 min). If integration or required API tests are unfinished, leave them open. Authenticated API ownership denial remains PENDING until that boundary exists.
+- [x] 4.1 Write/run focused API cases for correct status, JSON shape/content type, unknown-path non-disclosure, unsupported methods and generic failure; check loopback binding and server cleanup (15 min). Check observations against the contract, not only that a request succeeds.
+- [x] 4.2 Inject isolated faults such as wrong healthy status/body, accepting POST, serving an unknown file path, and leaking a sentinel error value (15 min). Each corresponding test must fail for its intended reason. Do not install faulty code in the running app or weaken assertions.
+- [x] 4.3 Integrate the new cases and applicable faults into the complete suite, then run .venv/bin/python tools/run_test_suite.py (10 min). Preserve all Day 6 cases/faults; ensure new baseline cases demonstrate relevant fault detection rather than silently passing with no audit coverage.
+- [x] 4.4 Record actual PASS/FAIL/PENDING, first failure and measured runtime (5 min). If integration or required API tests are unfinished, leave them open. Authenticated API ownership denial remains PENDING until that boundary exists. Actual results, first-failure history and measured runtime: [section 4.4 record](../testing/health-api-suite-integration.md#step-44--actual-status-record).
 
 📚 Learn first: [pytest fixtures](https://docs.pytest.org/en/stable/how-to/fixtures.html) — read teardown/cleanup; [pytest monkeypatch](https://docs.pytest.org/en/stable/how-to/monkeypatch.html) — read restoring isolated changes.
 ↩ Return: Keep failing evidence and repair responsible code. Use docs/testing/test-suite-commands.md; the previous approximately 53-second runtime is a measurement, not a speed guarantee after new tests.

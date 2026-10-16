@@ -1,0 +1,120 @@
+{
+  "scope": "Day 7 step 4.2: five representative faults; not the complete Python fault audit",
+  "status": "PASS",
+  "baseline_case_and_subtest_ids": 349,
+  "baseline_status": "PASS",
+  "faults": [
+    {
+      "fault": "health-api-wrong-status",
+      "status": "DETECTED",
+      "required_case": "tests/test_health_api.py::test_health_endpoint_success",
+      "required_assertion": "assert actual == status",
+      "intended_detection": true,
+      "setup_or_teardown_errors": [],
+      "observed_failure": "tests/test_health_api.py:123: in test_health_endpoint_success\n    assert_json_response(request(api), 200, {\"status\": \"ok\"})\ntests/test_health_api.py:111: in assert_json_response\n    assert actual == status\nE   assert 201 == 200"
+    },
+    {
+      "fault": "health-api-wrong-body",
+      "status": "DETECTED",
+      "required_case": "tests/test_health_api.py::test_health_endpoint_success",
+      "required_assertion": "assert json.loads(body.decode",
+      "intended_detection": true,
+      "setup_or_teardown_errors": [],
+      "observed_failure": "tests/test_health_api.py:123: in test_health_endpoint_success\n    assert_json_response(request(api), 200, {\"status\": \"ok\"})\ntests/test_health_api.py:114: in assert_json_response\n    assert json.loads(body.decode(\"utf-8\")) == expected\nE   AssertionError: assert {'status': 'broken'} == {'status': 'ok'}\nE     \nE     Differing items:\nE     {'status': 'broken'} != {'status': 'ok'}\nE     Use -v to get more diff"
+    },
+    {
+      "fault": "health-api-post-accepted",
+      "status": "DETECTED",
+      "required_case": "tests/test_health_api.py::test_unsupported_method_has_exact_error_and_allow[POST]",
+      "required_assertion": "assert actual == status",
+      "intended_detection": true,
+      "setup_or_teardown_errors": [],
+      "observed_failure": "tests/test_health_api.py:154: in test_unsupported_method_has_exact_error_and_allow\n    assert_json_response(request(api, method), 405,\ntests/test_health_api.py:111: in assert_json_response\n    assert actual == status\nE   assert 200 == 405"
+    },
+    {
+      "fault": "health-api-file-disclosure",
+      "status": "DETECTED",
+      "required_case": "tests/test_health_api.py::test_sensitive_path_never_serves_a_file[GET]",
+      "required_assertion": "assert json.loads(body.decode",
+      "intended_detection": true,
+      "setup_or_teardown_errors": [],
+      "observed_failure": "tests/test_health_api.py:143: in test_sensitive_path_never_serves_a_file\n    headers, body = assert_json_response(request(api, method, \"/.env\"), 404,\ntests/test_health_api.py:114: in assert_json_response\n    assert json.loads(body.decode(\"utf-8\")) == expected\nE   assert 'SYNTHETIC_FILE_CONTENT_SENTINEL' == {'error': 'Not found'}\nE    +  where 'SYNTHETIC_FILE_CONTENT_SENTINEL' = <function loads at <address>>('\"SYNTHETIC_FILE_CONTENT_SENTINEL\"')\nE    +    where <function loads at <address>> = json.loads\nE    +    and   '\"SYNTHETIC_FILE_CONTENT_SENTINEL\"' = <built-in method decode of bytes object at <address>>('utf-8')\nE    +      where <built-in method decode of bytes object at <address>> = b'\"SYNTHETIC_FILE_CONTENT_SENTINEL\"'.decode"
+    },
+    {
+      "fault": "health-api-error-leak",
+      "status": "DETECTED",
+      "required_case": "tests/test_health_api.py::test_handler_failure_is_generic_and_recovers_on_same_server",
+      "required_assertion": "assert json.loads(body.decode",
+      "intended_detection": true,
+      "setup_or_teardown_errors": [],
+      "observed_failure": "tests/test_health_api.py:163: in test_handler_failure_is_generic_and_recovers_on_same_server\n    headers, body = assert_json_response(request(api), 500,\ntests/test_health_api.py:114: in assert_json_response\n    assert json.loads(body.decode(\"utf-8\")) == expected\nE   AssertionError: assert {'error': 'SY...ROR_SENTINEL'} == {'error': 'In...server error'}\nE     \nE     Differing items:\nE     {'error': 'SYNTHETIC_HEALTH_ERROR_SENTINEL'} != {'error': 'Internal server error'}\nE     Use -v to get more diff"
+    }
+  ],
+  "counts": {
+    "DETECTED": 5,
+    "SURVIVED": 0,
+    "INVALID": 0,
+    "TIMEOUT": 0,
+    "UNAPPLIED": 0
+  },
+  "attribution_controls": [
+    {
+      "scenario": "api-fault-attribution-intended-assertion",
+      "passed": true
+    },
+    {
+      "scenario": "api-fault-attribution-wrong-case",
+      "passed": true
+    },
+    {
+      "scenario": "api-fault-attribution-wrong-assertion",
+      "passed": true
+    },
+    {
+      "scenario": "api-fault-attribution-setup-error",
+      "passed": true
+    }
+  ],
+  "runner_controls_passed": 97,
+  "source_sha256": {
+    "app/health_api.py": "9b781b34c009c49e023c2d26976da9fdd06a074b5990157a26dea374551c4ecd",
+    "app/health_server.py": "8defb038673eea5a66009a20916345b1a75092bbacbc812c361b3e846d7f624f",
+    "app/database_connectivity_probe.py": "2f79dc55f18135a555071197417b58985fd59eab1505f2526f612807d6fd2fd3",
+    "app/notes_maintenance.py": "dbbde39d5996296adc0244f74d1e4a606b5de08d0b05497a47373edbf207dffb",
+    "app/note_rules.py": "44c19fcd536d06c887e6e9a1600b63ca4f21074b32dee93ec7874810eae3b538",
+    "tests/test_prd_lint.py": "ea5d16d419ed3c93a68e8ee3e3a211c4b0a6e7ae3efc262dfb62d3698815a995",
+    "tests/test_note_rules_and_maintenance.py": "0a3dcf4b2e7c9b07e93d9e33f25d444b3b4b309f7020d075840617c28a6fa4ef",
+    "tests/test_health_api.py": "3dc8727b03097a757a26b7f5981f3e678caf50a867e0ddc2ef8c08d2c71f0b9a",
+    "tests/test_database_connectivity_probe.py": "ba296ed12baab295aea9b44c5915a88082fe163968ea9a2596ac82ca380a3063",
+    "tests/test_doctor_failure_cases.py": "6c8c06d6285fe2950912692838ae692763b5c28f4e9454f83af4b200a3c8df97",
+    "tests/test_users_notes_database.py": "94515aef520ccd6675f2a1352c200f85fab9ee6944fd971cd50cb44599e8d6a5",
+    "tools/audit_database_lifecycle.py": "874245fab5d2d97a6a57c5ec0df9f8e8d0802d6dfab00ca24dc30a3729302205",
+    "tools/audit_python_cases.py": "11f57686cf67891e75b7d44d44d7b4f23b035c5f07e651eff76a092075cc4b2a",
+    "tools/run_ci.py": "d40d12f09ec0387667be7ba2b3cd8ee0df872849a69262d8d575782be815db97",
+    "tools/write_test_audit.py": "eaceddefc9bc37aafe3a725ad63b140f8299da9cbe06c9228bfa026e2ec99dfe",
+    "tools/verify_suite_execution.py": "c5ec30355fcc3a346ff98aecd2db82d5f17f47e6077b2ad0d29ed3807ba1bcbc",
+    "tools/native_psql.py": "38e31ee8838cab63446f472c861d1bc8ef7d40ab55ad09b16a34b81d2e467ed5",
+    "tools/verify_native_psql.py": "50a76e822c734c6e265647718d664ebe573033401d0f17156ae78419488baead",
+    "tools/run_sql_shards.py": "7ad207492f5c8bc99fb686aca6399040c10d3df0022c46d2f1ba68aa8e1c9691",
+    "tools/run_test_suite.py": "fc3f8997350a87c6138a59cb30e4f8ebaf33865681a0aabacb7c1a57cef6c34d",
+    "tools/verify_migration_roundtrip.py": "4d6b0b315209b612dc6682e20a22b17fc8f2d023671993d7a30a3d65da20e23d",
+    "tools/doctor.py": "4cf276effb197aad39ce94f652e01a558ca39ad3bbebe8af5ce9ce4693fae26f",
+    "tools/setup_local.py": "7cbbe7a498c3089162bc03545ff82f9eca956e15463afb1882a06f74b9ba7d6b",
+    "tools/test_dependencies.py": "f2481fea46f51b43e4a8a2efc0eaea9167c27d40a22ac480b40a8d61150efb5d",
+    "tools/check_mutations.py": "bc27f20769efc386e9b085e43341c737cdedce2615f1fff08ea9d05a78a608b8",
+    "tools/audit_quiz_cases.py": "78bb4f5ce94f9689509cbd074e3a61534d0703c2c5b34a0d6152c21107901700",
+    "tools/audit_migration_undo.py": "6c60e3b0e7e8763b30faaeb81272067bb9b103c7d580787acab3cf885a10715e",
+    "tools/prd_lint.py": "e2817ce78253d736fb8e6b74086f48dc1ee4686415fe3f7fb1678a51aaa8a0e8",
+    "tools/audit_database_cases.py": "936985fa1b8daf20a78deae1d392cd1c0fa681180273fe267b1651aff4c5d773",
+    "tools/database_sandboxes.py": "b82bf8c3c4562ac1b41b85ca41799b7499ae59ff5b61c3c8af1d99b4ba5687b7",
+    "tools/ci_database.py": "72c7abba5046a98c1e8dd553d871d88cd82fcbf45a843f5b1897107a0bd97d12",
+    "tools/isolated_python.py": "58ed3a306fe3c89820ffefef1668301471b07dcbe5319d76f4caeef0d5e8cf7c",
+    "tools/verify_database_sandboxes.py": "acfba186204f223b71f7e54d4c9ad12ce8611c28f23f40533a3a361d0128bea9",
+    "tools/verify_python_isolation.py": "ba0191b30e496c7e94e652d4726e8a67a76cd68a248c233b37e11b369c94de8c",
+    "tools/test_doctor.py": "25522e95c32b8ceea080984ee800b2b8a82c3a0c169cac52e9732c0fce3d44b7",
+    "tools/database_test_session.py": "07f6dd2923ff28f7de3b2e3ac7728937833a0c930ba8b8dd9ec0312f0a62adcd"
+  },
+  "application_files_changed": false,
+  "full_suite_and_remote_api_integration": "PENDING step 4.3",
+  "actual_minutes": "unknown"
+}

@@ -11,9 +11,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 # Changed or new test modules use every fault until their scope is reviewed.
 REVIEWED_TESTS = {'tests/test_note_rules_and_maintenance.py': '0a3dcf4b2e7c9b07e93d9e33f25d444b3b4b309f7020d075840617c28a6fa4ef', 'tests/test_database_connectivity_probe.py': 'ba296ed12baab295aea9b44c5915a88082fe163968ea9a2596ac82ca380a3063', 'tests/test_prd_lint.py': 'ea5d16d419ed3c93a68e8ee3e3a211c4b0a6e7ae3efc262dfb62d3698815a995', 'tests/test_doctor_failure_cases.py': '6c8c06d6285fe2950912692838ae692763b5c28f4e9454f83af4b200a3c8df97', 'tools/test_doctor.py': '25522e95c32b8ceea080984ee800b2b8a82c3a0c169cac52e9732c0fce3d44b7'}
+# Reviewed API subprocess imports only the two explicitly imported API modules.
+REVIEWED_TESTS['tests/test_health_api.py'] = '3dc8727b03097a757a26b7f5981f3e678caf50a867e0ddc2ef8c08d2c71f0b9a'
 # Reviewed doctor launches setup clients only; changing it restores full scope.
 REVIEWED_DOCTOR = '4cf276effb197aad39ce94f652e01a558ca39ad3bbebe8af5ce9ce4693fae26f'
-TARGETS = {'app/note_rules.py', 'app/notes_maintenance.py',
+TARGETS = {'app/health_api.py', 'app/health_server.py', 'tests/test_health_api.py',
+           'app/note_rules.py', 'app/notes_maintenance.py',
            'app/database_connectivity_probe.py', 'tools/doctor.py', 'tools/prd_lint.py'}
 
 
@@ -78,6 +81,11 @@ def dependencies(file, visited=None):
                        and any(isinstance(target, ast.Name) and target.id=='LINTER' for target in node.targets)]
         expected = "Path(__file__).resolve().parents[1] / 'tools' / 'prd_lint.py'"
         allowed = allowed and len(definitions)==1 and ast.unparse(definitions[0].value)==expected
+        if (file == 'tests/test_health_api.py' and len(subprocess_calls) == 1
+                and hashlib.sha256((ROOT / file).read_bytes()).hexdigest() == REVIEWED_TESTS.get(file)
+                and ast.unparse(call.func) == 'subprocess.run'
+                and call.args and ast.unparse(call.args[0]) == "[sys.executable, '-c', script]"):
+            allowed = True
         if file == 'tools/doctor.py' and hashlib.sha256((ROOT / file).read_bytes()).hexdigest() == REVIEWED_DOCTOR:
             allowed = True
         if not allowed:

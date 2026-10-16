@@ -141,6 +141,13 @@ def validate(stage, directory):
                 observed_aliases[row['fault']] = row['canonical_fault']
                 continue
             if row['status'] == 'DETECTED':
+                from tools.audit_python_cases import HEALTH_API_DETECTIONS
+                if row['fault'] in HEALTH_API_DETECTIONS:
+                    test, assertion = HEALTH_API_DETECTIONS[row['fault']]
+                    node = 'tests/test_health_api.py::' + test
+                    assert row.get('intended_detection') is True, 'API intended detection missing'
+                    assert row.get('expected_detection') == node and row.get('expected_assertion') == assertion, 'API attribution differs from reviewed requirement'
+                    assert node in row['detected_by'] and assertion in row['cases'].get(node, {}).get('failure', ''), 'API intended assertion did not fail'
                 assert row['scope_manifest_matches'] is True, 'Mutation omitted a required dependent case'
                 assert row['detected_by'] and set(row['detected_by']) <= set(inventory['python_cases'])
                 assert all(row['cases'][case]['outcome'] == 'failed' for case in row['detected_by'])

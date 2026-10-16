@@ -27,7 +27,7 @@ root=pathlib.Path(sys.argv[1]); spec=json.loads(pathlib.Path(sys.argv[2]).read_t
 sys.path.insert(0,str(root));sys.path.insert(0,str(root/'tools'))
 if spec['file']:
  source=pathlib.Path(spec['source']).read_text()
- names=[spec['file'][:-3].replace('/','.')]
+ names=[] if spec.get('deferred_api_import') or spec['file'].startswith('tests/') else [spec['file'][:-3].replace('/','.')]
  if spec['file']=='tools/doctor.py':names.append('doctor')
  for name in names:
   module=importlib.import_module(name)
@@ -46,7 +46,26 @@ if os.environ.get('MERLIN_FAST_PYTHON_TESTS','1')=='1':
 class Record:
  def __init__(self):self.rows={};self.errors=[]
  def pytest_collection_modifyitems(self,items):
+  changed=set()
   for item in items:
+   if str(item.path.relative_to(root))=='tests/test_health_api.py' and id(item.module) not in changed:
+    if spec.get('deferred_api_import'):
+     # The test's socket/thread guards are installed before this copied module
+     # is imported. Never execute a startup fault in the worker or live app.
+     test_source=(root/'tests/test_health_api.py').read_text()
+     if "patch('socket.socket', side_effect=AssertionError" not in test_source or "patch('threading.Thread.start', side_effect=AssertionError" not in test_source:
+      raise RuntimeError('API import fault requires reviewed non-startup guards')
+     copied=pathlib.Path(spec['source']).parent/'import-inputs'
+     (copied/'app').mkdir(parents=True)
+     (copied/'app/__init__.py').write_text('')
+     (copied/'app/health_api.py').write_bytes((root/'app/health_api.py').read_bytes())
+     (copied/'app/health_server.py').write_text(source)
+     item.module.ROOT=copied
+    elif spec['file']=='tests/test_health_api.py':
+     # Only the shared cleanup helper is mutated. Collected functions keep
+     # their identities and resolve the altered helper in this isolated module.
+     exec(compile(source,str(root/spec['file']),'exec'),item.module.__dict__)
+    changed.add(id(item.module))
    self.rows[item.nodeid]={'baseline':'collected','file':str(item.path.relative_to(root)),
      'function':item.originalname or item.name,'line':item.location[1]+1}
    if hasattr(item.module,'LINTER'):
@@ -69,6 +88,102 @@ code=pytest.main(spec.get('tests',['tests','tools/test_doctor.py'])+['--ignore=t
 pathlib.Path(spec['output']).write_text(json.dumps({'exit':int(code),'cases':record.rows,'errors':record.errors},ensure_ascii=True,indent=2))
 raise SystemExit(code)
 '''
+
+
+# Required case and assertion category for the Day 7 representative faults.
+# Other failed tests do not substitute for the corresponding contract assertion.
+HEALTH_API_DETECTIONS = {
+    "health-api-wrong-status": ("test_health_endpoint_success", "assert actual == status"),
+    "health-api-wrong-body": ("test_health_endpoint_success", "assert json.loads(body.decode"),
+    "health-api-post-accepted": ("test_unsupported_method_has_exact_error_and_allow[POST]", "assert actual == status"),
+    "health-api-file-disclosure": ("test_sensitive_path_never_serves_a_file[GET]", "assert json.loads(body.decode"),
+    "health-api-error-leak": ("test_handler_failure_is_generic_and_recovers_on_same_server", "assert json.loads(body.decode"),
+}
+
+
+HEALTH_API_DETECTIONS.update({
+    "health-api-content-type": ("test_health_endpoint_success", 'assert headers.get_all("Content-Type")'),
+    "health-api-unknown-healthy": ("test_unknown_path_is_not_found_before_method_dispatch[GET]", "assert actual == status"),
+    "health-api-put-accepted": ("test_unsupported_method_has_exact_error_and_allow[PUT]", "assert actual == status"),
+    "health-api-wrong-allow": ("test_unsupported_method_has_exact_error_and_allow[PUT]", 'assert headers.get_all("Allow")'),
+    "health-api-serialization-status": ("test_unserializable_health_result_is_generic_500", "assert actual == status"),
+    "health-api-retry-written-response": ("test_body_write_failure_does_not_send_a_second_response", "assert_called_once_with(200)"),
+    "health-api-idle-timeout": ("test_idle_connection_does_not_block_health_and_times_out", ".timeout == 2"),
+    "health-api-serial-server": ("test_idle_connection_does_not_block_health_and_times_out", "TimeoutError"),
+    "health-api-public-bind": ("test_actual_entry_point_binds_loopback_and_always_closes[KeyboardInterrupt]", 'arguments[0] == ("127.0.0.1", 8000)'),
+    "health-api-no-close": ("test_actual_entry_point_binds_loopback_and_always_closes[RuntimeError]", "server.server_close.assert_called_once_with()"),
+    "health-api-import-startup": ("test_module_imports_have_no_server_side_effects", "assert result.returncode == 0"),
+    "health-api-fixture-no-shutdown": ("test_loopback_cleanup_after_failure_and_real_restart", 'API serving thread survived cleanup'),
+    "health-api-poisoned-recovery": ("test_handler_failure_is_generic_and_recovers_on_same_server", "assert json.loads(body.decode"),
+})
+
+
+def health_api_faults():
+    """Mutate only an isolated module; file disclosure uses owned pytest files."""
+    path = "app/health_api.py"
+    unknown = '                self._send_json_response(404, {"error": "Not found"})'
+    disclosed = """                if self.path == "/.env":
+                    from pathlib import Path
+                    import tempfile
+                    target = Path.cwd() / ".env"
+                    # Never read the working project's private configuration.
+                    # The selected test creates this file in its temporary cwd.
+                    if not target.parent.is_relative_to(Path(tempfile.gettempdir())):
+                        raise RuntimeError("Fault refused a non-temporary file")
+                    self._send_json_response(404, target.read_text(encoding="utf-8"))
+                else:
+                    self._send_json_response(404, {"error": "Not found"})"""
+    rejected = '                self._send_json_response(405, {"error": "Method not allowed"}, extra_headers={"Allow": "GET"})'
+    accepted = """                if method == "POST":
+                    self._send_json_response(200, {"status": "ok"})
+                else:
+                    self._send_json_response(405, {"error": "Method not allowed"}, extra_headers={"Allow": "GET"})"""
+    rows = [
+        ("health-api-wrong-status", path, 'self._send_json_response(200, result)',
+         'self._send_json_response(201, result)'),
+        ("health-api-wrong-body", path, 'return {"status": "ok"}',
+         'return {"status": "broken"}'),
+        ("health-api-post-accepted", path, rejected, accepted),
+        ("health-api-file-disclosure", path, unknown, disclosed),
+        ("health-api-error-leak", path,
+         'self._send_json_response(500, {"error": "Internal server error"})',
+         'self._send_json_response(500, {"error": "SYNTHETIC_HEALTH_ERROR_SENTINEL"})'),
+    ]
+    original = (ROOT / path).read_text()
+    serving = "app/health_server.py"
+    old_get = """                try:
+                    result = health_func()
+                except Exception:
+                    self._send_json_response(500, {"error": "Internal server error"})
+                    return
+                self._send_json_response(200, result)"""
+    retry_get = """                try:
+                    result = health_func()
+                    self._send_json_response(200, result)
+                except Exception:
+                    self._send_json_response(500, {"error": "Internal server error"})"""
+    poisoned = original.replace('result = health_func()',
+        'result = {"status": "poisoned"} if getattr(self.__class__, "poisoned", False) else health_func()').replace(
+        'self._send_json_response(500, {"error": "Internal server error"})',
+        'self.__class__.poisoned = True; self._send_json_response(500, {"error": "Internal server error"})')
+    rows.extend([
+        ("health-api-content-type", path, '"application/json"', '"text/plain"'),
+        ("health-api-unknown-healthy", path, unknown, '                self._send_json_response(200, {"status": "ok"})'),
+        ("health-api-put-accepted", path, rejected, accepted.replace('method == "POST"', 'method == "PUT"')),
+        ("health-api-wrong-allow", path, '{"Allow": "GET"}', '{"Allow": "POST"}'),
+        ("health-api-serialization-status", path, 'status_code = 500', 'status_code = 200'),
+        ("health-api-retry-written-response", path, old_get, retry_get),
+        ("health-api-idle-timeout", path, 'timeout = 2', 'timeout = None'),
+        ("health-api-serial-server", serving, 'from http.server import ThreadingHTTPServer',
+         'from http.server import HTTPServer as ThreadingHTTPServer'),
+        ("health-api-public-bind", serving, '"127.0.0.1"', '"0.0.0.0"'),
+        ("health-api-no-close", serving, 'httpd.server_close()', 'pass'),
+        ("health-api-import-startup", serving, 'if __name__ == "__main__":',
+         'run()\n\nif __name__ == "__main__":'),
+        ("health-api-fixture-no-shutdown", 'tests/test_health_api.py', '            server.shutdown()', '            pass'),
+        ("health-api-poisoned-recovery", path, original, poisoned),
+    ])
+    return rows
 
 
 def faults():
@@ -141,6 +256,7 @@ def faults():
         ("linter-code-limit-relaxed", l, 'MAX_CODE_LINES = 15', 'MAX_CODE_LINES = 16'),
         ("linter-code-limit-too-strict", l, 'MAX_CODE_LINES = 15', 'MAX_CODE_LINES = 14'),
     ]
+    rows.extend(health_api_faults())
     # Mutate comparisons and boolean operators at individual source locations.
     # Each changed program must compile; unsupported/equivalent faults are visible.
     for file in [p, m, n, d, l]:
@@ -250,7 +366,12 @@ def request(name, file, source, directory, tests=None):
     mutated.write_text(source)
     output = work / "results.json"
     request = work / "request.json"
-    payload = {"file": file, "source": str(mutated), "output": str(output)}
+    payload = {"file": file, "source": str(mutated), "output": str(output),
+               "deferred_api_import": name == "health-api-import-startup"}
+    if name == "health-api-fixture-no-shutdown":
+        # This mutates the fixture itself; test its cleanup assertion directly,
+        # rather than leak one deliberately faulty fixture for every API case.
+        tests = ["tests/test_health_api.py::" + HEALTH_API_DETECTIONS[name][0]]
     if tests is not None:
         payload['tests'] = tests
     request.write_text(json.dumps(payload))
@@ -270,8 +391,18 @@ def outcome(job, code, stderr):
     actual = {node for node, row in data['cases'].items() if row.get('kind') != 'subtest'}
     valid = not data["errors"] and code in (0, 1) and (expected is None or actual == expected)
     detected = [node for node, row in data["cases"].items() if row.get("outcome") == "failed"]
-    return {"fault": name, "file": file, "status": ("DETECTED" if detected else "SURVIVED") if valid else "INVALID",
-            "detected_by": detected, "selected_test_files": job.get("tests"), "scope_manifest_matches": expected is None or actual == expected, **data}
+    result = {"fault": name, "file": file, "status": ("DETECTED" if detected else "SURVIVED") if valid else "INVALID",
+              "detected_by": detected, "selected_test_files": job.get("tests"), "scope_manifest_matches": expected is None or actual == expected, **data}
+    if name in HEALTH_API_DETECTIONS:
+        test, assertion = HEALTH_API_DETECTIONS[name]
+        node = "tests/test_health_api.py::" + test
+        row = data["cases"].get(node, {})
+        intended = valid and node in detected and assertion in row.get("failure", "")
+        result.update(expected_detection=node, expected_assertion=assertion,
+                      intended_detection=intended)
+        if valid and not intended:
+            result.update(status="SURVIVED", reason="Required API assertion did not detect fault")
+    return result
 
 
 def execute(name, file, source, directory):
@@ -306,7 +437,7 @@ def main():
             for job in jobs:
                 job['expected_cases'] = {node for node, row in baseline['cases'].items()
                                          if row.get('kind') != 'subtest' and
-                                         (job['tests'] is None or row['file'] in job['tests'])}
+                                         (job['tests'] is None or row['file'] in job['tests'] or node in job['tests'])}
             stream = (outcome(job, code, stderr) for job, (code, stdout, stderr)
                       in zip(jobs, fork_jobs(jobs, workers=min(8, max(1, int(os.environ.get("MERLIN_PYTHON_FAULT_WORKERS", "8"))), len(os.sched_getaffinity(0))))))
             for result in stream:

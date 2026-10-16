@@ -1,0 +1,398 @@
+{
+  "scope": "Fresh local CI entry-point verification of Day 7 working inputs; hosted run pending",
+  "ci": {
+    "status": "PASS",
+    "steps": [
+      {
+        "name": "original-python-sources",
+        "status": "PASS"
+      },
+      {
+        "name": "complete-suite",
+        "status": "PASS"
+      },
+      {
+        "name": "committed-migration-roundtrip",
+        "status": "PASS"
+      }
+    ],
+    "source_commit": "cfe61b08fcac609cb8b45bb5cf7ae8561b12eb85",
+    "includes_uncommitted_inputs": true,
+    "target": {
+      "container": "4f33b30778eaf27ac83db0530f1c6ec038bf215a1c71a08016e471641d0d403d",
+      "cluster": "7697116761209364526",
+      "project": "merlin-ci-599ac617f3e0458180195b404114850c",
+      "network": "none"
+    },
+    "seconds": 91.647,
+    "cleanup_passed": true
+  },
+  "suite": {
+    "started_utc": "2026-10-16T04:24:19.858941+00:00",
+    "stages": [
+      {
+        "stage": "python-tests",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 12.564
+      },
+      {
+        "stage": "quiz-tests",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 0.091
+      },
+      {
+        "stage": "python-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "excluded_invalid_import_faults": [
+          "ast-database_connectivity_probe-21-11",
+          "ast-notes_maintenance-76-42",
+          "ast-doctor-229-52",
+          "ast-prd_lint-181-88"
+        ],
+        "fault_aliases": {
+          "text-whitespace-body-trimmed": "body-stripped",
+          "ast-notes_maintenance-25-60": "identity-or-changed-to-and",
+          "ast-doctor-208-1251": "doctor-cluster-always-refuses"
+        },
+        "seconds": 37.895
+      },
+      {
+        "stage": "database-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 15.946
+      },
+      {
+        "stage": "quiz-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 1.915
+      },
+      {
+        "stage": "browser-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 9.75
+      },
+      {
+        "stage": "database-lifecycle-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 11.915
+      },
+      {
+        "stage": "migration-undo-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 16.051
+      },
+      {
+        "stage": "documentation",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 0.161
+      },
+      {
+        "stage": "whitespace",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 0.005
+      }
+    ],
+    "status": "PASS",
+    "execution": {
+      "database_transport": "guarded reusable libpq session",
+      "python_fault_workers": 8,
+      "schedule": "independent Python and quiz lanes with isolated database lanes",
+      "python_fault_scope": "dependent",
+      "sql_shards": 2,
+      "database_isolation": {
+        "status": "PASS",
+        "root": "/tmp/merlin-db-sandboxes-c849c2ad3ddc4179849f1c3e0f9a1600",
+        "backup_command_seconds": 1.059,
+        "docker_operation_seconds": [
+          {
+            "operation": "diff",
+            "seconds": 1.398
+          },
+          {
+            "operation": "commit",
+            "seconds": 3.448
+          },
+          {
+            "operation": "commit",
+            "seconds": 6.507
+          },
+          {
+            "operation": "image",
+            "seconds": 0.1
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.083
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.091
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.103
+          },
+          {
+            "operation": "create",
+            "seconds": 0.472
+          },
+          {
+            "operation": "create",
+            "seconds": 0.505
+          },
+          {
+            "operation": "create",
+            "seconds": 0.507
+          },
+          {
+            "operation": "cp",
+            "seconds": 0.142
+          },
+          {
+            "operation": "cp",
+            "seconds": 0.141
+          },
+          {
+            "operation": "cp",
+            "seconds": 0.205
+          },
+          {
+            "operation": "cp",
+            "seconds": 0.128
+          },
+          {
+            "operation": "cp",
+            "seconds": 0.162
+          },
+          {
+            "operation": "cp",
+            "seconds": 0.088
+          },
+          {
+            "operation": "start",
+            "seconds": 0.386
+          },
+          {
+            "operation": "start",
+            "seconds": 0.368
+          },
+          {
+            "operation": "start",
+            "seconds": 0.397
+          },
+          {
+            "operation": "container",
+            "seconds": 0.046
+          },
+          {
+            "operation": "container",
+            "seconds": 0.087
+          },
+          {
+            "operation": "container",
+            "seconds": 0.101
+          },
+          {
+            "operation": "container",
+            "seconds": 0.075
+          },
+          {
+            "operation": "container",
+            "seconds": 0.059
+          },
+          {
+            "operation": "container",
+            "seconds": 0.07
+          },
+          {
+            "operation": "container",
+            "seconds": 0.059
+          },
+          {
+            "operation": "container",
+            "seconds": 0.065
+          },
+          {
+            "operation": "container",
+            "seconds": 0.063
+          },
+          {
+            "operation": "container",
+            "seconds": 0.069
+          },
+          {
+            "operation": "container",
+            "seconds": 0.067
+          },
+          {
+            "operation": "container",
+            "seconds": 0.059
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.049
+          },
+          {
+            "operation": "create",
+            "seconds": 0.208
+          },
+          {
+            "operation": "cp",
+            "seconds": 0.136
+          },
+          {
+            "operation": "cp",
+            "seconds": 0.09
+          },
+          {
+            "operation": "start",
+            "seconds": 0.266
+          },
+          {
+            "operation": "container",
+            "seconds": 0.037
+          },
+          {
+            "operation": "container",
+            "seconds": 0.04
+          },
+          {
+            "operation": "container",
+            "seconds": 0.039
+          },
+          {
+            "operation": "ps",
+            "seconds": 0.046
+          },
+          {
+            "operation": "container",
+            "seconds": 0.043
+          },
+          {
+            "operation": "rm",
+            "seconds": 0.25
+          },
+          {
+            "operation": "container",
+            "seconds": 0.061
+          },
+          {
+            "operation": "rm",
+            "seconds": 0.217
+          },
+          {
+            "operation": "container",
+            "seconds": 0.064
+          },
+          {
+            "operation": "rm",
+            "seconds": 0.217
+          },
+          {
+            "operation": "container",
+            "seconds": 0.08
+          },
+          {
+            "operation": "rm",
+            "seconds": 0.246
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.061
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.036
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.078
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.052
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.066
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.044
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.065
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.043
+          },
+          {
+            "operation": "volume",
+            "seconds": 0.061
+          },
+          {
+            "operation": "images",
+            "seconds": 0.087
+          }
+        ],
+        "runtime_cache_hit": false,
+        "runtime_image": "sha256:d8e68586f2cd14bba4e5d79451eb6111ea837a267f2eaa982dd4427b6dc88b40",
+        "runtime_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "runtime_prepare_seconds": 11.674,
+        "setup_seconds": 18.163,
+        "targets": [
+          {
+            "name": "sql",
+            "container": "ce08727e7e70ffe0cb81406d4405f66957ae7afd0d7fc77e1f9c7ec646ecc566",
+            "data": "/tmp/merlin-db-sandboxes-c849c2ad3ddc4179849f1c3e0f9a1600/sql",
+            "socket": "/tmp/merlin-db-sandboxes-c849c2ad3ddc4179849f1c3e0f9a1600/sql/socket"
+          },
+          {
+            "name": "lifecycle",
+            "container": "34648f0a6b0fbf197cda8c2e287840500793f0d4c290df33ae6b0e1eec29f5f0",
+            "data": "/tmp/merlin-db-sandboxes-c849c2ad3ddc4179849f1c3e0f9a1600/lifecycle",
+            "socket": "/tmp/merlin-db-sandboxes-c849c2ad3ddc4179849f1c3e0f9a1600/lifecycle/socket"
+          },
+          {
+            "name": "migration",
+            "container": "78fe484ce1933c6601178f6d22b0b5244f2d039995af5d40aac09570fca0ea5b",
+            "data": "/tmp/merlin-db-sandboxes-c849c2ad3ddc4179849f1c3e0f9a1600/migration",
+            "socket": "/tmp/merlin-db-sandboxes-c849c2ad3ddc4179849f1c3e0f9a1600/migration/socket"
+          },
+          {
+            "name": "sql-second",
+            "container": "09b1656e7d8eab8601d0878f9c547f912abc1e813eb511ab8463694091128ad2",
+            "data": "/tmp/merlin-db-sandboxes-c849c2ad3ddc4179849f1c3e0f9a1600/sql-second",
+            "socket": "/tmp/merlin-db-sandboxes-c849c2ad3ddc4179849f1c3e0f9a1600/sql-second/socket"
+          }
+        ],
+        "source_fingerprint": "8c23818a98b72b3d725d64d703c0e22f",
+        "startup_timings": {
+          "backup_seconds": 0.8735018679872155
+        },
+        "controls_seconds": 4.752,
+        "controls_passed": true,
+        "wall_seconds": 58.91,
+        "cleanup_seconds": 2.002,
+        "cleanup_passed": true,
+        "source_preserved": true
+      }
+    },
+    "finished_utc": "2026-10-16T04:25:18.930239+00:00"
+  },
+  "migration_status": "PASS",
+  "migration_rebuilt_cases": 383,
+  "remote_status": "PENDING"
+}
