@@ -212,5 +212,5 @@ That command sends a GET and displays response headers and body. A connection fa
 | API implementation and runtime behavior | Learner authored the API and confirmed manual startup/shutdown/restart. The focused tests and complete suite passed; see [integration evidence](../testing/health-api-suite-integration.md). |
 | Step 2.2 expected-result table | Authored by the assistant at your request; learner review pending. No cases executed. |
 | Step 2.3 fixture and cleanup plan | Authored by the assistant; implementation and execution PENDING. |
-| Executable API tests/fault checks | PASS locally: 17 API cases and 18 isolated faults integrated; full ten-stage suite PASS in 68.08 seconds. Remote API verification remains pending publication. |
+| Executable API tests/fault checks | PASS locally: 17 API cases and 18 isolated faults integrated; full ten-stage suite PASS in 68.08 seconds. Hosted API verification also passed: [run 38917698989](https://github.com/vipravlipare/Merlin/actions/runs/38917698989), commit `1c2dcd8`. |
 | Actual learner minutes | Unknown. |
