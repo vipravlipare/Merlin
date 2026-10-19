@@ -44,8 +44,8 @@ Goal: understand HTTP and implement one small, tested local health endpoint afte
 
 ### 5. Review and leave a clear handoff — 21 min
 
-- [ ] 5.1 Review the diff and secret handling; confirm no environment file, credential, traceback or private error value is included in responses or publishable changes (10 min). Stop the learning server and preserve both existing database volumes.
-- [ ] 5.2 Record authorship, observed results, actual minutes or unknown, first blocker and exact next action in a purpose-named handoff under docs/planning/ (11 min). Carry unfinished implementation/tests/CI forward; do not mark the Story Done just because planning or one smoke request succeeded.
+- [x] 5.1 Review the diff and secret handling; confirm no environment file, credential, traceback or private error value is included in responses or publishable changes (10 min). Stop the learning server and preserve both existing database volumes.
+- [x] 5.2 Record authorship, observed results, actual minutes or unknown, first blocker and exact next action in a purpose-named handoff under docs/planning/ (11 min). Carry unfinished implementation/tests/CI forward; do not mark the Story Done just because planning or one smoke request succeeded.
 
 📚 Learn first: [Reviewing changes](https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository) — review status/diff before any separately authorized commit.
 ↩ Return: Leave a restart note the next session can follow without chat history. Preserve assistant/learner authorship and distinguish technical proof from learner confirmation.
@@ -65,3 +65,5 @@ Definition of Done: explain the HTTP boundary; the agreed local endpoint and neg
 Official documentation links opened October 11, 2026. Context7 was unavailable. Existing runtime pins: Python 3.12.14, pytest 9.1.1; no new framework dependency is introduced by this planning change.
 
 The cumulative workflow now includes setup, the complete Day 6 case/fault suite and committed migration roundtrip verification. Hosted PASS: commit `177e755d23f8705adf208cb13aa666e3818fb3f0`, [run 38746965661](https://github.com/vipravlipare/Merlin/actions/runs/38746965661). See [verification and limitations](../testing/cumulative-ci-verification.md). The learner has now implemented the API and section 4 passed locally and on [GitHub run 38917698989](https://github.com/vipravlipare/Merlin/actions/runs/38917698989), commit `1c2dcd8`. Check the latest commit before advancing.
+
+Section 5 evidence: [Day 7 handoff](../planning/day-seven-handoff.md). Technical review and handoff are complete; learner explain-back and final publication/Jira reconciliation retain the statuses recorded there.

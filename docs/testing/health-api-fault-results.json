@@ -11,7 +11,7 @@
       "required_assertion": "assert actual == status",
       "intended_detection": true,
       "setup_or_teardown_errors": [],
-      "observed_failure": "tests/test_health_api.py:123: in test_health_endpoint_success\n    assert_json_response(request(api), 200, {\"status\": \"ok\"})\ntests/test_health_api.py:111: in assert_json_response\n    assert actual == status\nE   assert 201 == 200"
+      "observed_failure": "assert actual == status\nassert 201 == 200"
     },
     {
       "fault": "health-api-wrong-body",
@@ -20,7 +20,7 @@
       "required_assertion": "assert json.loads(body.decode",
       "intended_detection": true,
       "setup_or_teardown_errors": [],
-      "observed_failure": "tests/test_health_api.py:123: in test_health_endpoint_success\n    assert_json_response(request(api), 200, {\"status\": \"ok\"})\ntests/test_health_api.py:114: in assert_json_response\n    assert json.loads(body.decode(\"utf-8\")) == expected\nE   AssertionError: assert {'status': 'broken'} == {'status': 'ok'}\nE     \nE     Differing items:\nE     {'status': 'broken'} != {'status': 'ok'}\nE     Use -v to get more diff"
+      "observed_failure": "assert json.loads(body.decode\nAssertionError: assert {'status': 'broken'} == {'status': 'ok'}\nDiffering items:\n{'status': 'broken'} != {'status': 'ok'}\nUse -v to get more diff"
     },
     {
       "fault": "health-api-post-accepted",
@@ -29,7 +29,7 @@
       "required_assertion": "assert actual == status",
       "intended_detection": true,
       "setup_or_teardown_errors": [],
-      "observed_failure": "tests/test_health_api.py:154: in test_unsupported_method_has_exact_error_and_allow\n    assert_json_response(request(api, method), 405,\ntests/test_health_api.py:111: in assert_json_response\n    assert actual == status\nE   assert 200 == 405"
+      "observed_failure": "assert actual == status\nassert 200 == 405"
     },
     {
       "fault": "health-api-file-disclosure",
@@ -38,7 +38,7 @@
       "required_assertion": "assert json.loads(body.decode",
       "intended_detection": true,
       "setup_or_teardown_errors": [],
-      "observed_failure": "tests/test_health_api.py:143: in test_sensitive_path_never_serves_a_file\n    headers, body = assert_json_response(request(api, method, \"/.env\"), 404,\ntests/test_health_api.py:114: in assert_json_response\n    assert json.loads(body.decode(\"utf-8\")) == expected\nE   assert 'SYNTHETIC_FILE_CONTENT_SENTINEL' == {'error': 'Not found'}\nE    +  where 'SYNTHETIC_FILE_CONTENT_SENTINEL' = <function loads at <address>>('\"SYNTHETIC_FILE_CONTENT_SENTINEL\"')\nE    +    where <function loads at <address>> = json.loads\nE    +    and   '\"SYNTHETIC_FILE_CONTENT_SENTINEL\"' = <built-in method decode of bytes object at <address>>('utf-8')\nE    +      where <built-in method decode of bytes object at <address>> = b'\"SYNTHETIC_FILE_CONTENT_SENTINEL\"'.decode"
+      "observed_failure": "assert json.loads(body.decode\nassert 'SYNTHETIC_FILE_CONTENT_SENTINEL' == {'error': 'Not found'}\n+  where 'SYNTHETIC_FILE_CONTENT_SENTINEL' = <function loads at <address>>('\"SYNTHETIC_FILE_CONTENT_SENTINEL\"')\n+    where <function loads at <address>> = json.loads\n+    and   '\"SYNTHETIC_FILE_CONTENT_SENTINEL\"' = <built-in method decode of bytes object at <address>>('utf-8')\n+      where <built-in method decode of bytes object at <address>> = b'\"SYNTHETIC_FILE_CONTENT_SENTINEL\"'.decode"
     },
     {
       "fault": "health-api-error-leak",
@@ -47,7 +47,7 @@
       "required_assertion": "assert json.loads(body.decode",
       "intended_detection": true,
       "setup_or_teardown_errors": [],
-      "observed_failure": "tests/test_health_api.py:163: in test_handler_failure_is_generic_and_recovers_on_same_server\n    headers, body = assert_json_response(request(api), 500,\ntests/test_health_api.py:114: in assert_json_response\n    assert json.loads(body.decode(\"utf-8\")) == expected\nE   AssertionError: assert {'error': 'SY...ROR_SENTINEL'} == {'error': 'In...server error'}\nE     \nE     Differing items:\nE     {'error': 'SYNTHETIC_HEALTH_ERROR_SENTINEL'} != {'error': 'Internal server error'}\nE     Use -v to get more diff"
+      "observed_failure": "assert json.loads(body.decode\nAssertionError: assert {'error': 'SY...ROR_SENTINEL'} == {'error': 'In...server error'}\nDiffering items:\n{'error': 'SYNTHETIC_HEALTH_ERROR_SENTINEL'} != {'error': 'Internal server error'}\nUse -v to get more diff"
     }
   ],
   "counts": {
@@ -116,5 +116,6 @@
   },
   "application_files_changed": false,
   "full_suite_and_remote_api_integration": "PENDING step 4.3",
-  "actual_minutes": "unknown"
+  "actual_minutes": "unknown",
+  "failure_evidence_format": "Required assertion and synthetic diagnostic only; stack frames omitted during final publication review."
 }

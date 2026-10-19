@@ -678,7 +678,7 @@
       "required_case": "tests/test_health_api.py::test_health_endpoint_success",
       "required_assertion": "assert actual == status",
       "intended_detection": true,
-      "observed_failure": "tests/test_health_api.py:123: in test_health_endpoint_success\n    assert_json_response(request(api), 200, {\"status\": \"ok\"})\ntests/test_health_api.py:111: in assert_json_response\n    assert actual == status\nE   assert 201 == 200",
+      "observed_failure": "assert actual == status\nassert 201 == 200",
       "selected_tests": [
         "tests/test_health_api.py"
       ]
@@ -689,7 +689,7 @@
       "required_case": "tests/test_health_api.py::test_health_endpoint_success",
       "required_assertion": "assert json.loads(body.decode",
       "intended_detection": true,
-      "observed_failure": "tests/test_health_api.py:123: in test_health_endpoint_success\n    assert_json_response(request(api), 200, {\"status\": \"ok\"})\ntests/test_health_api.py:114: in assert_json_response\n    assert json.loads(body.decode(\"utf-8\")) == expected\nE   AssertionError: assert {'status': 'broken'} == {'status': 'ok'}\nE     \nE     Differing items:\nE     {'status': 'broken'} != {'status': 'ok'}\nE     Use -v to get more diff",
+      "observed_failure": "assert json.loads(body.decode\nAssertionError: assert {'status': 'broken'} == {'status': 'ok'}\nDiffering items:\n{'status': 'broken'} != {'status': 'ok'}\nUse -v to get more diff",
       "selected_tests": [
         "tests/test_health_api.py"
       ]
@@ -700,7 +700,7 @@
       "required_case": "tests/test_health_api.py::test_unsupported_method_has_exact_error_and_allow[POST]",
       "required_assertion": "assert actual == status",
       "intended_detection": true,
-      "observed_failure": "tests/test_health_api.py:154: in test_unsupported_method_has_exact_error_and_allow\n    assert_json_response(request(api, method), 405,\ntests/test_health_api.py:111: in assert_json_response\n    assert actual == status\nE   assert 200 == 405",
+      "observed_failure": "assert actual == status\nassert 200 == 405",
       "selected_tests": [
         "tests/test_health_api.py"
       ]
@@ -711,7 +711,7 @@
       "required_case": "tests/test_health_api.py::test_sensitive_path_never_serves_a_file[GET]",
       "required_assertion": "assert json.loads(body.decode",
       "intended_detection": true,
-      "observed_failure": "tests/test_health_api.py:143: in test_sensitive_path_never_serves_a_file\n    headers, body = assert_json_response(request(api, method, \"/.env\"), 404,\ntests/test_health_api.py:114: in assert_json_response\n    assert json.loads(body.decode(\"utf-8\")) == expected\nE   assert 'SYNTHETIC_FILE_CONTENT_SENTINEL' == {'error': 'Not found'}\nE    +  where 'SYNTHETIC_FILE_CONTENT_SENTINEL' = <function loads at <address>>('\"SYNTHETIC_FILE_CONTENT_SENTINEL\"')\nE    +    where <function loads at <address>> = json.loads\nE    +    and   '\"SYNTHETIC_FILE_CONTENT_SENTINEL\"' = <built-in method decode of bytes object at <address>>('utf-8')\nE    +      where <built-in method decode of bytes object at <address>> = b'\"SYNTHETIC_FILE_CONTENT_SENTINEL\"'.decode",
+      "observed_failure": "assert json.loads(body.decode\nassert 'SYNTHETIC_FILE_CONTENT_SENTINEL' == {'error': 'Not found'}\n+  where 'SYNTHETIC_FILE_CONTENT_SENTINEL' = <function loads at <address>>('\"SYNTHETIC_FILE_CONTENT_SENTINEL\"')\n+    where <function loads at <address>> = json.loads\n+    and   '\"SYNTHETIC_FILE_CONTENT_SENTINEL\"' = <built-in method decode of bytes object at <address>>('utf-8')\n+      where <built-in method decode of bytes object at <address>> = b'\"SYNTHETIC_FILE_CONTENT_SENTINEL\"'.decode",
       "selected_tests": [
         "tests/test_health_api.py"
       ]
@@ -722,7 +722,7 @@
       "required_case": "tests/test_health_api.py::test_handler_failure_is_generic_and_recovers_on_same_server",
       "required_assertion": "assert json.loads(body.decode",
       "intended_detection": true,
-      "observed_failure": "tests/test_health_api.py:163: in test_handler_failure_is_generic_and_recovers_on_same_server\n    headers, body = assert_json_response(request(api), 500,\ntests/test_health_api.py:114: in assert_json_response\n    assert json.loads(body.decode(\"utf-8\")) == expected\nE   AssertionError: assert {'error': 'SY...ROR_SENTINEL'} == {'error': 'In...server error'}\nE     \nE     Differing items:\nE     {'error': 'SYNTHETIC_HEALTH_ERROR_SENTINEL'} != {'error': 'Internal server error'}\nE     Use -v to get more diff",
+      "observed_failure": "assert json.loads(body.decode\nAssertionError: assert {'error': 'SY...ROR_SENTINEL'} == {'error': 'In...server error'}\nDiffering items:\n{'error': 'SYNTHETIC_HEALTH_ERROR_SENTINEL'} != {'error': 'Internal server error'}\nUse -v to get more diff",
       "selected_tests": [
         "tests/test_health_api.py"
       ]
@@ -733,7 +733,7 @@
       "required_case": "tests/test_health_api.py::test_health_endpoint_success",
       "required_assertion": "assert headers.get_all(\"Content-Type\")",
       "intended_detection": true,
-      "observed_failure": "tests/test_health_api.py:123: in test_health_endpoint_success\n    assert_json_response(request(api), 200, {\"status\": \"ok\"})\ntests/test_health_api.py:112: in assert_json_response\n    assert headers.get_all(\"Content-Type\") == [\"application/json\"]\nE   AssertionError: assert ['text/plain'] == ['application/json']\nE     \nE     At index 0 diff: 'text/plain' != 'application/json'\nE     Use -v to get more diff",
+      "observed_failure": "assert headers.get_all(\"Content-Type\")\nAssertionError: assert ['text/plain'] == ['application/json']\nAt index 0 diff: 'text/plain' != 'application/json'\nUse -v to get more diff",
       "selected_tests": [
         "tests/test_health_api.py"
       ]
@@ -744,7 +744,7 @@
       "required_case": "tests/test_health_api.py::test_unknown_path_is_not_found_before_method_dispatch[GET]",
       "required_assertion": "assert actual == status",
       "intended_detection": true,
-      "observed_failure": "tests/test_health_api.py:131: in test_unknown_path_is_not_found_before_method_dispatch\n    assert_json_response(request(api, method, \"/missing\"), 404,\ntests/test_health_api.py:111: in assert_json_response\n    assert actual == status\nE   assert 200 == 404",
+      "observed_failure": "assert actual == status\nassert 200 == 404",
       "selected_tests": [
         "tests/test_health_api.py"
       ]
@@ -755,7 +755,7 @@
       "required_case": "tests/test_health_api.py::test_unsupported_method_has_exact_error_and_allow[PUT]",
       "required_assertion": "assert actual == status",
       "intended_detection": true,
-      "observed_failure": "tests/test_health_api.py:154: in test_unsupported_method_has_exact_error_and_allow\n    assert_json_response(request(api, method), 405,\ntests/test_health_api.py:111: in assert_json_response\n    assert actual == status\nE   assert 200 == 405",
+      "observed_failure": "assert actual == status\nassert 200 == 405",
       "selected_tests": [
         "tests/test_health_api.py"
       ]
@@ -766,7 +766,7 @@
       "required_case": "tests/test_health_api.py::test_unsupported_method_has_exact_error_and_allow[PUT]",
       "required_assertion": "assert headers.get_all(\"Allow\")",
       "intended_detection": true,
-      "observed_failure": "tests/test_health_api.py:154: in test_unsupported_method_has_exact_error_and_allow\n    assert_json_response(request(api, method), 405,\ntests/test_health_api.py:116: in assert_json_response\n    assert headers.get_all(\"Allow\") == [allow]\nE   AssertionError: assert ['POST'] == ['GET']\nE     \nE     At index 0 diff: 'POST' != 'GET'\nE     Use -v to get more diff",
+      "observed_failure": "assert headers.get_all(\"Allow\")\nAssertionError: assert ['POST'] == ['GET']\nAt index 0 diff: 'POST' != 'GET'\nUse -v to get more diff",
       "selected_tests": [
         "tests/test_health_api.py"
       ]
@@ -777,7 +777,7 @@
       "required_case": "tests/test_health_api.py::test_unserializable_health_result_is_generic_500",
       "required_assertion": "assert actual == status",
       "intended_detection": true,
-      "observed_failure": "tests/test_health_api.py:175: in test_unserializable_health_result_is_generic_500\n    assert_json_response(request(api), 500, {\"error\": \"Internal server error\"})\ntests/test_health_api.py:111: in assert_json_response\n    assert actual == status\nE   assert 200 == 500",
+      "observed_failure": "assert actual == status\nassert 200 == 500",
       "selected_tests": [
         "tests/test_health_api.py"
       ]
@@ -788,7 +788,7 @@
       "required_case": "tests/test_health_api.py::test_body_write_failure_does_not_send_a_second_response",
       "required_assertion": "assert_called_once_with(200)",
       "intended_detection": true,
-      "observed_failure": "tests/test_health_api.py:190: in test_body_write_failure_does_not_send_a_second_response\n    handler.send_response.assert_called_once_with(200)\n../.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/unittest/mock.py:960: in assert_called_once_with\n    raise AssertionError(msg)\nE   AssertionError: Expected 'mock' to be called once. Called 2 times.\nE   Calls: [call(200), call(500)].",
+      "observed_failure": "assert_called_once_with(200)\nAssertionError: Expected 'mock' to be called once. Called 2 times.\nCalls: [call(200), call(500)].",
       "selected_tests": [
         "tests/test_health_api.py"
       ]
@@ -799,7 +799,7 @@
       "required_case": "tests/test_health_api.py::test_idle_connection_does_not_block_health_and_times_out",
       "required_assertion": ".timeout == 2",
       "intended_detection": true,
-      "observed_failure": "tests/test_health_api.py:196: in test_idle_connection_does_not_block_health_and_times_out\n    assert health_api.make_health_handler().timeout == 2\nE   AssertionError: assert None == 2\nE    +  where None = <class 'app.health_api.make_health_handler.<locals>.HealthHandler'>.timeout\nE    +    where <class 'app.health_api.make_health_handler.<locals>.HealthHandler'> = <function make_health_handler at <address>>()\nE    +      where <function make_health_handler at <address>> = health_api.make_health_handler",
+      "observed_failure": ".timeout == 2\nAssertionError: assert None == 2\n+  where None = <class 'app.health_api.make_health_handler.<locals>.HealthHandler'>.timeout\n+    where <class 'app.health_api.make_health_handler.<locals>.HealthHandler'> = <function make_health_handler at <address>>()\n+      where <function make_health_handler at <address>> = health_api.make_health_handler",
       "selected_tests": [
         "tests/test_health_api.py"
       ]
@@ -810,7 +810,7 @@
       "required_case": "tests/test_health_api.py::test_idle_connection_does_not_block_health_and_times_out",
       "required_assertion": "TimeoutError",
       "intended_detection": true,
-      "observed_failure": "tests/test_health_api.py:203: in test_idle_connection_does_not_block_health_and_times_out\n    assert_json_response(request(api, timeout=1), 200, {\"status\": \"ok\"})\n                         ^^^^^^^^^^^^^^^^^^^^^^^\ntests/test_health_api.py:101: in request\n    response = client.getresponse()\n               ^^^^^^^^^^^^^^^^^^^^\n../.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/http/client.py:1478: in getresponse\n    response.begin()\n../.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/http/client.py:343: in begin\n    version, status, reason = self._read_status()\n                              ^^^^^^^^^^^^^^^^^^^\n../.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/http/client.py:304: in _read_status\n    line = str(self.fp.readline(_MAXLINE + 1), \"iso-8859-1\")\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n../.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/socket.py:720: in readinto\n    return self._sock.recv_into(b)\n           ^^^^^^^^^^^^^^^^^^^^^^^\nE   TimeoutError: timed out",
+      "observed_failure": "TimeoutError\nTimeoutError: timed out",
       "selected_tests": [
         "tests/test_health_api.py"
       ]
@@ -821,7 +821,7 @@
       "required_case": "tests/test_health_api.py::test_actual_entry_point_binds_loopback_and_always_closes[KeyboardInterrupt]",
       "required_assertion": "arguments[0] == (\"127.0.0.1\", 8000)",
       "intended_detection": true,
-      "observed_failure": "tests/test_health_api.py:241: in test_actual_entry_point_binds_loopback_and_always_closes\n    assert not keywords and arguments[0] == (\"127.0.0.1\", 8000)\nE   AssertionError: assert (not {} and ('0.0.0.0', 8000) == ('127.0.0.1', 8000)\nE     \nE     At index 0 diff: '0.0.0.0' != '127.0.0.1'\nE     Use -v to get more diff)",
+      "observed_failure": "arguments[0] == (\"127.0.0.1\", 8000)\nAssertionError: assert (not {} and ('0.0.0.0', 8000) == ('127.0.0.1', 8000)\nAt index 0 diff: '0.0.0.0' != '127.0.0.1'\nUse -v to get more diff)",
       "selected_tests": [
         "tests/test_health_api.py"
       ]
@@ -832,7 +832,7 @@
       "required_case": "tests/test_health_api.py::test_actual_entry_point_binds_loopback_and_always_closes[RuntimeError]",
       "required_assertion": "server.server_close.assert_called_once_with()",
       "intended_detection": true,
-      "observed_failure": "tests/test_health_api.py:246: in test_actual_entry_point_binds_loopback_and_always_closes\n    server.server_close.assert_called_once_with()\n../.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/unittest/mock.py:960: in assert_called_once_with\n    raise AssertionError(msg)\nE   AssertionError: Expected 'server_close' to be called once. Called 0 times.",
+      "observed_failure": "server.server_close.assert_called_once_with()\nAssertionError: Expected 'server_close' to be called once. Called 0 times.",
       "selected_tests": [
         "tests/test_health_api.py"
       ]
@@ -843,7 +843,7 @@
       "required_case": "tests/test_health_api.py::test_module_imports_have_no_server_side_effects",
       "required_assertion": "assert result.returncode == 0",
       "intended_detection": true,
-      "observed_failure": "tests/test_health_api.py:260: in test_module_imports_have_no_server_side_effects\n    assert result.returncode == 0, \"Import unexpectedly attempted server startup\"\nE   AssertionError: Import unexpectedly attempted server startup\nE   assert 1 == 0\nE    +  where 1 = CompletedProcess(args=['.venv/bin/python', '-c', \"\\nfrom unittest.mock import patch\\nwith patch('so...n3.12/unittest/mock.py\", line 1198, in _execute_mock_call\\n    raise effect\\nAssertionError: Import opened a socket\\n').returncode",
+      "observed_failure": "assert result.returncode == 0\nAssertionError: Import unexpectedly attempted server startup\nassert 1 == 0\n+  where 1 = CompletedProcess(args=['.venv/bin/python', '-c', \"\\nfrom unittest.mock import patch\\nwith patch('so...n3.12/unittest/mock.py\", line 1198, in _execute_mock_call\\n    raise effect\\nAssertionError: Import opened a socket\\n').returncode",
       "selected_tests": [
         "tests/test_health_api.py"
       ]
@@ -854,7 +854,7 @@
       "required_case": "tests/test_health_api.py::test_loopback_cleanup_after_failure_and_real_restart",
       "required_assertion": "API serving thread survived cleanup",
       "intended_detection": true,
-      "observed_failure": "tests/test_health_api.py:213: in test_loopback_cleanup_after_failure_and_real_restart\n    with pytest.raises(AssertionError, match=\"Synthetic failed assertion\"):\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE   AssertionError: Regex pattern did not match.\nE     Expected regex: 'Synthetic failed assertion'\nE     Actual message: 'API serving thread survived cleanup'",
+      "observed_failure": "API serving thread survived cleanup\nAssertionError: Regex pattern did not match.\nExpected regex: 'Synthetic failed assertion'\nActual message: 'API serving thread survived cleanup'",
       "selected_tests": [
         "tests/test_health_api.py::test_loopback_cleanup_after_failure_and_real_restart"
       ]
@@ -865,7 +865,7 @@
       "required_case": "tests/test_health_api.py::test_handler_failure_is_generic_and_recovers_on_same_server",
       "required_assertion": "assert json.loads(body.decode",
       "intended_detection": true,
-      "observed_failure": "tests/test_health_api.py:166: in test_handler_failure_is_generic_and_recovers_on_same_server\n    assert_json_response(request(api), 200, {\"status\": \"ok\"})\ntests/test_health_api.py:114: in assert_json_response\n    assert json.loads(body.decode(\"utf-8\")) == expected\nE   AssertionError: assert {'status': 'poisoned'} == {'status': 'ok'}\nE     \nE     Differing items:\nE     {'status': 'poisoned'} != {'status': 'ok'}\nE     Use -v to get more diff",
+      "observed_failure": "assert json.loads(body.decode\nAssertionError: assert {'status': 'poisoned'} == {'status': 'ok'}\nDiffering items:\n{'status': 'poisoned'} != {'status': 'ok'}\nUse -v to get more diff",
       "selected_tests": [
         "tests/test_health_api.py"
       ]
@@ -915,5 +915,6 @@
   },
   "reviewed_inventory_sha256": "770fa268a6fd52f27811139948c122aecd115082d49b6621e3a50e5e67f034a2",
   "runner_controls_passed": 104,
-  "actual_minutes": "unknown"
+  "actual_minutes": "unknown",
+  "failure_evidence_format": "Required assertion and synthetic diagnostic only; stack frames omitted during final publication review."
 }

@@ -1,0 +1,80 @@
+# Day 8 — Local model readiness: learn, design, probe, verify
+
+Tracker: [MER-9](https://vipravlipare.atlassian.net/browse/MER-9). Expanded October 16, 2026. Day 8 is the learning sequence; its original calendar allocation was October 8. Record actual dates and minutes separately.
+
+Goal: establish whether one small local model can run safely and reproducibly on the existing machine. This is a provider-readiness experiment, not an integrated AI feature. The learner writes any new code; this checklist authorizes planning only.
+
+**Entry status:** Day 7 implementation, 17 API cases, 18 API faults and handoff are complete. Its saved explain-back answers still need correction, especially HTTP status versus JSON status and loopback versus all-interface binding. Latest published commit `a950525202f6d0371bb0b24281713b7ff4b6a602` has successful cumulative [CI run 38993686004](https://github.com/vipravlipare/Merlin/actions/runs/38993686004), including all prior tests/faults, disposable migration verification and cleanup. Section 5 documentation/evidence cleanup remains uncommitted. Resolve the remaining Day 7 gates before new implementation; drafting this ticket does not complete them.
+
+### 1. Review the handoff and learn the local provider boundary — 60 min
+
+- [ ] 1.1 Review Day 7's handoff and correct the learner explanations in docs/architecture/health-api-contract.md (15 min). Explain why liveness is independent of the database, what HTTP status/JSON content type/body each mean, and which interfaces loopback permits. Do not copy supplied answers or mark understanding from passing tests.
+- [ ] 1.2 Confirm cumulative CI covers all completed Days 1–7 checks, with exact commit, run and required-job results (15 min). Reconcile unpublished handoff changes through separately authorized publication; until observed, their hosted verification remains PENDING. CI failures or coverage gaps replace later experiment time.
+- [ ] 1.3 Learn model, inference server, application client, context window and streamed versus complete responses (20 min). Draw the local request boundary; distinguish the Ollama service from Merlin's liveness endpoint and from coding-agent routing.
+- [ ] 1.4 Explain why download size does not establish memory fit, why a response does not establish quality, and why local execution does not grant permission to send private data elsewhere (10 min).
+
+📚 Learn first: [Ollama Quickstart](https://docs.ollama.com/quickstart), local model/API sections only; [FAQ](https://docs.ollama.com/faq), memory, GPU placement and local-only operation. Stop before cloud setup or agent integrations.
+↩ Return: review docs/planning/day-seven-handoff.md and draw the process boundary in your notes. Done when explanations and the exact prior-day CI gate are reviewed; no installation begins while the gate is unresolved.
+
+### 2. Design the hardware probe and expected results — 60 min
+
+- [x] 2.1 Inspect available RAM, free disk, GPU/VRAM and WSL device visibility (15 min). Previous planning recorded 16 GB RAM and 4 GB VRAM; recheck available headroom rather than assuming it. Choose exactly one runtime location, preferably the existing Ubuntu/WSL environment, and check for an existing Ollama listener before starting another.
+- [x] 2.2 Select and record one compatible, exact Ollama release and one small model artifact (15 min). Start by reviewing qwen3:0.6b, its publisher license and quantization. Record the full installed digest after download; a mutable tag or short ID alone is insufficient. Historical version proposals are not approval to upgrade working tools. Selection is recorded below; compatibility is provisional until execution, and the installed digest is required in 3.2.
+- [x] 2.3 Write a probe contract in docs/evals/local-model-readiness.md before executing it (20 min). Specify loopback-only access, synthetic prompts, one request at a time, context/output limits, bounded request deadlines, memory/disk stop thresholds and cleanup. Start conservatively, for example context 2048 and output cap 64 tokens, subject to selected-version support. Define healthy generation, missing model, unavailable service and timeout outcomes. Never silently fall back to a paid/cloud provider.
+Contract: [local model readiness](../evals/local-model-readiness.md), assistant-authored October 19, 2026 at the learner's request. Design only; execution and cleanup results remain PENDING.
+
+- [x] 2.4 Define evidence by purpose (10 min): the readiness record holds versions, digest, license, settings and observations; a future provider contract defines transport/parser behavior separately. Record installation/download time and stop conditions; do not create an adapter merely to run a probe. Evidence destinations and timing/stop rules are defined in [the readiness contract](../evals/local-model-readiness.md#evidence-locations-and-responsibilities--day-8-item-24); future handoff/provider documents are planned, not completed.
+
+📚 Learn first: [Linux installation](https://docs.ollama.com/linux), manual/specific-version installation; [Qwen publisher card](https://huggingface.co/Qwen/Qwen3-0.6B), license and limitations; [Ollama artifact](https://ollama.com/library/qwen3:0.6b), quantization and package identity.
+↩ Return: complete the hardware/version/expected-result table before downloading. A blocked hardware, version, license or storage gate leaves live inference PENDING; do not compensate by increasing spending or public exposure.
+
+**2.1 evidence reviewed October 19, 2026:** learner supplied Ubuntu/WSL output and confirmed Ubuntu/WSL as the single Ollama runtime. WSL reported 7.6 GiB total RAM, 3.3 GiB available, and 1.8 of 2.0 GiB swap occupied. Root filesystem reported 944G available. RTX 3050 with 4096 MiB VRAM was visible with 0 MiB reported GPU memory use; `/dev/dxg` existed. No matching Ollama process or port 11434 listener was observed at that moment. Actual minutes unknown. Inspection is complete; occupied swap does not alone establish active swapping. Recheck headroom before model loading. Model fit and actual Ollama GPU acceleration remain PENDING.
+
+**2.2 selection decision — October 19, 2026:** select Ollama **0.40.6** for Ubuntu/WSL and **qwen3:0.6b**, **Q4_K_M**, approximately **523 MB**, **Apache-2.0**. Official [release](https://github.com/ollama/ollama/releases/tag/v0.40.6), [artifact](https://ollama.com/library/qwen3:0.6b), [publisher card](https://huggingface.co/Qwen/Qwen3-0.6B) and [Linux installation guidance](https://docs.ollama.com/linux) were reviewed. This is a conservative first hardware probe given the observed 4 GiB VRAM and limited WSL RAM headroom, not a proven final production model. Pin the runtime instead of following automatic latest-version selection. Use one local runtime and one inference request at a time; keep model access on loopback and use synthetic prompts. Do not enlarge the model or buy services to bypass a failed fit check. Recheck memory pressure before loading; occupied swap alone does not prove active swapping.
+
+The learner's attempted commands returned command-not-found/exit 127: installation, service startup and download did not succeed. **2.2 is complete for selection and recording only.** Actual binary/model compatibility and GPU use remain PENDING until section 3. The full installed model digest remains PENDING and is a required section 3.2 receipt; the catalog short ID is not a substitute. No model quality, worldwide capacity or production deployment readiness is established by this choice. Production model selection remains contingent on the required quality evaluation, load tests, privacy/security controls and hosting budget. Actual minutes unknown.
+
+### 3. Run one bounded local inference experiment — 75 min
+
+- [ ] 3.1 After entry gates pass, inspect/reuse a compatible existing installation or install the selected pinned release (20 min). Record actual version and chosen runtime. Installation delays consume this block; never run an unreviewed downloaded script merely because an example uses it.
+- [ ] 3.2 Download only the selected small model and record its full digest and license attribution (15 min). Observe free disk/memory and stop at the agreed thresholds. Do not add a second model, embeddings or GPU packages to fill time.
+- [ ] 3.3 Verify the service listens only on the intended loopback interface; make one bounded local API request with synthetic input (15 min). Record status, response shape, completion indicator and actual model identity. No API keys, personal prompts, public tunnels or database changes are needed.
+- [ ] 3.4 Record one cold and three warm, sequential runs with identical bounded settings (15 min). Measure wall time and API-reported load/evaluation timing, token counts and generation rate; distinguish first-byte timing from first generated-content timing. If token timing is not measured, mark it PENDING. Record observed memory/GPU placement without claiming unmeasured peaks.
+- [ ] 3.5 Review the experiment for clarity, cleanup and unnecessary dependencies (10 min). Refactor only learner-owned code already working and explicitly authorized for assistance; this block does not authorize AI-written code. Preserve the existing API and database volumes.
+
+📚 Learn first: [Generate API](https://docs.ollama.com/api/generate), request bounds and response timing fields; [FAQ](https://docs.ollama.com/faq), GPU placement and memory management; stop before concurrency tuning.
+↩ Return: execute the agreed local probe and record raw observations safely in the readiness record. Done means observed bounded generation and cleanup, not “AI integrated.” If blocked, carry the failed gate forward and use the remaining time for the same scoped diagnosis.
+
+### 4. Verify behavior, evidence and retained CI — 54 min
+
+- [ ] 4.1 Compare actual healthy, unavailable-service, missing-model and bounded-timeout observations against the probe contract (15 min). Stop only a service owned by this experiment; use an unused loopback target or isolated fixture for unavailable-service checks when another process owns the server. Restore service state afterward. Expected failures must be recorded as expected, not discarded.
+- [ ] 4.2 Review streaming/error requirements for the next scratch provider slice (10 min). Specify split JSON lines, malformed/truncated output, error objects, absent completion, deadlines/cancellation, private-error non-disclosure and zero unauthorized hosted fallback. A live manual probe does not establish parser or retry correctness. Any implementation/tests/faults not written remain PENDING.
+- [ ] 4.3 Verify all retained Day 6/7 cases and faults remain in the complete suite and cumulative CI (15 min). Run .venv/bin/python tools/run_test_suite.py when application/test/config behavior changes; reuse matching current proof for documentation-only changes. New deterministic provider checks, if implemented with authorization, must join CI using synthetic fixtures without GPU, model downloads or private services. Keep local hardware observations separate from hosted coverage.
+- [ ] 4.4 Record PASS/FAIL/PENDING, first failure, wall times and first blocker (14 min). Before any AI quality claim, require at least 20 labeled cases, a baseline, metric/threshold, measured latency and cost. This readiness-only experiment does not meet that feature-evaluation gate. Record zero new service spend only if observed; do not equate it with zero hardware/electricity cost.
+
+📚 Learn first: [Streaming](https://docs.ollama.com/api/streaming), newline-delimited JSON and completion; [Generate API](https://docs.ollama.com/api/generate), errors and measurements; stop before framework clients.
+↩ Return: keep expectation/observation rows and each unexecuted case visible. Do not add superficial tests, weaken old assertions, substitute fixture failures for detection or invent quality/speed claims.
+
+### 5. Review and leave a clear handoff — 45 min
+
+- [ ] 5.1 Review publishable changes for secrets and private prompts; stop/unload only experiment-owned model resources and verify listener cleanup (15 min). Preserve both existing database volumes and any pre-existing service. Do not uninstall shared tools or alter coding-agent routing.
+- [ ] 5.2 Record learner/assistant authorship, actual dates/minutes or unknown, versions/digest, observations, first blocker and exact next action in docs/planning/day-eight-handoff.md (20 min). Carry missing parser tests, evaluation work, CI or hardware proof forward explicitly.
+- [ ] 5.3 Explain the request path and memory/latency tradeoffs without copied answers (10 min). Review the diff and Jira checkboxes; mark the Story Done only when its required outcomes exist. A blocked probe is a useful handoff, not successful provider readiness.
+
+📚 Learn first: [Published restart state](https://github.com/vipravlipare/Merlin/blob/setup/E0-US01-environment/docs/planning/STATE.md), current published restart context; [Ollama FAQ](https://docs.ollama.com/faq), loading/unloading behavior. The uncommitted local Day 7 handoff remains the fuller source until published.
+↩ Return: leave a purpose-named handoff and exact next unchecked action. Record unknowns instead of reconstructing invented timings.
+
+## Budget and stop rule
+
+360-minute cap: 60 + 60 + 75 + 54 + 45 = 294 planned minutes; deferred DSA allocation 30 minutes remains uncommitted; reserve 36 minutes; total 360. Each checkbox is at most 20 minutes. Section 5 uses the existing 45-minute rituals allocation; AWS/DSA remain deferred and their unused time is not converted into extra feature scope. Installation, carryover, CI repair and diagnosis replace later work; no invisible hours or stretch-funded features. If earlier gates consume the block, leave later items open.
+
+## Scope and safety
+
+One local provider-readiness experiment only. No new Merlin API endpoint, provider adapter, framework, database migration/write, agent/tool execution, embeddings, RAG, auth, cloud fallback, public hosting or purchases. Scratch transport/parser implementation belongs to the next explicitly scoped slice; frameworks follow scratch acceptance and a comparison ADR. Do not reset, delete or downgrade protected database storage. No automatic changes to Codex, OmniRoute or Caveman. This ticket expansion does not authorize application/test/config/CI code changes, installation now, commit/push, remote dispatch or deployment.
+
+## Completion criteria
+
+Day 7 entry gates resolved; learner explains the local process/data boundary; selected versions/digest/license and hardware headroom recorded; one small model generates locally within agreed bounds; negative observations, measurements, ownership-aware cleanup and secret review recorded; retained cumulative checks remain green for their actual tested revision; handoff and unfinished work are explicit. If hardware or installation is blocked, retain To Do/In Progress and identify the failed gate. No AI feature quality or production-security claim follows from this experiment.
+
+Official references opened October 16, 2026. Context7 was not used. Verify the selected release's behavior at execution; no new version is installed or claimed compatible by this planning change.
+
