@@ -1,14 +1,24 @@
+from collections.abc import Callable, Mapping
 from http.server import BaseHTTPRequestHandler
 import json
 
-def default_health_check():
+
+def default_health_check() -> dict[str, str]:
     return {"status": "ok"}
 
-def make_health_handler(health_func=default_health_check):
+
+def make_health_handler(
+    health_func: Callable[[], object] = default_health_check,
+) -> type[BaseHTTPRequestHandler]:
     class HealthHandler(BaseHTTPRequestHandler):
         timeout = 2
 
-        def _send_json_response(self, status_code, data, extra_headers=None):
+        def _send_json_response(
+            self,
+            status_code: int,
+            data: object,
+            extra_headers: Mapping[str, str] | None = None,
+        ) -> None:
             try:
                 body_bytes = json.dumps(data).encode("utf-8")
             except Exception:
@@ -25,7 +35,7 @@ def make_health_handler(health_func=default_health_check):
             self.end_headers()
             self.wfile.write(body_bytes)
 
-        def handle_request(self, method):
+        def handle_request(self, method: str) -> None:
             if self.path != "/health":
                 self._send_json_response(404, {"error": "Not found"})
                 return
@@ -41,11 +51,13 @@ def make_health_handler(health_func=default_health_check):
             else:
                 self._send_json_response(405, {"error": "Method not allowed"}, extra_headers={"Allow": "GET"})
 
-        def do_GET(self):
+        def do_GET(self) -> None:
             self.handle_request("GET")
-        def do_PUT(self):
+
+        def do_PUT(self) -> None:
             self.handle_request("PUT")
-        def do_POST(self):
+
+        def do_POST(self) -> None:
             self.handle_request("POST")
 
     return HealthHandler

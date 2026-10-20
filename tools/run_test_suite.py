@@ -28,7 +28,7 @@ sys.path.insert(0, str(ROOT))
 PYTHON = ROOT / '.venv/bin/python'
 from tools.database_sandboxes import DatabaseSandboxes
 KNOWN_INVALID_IMPORT_FAULTS = {
-    'ast-database_connectivity_probe-21-11', 'ast-notes_maintenance-76-42',
+    'ast-database_connectivity_probe-30-11', 'ast-notes_maintenance-76-42',
     'ast-doctor-229-52', 'ast-prd_lint-181-88',
 }
 

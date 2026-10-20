@@ -1,9 +1,9 @@
 from http.server import ThreadingHTTPServer
 from app import health_api
 
+
 def run():
     server_address = ("127.0.0.1", 8000)
-    # Use the handler factory from health_api
     handler_class = health_api.make_health_handler()
     httpd = ThreadingHTTPServer(server_address, handler_class)
 
@@ -14,6 +14,7 @@ def run():
         print("\nShutting down server...")
     finally:
         httpd.server_close()
+
 
 if __name__ == "__main__":
     run()

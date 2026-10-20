@@ -94,7 +94,7 @@ A listening entry means the port is occupied. Do not terminate an unfamiliar pro
 2. What are the separate purposes of HTTP `200`, `Content-Type: application/json`, and `{"status":"ok"}`?
 3. What changes if you bind to `0.0.0.0` instead of `127.0.0.1`, and why is that outside this contract?
 
-Your answers:
+Historical first-attempt answers (retained for learning history):
 
 - Question 1: pending your explanation.
     - Yes, the endpoint should still return 200 because the server connection is valid, and the request has succeeded.
@@ -102,6 +102,8 @@ Your answers:
     - The '200' or any number is to return how the server connection is, good or erroneous. The content type is to set the return content type, for example JSON. The status is to interpret the number and return the meaning of the number.
 - Question 3: pending your explanation.
     - Replies with how the application data is doing according to the status.
+
+Learner confirmation, October 19, 2026: the learner explicitly confirmed Day 8 item 1.1 complete after the chat review and corrections. The first-attempt answers above remain historical and are not the current accepted explanation. This records learner confirmation; no new learner answer was authored by the assistant.
 
 ## 2.2 — Expected results for requests and errors
 
