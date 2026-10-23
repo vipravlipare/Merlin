@@ -2,12 +2,12 @@
 
 Later scope change: [application-only verification](../testing/application-test-scope.md) removes personal quiz tests/faults under explicit learner instruction. Quiz-inclusive counts and source receipts below are historical; use the new receipt for the retained application gates.
 
-Later pre-commit audit: [cumulative suite audit](../testing/precommit-suite-audit.md) supersedes the technical counts, source fingerprints and runtime evidence below. It repairs additional decoder/verification gaps and retains all earlier cases/faults. Earlier learning and publication states remain attributed as recorded; hosted proof is still pending.
+Later pre-commit audit: [cumulative suite audit](../testing/precommit-suite-audit.md) supersedes the technical counts, source fingerprints and runtime evidence below. It repairs additional decoder/verification gaps and retains all earlier cases/faults. The exact hosted run is recorded in the final closeout below; earlier learning states remain attributed as recorded.
 
-Recorded October 23, 2026. Tracker: [MER-10](https://vipravlipare.atlassian.net/browse/MER-10). Day 9 is the learning sequence, not a claim that the work fit one calendar day. **5.1 final review, 5.2 guided explain-back/review and 5.3 handoff complete.** The learner explicitly confirmed their work in sections 1–4 complete except publication. Record learning confirmation and guided corrections honestly, not as an independently administered perfect exam. Exact hosted proof remains open under 4.4; no commit, push or workflow dispatch is authorized by this handoff request.
+Recorded October 23, 2026. Tracker: [MER-10](https://vipravlipare.atlassian.net/browse/MER-10). Day 9 is the learning sequence, not a claim that the work fit one calendar day. **5.1 final review, 5.2 guided explain-back/review, 5.3 handoff and 4.4 exact hosted verification complete for the parser-only scope.** The learner explicitly confirmed their work in sections 1–4 complete except publication. Record learning confirmation and guided corrections honestly, not as an independently administered perfect exam. Commit 51374ee2e8c72d4d5be1d5d26e7e4ff3d209d13c passed the cumulative workflow; HTTP transport remains unbuilt and deferred.
 
 📚 Learn first: [Day 9 checklist](../sprints/day-nine-jira-checklist.md), current completion notes; [step 4 verification](../testing/provider-decoder-suite-verification.md), actual runs and limits.
-↩ Return: review this handoff and the guided corrections, then separately decide publication. Do not claim a connected provider or close the story before its remaining hosted gate passes.
+↩ Return: review this handoff and the guided corrections. The parser-only outcome is verified; do not claim that a connected provider or HTTP transport was built.
 
 ## Agreed outcome and current status
 
@@ -21,7 +21,7 @@ The selected stop rung was a pure, bounded decoder. It accepts supplied bytes, v
 | 3.3 | Assessment COMPLETE; live transport DEFERRED by the permitted stop rule. |
 | 3.4 | COMPLETE: learner-submitted helper extraction, now reported as potentially AI-assisted, plus explicitly authorized assistant review/cleanup, with before/after verification. |
 | 4.1–4.3 | COMPLETE locally: retained cases, intended isolated fault detections, inventory/validators and full-suite/fresh synthetic CI-entry execution. |
-| 4.4 | Local outcome/first-failure/runtime record COMPLETE; exact hosted verification PENDING publication. |
+| 4.4 | COMPLETE for parser-only scope. Exact hosted cumulative workflow passed on commit 51374ee2e8c72d4d5be1d5d26e7e4ff3d209d13c, run [40008698978](https://github.com/vipravlipare/Merlin/actions/runs/40008698978); all steps succeeded. |
 | 5.1 | COMPLETE within the final review scope below. No service or protected volume was stopped/deleted. |
 | 5.2 | COMPLETE as a guided explain-back/review. Learner supplied answers and reached the correct failure/no-retry conclusion; assistant corrected HTTP/completion/trailing-record terminology. Independent perfect recall/mastery is not established. |
 | 5.3 | COMPLETE as this assistant-authored purpose-named handoff, including honest unresolved gates and restart action. |
@@ -47,7 +47,7 @@ The selected stop rung was a pure, bounded decoder. It accepts supplied bytes, v
 | Runner controls | 120 PASS, including isolation, inventory, intended-assertion attribution and contradictory-result rejection. |
 | Full ten-stage suite | PASS in 74.937830 seconds; all SQL/browser/lifecycle/migration stages retained; source preservation and owned cleanup PASS. |
 | Fresh synthetic CI entry point | PASS in 123.009 seconds, including original-source Python checks, full suite and separate 383-case committed migration roundtrip. |
-| Exact hosted revision | PENDING. Current HEAD is the old Day 8 commit 235ee974a3a95628be7ae9cb5f84ae31463709b3; new work remains uncommitted. Local CI explicitly included uncommitted inputs. |
+| Exact hosted revision | PASS. Commit 51374ee2e8c72d4d5be1d5d26e7e4ff3d209d13c, workflow run [40008698978](https://github.com/vipravlipare/Merlin/actions/runs/40008698978), cumulative verification job and all steps succeeded. |
 | Section 5 technical identity check | All recorded technical-source hashes and the inventory hash still match the passing receipt. No code changed during this final documentation/review task. |
 
 Durable evidence: [verification summary](../testing/provider-decoder-verification-results.json), [individual case/fault matrix and synthetic failures](../testing/provider-decoder-effectiveness-evidence.json.gz), [complete interpretation and first-failure history](../testing/provider-decoder-suite-verification.md). Raw `/tmp` directories can disappear and are not publication artifacts. Machine runtimes are not effort measurements or performance-improvement claims. Finite coverage is not universal security/correctness proof.
@@ -72,13 +72,13 @@ Known documentation limitation: the pre-existing root README still understates D
 
 After the initial response, the learner answered both HTTP-200 scenarios and correctly concluded that neither succeeds and neither should automatically retry. Their descriptions still conflated HTTP status with connection health, generation completion with all bytes received, and an ordinary trailing record with an error object. The assistant corrected those distinctions: missing completion at EOF is incomplete-response; ordinary nonblank data after completion is invalid-response; a parsed error member has provider-failure precedence; retries are zero. The learner acknowledged the clarification and requested final completion review.
 
-Record **5.2 complete with guided corrections**, rather than forcing repeated restatements or claiming independently perfect answers. Preserve the original partial answers and feedback below as learning history. Independent whiteboard/spaced re-quiz and broader mastery remain unverified; this checklist item does not certify them. The next action is publication review/authorization, not another mandatory explain-back loop.
+Record **5.2 complete with guided corrections**, rather than forcing repeated restatements or claiming independently perfect answers. Preserve the original partial answers and feedback below as learning history. Independent whiteboard/spaced re-quiz and broader mastery remain unverified; this checklist item does not certify them. Publication and hosted verification are complete; the remaining action is to reconcile Jira to the explicitly scoped parser-only outcome.
 
 ### Learner response and review
 
 The learner responded that split bytes become records, an answer returns when everything is clear, and any error after partial text abandons the answer and returns an error. They also clarified that most code was assistant-written and that they used Gemini for submitted code. Record the error/no-partial-success principle as correctly stated and the authorship clarification as learner-reported. Do not infer independent coding mastery or exact authorship of earlier submissions.
 
-The completion description is still imprecise: bytes are accumulated until LF identifies a full record (with a valid final record also allowed at EOF); success requires exactly one valid done=true, clean EOF without extra nonblank data, nonempty text and no validation/source failure. HTTP 200 is not generation completion. Automatic retry is zero. The response did not yet state these conditions or the retry rule explicitly, so **5.2 remains in progress pending a short targeted follow-up**, not unanswered or independently passed.
+The completion description was initially imprecise: bytes are accumulated until LF identifies a full record (with a valid final record also allowed at EOF); success requires exactly one valid done=true, clean EOF without extra nonblank data, nonempty text and no validation/source failure. HTTP 200 is not generation completion. Automatic retry is zero. That initial status was superseded by the guided correction recorded above; 5.2 is complete with assistance, not an independent mastery claim.
 
 At the learner's explicit request, AGENTS.md now records the beginner-friendly comment/docstring preference and honest attribution of AI-assisted submissions. No application/test code or runtime behavior changed to apply this preference in the present handoff task. Existing historical authorship notes are superseded by this clarification rather than silently treated as proof of independent learner authorship.
 
@@ -100,11 +100,11 @@ Original Day 9 budget: 201 planned work/ritual minutes + 15 deferred DSA minutes
 ## Remaining work and exact restart
 
 - Review this handoff and retain 5.2's guided-correction attribution. Earlier pending explain-back notes are historical; no new mandatory response is required to close the guided review.
-- Keep 4.4 hosted verification PENDING until the learner separately authorizes publication and the exact new revision's required jobs/steps are observed passing. No commit, push or dispatch was performed here. The old Day 8 green run does not certify the current working tree.
+- 4.4 hosted verification passed for exact commit 51374ee2e8c72d4d5be1d5d26e7e4ff3d209d13c; all steps in run [40008698978](https://github.com/vipravlipare/Merlin/actions/runs/40008698978) succeeded. This does not certify a future code change or build the deferred HTTP transport.
 - Preserve transport carryover: actual HTTP status/media validation, fixed endpoint/model enforcement, blocked-read cancellation, connection/header/idle/absolute deadlines, redirect/proxy/hosted no-fallback behavior and network response cleanup. The [assessment](../architecture/local-provider-transport-assessment.md) records the next design requirements; no partial transport is wired.
 - Do not infer task-quality, first-token timing, production throughput/security or real Ollama server cancellation from synthetic parser tests. Original watchdog and exact READY compliance limitations remain in Day 8 evidence. Authentication/owner-denial implementation, AWS/DSA and permanent OmniRoute defaults retain their separate pending/deferred states.
 
-**Exact restart:** learner reviews the final handoff/diff and separately decides publication authorization. If authorized, publish the reviewed inputs, observe cumulative hosted CI for that exact revision, record the actual result and reconcile 4.4/story status. Until then MER-10 stays In Progress; do not start Day 10 or silently expand into live transport.
+**Exact restart:** reconcile Jira MER-10 to Done for the explicitly scoped parser-only result, retaining HTTP transport as deferred follow-on work. Day 10 may proceed after the learner reviews the completion record; do not imply the local provider is connected or transport-safe.
 
 📚 Learn first: [pre-commit readiness order](../testing/day-nine-precommit-readiness.md) and [remaining transport scope](../architecture/local-provider-transport-assessment.md).
-↩ Return: finish the learner-only response and the remaining publication gate; preserve all local resources and evidence.
+↩ Return: review the guided explanation and parser-only completion record; preserve all local resources and evidence.
