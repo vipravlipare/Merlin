@@ -13,6 +13,7 @@ import hashlib
 import importlib.util
 import json
 import os
+import re
 from pathlib import Path
 import subprocess
 import sys
@@ -20,6 +21,7 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
+from tools.provider_faults import DETECTIONS as PROVIDER_DETECTIONS, GUARDED_FAULTS
 
 WORKER = r'''
 import importlib,json,pathlib,sys,pytest,os,subprocess
@@ -85,7 +87,7 @@ class Record:
   if report.failed:self.errors.append({'stage':'collection','failure':str(report.longrepr)[-1200:]})
 record=Record()
 code=pytest.main(spec.get('tests',['tests','tools/test_doctor.py'])+['--ignore=tests/test_users_notes_database.py','-q','--tb=short','--basetemp='+str(pathlib.Path(sys.argv[2]).parent/'pytest')],plugins=[record])
-pathlib.Path(spec['output']).write_text(json.dumps({'exit':int(code),'cases':record.rows,'errors':record.errors},ensure_ascii=True,indent=2))
+pathlib.Path(spec['output']).write_text(json.dumps({'exit':int(code),'cases':record.rows,'errors':record.errors},ensure_ascii=True,separators=(',',':')))
 raise SystemExit(code)
 '''
 
@@ -257,6 +259,8 @@ def faults():
         ("linter-code-limit-too-strict", l, 'MAX_CODE_LINES = 15', 'MAX_CODE_LINES = 14'),
     ]
     rows.extend(health_api_faults())
+    from tools.provider_faults import faults as provider_faults
+    rows.extend(provider_faults())
     # Mutate comparisons and boolean operators at individual source locations.
     # Each changed program must compile; unsupported/equivalent faults are visible.
     for file in [p, m, n, d, l]:
@@ -372,12 +376,35 @@ def request(name, file, source, directory, tests=None):
         # This mutates the fixture itself; test its cleanup assertion directly,
         # rather than leak one deliberately faulty fixture for every API case.
         tests = ["tests/test_health_api.py::" + HEALTH_API_DETECTIONS[name][0]]
+    if name in GUARDED_FAULTS:
+        # Potential external-call mutations execute only inside tests that trap
+        # socket/process entry points before invoking the mutated decoder.
+        from tools.test_dependencies import REVIEWED_TESTS
+        test_path = ROOT / 'tests/test_local_provider.py'
+        if hashlib.sha256(test_path.read_bytes()).hexdigest() != REVIEWED_TESTS.get('tests/test_local_provider.py'):
+            raise RuntimeError('Provider side-effect faults require reviewed traps')
+        tests = ['tests/test_local_provider.py::test_contract_decoder_has_zero_external_side_effects[' + value + ']'
+                 for value in ['success', 'provider-failure', 'invalid-response']]
     if tests is not None:
         payload['tests'] = tests
     request.write_text(json.dumps(payload))
     return {'name': name, 'file': file, 'output': output,
             'argv': [str(ROOT), str(request)], 'code': WORKER,
             'stdout': work / 'stdout.log', 'stderr': work / 'stderr.log', 'tests': tests}
+
+
+def matches_intended_failure(row, assertion):
+    """Source text saying 'assert' cannot turn an unrelated error into proof."""
+    if row.get('outcome') != 'failed':
+        return False
+    failure = row.get('failure', '')
+    error_lines = '\n'.join(line for line in failure.splitlines() if line.startswith('E '))
+    if assertion in {'ProviderError', 'OSError', 'TimeoutError'}:
+        return bool(re.search(r'^E\s+(?:[A-Za-z_]\w*\.)*' + assertion + r'(?::|\s*$)', error_lines, re.M))
+    is_assertion = bool(re.search(
+        r'^E\s+(?:(?:[A-Za-z_]\w*\.)*(?:AssertionError|Failed):|assert\b)',
+        error_lines, re.M))
+    return is_assertion and assertion in failure
 
 
 def outcome(job, code, stderr):
@@ -389,7 +416,9 @@ def outcome(job, code, stderr):
     data = json.loads(output.read_text())
     expected = job.get('expected_cases')
     actual = {node for node, row in data['cases'].items() if row.get('kind') != 'subtest'}
-    valid = not data["errors"] and code in (0, 1) and (expected is None or actual == expected)
+    valid = (not data["errors"] and code in (0, 1) and data.get('exit') == code
+             and all(row.get('outcome') in {'passed', 'failed'} for row in data['cases'].values())
+             and (expected is None or actual == expected))
     detected = [node for node, row in data["cases"].items() if row.get("outcome") == "failed"]
     result = {"fault": name, "file": file, "status": ("DETECTED" if detected else "SURVIVED") if valid else "INVALID",
               "detected_by": detected, "selected_test_files": job.get("tests"), "scope_manifest_matches": expected is None or actual == expected, **data}
@@ -397,11 +426,20 @@ def outcome(job, code, stderr):
         test, assertion = HEALTH_API_DETECTIONS[name]
         node = "tests/test_health_api.py::" + test
         row = data["cases"].get(node, {})
-        intended = valid and node in detected and assertion in row.get("failure", "")
+        intended = valid and node in detected and matches_intended_failure(row, assertion)
         result.update(expected_detection=node, expected_assertion=assertion,
                       intended_detection=intended)
         if valid and not intended:
             result.update(status="SURVIVED", reason="Required API assertion did not detect fault")
+    if name in PROVIDER_DETECTIONS:
+        prefix, assertion = PROVIDER_DETECTIONS[name]
+        intended_nodes = [node for node in detected if node.startswith(prefix)
+                          and matches_intended_failure(data['cases'][node], assertion)]
+        intended = valid and bool(intended_nodes)
+        result.update(expected_detection=prefix, expected_assertion=assertion,
+                      intended_detection=intended, intended_cases=intended_nodes)
+        if valid and not intended:
+            result.update(status='SURVIVED', reason='Required provider assertion did not detect fault')
     return result
 
 
@@ -416,11 +454,23 @@ def execute(name, file, source, directory):
         return outcome(job, None, '')
 
 
+def source_manifest():
+    """Pin exactly the technical inputs whose case/fault evidence is reported."""
+    return {str(path.relative_to(ROOT)): hashlib.sha256(path.read_bytes()).hexdigest()
+            for folder in ['app', 'tests', 'tools'] for path in (ROOT / folder).glob('*.py')}
+
+
+def verify_manifest(expected):
+    if source_manifest() != expected:
+        raise RuntimeError('Python audit inputs changed during execution')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--only", help="Run matching fault names only")
     args = parser.parse_args()
+    fingerprints = source_manifest()
     with tempfile.TemporaryDirectory(prefix="merlin-python-audit-") as directory:
         baseline = execute("baseline", None, "", directory)
         if baseline.get("exit") != 0 or baseline.get("errors"):
@@ -430,6 +480,7 @@ def main():
         selected = scopes(baseline) if os.environ.get('MERLIN_PYTHON_FAULT_SCOPE','dependent') != 'all' else {}
         catalog = [row for row in faults() if not args.only or args.only in row[0]]
         prepared, aliases, excluded, invalid = canonical_faults(catalog)
+        verify_manifest(fingerprints)
         results = []
         if os.environ.get('MERLIN_FAST_PYTHON_TESTS', '1') == '1':
             from tools.isolated_python import fork_jobs
@@ -447,19 +498,25 @@ def main():
         else:
             with ThreadPoolExecutor(max_workers=min(8, max(1, int(os.environ.get("MERLIN_PYTHON_FAULT_WORKERS", "8"))), len(os.sched_getaffinity(0)))) as pool:
                 results = list(pool.map(lambda row: execute(*row, directory), prepared))
+        # Build the reverse index once; preserve the fault catalogue order and
+        # every underlying outcome while avoiding a case-by-fault rescan.
+        detections = {}
+        for result in results:
+            if result['status'] == 'DETECTED':
+                for node in result.get('detected_by', []):
+                    detections.setdefault(node, []).append(result['fault'])
         matrix = []
         for node, row in baseline["cases"].items():
-            kills = [r["fault"] for r in results if r["status"] == "DETECTED" and node in r.get("detected_by", [])]
+            kills = detections.get(node, [])
             matrix.append({"case": node, **row, "detects": kills,
                            "effectiveness": "DEMONSTRATED" if kills else "NO_MATCHING_DETECTION"})
-        fingerprints = {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
-                        for folder in ["app", "tests", "tools"] for p in (ROOT / folder).glob("*.py")}
+        verify_manifest(fingerprints)
         payload = {"source_sha256": fingerprints, "baseline": baseline, "faults": results + invalid + aliases + excluded, "fault_aliases": aliases,
                    "excluded_invalid_diagnostics": excluded,
                    "executed_fault_ids": [row[0] for row in prepared],
                    "catalog_fault_ids": [row[0] for row in catalog], "matrix": matrix}
         args.out.parent.mkdir(parents=True, exist_ok=True)
-        args.out.write_text(json.dumps(payload, ensure_ascii=True, indent=2) + "\n")
+        args.out.write_text(json.dumps(payload, ensure_ascii=True, separators=(',', ':')) + "\n")
         counts = {status: sum(r["status"] == status for r in results + invalid)
                   for status in ["DETECTED", "SURVIVED", "INVALID", "TIMEOUT", "UNAPPLIED"]}
         print(json.dumps({"cases": len(matrix), "demonstrated": sum(bool(r["detects"]) for r in matrix), "faults": counts, "aliases": len(aliases), "excluded_invalid": len(excluded)}))

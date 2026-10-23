@@ -1,0 +1,706 @@
+{
+  "purpose": "Day 9 4.2\u20134.4 local verification; unpublished source, hosted proof pending",
+  "application_sha256": "5ef81d42a4af25d1ca4ee3eda777d7361626be6135d468ccfa15dc6303e589bb",
+  "test_sha256": "04cac6a51b5c873adc92990b4fa79175516b12c7af25cab86479843ea986ffdd",
+  "technical_source_sha256": {
+    "app/health_api.py": "85015c1e6b4302482523edf5b2360fd2cd0771e1d39d25635279115ced016159",
+    "app/health_server.py": "c893480c8ae0af9d240ae32b013a4071de92861b3e27a5c487020932d548d692",
+    "app/database_connectivity_probe.py": "db9d13ea7d624a8030b5555518b1fb82a3dca7f1165fbf50af5590d9ed439d7f",
+    "app/notes_maintenance.py": "dbbde39d5996296adc0244f74d1e4a606b5de08d0b05497a47373edbf207dffb",
+    "app/note_rules.py": "44c19fcd536d06c887e6e9a1600b63ca4f21074b32dee93ec7874810eae3b538",
+    "app/local_provider.py": "5ef81d42a4af25d1ca4ee3eda777d7361626be6135d468ccfa15dc6303e589bb",
+    "tests/test_prd_lint.py": "ea5d16d419ed3c93a68e8ee3e3a211c4b0a6e7ae3efc262dfb62d3698815a995",
+    "tests/test_note_rules_and_maintenance.py": "0a3dcf4b2e7c9b07e93d9e33f25d444b3b4b309f7020d075840617c28a6fa4ef",
+    "tests/test_health_api.py": "3dc8727b03097a757a26b7f5981f3e678caf50a867e0ddc2ef8c08d2c71f0b9a",
+    "tests/test_local_provider.py": "04cac6a51b5c873adc92990b4fa79175516b12c7af25cab86479843ea986ffdd",
+    "tests/test_database_connectivity_probe.py": "ba296ed12baab295aea9b44c5915a88082fe163968ea9a2596ac82ca380a3063",
+    "tests/test_doctor_failure_cases.py": "6c8c06d6285fe2950912692838ae692763b5c28f4e9454f83af4b200a3c8df97",
+    "tests/test_users_notes_database.py": "94515aef520ccd6675f2a1352c200f85fab9ee6944fd971cd50cb44599e8d6a5",
+    "tools/audit_database_lifecycle.py": "874245fab5d2d97a6a57c5ec0df9f8e8d0802d6dfab00ca24dc30a3729302205",
+    "tools/audit_python_cases.py": "72fd73e0734e5e60e9b3c98edd561629b6ee8701359b826c2ab22d4f4efa7a9a",
+    "tools/run_ci.py": "d40d12f09ec0387667be7ba2b3cd8ee0df872849a69262d8d575782be815db97",
+    "tools/write_test_audit.py": "eaceddefc9bc37aafe3a725ad63b140f8299da9cbe06c9228bfa026e2ec99dfe",
+    "tools/verify_suite_execution.py": "fca3f9f32a990f74f0c88a7780eb406018723f449b3c2361d55f2fedc9f48043",
+    "tools/native_psql.py": "38e31ee8838cab63446f472c861d1bc8ef7d40ab55ad09b16a34b81d2e467ed5",
+    "tools/verify_native_psql.py": "50a76e822c734c6e265647718d664ebe573033401d0f17156ae78419488baead",
+    "tools/run_sql_shards.py": "7ad207492f5c8bc99fb686aca6399040c10d3df0022c46d2f1ba68aa8e1c9691",
+    "tools/run_test_suite.py": "90562b9389fb2f85611bc1ffa8d8107c8b078b95bc5f23225dd8d619bfcc975e",
+    "tools/verify_migration_roundtrip.py": "4d6b0b315209b612dc6682e20a22b17fc8f2d023671993d7a30a3d65da20e23d",
+    "tools/doctor.py": "4cf276effb197aad39ce94f652e01a558ca39ad3bbebe8af5ce9ce4693fae26f",
+    "tools/setup_local.py": "7cbbe7a498c3089162bc03545ff82f9eca956e15463afb1882a06f74b9ba7d6b",
+    "tools/test_dependencies.py": "98eb9338a32f3102d882d7e81a2c4336c5fc4a3f29869d3f25069532466a2a9b",
+    "tools/provider_faults.py": "c0e08df6528b062bd0f9b7483f5afb8a9f68395e172e1b25b4e12d360bba5d24",
+    "tools/check_mutations.py": "bc27f20769efc386e9b085e43341c737cdedce2615f1fff08ea9d05a78a608b8",
+    "tools/audit_quiz_cases.py": "78bb4f5ce94f9689509cbd074e3a61534d0703c2c5b34a0d6152c21107901700",
+    "tools/audit_migration_undo.py": "6c60e3b0e7e8763b30faaeb81272067bb9b103c7d580787acab3cf885a10715e",
+    "tools/prd_lint.py": "e2817ce78253d736fb8e6b74086f48dc1ee4686415fe3f7fb1678a51aaa8a0e8",
+    "tools/audit_database_cases.py": "936985fa1b8daf20a78deae1d392cd1c0fa681180273fe267b1651aff4c5d773",
+    "tools/database_sandboxes.py": "b82bf8c3c4562ac1b41b85ca41799b7499ae59ff5b61c3c8af1d99b4ba5687b7",
+    "tools/ci_database.py": "72c7abba5046a98c1e8dd553d871d88cd82fcbf45a843f5b1897107a0bd97d12",
+    "tools/isolated_python.py": "4baafa73841a1ecb1546b43be155715034bd9018940cfb4419e20ed16eb75918",
+    "tools/verify_database_sandboxes.py": "acfba186204f223b71f7e54d4c9ad12ce8611c28f23f40533a3a361d0128bea9",
+    "tools/verify_python_isolation.py": "ba0191b30e496c7e94e652d4726e8a67a76cd68a248c233b37e11b369c94de8c",
+    "tools/test_doctor.py": "25522e95c32b8ceea080984ee800b2b8a82c3a0c169cac52e9732c0fce3d44b7",
+    "tools/database_test_session.py": "07f6dd2923ff28f7de3b2e3ac7728937833a0c930ba8b8dd9ec0312f0a62adcd"
+  },
+  "inventory_sha256": "ec69fd99d6b0c51beb762ff1faa7552e32a8acec69716b87926b37f08361535e",
+  "local_full_suite": {
+    "status": "PASS",
+    "seconds": 74.93783,
+    "stages": [
+      {
+        "stage": "python-tests",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 13.745
+      },
+      {
+        "stage": "quiz-tests",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 0.122
+      },
+      {
+        "stage": "python-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "excluded_invalid_import_faults": [
+          "ast-database_connectivity_probe-30-11",
+          "ast-notes_maintenance-76-42",
+          "ast-doctor-229-52",
+          "ast-prd_lint-181-88"
+        ],
+        "fault_aliases": {
+          "text-whitespace-body-trimmed": "body-stripped",
+          "ast-notes_maintenance-25-60": "identity-or-changed-to-and",
+          "ast-doctor-208-1251": "doctor-cluster-always-refuses"
+        },
+        "seconds": 52.473
+      },
+      {
+        "stage": "database-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 20.363
+      },
+      {
+        "stage": "quiz-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 2.403
+      },
+      {
+        "stage": "browser-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 8.511
+      },
+      {
+        "stage": "database-lifecycle-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 14.418
+      },
+      {
+        "stage": "migration-undo-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 21.185
+      },
+      {
+        "stage": "documentation",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 0.279
+      },
+      {
+        "stage": "whitespace",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 0.014
+      }
+    ],
+    "source_preserved": true,
+    "cleanup_passed": true
+  },
+  "fresh_local_ci": {
+    "status": "PASS",
+    "seconds": 123.009,
+    "base_commit": "235ee974a3a95628be7ae9cb5f84ae31463709b3",
+    "includes_uncommitted_inputs": true,
+    "steps": [
+      {
+        "name": "original-python-sources",
+        "status": "PASS"
+      },
+      {
+        "name": "complete-suite",
+        "status": "PASS"
+      },
+      {
+        "name": "committed-migration-roundtrip",
+        "status": "PASS"
+      }
+    ],
+    "cleanup_passed": true,
+    "suite_seconds": 89.116166,
+    "suite_source_preserved": true,
+    "suite_cleanup_passed": true,
+    "migration_cases": 383,
+    "migration_status": "PASS",
+    "migration_source_preserved": true,
+    "migration_cleanup_passed": true
+  },
+  "python_audit": {
+    "case_subtest_ids": 808,
+    "demonstrated": 808,
+    "canonical_detected": 284,
+    "aliases": 3,
+    "excluded_startup_diagnostics": 4,
+    "provider_cases": 459,
+    "provider_faults": 34
+  },
+  "runner_controls": {
+    "checks": [
+      {
+        "scenario": "pass",
+        "passed": true,
+        "runner_exit": 0
+      },
+      {
+        "scenario": "serial",
+        "passed": true,
+        "runner_exit": 0
+      },
+      {
+        "scenario": "failure",
+        "passed": true,
+        "runner_exit": 1
+      },
+      {
+        "scenario": "setup-failure",
+        "passed": true,
+        "runner_exit": 1
+      },
+      {
+        "scenario": "interrupt",
+        "passed": true,
+        "runner_exit": 1
+      },
+      {
+        "scenario": "baseline-failure",
+        "passed": true,
+        "runner_exit": 1
+      },
+      {
+        "scenario": "interrupt-setup",
+        "passed": true,
+        "runner_exit": 1
+      },
+      {
+        "scenario": "prerequisite-failure",
+        "passed": true,
+        "runner_exit": 1
+      },
+      {
+        "scenario": "preflight-pass",
+        "passed": true
+      },
+      {
+        "scenario": "preflight-failure",
+        "passed": true
+      },
+      {
+        "scenario": "preflight-timeout",
+        "passed": true
+      },
+      {
+        "scenario": "preflight-ci-guards-failure",
+        "passed": true
+      },
+      {
+        "scenario": "preflight-ci-guards-timeout",
+        "passed": true
+      },
+      {
+        "scenario": "migration-undo-faults-complete-positive",
+        "passed": true
+      },
+      {
+        "scenario": "migration-undo-faults-contradictory-schema",
+        "passed": true
+      },
+      {
+        "scenario": "migration-undo-faults-contradictory-runtime",
+        "passed": true
+      },
+      {
+        "scenario": "migration-undo-faults-wrong-target",
+        "passed": true
+      },
+      {
+        "scenario": "migration-undo-faults-missing-source",
+        "passed": true
+      },
+      {
+        "scenario": "migration-undo-faults-false-validation",
+        "passed": true
+      },
+      {
+        "scenario": "migration-undo-faults-malformed-schema-digest",
+        "passed": true
+      },
+      {
+        "scenario": "migration-undo-faults-wrong-replay-count",
+        "passed": true
+      },
+      {
+        "scenario": "migration-undo-faults-wrong-replay-mode",
+        "passed": true
+      },
+      {
+        "scenario": "migration-undo-faults-missing-branch",
+        "passed": true
+      },
+      {
+        "scenario": "legacy-python-faults-complete-positive",
+        "passed": true
+      },
+      {
+        "scenario": "legacy-python-faults-truncated",
+        "passed": true
+      },
+      {
+        "scenario": "legacy-python-faults-duplicate",
+        "passed": true
+      },
+      {
+        "scenario": "python-case-faults-complete-positive",
+        "passed": true
+      },
+      {
+        "scenario": "python-case-faults-truncated",
+        "passed": true
+      },
+      {
+        "scenario": "python-case-faults-duplicate",
+        "passed": true
+      },
+      {
+        "scenario": "python-case-faults-missing-fault",
+        "passed": true
+      },
+      {
+        "scenario": "python-case-faults-missing-source-manifest",
+        "passed": true
+      },
+      {
+        "scenario": "python-case-faults-contradictory-baseline",
+        "passed": true
+      },
+      {
+        "scenario": "python-case-faults-missing-scope-proof",
+        "passed": true
+      },
+      {
+        "scenario": "python-case-faults-missing-api-intended_detection",
+        "passed": true
+      },
+      {
+        "scenario": "python-case-faults-missing-api-expected_detection",
+        "passed": true
+      },
+      {
+        "scenario": "python-case-faults-missing-api-expected_assertion",
+        "passed": true
+      },
+      {
+        "scenario": "python-case-faults-invented-detection",
+        "passed": true
+      },
+      {
+        "scenario": "python-case-faults-missing-provider-intended_detection",
+        "passed": true
+      },
+      {
+        "scenario": "python-case-faults-missing-provider-expected_detection",
+        "passed": true
+      },
+      {
+        "scenario": "python-case-faults-missing-provider-expected_assertion",
+        "passed": true
+      },
+      {
+        "scenario": "python-case-faults-missing-provider-intended_cases",
+        "passed": true
+      },
+      {
+        "scenario": "python-case-faults-missing-provider-exit",
+        "passed": true
+      },
+      {
+        "scenario": "python-case-faults-provider-fixture-failure",
+        "passed": true
+      },
+      {
+        "scenario": "database-case-faults-complete-positive",
+        "passed": true
+      },
+      {
+        "scenario": "database-case-faults-truncated",
+        "passed": true
+      },
+      {
+        "scenario": "database-case-faults-duplicate",
+        "passed": true
+      },
+      {
+        "scenario": "database-case-faults-missing-source-manifest",
+        "passed": true
+      },
+      {
+        "scenario": "database-case-faults-contradictory-preservation",
+        "passed": true
+      },
+      {
+        "scenario": "database-case-faults-missing-pair",
+        "passed": true
+      },
+      {
+        "scenario": "quiz-case-faults-complete-positive",
+        "passed": true
+      },
+      {
+        "scenario": "quiz-case-faults-truncated",
+        "passed": true
+      },
+      {
+        "scenario": "quiz-case-faults-duplicate",
+        "passed": true
+      },
+      {
+        "scenario": "quiz-case-faults-missing-fault",
+        "passed": true
+      },
+      {
+        "scenario": "quiz-case-faults-missing-source-manifest",
+        "passed": true
+      },
+      {
+        "scenario": "quiz-case-faults-contradictory-baseline",
+        "passed": true
+      },
+      {
+        "scenario": "quiz-case-faults-invented-detection",
+        "passed": true
+      },
+      {
+        "scenario": "browser-case-faults-complete-positive",
+        "passed": true
+      },
+      {
+        "scenario": "browser-case-faults-truncated",
+        "passed": true
+      },
+      {
+        "scenario": "browser-case-faults-duplicate",
+        "passed": true
+      },
+      {
+        "scenario": "browser-case-faults-missing-source-manifest",
+        "passed": true
+      },
+      {
+        "scenario": "browser-case-faults-contradictory-mutation",
+        "passed": true
+      },
+      {
+        "scenario": "database-lifecycle-faults-complete-positive",
+        "passed": true
+      },
+      {
+        "scenario": "database-lifecycle-faults-truncated",
+        "passed": true
+      },
+      {
+        "scenario": "database-lifecycle-faults-duplicate",
+        "passed": true
+      },
+      {
+        "scenario": "database-lifecycle-faults-contradictory-mutation",
+        "passed": true
+      },
+      {
+        "scenario": "sql-shards-complete-positive",
+        "passed": true
+      },
+      {
+        "scenario": "sql-shards-missing-case",
+        "passed": true
+      },
+      {
+        "scenario": "sql-shards-duplicate-case",
+        "passed": true
+      },
+      {
+        "scenario": "sql-shards-crossed-case",
+        "passed": true
+      },
+      {
+        "scenario": "sql-shards-wrong-index",
+        "passed": true
+      },
+      {
+        "scenario": "sql-shards-wrong-source",
+        "passed": true
+      },
+      {
+        "scenario": "sql-shards-false-preservation",
+        "passed": true
+      },
+      {
+        "scenario": "sql-shards-wrong-fingerprint",
+        "passed": true
+      },
+      {
+        "scenario": "sql-shards-duplicate-target",
+        "passed": true
+      },
+      {
+        "scenario": "sql-shards-missing-shard",
+        "passed": true
+      },
+      {
+        "scenario": "sql-shards-refuse-2/2",
+        "passed": true
+      },
+      {
+        "scenario": "sql-shards-refuse--1/2",
+        "passed": true
+      },
+      {
+        "scenario": "sql-shards-refuse-0/0",
+        "passed": true
+      },
+      {
+        "scenario": "sql-shards-refuse-x/2",
+        "passed": true
+      },
+      {
+        "scenario": "sql-shards-refuse-partial-filter",
+        "passed": true
+      },
+      {
+        "scenario": "sql-parent-shards-complete-positive",
+        "passed": true
+      },
+      {
+        "scenario": "sql-parent-shards-contradictory-merged-proof",
+        "passed": true
+      },
+      {
+        "scenario": "sql-parent-shards-changed-child-outcome",
+        "passed": true
+      },
+      {
+        "scenario": "sql-parent-shards-missing-child",
+        "passed": true
+      },
+      {
+        "scenario": "sql-parent-shards-wrong-child-source",
+        "passed": true
+      },
+      {
+        "scenario": "sql-parent-shards-crossed-target",
+        "passed": true
+      },
+      {
+        "scenario": "migration-schema-literal-normalization",
+        "passed": true
+      },
+      {
+        "scenario": "migration-schema-outer-order-equivalent",
+        "passed": true
+      },
+      {
+        "scenario": "migration-schema-nested-order-change-rejected",
+        "passed": true
+      },
+      {
+        "scenario": "migration-schema-missing-row-rejected",
+        "passed": true
+      },
+      {
+        "scenario": "migration-schema-owner-change-rejected",
+        "passed": true
+      },
+      {
+        "scenario": "migration-schema-generated-trigger-equivalent",
+        "passed": true
+      },
+      {
+        "scenario": "migration-schema-boolean-not-role-oid",
+        "passed": true
+      },
+      {
+        "scenario": "compressor-repair-succeeds",
+        "passed": true
+      },
+      {
+        "scenario": "compressor-real-validation-retry-exercised",
+        "passed": true
+      },
+      {
+        "scenario": "compressor-code-and-frontmatter-stay-local",
+        "passed": true
+      },
+      {
+        "scenario": "compressor-protected-content-restored",
+        "passed": true
+      },
+      {
+        "scenario": "compressor-reordered-code-repair-retained",
+        "passed": true
+      },
+      {
+        "scenario": "compressor-cli-error-redacted",
+        "passed": true
+      },
+      {
+        "scenario": "runtime-commit---pause=false",
+        "passed": true
+      },
+      {
+        "scenario": "runtime-commit---no-pause",
+        "passed": true
+      },
+      {
+        "scenario": "runtime-commit-unsupported-refused",
+        "passed": true
+      },
+      {
+        "scenario": "api-fault-attribution-intended-assertion",
+        "passed": true
+      },
+      {
+        "scenario": "api-fault-attribution-wrong-case",
+        "passed": true
+      },
+      {
+        "scenario": "api-fault-attribution-wrong-assertion",
+        "passed": true
+      },
+      {
+        "scenario": "api-fault-attribution-setup-error",
+        "passed": true
+      },
+      {
+        "scenario": "reviewed-api-scope-preserves-dependencies",
+        "passed": true
+      },
+      {
+        "scenario": "changed-api-source-restores-conservative-scope",
+        "passed": true
+      },
+      {
+        "scenario": "opaque-api-import-restores-conservative-scope",
+        "passed": true
+      },
+      {
+        "scenario": "shared-fixture-restores-all-python-scope",
+        "passed": true
+      },
+      {
+        "scenario": "provider-attribution-intended",
+        "passed": true
+      },
+      {
+        "scenario": "provider-attribution-wrong-case",
+        "passed": true
+      },
+      {
+        "scenario": "provider-attribution-wrong-assertion",
+        "passed": true
+      },
+      {
+        "scenario": "provider-attribution-setup-error",
+        "passed": true
+      },
+      {
+        "scenario": "provider-attribution-exit-mismatch",
+        "passed": true
+      },
+      {
+        "scenario": "provider-attribution-missing-case",
+        "passed": true
+      },
+      {
+        "scenario": "provider-unreviewed-side-effect-fault-refused",
+        "passed": true
+      },
+      {
+        "scenario": "provider-reviewed-scope",
+        "passed": true
+      },
+      {
+        "scenario": "provider-changed-source-restores-full-scope",
+        "passed": true
+      },
+      {
+        "scenario": "provider-imported-parent-refused-before-fork",
+        "passed": true
+      }
+    ]
+  },
+  "first_final_failure": null,
+  "initial_experiments": [
+    {
+      "experiment": "initial-31",
+      "non_detections": [
+        {
+          "fault": "provider-character-count",
+          "status": "SURVIVED",
+          "reason": "Required provider assertion did not detect fault"
+        },
+        {
+          "fault": "provider-duplicate-key",
+          "status": "SURVIVED",
+          "reason": "Required provider assertion did not detect fault"
+        },
+        {
+          "fault": "provider-done-type",
+          "status": "SURVIVED",
+          "reason": "Required provider assertion did not detect fault"
+        },
+        {
+          "fault": "provider-parser-leak",
+          "status": "SURVIVED",
+          "reason": "Required provider assertion did not detect fault"
+        },
+        {
+          "fault": "provider-network-side-effect",
+          "status": "INVALID",
+          "reason": ""
+        },
+        {
+          "fault": "provider-process-side-effect",
+          "status": "INVALID",
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "experiment": "expanded-34-before-utf8-fixture-repair",
+      "non_detections": [
+        {
+          "fault": "provider-utf8-replacement",
+          "status": "SURVIVED",
+          "reason": "Required provider assertion did not detect fault"
+        }
+      ]
+    }
+  ],
+  "hosted_ci": "PENDING; commit/push not authorized",
+  "actual_work_minutes": "unknown",
+  "publication_scan": "finite changed-file pattern/local-value scan, not universal secrecy proof"
+}

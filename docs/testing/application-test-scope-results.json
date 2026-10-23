@@ -1,0 +1,362 @@
+{
+  "purpose": "Application-only cumulative verification; deliberate personal-learning scope removal",
+  "date": "2026-10-23",
+  "hosted_ci": "PENDING separately authorized publication",
+  "actual_work_minutes": "unknown",
+  "local_suite": {
+    "status": "PASS",
+    "seconds": 59.44176,
+    "stages": [
+      {
+        "stage": "python-tests",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 11.457
+      },
+      {
+        "stage": "python-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 40.327
+      },
+      {
+        "stage": "database-case-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 14.158
+      },
+      {
+        "stage": "database-lifecycle-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 10.087
+      },
+      {
+        "stage": "migration-undo-faults",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 14.351
+      },
+      {
+        "stage": "documentation",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 0.191
+      },
+      {
+        "stage": "whitespace",
+        "status": "PASS",
+        "exit": 0,
+        "seconds": 0.015
+      }
+    ],
+    "source_preserved": true,
+    "cleanup_passed": true
+  },
+  "counts": {
+    "python_database_tests": 1195,
+    "python_subtests": 3,
+    "python_case_subtest_ids": 815,
+    "provider_cases": 467,
+    "canonical_python_faults": 297,
+    "provider_faults": 47,
+    "aliases": 3,
+    "excluded_startup_diagnostics": 4,
+    "sql_cases_with_reconnect": 383,
+    "sql_fault_applications": 607,
+    "distinct_sql_fault_implementations": 126,
+    "lifecycle_cases_faults": 5,
+    "migration_gates": 14,
+    "migration_repairs": 17,
+    "migration_concurrency_checks": 3,
+    "runner_controls": 126,
+    "python_isolation_controls": 5
+  },
+  "removed": {
+    "quiz_logic_cases": 40,
+    "quiz_logic_faults": 37,
+    "quiz_browser_workflows_faults": 16,
+    "quiz_documentation_parameter": 1,
+    "quiz_only_runner_controls": 24,
+    "new_scope_control": 1
+  },
+  "source_sha256": {
+    "app/health_api.py": "85015c1e6b4302482523edf5b2360fd2cd0771e1d39d25635279115ced016159",
+    "app/health_server.py": "c893480c8ae0af9d240ae32b013a4071de92861b3e27a5c487020932d548d692",
+    "app/database_connectivity_probe.py": "db9d13ea7d624a8030b5555518b1fb82a3dca7f1165fbf50af5590d9ed439d7f",
+    "app/notes_maintenance.py": "dbbde39d5996296adc0244f74d1e4a606b5de08d0b05497a47373edbf207dffb",
+    "app/note_rules.py": "44c19fcd536d06c887e6e9a1600b63ca4f21074b32dee93ec7874810eae3b538",
+    "app/local_provider.py": "eb851a4ce033be2a60e58afd5dbc1976a8522a0b8834dea802ba83c7bc803309",
+    "tests/test_prd_lint.py": "04a66d2ac906235b4bd727b6fb87ce475dd2f6ba51c5ba910b2c945996082344",
+    "tests/test_note_rules_and_maintenance.py": "0a3dcf4b2e7c9b07e93d9e33f25d444b3b4b309f7020d075840617c28a6fa4ef",
+    "tests/test_health_api.py": "3dc8727b03097a757a26b7f5981f3e678caf50a867e0ddc2ef8c08d2c71f0b9a",
+    "tests/test_local_provider.py": "fe78680b5ef16bf94579870023cd93440e11c6f95c5f87fee6e6479da06cc56a",
+    "tests/test_database_connectivity_probe.py": "ba296ed12baab295aea9b44c5915a88082fe163968ea9a2596ac82ca380a3063",
+    "tests/test_doctor_failure_cases.py": "6c8c06d6285fe2950912692838ae692763b5c28f4e9454f83af4b200a3c8df97",
+    "tests/test_users_notes_database.py": "94515aef520ccd6675f2a1352c200f85fab9ee6944fd971cd50cb44599e8d6a5",
+    "tools/audit_database_lifecycle.py": "39f40e53db77a2490a44d77441403b8cee06e2d632cfaca62939c2a6937c0380",
+    "tools/audit_python_cases.py": "28b65ad33548ab0a4d33c9fe975597af0a575b24b415d2b4c7bb0f70ecccbba1",
+    "tools/run_ci.py": "001626a443edf2d633c4f53f9d10ccff53b5e0ef1c6989ec6204a55f085377dc",
+    "tools/write_test_audit.py": "f290e974467979fdd7ff0301b8a02e0ed67a45ca2034f49844e439a5fda1439e",
+    "tools/verify_suite_execution.py": "b14ae0d0a5a5a8defbaab9cb2975df09b3a64d35aacfcd9c67068471ca88ff00",
+    "tools/native_psql.py": "38e31ee8838cab63446f472c861d1bc8ef7d40ab55ad09b16a34b81d2e467ed5",
+    "tools/verify_native_psql.py": "50a76e822c734c6e265647718d664ebe573033401d0f17156ae78419488baead",
+    "tools/run_sql_shards.py": "7ad207492f5c8bc99fb686aca6399040c10d3df0022c46d2f1ba68aa8e1c9691",
+    "tools/run_test_suite.py": "f09b37ed8db8cb5adba1e0ca936cf6e83c3426040c100fd2761e9c158dd084e9",
+    "tools/verify_migration_roundtrip.py": "4d6b0b315209b612dc6682e20a22b17fc8f2d023671993d7a30a3d65da20e23d",
+    "tools/doctor.py": "4cf276effb197aad39ce94f652e01a558ca39ad3bbebe8af5ce9ce4693fae26f",
+    "tools/setup_local.py": "7cbbe7a498c3089162bc03545ff82f9eca956e15463afb1882a06f74b9ba7d6b",
+    "tools/test_dependencies.py": "3857faa7ed83e50517b0ab9c8701aec15e7347b255a6e1af20dba73fc73f2693",
+    "tools/provider_faults.py": "977c4de759e63ea1f8077d9961c8af56bcfa6d1bcf19158ac84914b1cfce6360",
+    "tools/check_mutations.py": "bc27f20769efc386e9b085e43341c737cdedce2615f1fff08ea9d05a78a608b8",
+    "tools/audit_migration_undo.py": "6c60e3b0e7e8763b30faaeb81272067bb9b103c7d580787acab3cf885a10715e",
+    "tools/prd_lint.py": "af94073d1933bea391009e819c1819dbad22c14f4d63334ce27c6034251db587",
+    "tools/audit_database_cases.py": "936985fa1b8daf20a78deae1d392cd1c0fa681180273fe267b1651aff4c5d773",
+    "tools/database_sandboxes.py": "b82bf8c3c4562ac1b41b85ca41799b7499ae59ff5b61c3c8af1d99b4ba5687b7",
+    "tools/ci_database.py": "72c7abba5046a98c1e8dd553d871d88cd82fcbf45a843f5b1897107a0bd97d12",
+    "tools/isolated_python.py": "8397b64a33db84468664f807f6b6ccaa2a1298ab3611b07bedaf7a5f8138797e",
+    "tools/verify_database_sandboxes.py": "acfba186204f223b71f7e54d4c9ad12ce8611c28f23f40533a3a361d0128bea9",
+    "tools/verify_python_isolation.py": "ca7de4e131fdb57413c3c788727425ea3e6b82c30a831ba6fec6965d75196e64",
+    "tools/test_doctor.py": "25522e95c32b8ceea080984ee800b2b8a82c3a0c169cac52e9732c0fce3d44b7",
+    "tools/database_test_session.py": "07f6dd2923ff28f7de3b2e3ac7728937833a0c930ba8b8dd9ec0312f0a62adcd"
+  },
+  "local_run_source_sha256": {
+    "app/health_api.py": "85015c1e6b4302482523edf5b2360fd2cd0771e1d39d25635279115ced016159",
+    "app/health_server.py": "c893480c8ae0af9d240ae32b013a4071de92861b3e27a5c487020932d548d692",
+    "app/database_connectivity_probe.py": "db9d13ea7d624a8030b5555518b1fb82a3dca7f1165fbf50af5590d9ed439d7f",
+    "app/notes_maintenance.py": "dbbde39d5996296adc0244f74d1e4a606b5de08d0b05497a47373edbf207dffb",
+    "app/note_rules.py": "44c19fcd536d06c887e6e9a1600b63ca4f21074b32dee93ec7874810eae3b538",
+    "app/local_provider.py": "eb851a4ce033be2a60e58afd5dbc1976a8522a0b8834dea802ba83c7bc803309",
+    "tests/test_prd_lint.py": "04a66d2ac906235b4bd727b6fb87ce475dd2f6ba51c5ba910b2c945996082344",
+    "tests/test_note_rules_and_maintenance.py": "0a3dcf4b2e7c9b07e93d9e33f25d444b3b4b309f7020d075840617c28a6fa4ef",
+    "tests/test_health_api.py": "3dc8727b03097a757a26b7f5981f3e678caf50a867e0ddc2ef8c08d2c71f0b9a",
+    "tests/test_local_provider.py": "fe78680b5ef16bf94579870023cd93440e11c6f95c5f87fee6e6479da06cc56a",
+    "tests/test_database_connectivity_probe.py": "ba296ed12baab295aea9b44c5915a88082fe163968ea9a2596ac82ca380a3063",
+    "tests/test_doctor_failure_cases.py": "6c8c06d6285fe2950912692838ae692763b5c28f4e9454f83af4b200a3c8df97",
+    "tests/test_users_notes_database.py": "94515aef520ccd6675f2a1352c200f85fab9ee6944fd971cd50cb44599e8d6a5",
+    "tools/audit_database_lifecycle.py": "39f40e53db77a2490a44d77441403b8cee06e2d632cfaca62939c2a6937c0380",
+    "tools/audit_python_cases.py": "28b65ad33548ab0a4d33c9fe975597af0a575b24b415d2b4c7bb0f70ecccbba1",
+    "tools/run_ci.py": "0a8e40a5fb8313df546ad76da3c3885fa636d20046bd2c97cf8d5ca6a598bceb",
+    "tools/write_test_audit.py": "f290e974467979fdd7ff0301b8a02e0ed67a45ca2034f49844e439a5fda1439e",
+    "tools/verify_suite_execution.py": "b14ae0d0a5a5a8defbaab9cb2975df09b3a64d35aacfcd9c67068471ca88ff00",
+    "tools/native_psql.py": "38e31ee8838cab63446f472c861d1bc8ef7d40ab55ad09b16a34b81d2e467ed5",
+    "tools/verify_native_psql.py": "50a76e822c734c6e265647718d664ebe573033401d0f17156ae78419488baead",
+    "tools/run_sql_shards.py": "7ad207492f5c8bc99fb686aca6399040c10d3df0022c46d2f1ba68aa8e1c9691",
+    "tools/run_test_suite.py": "f09b37ed8db8cb5adba1e0ca936cf6e83c3426040c100fd2761e9c158dd084e9",
+    "tools/verify_migration_roundtrip.py": "4d6b0b315209b612dc6682e20a22b17fc8f2d023671993d7a30a3d65da20e23d",
+    "tools/doctor.py": "4cf276effb197aad39ce94f652e01a558ca39ad3bbebe8af5ce9ce4693fae26f",
+    "tools/setup_local.py": "7cbbe7a498c3089162bc03545ff82f9eca956e15463afb1882a06f74b9ba7d6b",
+    "tools/test_dependencies.py": "3857faa7ed83e50517b0ab9c8701aec15e7347b255a6e1af20dba73fc73f2693",
+    "tools/provider_faults.py": "977c4de759e63ea1f8077d9961c8af56bcfa6d1bcf19158ac84914b1cfce6360",
+    "tools/check_mutations.py": "bc27f20769efc386e9b085e43341c737cdedce2615f1fff08ea9d05a78a608b8",
+    "tools/audit_migration_undo.py": "6c60e3b0e7e8763b30faaeb81272067bb9b103c7d580787acab3cf885a10715e",
+    "tools/prd_lint.py": "af94073d1933bea391009e819c1819dbad22c14f4d63334ce27c6034251db587",
+    "tools/audit_database_cases.py": "936985fa1b8daf20a78deae1d392cd1c0fa681180273fe267b1651aff4c5d773",
+    "tools/database_sandboxes.py": "b82bf8c3c4562ac1b41b85ca41799b7499ae59ff5b61c3c8af1d99b4ba5687b7",
+    "tools/ci_database.py": "72c7abba5046a98c1e8dd553d871d88cd82fcbf45a843f5b1897107a0bd97d12",
+    "tools/isolated_python.py": "8397b64a33db84468664f807f6b6ccaa2a1298ab3611b07bedaf7a5f8138797e",
+    "tools/verify_database_sandboxes.py": "acfba186204f223b71f7e54d4c9ad12ce8611c28f23f40533a3a361d0128bea9",
+    "tools/verify_python_isolation.py": "ca7de4e131fdb57413c3c788727425ea3e6b82c30a831ba6fec6965d75196e64",
+    "tools/test_doctor.py": "25522e95c32b8ceea080984ee800b2b8a82c3a0c169cac52e9732c0fce3d44b7",
+    "tools/database_test_session.py": "07f6dd2923ff28f7de3b2e3ac7728937833a0c930ba8b8dd9ec0312f0a62adcd"
+  },
+  "source_change_after_local_run": "Final run_ci.py deletion support/self-checks verified by fresh CI-entry execution and exact original/executed input integrity checks.",
+  "inventory_sha256": "a16d7b397f771cd25b12671bedc4ad909b20835aa424afb1abb4ba5826e5f09b",
+  "additional_inputs_sha256": {
+    "package.json": "ea1447adf3bf716dbca8fc963cc42de5aeae9768f08266ac3e5babd21ef70334",
+    ".github/workflows/setup.yml": "e1f3d89e0362cbf8a8cb5f0606a3ba2a515e5c63548aead42b9445b08dc5556e"
+  },
+  "linter_fault_identity_review": {
+    "reason": "Removing quiz-only scan changes breadth-first AST indexes, not retained fault behavior",
+    "old_count": 28,
+    "new_count": 28,
+    "removed_retained_faults": 0,
+    "renamed_faults": [
+      {
+        "old": "ast-prd_lint-36-268",
+        "new": "ast-prd_lint-36-267",
+        "same_faulty_ast_after_removing_only_quiz_scan": true
+      },
+      {
+        "old": "ast-prd_lint-36-269",
+        "new": "ast-prd_lint-36-268",
+        "same_faulty_ast_after_removing_only_quiz_scan": true
+      },
+      {
+        "old": "ast-prd_lint-53-286",
+        "new": "ast-prd_lint-53-285",
+        "same_faulty_ast_after_removing_only_quiz_scan": true
+      },
+      {
+        "old": "ast-prd_lint-55-288",
+        "new": "ast-prd_lint-55-287",
+        "same_faulty_ast_after_removing_only_quiz_scan": true
+      },
+      {
+        "old": "ast-prd_lint-154-425",
+        "new": "ast-prd_lint-154-421",
+        "same_faulty_ast_after_removing_only_quiz_scan": true
+      },
+      {
+        "old": "ast-prd_lint-157-431",
+        "new": "ast-prd_lint-157-427",
+        "same_faulty_ast_after_removing_only_quiz_scan": true
+      },
+      {
+        "old": "ast-prd_lint-162-438",
+        "new": "ast-prd_lint-162-434",
+        "same_faulty_ast_after_removing_only_quiz_scan": true
+      },
+      {
+        "old": "ast-prd_lint-46-491",
+        "new": "ast-prd_lint-46-487",
+        "same_faulty_ast_after_removing_only_quiz_scan": true
+      },
+      {
+        "old": "ast-prd_lint-48-495",
+        "new": "ast-prd_lint-48-491",
+        "same_faulty_ast_after_removing_only_quiz_scan": true
+      },
+      {
+        "old": "ast-prd_lint-65-524",
+        "new": "ast-prd_lint-65-520",
+        "same_faulty_ast_after_removing_only_quiz_scan": true
+      },
+      {
+        "old": "ast-prd_lint-94-550",
+        "new": "ast-prd_lint-94-546",
+        "same_faulty_ast_after_removing_only_quiz_scan": true
+      },
+      {
+        "old": "ast-prd_lint-108-568",
+        "new": "ast-prd_lint-108-564",
+        "same_faulty_ast_after_removing_only_quiz_scan": true
+      },
+      {
+        "old": "ast-prd_lint-120-593",
+        "new": "ast-prd_lint-120-589",
+        "same_faulty_ast_after_removing_only_quiz_scan": true
+      },
+      {
+        "old": "ast-prd_lint-162-690",
+        "new": "ast-prd_lint-162-683",
+        "same_faulty_ast_after_removing_only_quiz_scan": true
+      },
+      {
+        "old": "ast-prd_lint-50-752",
+        "new": "ast-prd_lint-50-745",
+        "same_faulty_ast_after_removing_only_quiz_scan": true
+      },
+      {
+        "old": "ast-prd_lint-85-801",
+        "new": "ast-prd_lint-85-794",
+        "same_faulty_ast_after_removing_only_quiz_scan": true
+      },
+      {
+        "old": "ast-prd_lint-111-834",
+        "new": "ast-prd_lint-111-827",
+        "same_faulty_ast_after_removing_only_quiz_scan": true
+      },
+      {
+        "old": "ast-prd_lint-161-927",
+        "new": "ast-prd_lint-161-917",
+        "same_faulty_ast_after_removing_only_quiz_scan": true
+      },
+      {
+        "old": "ast-prd_lint-50-979",
+        "new": "ast-prd_lint-50-969",
+        "same_faulty_ast_after_removing_only_quiz_scan": true
+      },
+      {
+        "old": "ast-prd_lint-50-980",
+        "new": "ast-prd_lint-50-970",
+        "same_faulty_ast_after_removing_only_quiz_scan": true
+      },
+      {
+        "old": "ast-prd_lint-85-1027",
+        "new": "ast-prd_lint-85-1017",
+        "same_faulty_ast_after_removing_only_quiz_scan": true
+      },
+      {
+        "old": "ast-prd_lint-85-1028",
+        "new": "ast-prd_lint-85-1018",
+        "same_faulty_ast_after_removing_only_quiz_scan": true
+      },
+      {
+        "old": "ast-prd_lint-87-1032",
+        "new": "ast-prd_lint-87-1022",
+        "same_faulty_ast_after_removing_only_quiz_scan": true
+      },
+      {
+        "old": "ast-prd_lint-111-1079",
+        "new": "ast-prd_lint-111-1069",
+        "same_faulty_ast_after_removing_only_quiz_scan": true
+      },
+      {
+        "old": "ast-prd_lint-87-1260",
+        "new": "ast-prd_lint-87-1248",
+        "same_faulty_ast_after_removing_only_quiz_scan": true
+      }
+    ]
+  },
+  "evidence": {
+    "file": "application-test-scope-evidence.json.gz",
+    "sha256": "d65b2a0c5cb30b409bcb21aa182c1a55a32479d21fd497087b1bd7ec6cef5efd",
+    "expanded_bytes": 8929571
+  },
+  "fresh_ci_entry": {
+    "status": "PASS",
+    "seconds": 97.291,
+    "steps": [
+      {
+        "name": "original-python-sources",
+        "status": "PASS"
+      },
+      {
+        "name": "complete-suite",
+        "status": "PASS"
+      },
+      {
+        "name": "committed-migration-roundtrip",
+        "status": "PASS"
+      }
+    ],
+    "cleanup_passed": true,
+    "source_commit": "235ee974a3a95628be7ae9cb5f84ae31463709b3",
+    "suite_status": "PASS",
+    "suite_seconds": 65.962261,
+    "source_preserved": true,
+    "original_and_executed_inputs_validated": true,
+    "committed_migration_case_count": 383,
+    "committed_migration_source_preserved": true,
+    "committed_migration_cleanup_passed": true,
+    "hosted": false
+  },
+  "initial_run": {
+    "status": "FAIL",
+    "stage": "python-case-faults",
+    "reason": "Exact inventory correctly rejected AST ID shifts caused by removed quiz scan; all real cases/faults passed. IDs reconciled using exact AST equivalence, not blind regeneration."
+  },
+  "renderer": {
+    "status": "PASS",
+    "required_reports": [
+      "Python",
+      "SQL",
+      "lifecycle"
+    ],
+    "quiz_or_browser_required": false
+  },
+  "privacy_review": {
+    "status": "PASS within finite review",
+    "changed_paths": 45,
+    "expanded_compressed_artifacts": 3,
+    "credential_pattern_or_private_env_value_matches": 0,
+    "relative_file_links_checked": 121,
+    "missing_relative_file_links": 0,
+    "whitespace_findings": 0,
+    "documentation_errors": 0,
+    "existing_warning_count": 1,
+    "existing_verify_items": 27,
+    "universal_confidentiality_or_security_claim": false
+  }
+}

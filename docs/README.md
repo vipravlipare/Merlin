@@ -2,14 +2,18 @@
 
 - [Parallel SQL performance: 36.83-second full verification and coverage proof](testing/test-suite-parallel-sql-performance.md)
 - [Final second review: every case/fault, repairs and observed results](testing/test-suite-second-review.md)
-Current work: [cumulative CI repair and hosted verification](testing/cumulative-ci-verification.md), then the [Day 7 health API contract and learning guide](architecture/health-api-contract.md), step 2.1 of the [Day 7 Jira checklist](sprints/day-seven-jira-checklist.md). Section 1 is learner-confirmed complete. Previous evidence: [Day 6 handoff](planning/day-six-handoff.md) and [test-suite necessity review](testing/test-suite-necessity-review.md).
+Current work: [Day 9 handoff](planning/day-nine-handoff.md) and [checklist](sprints/day-nine-jira-checklist.md), tracked in [Jira MER-10](https://vipravlipare.atlassian.net/browse/MER-10). The bounded byte-only decoder, retained cases/faults and local full-suite/fresh synthetic CI-entry verification are complete. Live HTTP transport is deferred. The guided learner explanation/review is complete; exact hosted verification remains open; no commit or push has occurred.
 
-For a beginner explanation of the current implementation, read [How Merlin works today](learning/current-app-setup-walkthrough.md).
+Learning and authorship: [decoder preparation, reviews and second-pass receipt](learning/provider-completion-preparation.md). Learner attempts and helper extraction are distinguished from explicitly authorized assistant implementation, test and harness work. The learner now confirms sections 1–4 complete from their side except publication; final 5.2 is separate.
 
-For today’s work, open the [health API contract](architecture/health-api-contract.md). Track Day 7 in [Jira MER-8](https://vipravlipare.atlassian.net/browse/MER-8).
+Transport decision: [3.3 assessment](architecture/local-provider-transport-assessment.md). Assessment complete; the unbuilt network connection and its full safety requirements need a separately budgeted slice.
 
-📚 Learn first: the Day 7 contract guide, request/response table and linked Python HTTP documentation.
-↩ Return: review the contract and answer its three explain-back questions; then design the negative cases before writing server code.
+Verification: [retained decoder map](testing/provider-decoder-baseline-review.md) and [integrated proof](testing/provider-decoder-suite-verification.md). All 38 decoder families mapped, 459 provider cases pass and 34 provider faults are detected. Full local suite/fresh synthetic CI-entry proof passed; hosted proof remains pending publication.
+
+For a beginner explanation of the earlier application foundation, read [How Merlin works today](learning/current-app-setup-walkthrough.md); compare historical descriptions with the latest handoff.
+
+📚 Learn first: the Day 9 checklist's streaming resources and Day 8 evidence limits.
+↩ Return: review the Day 9 handoff and guided corrections, then separately authorize publication if ready. Observe exact hosted CI before closing 4.4 or starting Day 10.
 
 | Folder | What belongs here |
 |---|---|
@@ -58,3 +62,9 @@ Migration 001 undo: [scaffold fill-in guide](learning/users-notes-down-migration
 Run all tests and injected faults: [test-suite terminal commands](testing/test-suite-commands.md).
 
 Test-suite repair and speed: [failure investigation and measured performance](testing/test-suite-performance.md).
+
+Day 9 latest: [4.2–4.4 verification](testing/provider-decoder-suite-verification.md) — 34 provider faults detected, full guarded suite and fresh synthetic CI entry point PASS. Publication and exact hosted proof remain pending; learner explanation and section 5 remain open.
+
+- [Pre-commit cumulative suite audit](testing/precommit-suite-audit.md): repaired decoder and fault-reporting gaps, complete case/fault evidence, measured reporting costs and publication limits.
+
+- [Application-only cumulative test scope](testing/application-test-scope.md): personal quizzes excluded; implemented-work ownership map, current seven-stage verification and evidence.

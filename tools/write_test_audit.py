@@ -18,32 +18,24 @@ def main():
     parser.add_argument("--output", type=Path, default=ROOT / "docs/testing/case-effectiveness-evidence")
     args = parser.parse_args()
     names = {"python":"merlin-python-effectiveness-final.json", "sql":"merlin-sql-effectiveness-final.json",
-             "sql_timestamp_rerun":"merlin-sql-F077-final.json", "quiz":"merlin-quiz-effectiveness.json",
-             "browser":"merlin-browser-effectiveness.json", "lifecycle":"merlin-lifecycle-effectiveness.json"}
+             "lifecycle":"merlin-lifecycle-effectiveness.json"}
     data = {key: json.loads((args.input / name).read_text()) for key,name in names.items()}
-    # F077's first audit fixture used an overlong username. Keep the original
-    # failure in the raw archive and use its explicit, validated rerun in tables.
-    patched = data["sql_timestamp_rerun"]["cases"][0]
-    assert patched['case'] == 'F077' and patched['effectiveness'] == 'DEMONSTRATED'
-    sql_rows = [patched if row['case'] == 'F077' else row for row in data['sql']['cases']]
+    sql_rows = data['sql']['cases']
     assert all(row['effectiveness'] == 'DEMONSTRATED' for row in sql_rows)
     assert all(row['outcome'] == 'passed' and row['detects'] for row in data['python']['matrix'])
-    assert all(row['baseline'] == 'passed' and row['detects'] for row in data['quiz']['matrix'])
-    assert all(row['baseline']['outcome'] == 'passed' and row['mutation']['status'] == 'DETECTED' for row in data['browser']['cases'])
     assert all(row['effectiveness'] == 'DEMONSTRATED' for row in data['lifecycle']['cases'])
-    assert data['sql']['preserved'] and data['sql_timestamp_rerun']['preserved'] and data['lifecycle']['preserved']
+    assert data['sql']['preserved'] and data['lifecycle']['preserved']
     # Refuse stale evidence if current Python/product/test sources changed.
-    for file,digest in {**data['python']['source_sha256'], **data['quiz']['source_sha256']}.items():
+    for file,digest in data['python']['source_sha256'].items():
         # Report rendering can change after the run without changing tested
         # behavior. Require freshness for product code and actual test inputs.
         if file.startswith('tools/') and file not in {'tools/doctor.py','tools/prd_lint.py','tools/test_doctor.py','tools/audit_python_cases.py','tools/check_mutations.py'}:
             continue
         assert hashlib.sha256((ROOT/file).read_bytes()).hexdigest() == digest, f'Stale evidence: {file}'
-    assert hashlib.sha256((ROOT/'tests/test_users_notes_database.py').read_bytes()).hexdigest() == data['sql_timestamp_rerun']['source_sha256']
+    assert hashlib.sha256((ROOT/'tests/test_users_notes_database.py').read_bytes()).hexdigest() == data['sql']['source_sha256']
     args.output.mkdir(parents=True,exist_ok=True)
     archive_names = {"python":"python-test-results", "sql":"database-test-results",
-                     "sql_timestamp_rerun":"timestamp-case-results", "quiz":"quiz-logic-results",
-                     "browser":"quiz-browser-results", "lifecycle":"database-lifecycle-results"}
+                     "lifecycle":"database-lifecycle-results"}
     for key,payload in data.items():
         (args.output/(archive_names[key]+'.json.gz')).write_bytes(gzip.compress((json.dumps(payload,ensure_ascii=True)+'\n').encode(),mtime=0))
     def esc(value): return str(value).replace('|','\\|').replace('\n',' ').replace('[','&lbrack;').replace(']','&rbrack;').replace('<','&lt;').replace('>','&gt;').replace('href=','href&#61;')
@@ -75,17 +67,6 @@ def main():
     for identity,group in sql_groups.items():
         catalog.append('| '+' | '.join(esc(v) for v in [group['id'],', '.join(sorted(group['names'])),dict(Counter(group['results'])),identity])+' |')
     table('database-cases.md','PostgreSQL cases',[[row['case'],row['rule'],'PASS',', '.join(sql_groups[f.get('sql',f['name'])]['id'] for f in row['faults'] if f['status'].startswith('DETECTED'))] for row in sql_rows])
-    js_ids={row['fault']:f'JS-M{index:03}' for index,row in enumerate(data['quiz']['faults'],1)}
-    catalog += ['', '## Quiz pure logic', '', '| ID | Fault | Status |','|---|---|---|']
-    catalog += ['| '+' | '.join(esc(v) for v in [js_ids[row['fault']],row['fault'],row['status']])+' |' for row in data['quiz']['faults']]
-    table('quiz-logic-cases.md','Quiz logic cases',[[row['case'],'tests/quiz.test.js','PASS',', '.join(js_ids[name] for name in row['detects'])] for row in data['quiz']['matrix']])
-    browser_rows=[]
-    catalog += ['', '## Real Chromium workflows', '', '| ID | Fault | Status |','|---|---|---|']
-    for index,row in enumerate(data['browser']['cases'],1):
-        ident=f'UI-M{index:03}'
-        catalog.append('| '+' | '.join(esc(v) for v in [ident,row['mutation']['fault']+' → '+row['mutation']['replacement'],row['mutation']['status']])+' |')
-        browser_rows.append([row['case'],'tools/audit_quiz_browser.mjs','PASS',ident])
-    table('quiz-browser-cases.md','Real Chromium workflow cases',browser_rows)
     lifecycle_rows=[]
     catalog += ['', '## PostgreSQL lifecycle', '', '| ID | Fault | Status |','|---|---|---|']
     descriptions=['Remove the note-owner foreign key during account deletion','Remove SKIP LOCKED from expiry cleanup','Remove SKIP LOCKED from retention purge','Remove the expiry batch limit','Commit the first cleanup before the second operation fails']
@@ -98,9 +79,7 @@ def main():
     summary={'python_observations':len(data['python']['matrix']),'python_subtests':sum(row.get('kind')=='subtest' for row in data['python']['matrix']),
              'python_faults':dict(Counter(row['status'] for row in data['python']['faults'])),
              'sql_cases':len(sql_rows),'sql_fault_pairs':dict(Counter(f['status'] for row in sql_rows for f in row['faults'])),
-             'sql_distinct_faults':len(sql_groups),'quiz_cases':len(data['quiz']['matrix']),
-             'quiz_faults':dict(Counter(row['status'] for row in data['quiz']['faults'])),
-             'browser_cases':len(browser_rows),'lifecycle_cases':len(lifecycle_rows),'preserved':True}
+             'sql_distinct_faults':len(sql_groups),'lifecycle_cases':len(lifecycle_rows),'preserved':True}
     (args.output/'audit-summary.json').write_text(json.dumps(summary,indent=2)+'\n')
     print(json.dumps(summary))
 

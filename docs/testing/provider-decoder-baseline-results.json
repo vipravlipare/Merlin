@@ -1,0 +1,3696 @@
+{
+  "purpose": "Day 9 4.1 retained decoder baseline only; no fault effectiveness/full suite/hosted certification",
+  "recorded_utc": "2026-10-23T17:27:48.235637+00:00",
+  "command": ".venv/bin/python -m pytest -q tests/test_local_provider.py (same invocation via pytest.main with an outcome-only evidence plugin)",
+  "exit_code": 0,
+  "wall_seconds": 0.7607122779991187,
+  "case_count": 459,
+  "files_sha256": {
+    "app/local_provider.py": "5ef81d42a4af25d1ca4ee3eda777d7361626be6135d468ccfa15dc6303e589bb",
+    "tests/test_local_provider.py": "8cf3a6855baa46baaf150ae33f2ae34aff1f1677940beb088165d068a457b976"
+  },
+  "cases": {
+    "tests/test_local_provider.py::test_every_split_preserves_unicode_and_order": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_record_cap_accepts_exact_boundary_and_rejects_one_over_before_copy[\\n]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_record_cap_accepts_exact_boundary_and_rejects_one_over_before_copy[\\r\\n]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_unfinished_record_cannot_grow_past_limit": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_large_coalesced_chunk_and_total_cap_count_metadata_and_blank_bytes": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_nonfinite_numbers_are_rejected_even_in_nested_metadata[NaN]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_nonfinite_numbers_are_rejected_even_in_nested_metadata[Infinity]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_nonfinite_numbers_are_rejected_even_in_nested_metadata[-Infinity]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_nonfinite_numbers_are_rejected_even_in_nested_metadata[1e999]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_nonfinite_numbers_are_rejected_even_in_nested_metadata[-1e999]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_duplicate_keys_are_rejected_at_every_object_level[{\"model\":\"qwen3:0.6b\",\"response\":\"Hi\",\"done\":false,\"done\":true}\\n]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_duplicate_keys_are_rejected_at_every_object_level[{\"model\":\"qwen3:0.6b\",\"response\":\"Hi\",\"done\":false,\"metadata\":{\"x\":1,\"x\":2}}\\n]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_schema_rejects_wrong_identity_types_and_token_metadata[updates0]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_schema_rejects_wrong_identity_types_and_token_metadata[updates1]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_schema_rejects_wrong_identity_types_and_token_metadata[updates2]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_schema_rejects_wrong_identity_types_and_token_metadata[updates3]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_schema_rejects_wrong_identity_types_and_token_metadata[updates4]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_schema_rejects_wrong_identity_types_and_token_metadata[updates5]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_schema_rejects_wrong_identity_types_and_token_metadata[updates6]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_schema_rejects_wrong_identity_types_and_token_metadata[updates7]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_schema_rejects_wrong_identity_types_and_token_metadata[updates8]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_schema_rejects_wrong_identity_types_and_token_metadata[updates9]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_schema_rejects_wrong_identity_types_and_token_metadata[updates10]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_schema_rejects_wrong_identity_types_and_token_metadata[updates11]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_required_nonterminal_fields_cannot_be_missing[model]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_required_nonterminal_fields_cannot_be_missing[done]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_required_nonterminal_fields_cannot_be_missing[response]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_valid_integer_token_count_boundary[0]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_valid_integer_token_count_boundary[64]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_output_token_count_over_cap_is_a_limit_error": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_invalid_chunk_type_has_safe_error[text]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_invalid_chunk_type_has_safe_error[None]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_invalid_chunk_type_has_safe_error[chunk2]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_invalid_chunk_type_has_safe_error[42]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_any_error_member_overrides_success_fields_without_disclosure[None]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_any_error_member_overrides_success_fields_without_disclosure[False]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_any_error_member_overrides_success_fields_without_disclosure[]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_any_error_member_overrides_success_fields_without_disclosure[SYNTHETIC_PROVIDER_ERROR_SENTINEL]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_malformed_records_do_not_expose_private_exception_chains[{\"SYNTHETIC_PRIVATE_INPUT_SENTINEL\": broken}\\n]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_malformed_records_do_not_expose_private_exception_chains[{\"response\":\"SYNTHETIC_PRIVATE_INPUT_SENTINEL\\xff\"}\\n]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_truncated_record_does_not_return_preceding_text": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_metadata_completion_waits_for_clean_eof[-{\"model\": \"qwen3:0.6b\", \"done\": true}\\n]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_metadata_completion_waits_for_clean_eof[-{\"model\":\"qwen3:0.6b\",\"response\":\"\",\"done\":true}\\n]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_metadata_completion_waits_for_clean_eof[ \\t\\r\\n-{\"model\": \"qwen3:0.6b\", \"done\": true}\\n]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_metadata_completion_waits_for_clean_eof[ \\t\\r\\n-{\"model\":\"qwen3:0.6b\",\"response\":\"\",\"done\":true}\\n]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_metadata_completion_waits_for_clean_eof[ \\t-{\"model\": \"qwen3:0.6b\", \"done\": true}\\n]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_metadata_completion_waits_for_clean_eof[ \\t-{\"model\":\"qwen3:0.6b\",\"response\":\"\",\"done\":true}\\n]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-0]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-1]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-2]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-3]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-4]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-5]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-6]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-7]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-8]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-9]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-10]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-11]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-12]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-13]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-14]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-15]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-16]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-17]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-18]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-19]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-20]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-21]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-22]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-23]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-24]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-25]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-26]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-27]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-28]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-29]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-30]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-31]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-32]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-33]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-34]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-35]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-36]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-37]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-38]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-39]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-40]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-41]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-42]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-43]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-44]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-45]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-46]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-47]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-48]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-49]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[terminal-text-byte-50]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-0]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-1]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-2]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-3]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-4]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-5]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-6]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-7]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-8]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-9]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-10]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-11]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-12]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-13]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-14]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-15]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-16]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-17]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-18]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-19]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-20]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-21]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-22]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-23]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-24]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-25]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-26]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-27]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-28]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-29]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-30]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-31]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-32]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-33]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-34]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-35]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-36]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-37]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-38]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-39]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-40]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-41]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-42]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-43]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-44]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-45]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-46]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-47]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-48]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-49]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-50]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-51]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-52]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-53]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-54]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-55]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-56]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-57]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-58]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-59]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-60]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-61]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-62]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-63]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-64]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-65]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-66]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-67]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-68]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-69]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-70]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-71]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-72]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-73]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-74]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-75]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-76]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-77]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-78]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-79]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-80]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-81]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-82]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-83]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-84]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-85]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-86]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-87]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-88]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-89]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_missing_completion_or_empty_answer_is_incomplete[chunks0]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_missing_completion_or_empty_answer_is_incomplete[chunks1]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_missing_completion_or_empty_answer_is_incomplete[chunks2]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_missing_completion_or_empty_answer_is_incomplete[chunks3]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_missing_completion_or_empty_answer_is_incomplete[chunks4]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_nonblank_data_after_completion_is_invalid[False-{\"model\":\"qwen3:0.6b\",\"response\":\"Hi\",\"done\":true}\\n]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_nonblank_data_after_completion_is_invalid[False-{\"model\":\"qwen3:0.6b\",\"response\":\"Hi\",\"done\":false}\\n]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_nonblank_data_after_completion_is_invalid[False-{]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_nonblank_data_after_completion_is_invalid[False-\\xff]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_nonblank_data_after_completion_is_invalid[True-{\"model\":\"qwen3:0.6b\",\"response\":\"Hi\",\"done\":true}\\n]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_nonblank_data_after_completion_is_invalid[True-{\"model\":\"qwen3:0.6b\",\"response\":\"Hi\",\"done\":false}\\n]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_nonblank_data_after_completion_is_invalid[True-{]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_nonblank_data_after_completion_is_invalid[True-\\xff]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_error_precedence_including_after_terminal[None-]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_error_precedence_including_after_terminal[None-{\"model\":\"qwen3:0.6b\",\"response\":\"Hi\",\"done\":false}\\n]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_error_precedence_including_after_terminal[None-{\"model\":\"qwen3:0.6b\",\"response\":\"Hi\",\"done\":true}\\n]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_error_precedence_including_after_terminal[False-]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_error_precedence_including_after_terminal[False-{\"model\":\"qwen3:0.6b\",\"response\":\"Hi\",\"done\":false}\\n]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_error_precedence_including_after_terminal[False-{\"model\":\"qwen3:0.6b\",\"response\":\"Hi\",\"done\":true}\\n]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_error_precedence_including_after_terminal[0-]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_error_precedence_including_after_terminal[0-{\"model\":\"qwen3:0.6b\",\"response\":\"Hi\",\"done\":false}\\n]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_error_precedence_including_after_terminal[0-{\"model\":\"qwen3:0.6b\",\"response\":\"Hi\",\"done\":true}\\n]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_error_precedence_including_after_terminal[value3-]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_error_precedence_including_after_terminal[value3-{\"model\":\"qwen3:0.6b\",\"response\":\"Hi\",\"done\":false}\\n]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_error_precedence_including_after_terminal[value3-{\"model\":\"qwen3:0.6b\",\"response\":\"Hi\",\"done\":true}\\n]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_error_precedence_including_after_terminal[SYNTHETIC_PROVIDER_ERROR_SENTINEL-]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_error_precedence_including_after_terminal[SYNTHETIC_PROVIDER_ERROR_SENTINEL-{\"model\":\"qwen3:0.6b\",\"response\":\"Hi\",\"done\":false}\\n]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_error_precedence_including_after_terminal[SYNTHETIC_PROVIDER_ERROR_SENTINEL-{\"model\":\"qwen3:0.6b\",\"response\":\"Hi\",\"done\":true}\\n]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_terminal_response_if_present_must_be_string[None]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_terminal_response_if_present_must_be_string[4]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_terminal_response_if_present_must_be_string[value2]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_terminal_response_if_present_must_be_string[False]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_unfinished_final_record_is_incomplete[{]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_unfinished_final_record_is_incomplete[{\"x\":]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_unfinished_final_record_is_incomplete[{\"x\":\"unfinished]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_unfinished_final_record_is_incomplete[{\"x\":tru]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_unfinished_final_record_is_incomplete[{\"x\":1e+]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_unfinished_final_record_is_incomplete[{\"x\":1.]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_unfinished_final_record_is_incomplete[{\"x\":\"\\u12]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_unfinished_final_record_is_incomplete[{\"x\":\"\\xf0\\x9f]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_malformed_final_record_is_invalid[{broken}]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_malformed_final_record_is_invalid[{\"x\":nope}]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_malformed_final_record_is_invalid[{\"x\":\"\\q\"}]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_malformed_final_record_is_invalid[{\"x\":\"\\xff\"}]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_malformed_final_record_is_invalid[{\"x\":1 \"y\":2}]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_malformed_final_record_is_invalid[{\"x\":1.2.]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_malformed_final_record_is_invalid[{\"x\":1e2e]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_malformed_final_record_is_invalid[{\"x\":\"\\u1z]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_malformed_final_record_is_invalid[{\"x\":tru ]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_malformed_final_record_is_invalid[{\"x\":- ]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_source_failure_is_safe_and_never_replayed[prefix0]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_source_failure_is_safe_and_never_replayed[prefix1]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_source_failure_is_safe_and_never_replayed[prefix2]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_source_acquisition_failure_is_safe": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_unexpected_or_control_exception_is_not_swallowed[KeyboardInterrupt]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_unexpected_or_control_exception_is_not_swallowed[SystemExit]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_unexpected_or_control_exception_is_not_swallowed[RuntimeError]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_length_policy_respects_validation_precedence[updates0-length-limited]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_length_policy_respects_validation_precedence[updates1-invalid-response]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_length_policy_respects_validation_precedence[updates2-invalid-response]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_length_policy_respects_validation_precedence[updates3-invalid-response]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_length_policy_respects_validation_precedence[updates4-limit-exceeded]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_length_policy_respects_validation_precedence[updates5-provider-failure]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_failure_does_not_consume_more_source_or_close_caller_resource": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_complete_stream_keeps_total_and_post_terminal_byte_limits": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_caller_keeps_source_cleanup_ownership[False]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_caller_keeps_source_cleanup_ownership[True]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_unknown_metadata_and_mixed_line_endings_preserve_text": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-1]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-2]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-3]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-4]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-5]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-6]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-7]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-8]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-9]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-10]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-11]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-12]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-13]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-14]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-15]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-16]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-17]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-18]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-19]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-20]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-21]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-22]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-23]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-24]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-25]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-26]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-27]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-28]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-29]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-30]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-31]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-32]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-33]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-34]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-35]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-36]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-37]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-38]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-39]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-40]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-41]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-42]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-43]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-44]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-45]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-46]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-47]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-48]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-49]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-50]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-51]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-52]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-53]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-54]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-55]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-56]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-57]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-58]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-59]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-60]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-61]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-62]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-63]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-64]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-65]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-66]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-67]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-68]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-69]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-70]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-71]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-72]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-73]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-74]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-75]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-76]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-77]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-78]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-79]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-80]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-81]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-82]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-83]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-84]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-85]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-86]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-87]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-88]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-89]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-90]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-91]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-92]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-93]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-94]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-95]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-96]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-97]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-98]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-99]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-100]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-101]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-102]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-103]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-104]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-105]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-106]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-107]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-108]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-109]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-110]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-111]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-112]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-113]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-114]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-115]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-116]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-117]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-118]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-119]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-120]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-121]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-122]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-123]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-124]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-125]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-126]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-127]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-128]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-129]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-130]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-131]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-132]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-133]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-134]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-135]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-136]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-137]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-138]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-139]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-140]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-141]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-142]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-143]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-144]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-145]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-146]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-147]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-148]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-149]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-150]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-151]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-152]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-153]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_two_piece_split[byte-154]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_one_byte_chunks_with_interleaved_empty_chunks": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_ordered_ascii_assembly[separate-records]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_ordered_ascii_assembly[coalesced-records]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_multibyte_split[unicode-byte-38]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_multibyte_split[unicode-byte-40]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_multibyte_split[unicode-byte-41]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_each_multibyte_split[unicode-byte-42]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_record_endings_with_split_crlf[lf]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_record_endings_with_split_crlf[crlf]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_record_endings_with_split_crlf[mixed]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_blank_records_before_between_and_after_text": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_duplicate_identity_and_text_keys[model]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_duplicate_identity_and_text_keys[response]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_top_level_shapes[array]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_top_level_shapes[string]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_top_level_shapes[null]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_top_level_shapes[boolean]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_top_level_shapes[number]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_corruption_after_partial_text[malformed-line]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_corruption_after_partial_text[invalid-utf8-line]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_corruption_after_partial_text[truncated-utf8-tail]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_additional_state_and_schema_boundaries[multiple-text-no-terminal]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_additional_state_and_schema_boundaries[terminal-model-change]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_additional_state_and_schema_boundaries[object-response]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_empty_fragment_before_real_answer[{\"model\": \"qwen3:0.6b\", \"done\": true}\\n]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_empty_fragment_before_real_answer[{\"model\":\"qwen3:0.6b\",\"response\":\"\",\"done\":true}\\n]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_bare_error_object[prefix0]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_bare_error_object[prefix1]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_complete_stream_record_byte_boundary[ascii-exact]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_complete_stream_record_byte_boundary[ascii-over]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_complete_stream_record_byte_boundary[utf8-exact]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_complete_stream_record_byte_boundary[utf8-over]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_small_chunks_enforce_unfinished_buffer_cap_immediately": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_total_cap_counts_ignored_metadata_bytes[ascii-exact]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_total_cap_counts_ignored_metadata_bytes[ascii-over]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_total_cap_counts_ignored_metadata_bytes[utf8-exact]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_total_cap_counts_ignored_metadata_bytes[utf8-over]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_blank_only_flood_cannot_bypass_aggregate_limit": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_terminal_token_metadata[64-None]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_terminal_token_metadata[65-limit-exceeded]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_terminal_token_metadata[-1-invalid-response]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_terminal_token_metadata[True-invalid-response]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_terminal_token_metadata[64-invalid-response]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_private_markers_absent_from_all_public_diagnostics[provider]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_private_markers_absent_from_all_public_diagnostics[json]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_private_markers_absent_from_all_public_diagnostics[utf8]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_decoder_has_zero_external_side_effects[success]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_decoder_has_zero_external_side_effects[provider-failure]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    },
+    "tests/test_local_provider.py::test_contract_decoder_has_zero_external_side_effects[invalid-response]": {
+      "outcome": "passed",
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    }
+  },
+  "transport": "deferred; no HTTP/GPU/model required",
+  "fault_effectiveness": "not executed in this 4.1 run",
+  "hosted_ci": "PENDING for expanded working tree",
+  "nearest_regressions": {
+    "command": ".venv/bin/python -m pytest -q tests/test_local_provider.py tests/test_note_rules_and_maintenance.py tests/test_health_api.py tests/test_database_connectivity_probe.py",
+    "passed": 691,
+    "pytest_seconds": 3.56,
+    "failed": 0,
+    "skipped": 0
+  }
+}

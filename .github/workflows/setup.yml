@@ -51,21 +51,11 @@ jobs:
             cat "$RUNNER_TEMP/doctor-safe.log"
           done
           git diff --check
-      - name: Pinned browser runtime
-        env:
-          PLAYWRIGHT_BROWSERS_PATH: ${{ runner.temp }}/merlin-browser-binaries
-        run: |
-          npm ci --prefix .github/ci/browser --ignore-scripts --no-audit --no-fund
-          node .github/ci/browser/node_modules/playwright/cli.js install --with-deps --only-shell chromium
       - name: Build isolated PostgreSQL test runtime
         run: |
           docker build --iidfile "$RUNNER_TEMP/merlin-ci-image" -f .github/ci/postgres.Dockerfile .github/ci
           docker image inspect --format '{{.Id}}' "$(cat "$RUNNER_TEMP/merlin-ci-image")" > "$RUNNER_TEMP/merlin-ci-runtime-id"
       - name: All prior application cases, faults and migration verification
-        env:
-          MERLIN_PLAYWRIGHT_MODULE: ${{ github.workspace }}/.github/ci/browser/node_modules/playwright/index.mjs
-          PLAYWRIGHT_BROWSERS_PATH: ${{ runner.temp }}/merlin-browser-binaries
-          PLAYWRIGHT_HOST_PLATFORM_OVERRIDE: ubuntu24.04-x64
         run: |
           uv run --locked python tools/run_ci.py --image "$(cat "$RUNNER_TEMP/merlin-ci-runtime-id")" --out "$RUNNER_TEMP/merlin-ci-results"
       - name: Retain only CI-owned synthetic verification reports

@@ -147,7 +147,7 @@ def main():
     link_files = list(folder.rglob("*.md"))
     if folder.name == "docs":
         link_files += [p for p in (folder.parent / "README.md", folder.parent / "AGENTS.md") if p.is_file()]
-        link_files += list((folder.parent / "quizzes").glob("*.html"))
+        # Personal learning HTML is outside application verification scope.
     for path in sorted(set(link_files)):
         errors.extend(local_link_errors(path))
     for k, v in story_ids.items():

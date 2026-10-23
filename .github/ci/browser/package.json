@@ -1,7 +1,0 @@
-{
-  "name": "merlin-ci-browser",
-  "private": true,
-  "dependencies": {
-    "playwright": "1.58.2"
-  }
-}

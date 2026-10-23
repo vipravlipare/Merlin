@@ -5,6 +5,7 @@ Each child gets separate memory, process group, output and a timeout. The parent
 imports dependencies only: it must not execute tests or import app modules.
 """
 import os
+import ctypes
 from pathlib import Path
 import signal
 import subprocess
@@ -35,9 +36,19 @@ def _start(action, stdout, stderr):
     if threading.active_count() != 1:
         raise RuntimeError('Fork isolation requires a single-threaded parent')
     sys.stdout.flush(); sys.stderr.flush()
+    parent_pid = os.getpid()
     pid = os.fork()
     if pid == 0:
         try:
+            # Nested CLI workers have their own process group. Kill them if
+            # their owning worker disappears, including a hard timeout/abort.
+            libc = ctypes.CDLL(None, use_errno=True)
+            if libc.prctl(1, signal.SIGKILL, 0, 0, 0) != 0:
+                raise OSError(ctypes.get_errno(), 'Cannot bind worker lifetime')
+            # The parent can die between fork and prctl; no work may begin
+            # after that race, because the death signal was not yet installed.
+            if os.getppid() != parent_pid:
+                os._exit(127)
             os.setsid()
             # Faults can turn import guards into interactive CLI entry points.
             # A detached session still inherits an open terminal on fd 0;
@@ -75,7 +86,7 @@ def fork_jobs(jobs, *, workers=8, timeout=45):
         importlib.import_module("_pytest." + plugin)
     for dependency in ["emoji", "regex", "psycopg", "unittest.mock", "tomllib"]:
         importlib.import_module(dependency)
-    forbidden = ['app.health_api', 'app.health_server', 'test_health_api', 'tests.test_health_api',
+    forbidden = ['app.local_provider', 'app.health_api', 'app.health_server', 'test_health_api', 'tests.test_health_api',
                  'app.note_rules', 'app.notes_maintenance', 'app.database_connectivity_probe',
                  'tools.doctor', 'doctor', 'tools.prd_lint']
     if any(name in sys.modules for name in forbidden):

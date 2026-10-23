@@ -41,13 +41,6 @@ def environment():
     env.pop('MERLIN_DB_SANDBOX', None)
     env.pop('MERLIN_DB_SQL_SECOND',None)
     env.setdefault('MERLIN_SQL_SHARDS','2')
-    browser_root = Path('/tmp/merlin-browser-audit')
-    if not env.get('MERLIN_PLAYWRIGHT_MODULE'):
-        env['MERLIN_PLAYWRIGHT_MODULE'] = str(browser_root / 'node_modules/playwright/index.mjs')
-        env.setdefault('PLAYWRIGHT_BROWSERS_PATH', str(browser_root / 'browsers'))
-        env.setdefault('PLAYWRIGHT_HOST_PLATFORM_OVERRIDE', 'ubuntu24.04-x64')
-        libraries = str(browser_root / 'runtime/usr/lib/x86_64-linux-gnu')
-        env['LD_LIBRARY_PATH'] = libraries + (':' + env['LD_LIBRARY_PATH'] if env.get('LD_LIBRARY_PATH') else '')
     return env
 
 
@@ -55,11 +48,8 @@ def stages(directory):
     py = str(PYTHON)
     return [
         ('python-tests', [py, '-m', 'pytest', '-q', 'tests', 'tools/test_doctor.py', '--tb=short']),
-        ('quiz-tests', ['node', '--test', '--test-isolation=none', 'tests/quiz.test.js']),
         ('python-case-faults', [py, 'tools/audit_python_cases.py', '--out', str(directory / 'merlin-python-effectiveness-final.json')]),
         ('database-case-faults', [py, 'tools/audit_database_cases.py', '--out', str(directory / 'merlin-sql-effectiveness-final.json')]),
-        ('quiz-case-faults', [py, 'tools/audit_quiz_cases.py', '--out', str(directory / 'merlin-quiz-effectiveness.json')]),
-        ('browser-case-faults', ['node', 'tools/audit_quiz_browser.mjs', str(directory / 'merlin-browser-effectiveness.json')]),
         ('database-lifecycle-faults', [py, 'tools/audit_database_lifecycle.py', '--out', str(directory / 'merlin-lifecycle-effectiveness.json')]),
         ('migration-undo-faults', [py, 'tools/audit_migration_undo.py', '--out', str(directory / 'migration-undo-results.json')]),
         ('documentation', [py, 'tools/prd_lint.py', 'docs']),
@@ -70,17 +60,15 @@ def stages(directory):
 def preflight(env):
     if not PYTHON.is_file():
         raise RuntimeError('Missing .venv; follow the documented locked-environment setup')
-    for name in ['node', 'docker', 'git']:
+    for name in ['docker', 'git']:
         if not shutil.which(name):
             raise RuntimeError('Required command missing: ' + name)
     probes = [
         [str(PYTHON), 'tools/verify_suite_execution.py'],
         [str(PYTHON), 'tools/verify_native_psql.py'],
         [str(PYTHON), '-c', "import sys,pytest,psycopg,emoji,regex; assert sys.version_info[:2]==(3,12); print('Python imports ready')"],
-        ['node', '-e', "if(Number(process.versions.node.split('.')[0])!==24)process.exit(1)"],
         [str(PYTHON), '-c', 'from tools.database_test_session import DatabaseTestSession; s=DatabaseTestSession(); s.__enter__(); s.close(); print("Guarded reusable SQL transport ready")'],
         [str(PYTHON), '-c', 'from tools.audit_database_cases import load_cases,preservation; m,_=load_cases(); preservation(m); print("Disposable identity and empty tables verified")'],
-        ['node', '--input-type=module', '-e', "import {pathToFileURL} from 'node:url'; const fs=await import('node:fs'); const path=await import('node:path'); const pkg=JSON.parse(fs.readFileSync(path.join(path.dirname(process.env.MERLIN_PLAYWRIGHT_MODULE),'package.json'),'utf8')); if(pkg.version!=='1.58.2') throw Error('Playwright differs from audited pin'); const {chromium}=await import(pathToFileURL(process.env.MERLIN_PLAYWRIGHT_MODULE).href); const b=await chromium.launch({headless:true}); try {if(b.version()!=='145.0.7632.6') throw Error('Browser differs from audited pin'); console.log('Chromium launch verified');} finally {await b.close();}"],
     ]
     probes.append([str(PYTHON), 'tools/verify_python_isolation.py'])
     probes.append([str(PYTHON), 'tools/run_ci.py', '--self-check'])
@@ -93,7 +81,7 @@ def preflight(env):
                 safe_details = [line for line in result.stdout.splitlines()
                                 if re.fullmatch(r'Native psql failed checks: [a-z0-9_, -]+', line)]
                 detail = '; ' + safe_details[0] if safe_details else ''
-                raise RuntimeError('Prerequisite check failed: ' + ('browser runtime' if command[0] == 'node' and '--input-type=module' in command else ' '.join(command[:3])) + '; see the command guide' + detail)
+                raise RuntimeError('Prerequisite check failed: ' + ' '.join(command[:3]) + '; see the command guide' + detail)
             if result.stdout.strip():
                 print(result.stdout.strip(), flush=True)
 
@@ -102,7 +90,7 @@ def preflight(env):
     # before starting baselines; a failed or timed-out prerequisite still aborts.
     with ThreadPoolExecutor(max_workers=3) as pool:
         jobs = [pool.submit(check_group, indexes) for indexes in
-                [(0, 8), (1, 4, 5), (2, 3, 6, 7)]]
+                [(0, 6), (1, 3, 4), (2, 5)]]
         for job in as_completed(jobs):
             job.result()
 
@@ -141,13 +129,35 @@ def validate(stage, directory):
                 observed_aliases[row['fault']] = row['canonical_fault']
                 continue
             if row['status'] == 'DETECTED':
-                from tools.audit_python_cases import HEALTH_API_DETECTIONS
+                # Independently reconstruct selected execution from baseline
+                # identities; a worker's scope flag is not proof by itself.
+                selected = row.get('selected_test_files')
+                assert selected is None or isinstance(selected, list), 'Invalid selected-case manifest'
+                baseline_cases = data['baseline']['cases']
+                expected_selected = {node for node, case in baseline_cases.items()
+                                     if case.get('kind') != 'subtest' and
+                                     (selected is None or case.get('file') in selected or node in selected)}
+                actual_selected = {node for node, case in row['cases'].items() if case.get('kind') != 'subtest'}
+                assert actual_selected == expected_selected, 'Selected Python execution is incomplete'
+                assert row.get('exit') == 1 and not row.get('errors'), 'Python fault did not finish its selected calls'
+                assert all(case.get('outcome') in {'passed', 'failed'} for case in row['cases'].values()), 'Python selected case skipped or unexecuted'
+                from tools.audit_python_cases import HEALTH_API_DETECTIONS, matches_intended_failure
                 if row['fault'] in HEALTH_API_DETECTIONS:
                     test, assertion = HEALTH_API_DETECTIONS[row['fault']]
                     node = 'tests/test_health_api.py::' + test
                     assert row.get('intended_detection') is True, 'API intended detection missing'
                     assert row.get('expected_detection') == node and row.get('expected_assertion') == assertion, 'API attribution differs from reviewed requirement'
-                    assert node in row['detected_by'] and assertion in row['cases'].get(node, {}).get('failure', ''), 'API intended assertion did not fail'
+                    assert node in row['detected_by'] and matches_intended_failure(row['cases'].get(node, {}), assertion), 'API intended assertion did not fail'
+                from tools.provider_faults import DETECTIONS as PROVIDER_DETECTIONS
+                if row['fault'] in PROVIDER_DETECTIONS:
+                    prefix, assertion = PROVIDER_DETECTIONS[row['fault']]
+                    intended = [node for node in row['detected_by'] if node.startswith(prefix)
+                                and row['cases'].get(node, {}).get('outcome') == 'failed'
+                                and matches_intended_failure(row['cases'][node], assertion)]
+                    assert row.get('intended_detection') is True and intended, 'Provider intended assertion did not fail'
+                    assert row.get('expected_detection') == prefix and row.get('expected_assertion') == assertion, 'Provider attribution differs from reviewed requirement'
+                    assert row.get('intended_cases') == intended, 'Provider detection evidence contradicts failures'
+                    assert row.get('exit') == 1 and not row.get('errors'), 'Provider fixture/exit cannot certify detection'
                 assert row['scope_manifest_matches'] is True, 'Mutation omitted a required dependent case'
                 assert row['detected_by'] and set(row['detected_by']) <= set(inventory['python_cases'])
                 assert all(row['cases'][case]['outcome'] == 'failed' for case in row['detected_by'])
@@ -186,28 +196,11 @@ def validate(stage, directory):
                 key = (fault['name'], fault.get('sql', ''), fault.get('before_seed', False))
                 faults.setdefault(key, []).append(fault['status'])
         assert faults and all(any(s.startswith('DETECTED') for s in outcomes) for outcomes in faults.values()), 'Database fault survived the entire selected suite'
-    elif stage == 'quiz-case-faults':
-        data = read('merlin-quiz-effectiveness.json')
-        complete(data['matrix'], 'case', inventory['quiz_cases'])
-        complete(data['faults'], 'fault', inventory['quiz_faults'])
-        current_hashes(data['source_sha256'], ['quizzes/sprint-0-quiz.html', 'tests/quiz.test.js'])
-        assert set(data['baseline']['cases']) == set(inventory['quiz_cases'])
-        assert data['baseline']['status'] == 'SURVIVED' and all(r == 'passed' for r in data['baseline']['cases'].values()), 'Quiz baseline outcomes contradict success'
-        assert data['matrix'] and all(r['baseline'] == 'passed' and r['detects'] for r in data['matrix'])
-        assert data['faults'] and all(r['status'] == 'DETECTED' for r in data['faults']), 'Quiz fault survived or was invalid'
-        for case in data['matrix']:
-            expected_kills = {r['fault'] for r in data['faults'] if r['cases'].get(case['case']) == 'failed'}
-            assert set(case['detects']) == expected_kills, 'Quiz detection matrix contradicts fault outcomes'
-    elif stage == 'browser-case-faults':
-        data = read('merlin-browser-effectiveness.json')
-        complete(data['cases'], 'case', inventory['browser_cases'])
-        current_hashes(data['source_sha256'], ['quizzes/sprint-0-quiz.html', 'tools/audit_quiz_browser.mjs'])
-        assert all(r['mutation']['outcome'] == 'failed' for r in data['cases'])
-        assert data['cases'] and all(r['baseline']['outcome'] == 'passed' and r['mutation']['status'] == 'DETECTED' for r in data['cases'])
     elif stage == 'database-lifecycle-faults':
         data = read('merlin-lifecycle-effectiveness.json')
         complete(data['cases'], 'case', inventory['lifecycle_cases'])
         assert all(r['baseline']['outcome'] == 'passed' and r['mutation']['outcome'] == 'failed' for r in data['cases'])
+        assert all(r['mutation'].get('phase') == 'check' and r['mutation'].get('failure_kind') in {'behavior-assertion','expected-lock-timeout'} for r in data['cases']), 'Lifecycle fixture failure credited as detection'
         assert data['preserved'] and data['cases'] and all(r['effectiveness'] == 'DEMONSTRATED' for r in data['cases'])
     elif stage == 'migration-undo-faults':
         data = read('migration-undo-results.json')
@@ -322,7 +315,7 @@ def main():
         summary = {'started_utc': datetime.now(timezone.utc).isoformat(), 'stages': [], 'status': 'FAIL',
                    'execution': {'database_transport': 'guarded reusable libpq session',
                                  'python_fault_workers': min(8, max(1, int(env.get('MERLIN_PYTHON_FAULT_WORKERS','8'))), len(os.sched_getaffinity(0))),
-                                 'schedule': 'independent Python and quiz lanes with isolated database lanes' if env.get('MERLIN_DB_ISOLATION','1')=='1' else 'independent Python and quiz lanes with serial database lane',
+                                 'schedule': 'independent Python and isolated database lanes' if env.get('MERLIN_DB_ISOLATION','1')=='1' else 'independent Python and serial database lanes',
                                  'python_fault_scope': env.get('MERLIN_PYTHON_FAULT_SCOPE','dependent'),
                                  'sql_shards': 2 if env.get('MERLIN_DB_ISOLATION','1')=='1' and env.get('MERLIN_SQL_SHARDS','2')=='2' else 1}}
         print('Results: ' + str(directory), flush=True)
@@ -446,7 +439,7 @@ def main():
             # Baselines write only rollback-scoped source fixtures. PostgreSQL
             # basebackup+WAL supports concurrent clients; recovered copies must
             # still pass every identity, empty-table and fingerprint guard.
-            # Preparation is not fault injection. All faults wait for BOTH
+            # Preparation is not fault injection. All faults wait for both
             # baseline completion and successful copy/isolation verification.
             with ThreadPoolExecutor(max_workers=1) as setup_pool:
                 if env.get('MERLIN_DB_ISOLATION','1') == '1':
@@ -463,7 +456,7 @@ def main():
                         summary.setdefault('failure', str(error))
                         summary.setdefault('first_failed_stage', 'preflight')
                         raise
-                    lane(['python-tests', 'quiz-tests'])
+                    lane(['python-tests'])
                     if prepared is not None:
                         try:
                             setup_job.result()
@@ -473,10 +466,9 @@ def main():
                             summary.setdefault('first_failed_stage', 'database-isolation')
                             raise
                     if not stop.is_set():
-                        pool = ThreadPoolExecutor(max_workers=3)
+                        pool = ThreadPoolExecutor(max_workers=2)
                         try:
-                            work = [pool.submit(lane, ['quiz-case-faults', 'browser-case-faults']),
-                                    pool.submit(lane, ['python-case-faults']),
+                            work = [pool.submit(lane, ['python-case-faults']),
                                     pool.submit(database_lanes, prepared)]
                             for future in as_completed(work):
                                 future.result()

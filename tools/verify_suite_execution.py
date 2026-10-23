@@ -1,6 +1,6 @@
 """Exercise real suite scheduling against disposable, deliberately faulty jobs.
 
-No database or browser access. Proves baseline-first scheduling, independent
+No live database access. Proves baseline-first scheduling, independent
 target assignment, serial fallback, validation failure and cancellation cleanup.
 These infrastructure checks are separate from application case counts.
 """
@@ -52,10 +52,10 @@ names=[name for name,command in suite.stages(folder)]
 def stages(directory):
  rows=[]
  for name in names:
-  delay=1 if (mode=='interrupt' and name in ['quiz-case-faults','python-case-faults','migration-undo-faults','database-case-faults','database-lifecycle-faults']) or mode=='interrupt-setup' else .1
+  delay=1 if (mode=='interrupt' and name in ['python-case-faults','migration-undo-faults','database-case-faults','database-lifecycle-faults']) or mode=='interrupt-setup' else .1
   code="import json,os,time;from pathlib import Path;p=Path("+repr(str(folder/'trace'))+");name="+repr(name)+";\ndef event(action):\n with p.open('a') as f:f.write(json.dumps({'stage':name,'action':action,'pid':os.getpid(),'time':time.monotonic(),'target':os.environ.get('MERLIN_DB_SANDBOX')})+'\\n')\nevent('start')\ntry:time.sleep("+repr(delay)+")\nfinally:event('end')"
   if mode in {'pass','serial'}:
-   peers=['quiz-case-faults','python-case-faults','migration-undo-faults']
+   peers=['python-case-faults','migration-undo-faults']
    if mode=='pass':peers+=['database-case-faults','database-lifecycle-faults']
    if name in peers:
     # Hold each worker until its independent peers have actually started.
@@ -67,7 +67,7 @@ def stages(directory):
 suite.stages=stages
 def validate(name,directory):
  if mode=='baseline-failure' and name=='python-tests':raise RuntimeError('Injected baseline failure')
- if mode=='failure' and name=='quiz-case-faults':raise RuntimeError('Injected zero-exit report failure')
+ if mode=='failure' and name=='python-case-faults':raise RuntimeError('Injected zero-exit report failure')
  return {}
 suite.validate=validate
 sys.argv=['run_test_suite.py','--out-dir',str(folder/'results')]
@@ -91,7 +91,7 @@ def check(mode, root):
             process.send_signal(signal.SIGINT)
         if mode == 'interrupt':
             deadline = time.monotonic() + 5
-            while not {'quiz-case-faults','python-case-faults','migration-undo-faults','database-case-faults','database-lifecycle-faults'} <= {
+            while not {'python-case-faults','migration-undo-faults','database-case-faults','database-lifecycle-faults'} <= {
                     row['stage'] for row in trace() if row['action']=='start'}:
                 if time.monotonic() > deadline:raise RuntimeError('Coordinator did not start both independent lanes')
                 time.sleep(.005)
@@ -107,9 +107,9 @@ def check(mode, root):
         intervals.setdefault(row['stage'],{})[row['action']] = row['time']
     assert code == (0 if mode in {'pass','serial'} else 1), (mode,code,result)
     if mode in {'pass','serial'}:
-        assert result['status']=='PASS' and len(stages)==10 and all(row['status']=='PASS' for row in stages.values())
-        baseline_end=max(intervals[name]['end'] for name in ['python-tests','quiz-tests'])
-        assert all(value['start']>=baseline_end for name,value in intervals.items() if name not in ['python-tests','quiz-tests'])
+        assert result['status']=='PASS' and len(stages)==7 and all(row['status']=='PASS' for row in stages.values())
+        baseline_end=intervals['python-tests']['end']
+        assert all(value['start']>=baseline_end for name,value in intervals.items() if name!='python-tests')
         if mode=='serial':
             database=['migration-undo-faults','database-lifecycle-faults','database-case-faults']
             assert all(intervals[a]['end']<=intervals[b]['start'] for a,b in zip(database,database[1:]))
@@ -122,15 +122,11 @@ def check(mode, root):
             assert (folder/'copies-cleaned').exists()
             assert float((folder/'copies-start').read_text()) < intervals['python-tests']['end']
             assert float((folder/'copies-ready').read_text()) <= min(intervals[n]['start'] for n in database)
-        cpu=intervals['quiz-case-faults']; db=intervals['migration-undo-faults']
+        cpu=intervals['python-case-faults']; db=intervals['migration-undo-faults']
         assert max(cpu['start'],db['start'])<min(cpu['end'],db['end']), 'Independent work did not overlap'
-        python=intervals['python-case-faults']
-        assert max(cpu['start'],python['start'])<min(cpu['end'],python['end']), 'Independent Python audits did not overlap'
-        assert intervals['quiz-case-faults']['end']<=intervals['browser-case-faults']['start']
     elif mode=='failure':
-        assert result['status']=='FAIL' and result['first_failed_stage']=='quiz-case-faults'
-        assert stages['quiz-case-faults']['exit']==0 and stages['quiz-case-faults']['status']=='FAIL'
-        assert stages['browser-case-faults']['status']=='PENDING'
+        assert result['status']=='FAIL' and result['first_failed_stage']=='python-case-faults'
+        assert stages['python-case-faults']['exit']==0 and stages['python-case-faults']['status']=='FAIL'
         assert stages['documentation']['status']=='PENDING'
     elif mode=='setup-failure':
         assert result['status']=='FAIL' and result['first_failed_stage']=='database-isolation'
@@ -148,7 +144,7 @@ def check(mode, root):
         assert not any(row['action']=='start' and row['stage']!='python-tests' for row in events)
     else:
         assert result['status']=='FAIL' and stages['documentation']['status']=='PENDING'
-        assert {'quiz-case-faults','python-case-faults','migration-undo-faults','database-case-faults','database-lifecycle-faults'} <= {
+        assert {'python-case-faults','migration-undo-faults','database-case-faults','database-lifecycle-faults'} <= {
             row['stage'] for row in events if row['action']=='end'}, 'Running jobs did not execute cleanup'
         for row in events:
             try:os.kill(row['pid'],0)
@@ -172,7 +168,6 @@ def check_preflight():
             elif command[1:2]==['tools/verify_native_psql.py']:name='native'
             elif command[1:2]==['tools/verify_python_isolation.py']:name='python-isolation'
             elif command[1:2]==['tools/run_ci.py']:name='ci-guards'
-            elif command[0]=='node':name='browser' if '--input-type=module' in command else 'node'
             elif 'import sys,pytest' in command[-1]:name='imports'
             elif 'DatabaseTestSession' in command[-1]:name='transport'
             else:name='preservation'
@@ -194,14 +189,31 @@ def check_preflight():
             else:assert mode=='pass','Failed prerequisite was accepted'
         if mode=='pass':
             by_name={event['name']:event for event in events}
-            # CI ownership checks are now a mandatory ninth prerequisite.
-            assert len(events)==9 and set(by_name)=={'scheduling','native','imports','node','transport','preservation','browser','python-isolation','ci-guards'}
+            # The seven retained prerequisites exclude personal quiz tooling.
+            assert len(events)==7 and set(by_name)=={'scheduling','native','imports','transport','preservation','python-isolation','ci-guards'}
             assert by_name['scheduling']['end']<=by_name['ci-guards']['start']
             assert by_name['native']['end']<=by_name['transport']['start']
             assert by_name['transport']['end']<=by_name['preservation']['start']
             assert max(by_name[name]['start'] for name in ['scheduling','native','imports'])<min(by_name[name]['end'] for name in ['scheduling','native','imports'])
         rows.append({'scenario':'preflight-'+mode,'passed':True})
     return rows
+
+
+def check_retained_scope():
+    """Keep application gates while excluding personal quiz-only tooling."""
+    from tools import run_test_suite as suite
+    expected = {'python-tests', 'python-case-faults', 'database-case-faults',
+                'database-lifecycle-faults', 'migration-undo-faults',
+                'documentation', 'whitespace'}
+    stages = suite.stages(Path('/unused-scope-control'))
+    assert len(stages) == 7 and {name for name, command in stages} == expected
+    assert all(command[0] != 'node' for name, command in stages)
+    # Clear inherited settings so this checks what the runner itself adds.
+    with patch.dict(os.environ, {}, clear=True):
+        environment = suite.environment()
+    assert not any('PLAYWRIGHT' in key for key in environment)
+    assert 'LD_LIBRARY_PATH' not in environment
+    return [{'scenario': 'retained-application-scope-without-quiz-tooling', 'passed': True}]
 
 
 def check_result_validation():
@@ -227,18 +239,29 @@ def check_result_validation():
             row.update(intended_detection=True, expected_detection=node, expected_assertion=assertion)
             if node not in row['detected_by']:
                 row['detected_by'].append(node)
-            row['cases'][node] = {'outcome': 'failed', 'failure': assertion}
-    python_report = {'baseline':{'exit':0,'errors':[],'cases':{case:{'outcome':'passed'} for case in python_cases}},
+            row['cases'][node] = {'outcome': 'failed', 'failure': synthetic_failure(assertion)}
+    from tools.provider_faults import DETECTIONS as PROVIDER_DETECTIONS
+    for row in python_faults:
+        if row['fault'] in PROVIDER_DETECTIONS:
+            prefix, assertion = PROVIDER_DETECTIONS[row['fault']]
+            node = next(node for node in python_cases if node.startswith(prefix))
+            row.update(intended_detection=True, expected_detection=prefix,
+                       expected_assertion=assertion, intended_cases=[node], exit=1, errors=[])
+            if node not in row['detected_by']:
+                row['detected_by'].append(node)
+            row['cases'][node] = {'outcome':'failed', 'failure':synthetic_failure(assertion)}
+    # Model a complete selected execution in the positive control. Select exact
+    # nodes here so fixture size does not grow to every case for every fault.
+    for row in python_faults:
+        if row['status'] == 'DETECTED':
+            row.update(exit=1, errors=[], selected_test_files=list(row['cases']))
+            for node, case in row['cases'].items():
+                if '::subtest' in node:case['kind']='subtest'
+    python_report = {'baseline':{'exit':0,'errors':[],'cases':{case:{'outcome':'passed','file':case.split('::')[0],
+                     **({'kind':'subtest'} if '::subtest' in case else {})} for case in python_cases}},
                      'matrix':[{'case':case,'outcome':'passed','detects':[r['fault'] for r in python_faults if case in r.get('detected_by',[])]} for case in python_cases],
                      'faults':python_faults,'source_sha256':hashes}
-    quiz_cases = inventory['quiz_cases']
-    quiz_report = {'baseline':{'status':'SURVIVED','cases':dict.fromkeys(quiz_cases,'passed')},
-                   'matrix':[{'case':case,'baseline':'passed','detects':inventory['quiz_faults']} for case in quiz_cases],
-                   'faults':[{'fault':name,'status':'DETECTED','cases':dict.fromkeys(quiz_cases,'failed')} for name in inventory['quiz_faults']],
-                   'source_sha256':{path:hashlib.sha256((ROOT/path).read_bytes()).hexdigest() for path in ['quizzes/sprint-0-quiz.html','tests/quiz.test.js']}}
-    browser_report = {'cases':[{'case':case,'baseline':{'outcome':'passed'},'mutation':{'status':'DETECTED','outcome':'failed'}} for case in inventory['browser_cases']],
-                      'source_sha256':{path:hashlib.sha256((ROOT/path).read_bytes()).hexdigest() for path in ['quizzes/sprint-0-quiz.html','tools/audit_quiz_browser.mjs']}}
-    lifecycle_report = {'preserved':True,'cases':[{'case':case,'effectiveness':'DEMONSTRATED','baseline':{'outcome':'passed'},'mutation':{'outcome':'failed'}} for case in inventory['lifecycle_cases']]}
+    lifecycle_report = {'preserved':True,'cases':[{'case':case,'effectiveness':'DEMONSTRATED','baseline':{'outcome':'passed'},'mutation':{'outcome':'failed','phase':'check','failure_kind':'behavior-assertion'}} for case in inventory['lifecycle_cases']]}
     from tools.audit_database_cases import load_cases, recipes
     module,unused = load_cases()
     sql_report = {'preserved':True,'original_fingerprint':'a'*32,'final_fingerprint':'a'*32,'source_sha256':hashlib.sha256((ROOT/'tests/test_users_notes_database.py').read_bytes()).hexdigest(),
@@ -249,8 +272,6 @@ def check_result_validation():
     sql_report['cases'].append({'case':reconnect[0][0],'effectiveness':'DEMONSTRATED','baseline':{'exit':0},'faults':[{'name':reconnect[0][1],'status':'DETECTED_ASSERTION'}]})
     reports = {'python-case-faults':('merlin-python-effectiveness-final.json',python_report,'matrix'),
                'database-case-faults':('merlin-sql-effectiveness-final.json',sql_report,'cases'),
-               'quiz-case-faults':('merlin-quiz-effectiveness.json',quiz_report,'matrix'),
-               'browser-case-faults':('merlin-browser-effectiveness.json',browser_report,'cases'),
                'database-lifecycle-faults':('merlin-lifecycle-effectiveness.json',lifecycle_report,'cases')}
     rows=[]
     with tempfile.TemporaryDirectory(prefix='merlin-result-controls-') as directory:
@@ -339,12 +360,30 @@ def check_result_validation():
                     variants['missing-api-'+field]=faulty
                 faulty=json.loads(json.dumps(report));faulty['matrix'][0]['detects']=['invented-fault']
                 variants['invented-detection']=faulty
-            if stage=='quiz-case-faults':
-                faulty=json.loads(json.dumps(report));faulty['baseline']['cases'][quiz_cases[0]]='failed'
-                variants['contradictory-baseline']=faulty
-                faulty=json.loads(json.dumps(report));faulty['matrix'][0]['detects']=['invented-fault']
-                variants['invented-detection']=faulty
-            if stage in {'browser-case-faults','database-lifecycle-faults'}:
+                for field in ['intended_detection', 'expected_detection', 'expected_assertion', 'intended_cases', 'exit']:
+                    faulty=json.loads(json.dumps(report))
+                    provider=next(row for row in faulty['faults'] if row['fault'] in PROVIDER_DETECTIONS)
+                    provider.pop(field)
+                    variants['missing-provider-'+field]=faulty
+                faulty=json.loads(json.dumps(report))
+                provider=next(row for row in faulty['faults'] if row['fault'] in PROVIDER_DETECTIONS)
+                provider['errors']=[{'stage':'setup','failure':'Synthetic fixture failure'}]
+                variants['provider-fixture-failure']=faulty
+                for outcome in ['skipped','collected']:
+                    faulty=json.loads(json.dumps(report))
+                    fault=next(row for row in faulty['faults'] if row['status']=='DETECTED')
+                    node=next(node for node,row in fault['cases'].items() if row.get('kind')!='subtest')
+                    fault['cases'][node]['outcome']=outcome
+                    variants['selected-case-'+outcome]=faulty
+                faulty=json.loads(json.dumps(report))
+                fault=next(row for row in faulty['faults'] if row['status']=='DETECTED' and len(row['cases'])<len(python_cases)-3)
+                extra=next(node for node,row in faulty['baseline']['cases'].items()
+                           if row.get('kind')!='subtest' and node not in fault['cases'])
+                fault['selected_test_files'].append(extra)
+                variants['missing-passing-selected-case-despite-true-scope-flag']=faulty
+            if stage=='database-lifecycle-faults':
+                faulty=json.loads(json.dumps(report));faulty['cases'][0]['mutation']['phase']='setup'
+                variants['fixture-error-credited-as-detection']=faulty
                 faulty=json.loads(json.dumps(report));faulty['cases'][0]['mutation']['outcome']='passed'
                 variants['contradictory-mutation']=faulty
             if stage=='database-case-faults':
@@ -593,6 +632,13 @@ def check_runtime_commit_compatibility():
     return rows
 
 
+def synthetic_failure(assertion):
+    """Represent a real pytest terminal error, not a token in source context."""
+    if assertion in {'ProviderError', 'OSError', 'TimeoutError'}:
+        return 'E ' + assertion + ': Synthetic expected failure'
+    return 'assertion site: ' + assertion + '\nE AssertionError: Synthetic assertion failed'
+
+
 def check_api_fault_attribution():
     """A random red test or setup error must not certify an API fault."""
     from copy import deepcopy
@@ -600,20 +646,24 @@ def check_api_fault_attribution():
     node = "tests/test_health_api.py::test_health_endpoint_success"
     other = "tests/test_health_api.py::test_unrelated_synthetic_case"
     baseline = {"exit": 1, "errors": [], "cases": {
-        node: {"outcome": "failed", "failure": "assert actual == status"},
+        node: {"outcome": "failed", "failure": synthetic_failure("assert actual == status")},
         other: {"outcome": "passed"}}}
     rows = []
     with tempfile.TemporaryDirectory(prefix="merlin-api-attribution-") as directory:
         output = Path(directory) / "result.json"
         job = {"name": "health-api-wrong-status", "file": "app/health_api.py",
                "output": output, "expected_cases": {node, other}}
-        for name in ["intended-assertion", "wrong-case", "wrong-assertion", "setup-error"]:
+        for name in ["intended-assertion", "wrong-case", "wrong-assertion", "wrong-call-error", "misleading-exception-message", "setup-error"]:
             data = deepcopy(baseline)
             if name == "wrong-case":
                 data["cases"][node] = {"outcome": "passed"}
-                data["cases"][other] = {"outcome": "failed", "failure": "assert actual == status"}
+                data["cases"][other] = {"outcome": "failed", "failure": synthetic_failure("assert actual == status")}
             elif name == "wrong-assertion":
                 data["cases"][node]["failure"] = "assert unrelated_fixture"
+            elif name == "wrong-call-error":
+                data["cases"][node]["failure"] = "assert actual == status\nE RuntimeError: unrelated failure"
+            elif name == "misleading-exception-message":
+                data["cases"][node]["failure"] = "assert actual == status\nE RuntimeError: AssertionError Failed: unrelated"
             elif name == "setup-error":
                 data["errors"] = [{"stage": "setup", "failure": "Synthetic fixture failure"}]
             output.write_text(json.dumps(data))
@@ -654,6 +704,94 @@ def check_api_dependency_scopes():
     return rows
 
 
+def check_provider_controls():
+    """Provider attribution, dependency fallback and side-effect fault guards."""
+    from copy import deepcopy
+    from tools import audit_python_cases as audit, test_dependencies as dependencies
+    from tools.provider_faults import DETECTIONS
+    name = 'provider-trust-eof'
+    node, assertion = DETECTIONS[name]
+    baseline = {'exit':1, 'errors':[], 'cases':{node:{'outcome':'failed','failure':synthetic_failure(assertion)}}}
+    rows = []
+    with tempfile.TemporaryDirectory(prefix='merlin-provider-controls-') as directory:
+        path = Path(directory) / 'results.json'
+        for scenario in ['intended', 'wrong-case', 'wrong-assertion', 'wrong-call-error', 'misleading-exception-message', 'setup-error', 'exit-mismatch', 'missing-case', 'skipped-case', 'unexecuted-case']:
+            data = deepcopy(baseline)
+            if scenario == 'wrong-case':
+                data['cases']={node:{'outcome':'passed'}, 'synthetic-other':{'outcome':'failed','failure':synthetic_failure(assertion)}}
+            if scenario == 'wrong-assertion':data['cases'][node]['failure']='Synthetic unrelated assertion'
+            if scenario == 'wrong-call-error':data['cases'][node]['failure']='assertion site: '+assertion+'\nE RuntimeError: unrelated failure'
+            if scenario == 'misleading-exception-message':data['cases'][node]['failure']='assertion site: '+assertion+'\nE RuntimeError: AssertionError Failed: unrelated'
+            if scenario == 'setup-error':data['errors']=[{'stage':'setup','failure':'Synthetic fixture error'}]
+            if scenario == 'exit-mismatch':data['exit']=0
+            if scenario == 'missing-case':data['cases']={}
+            if scenario in {'skipped-case','unexecuted-case'}:
+                data['cases']['synthetic-selected']={'outcome':'skipped' if scenario=='skipped-case' else 'collected'}
+            path.write_text(json.dumps(data))
+            job={'name':name,'file':'app/local_provider.py','output':path,
+                 'expected_cases':set(data['cases']) if scenario in {'wrong-case','skipped-case','unexecuted-case'} else {node}}
+            result=audit.outcome(job,1,'')
+            assert result['intended_detection'] is (scenario=='intended')
+            expected='DETECTED' if scenario=='intended' else ('SURVIVED' if scenario in {'wrong-case','wrong-assertion','wrong-call-error','misleading-exception-message'} else 'INVALID')
+            assert result['status']==expected
+            rows.append({'scenario':'provider-attribution-'+scenario,'passed':True})
+        with patch.dict(dependencies.REVIEWED_TESTS, {'tests/test_local_provider.py':'changed'}):
+            try:audit.request('provider-network-side-effect','app/local_provider.py','',directory)
+            except RuntimeError as error:assert 'reviewed traps' in str(error)
+            else:raise AssertionError('Unreviewed side-effect fault was allowed')
+        rows.append({'scenario':'provider-unreviewed-side-effect-fault-refused','passed':True})
+    inventory=json.loads((ROOT/'tests/suite-inventory.json').read_text())
+    baseline={'cases':{node:{'file':node.split('::')[0]} for node in inventory['python_cases']}}
+    provider='tests/test_local_provider.py'
+    selected=dependencies.scopes(baseline)
+    assert provider in selected['app/local_provider.py']
+    assert all(provider not in files for target,files in selected.items() if target!='app/local_provider.py')
+    rows.append({'scenario':'provider-reviewed-scope','passed':True})
+    with patch.dict(dependencies.REVIEWED_TESTS,{provider:'changed'}):
+        assert all(provider in files for files in dependencies.scopes(baseline).values())
+    rows.append({'scenario':'provider-changed-source-restores-full-scope','passed':True})
+    from tools.isolated_python import fork_jobs
+    with patch.dict(sys.modules, {'app.local_provider': object()}):
+        try:list(fork_jobs([], workers=1))
+        except RuntimeError as error:assert 'application modules' in str(error)
+        else:raise AssertionError('Provider was permitted in the pristine fork parent')
+    rows.append({'scenario':'provider-imported-parent-refused-before-fork','passed':True})
+    return rows
+
+
+def check_audit_failure_boundaries():
+    """Infrastructure errors cannot stand in for completed case assertions."""
+    from tools import audit_python_cases as python
+    from tools import audit_database_lifecycle as lifecycle
+    rows = []
+    for token in ['ProviderError','OSError','TimeoutError']:
+        assert python.matches_intended_failure({'outcome':'failed','failure':'E package.'+token+': synthetic'}, token)
+        assert not python.matches_intended_failure({'outcome':'failed','failure':'E RuntimeError: '+token+': synthetic'}, token)
+        rows.append({'scenario':'typed-error-attribution-'+token,'passed':True})
+    with patch.object(lifecycle.audit,'preservation'), patch.object(lifecycle,'sql',return_value=[]):
+        for exception in [AssertionError('Synthetic fixture'), lifecycle.SqlExecutionError('Synthetic SQL fixture')]:
+            with patch.object(lifecycle,'fixtures',side_effect=exception):
+                result=lifecycle.execute('committed-reconnect-cascade',faulty=True)
+            assert result['outcome']=='invalid' and result['phase']=='setup'
+            rows.append({'scenario':'lifecycle-fixture-'+type(exception).__name__,'passed':True})
+        with patch.object(lifecycle,'fixtures'):
+            result=lifecycle.execute('committed-reconnect-cascade',faulty=True)
+        assert result['outcome']=='failed' and result['failure_kind']=='behavior-assertion'
+        rows.append({'scenario':'lifecycle-check-assertion','passed':True})
+    with tempfile.TemporaryDirectory(prefix='merlin-source-drift-') as directory:
+        root=Path(directory)
+        for folder in ['app','tests','tools']:(root/folder).mkdir()
+        source=root/'app/synthetic.py';source.write_text('original')
+        with patch.object(python,'ROOT',root):
+            manifest=python.source_manifest();python.verify_manifest(manifest)
+            source.write_text('changed')
+            try:python.verify_manifest(manifest)
+            except RuntimeError:pass
+            else:raise AssertionError('Changed source accepted')
+        rows.append({'scenario':'python-audit-source-drift-refused','passed':True})
+    return rows
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--out',type=Path)
@@ -665,6 +803,7 @@ def main():
             rows=list(pool.map(lambda mode:check(mode,Path(directory)),
                                ['pass','serial','failure','setup-failure','interrupt','baseline-failure','interrupt-setup','prerequisite-failure']))
     rows.extend(check_preflight())
+    rows.extend(check_retained_scope())
     rows.extend(check_result_validation())
     rows.extend(check_sql_shards())
     rows.extend(check_migration_schema_normalization())
@@ -672,6 +811,8 @@ def main():
     rows.extend(check_runtime_commit_compatibility())
     rows.extend(check_api_fault_attribution())
     rows.extend(check_api_dependency_scopes())
+    rows.extend(check_provider_controls())
+    rows.extend(check_audit_failure_boundaries())
     if args.out:args.out.write_text(json.dumps({'checks':rows},indent=2)+'\n')
     print('Suite scheduling, first failure and interrupt cleanup controls PASS')
 

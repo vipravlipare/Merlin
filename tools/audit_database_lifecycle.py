@@ -29,10 +29,14 @@ THEN RAISE EXCEPTION 'Unexpected lifecycle target'; END IF; END $gate$;
 """
 
 
+class SqlExecutionError(RuntimeError):
+    """Unexpected SQL failures cannot substitute for behavior assertions."""
+
+
 def sql(text):
     result = native_run(module.COMMAND, input=text, text=True, capture_output=True, timeout=20)
     if result.returncode:
-        raise AssertionError(result.stderr)
+        raise SqlExecutionError(result.stderr)
     return result.stdout.splitlines()
 
 
@@ -69,8 +73,10 @@ def execute(case, faulty=False):
     mode = "purge" if case == "purge-skips-locked" else "expiry" if case != "committed-reconnect-cascade" else "normal"
     user, first, second = (str(uuid.uuid4()) for _ in range(3))
     lock = None
+    phase = 'setup'
     try:
         fixtures(mode, user, first, second)
+        phase = 'check'
         if case == "committed-reconnect-cascade":
             assert sql(GATE + f"SELECT count(*),bool_and(body='real body') FROM public.notes WHERE user_id='{user}';") == ['2|t']
             # Mutate only the deletion predicate, never committed schema. A
@@ -90,7 +96,9 @@ def execute(case, faulty=False):
         else:
             name = "purge_deleted_notes" if mode == "purge" else "cleanup_expired_blank_notes"
             if case.endswith("skips-locked"):
+                phase = 'setup-lock'
                 lock = holder(first)
+                phase = 'check'
                 old, new = "FOR UPDATE SKIP LOCKED", "FOR UPDATE"
             else:
                 old, new = "LIMIT batch_size FOR UPDATE SKIP LOCKED", "FOR UPDATE SKIP LOCKED"
@@ -109,7 +117,15 @@ def execute(case, faulty=False):
             assert lines == (['1','1','t|f'] if lock else ['1','1']), f"Wrong batch effect: {lines}"
         return {"outcome": "passed"}
     except AssertionError as error:
-        return {"outcome": "failed", "failure": str(error)}
+        return {"outcome": "failed" if phase == 'check' else 'invalid',
+                "failure_kind": 'behavior-assertion' if phase == 'check' else 'fixture-error',
+                "phase": phase, "failure": str(error)}
+    except SqlExecutionError as error:
+        expected = (faulty and phase == 'check' and case.endswith('skips-locked')
+                    and 'lock timeout' in str(error))
+        return {'outcome':'failed' if expected else 'invalid', 'phase':phase,
+                'failure_kind':'expected-lock-timeout' if expected else 'sql-error',
+                'failure':str(error)}
     finally:
         if lock:
             lock.stdin.write("ROLLBACK;\n");lock.stdin.flush();lock.communicate(timeout=5)
@@ -128,7 +144,8 @@ def main():
         baseline = execute(case)
         mutated = execute(case, True) if baseline['outcome'] == 'passed' else {"outcome": "unexecuted"}
         rows.append({"case": case, "baseline": baseline, "mutation": mutated,
-                     "effectiveness": "DEMONSTRATED" if baseline['outcome'] == 'passed' and mutated['outcome'] == 'failed' else "NOT_DEMONSTRATED"})
+                     "effectiveness": "DEMONSTRATED" if baseline['outcome'] == 'passed' and mutated['outcome'] == 'failed'
+                     and mutated.get('failure_kind') in {'behavior-assertion','expected-lock-timeout'} else "NOT_DEMONSTRATED"})
         print(json.dumps(rows[-1]), flush=True)
     final = audit.preservation(module)
     args.out.write_text(json.dumps({"cases": rows,"preserved":original==final,"original_fingerprint":original,"final_fingerprint":final},indent=2)+'\n')

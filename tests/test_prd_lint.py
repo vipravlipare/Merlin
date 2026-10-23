@@ -21,14 +21,14 @@ def test_docs_subfolder_is_not_mistaken_for_legacy_planning_root(tmp_path):
     assert result.returncode == 0 and "Checked 1 file(s)." in result.stdout
 
 
-@pytest.mark.parametrize("target", ["README.md", "AGENTS.md", "quizzes/quiz.html"])
+@pytest.mark.parametrize("target", ["README.md", "AGENTS.md"])
 def test_document_root_audits_external_entrypoints(tmp_path, target):
     docs=tmp_path / "docs"
     docs.mkdir()
     (docs / "part-01-design.md").write_text("# Design\n")
     entry=tmp_path / target
     entry.parent.mkdir(exist_ok=True)
-    entry.write_text('<a href="missing.md">Broken</a>' if entry.suffix == ".html" else "[Broken](missing.md)\n")
+    entry.write_text("[Broken](missing.md)\n")
     result=run_linter(docs)
     assert result.returncode == 1 and str(entry) in result.stdout
 

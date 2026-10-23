@@ -59,6 +59,10 @@ def copy_inputs(destination, cluster, project, *, include_untracked=False):
     command = ['git', 'ls-files', '-z']
     names = set(subprocess.check_output(command, cwd=ROOT).decode().split('\0'))
     if include_untracked:
+        # Explicit working-tree verification includes deliberate deletions.
+        # Normal hosted runs still refuse a missing tracked input.
+        names.difference_update(subprocess.check_output(
+            ['git', 'ls-files', '--deleted', '-z'], cwd=ROOT).decode().split('\0'))
         names.update(subprocess.check_output(
             ['git', 'ls-files', '--others', '--exclude-standard', '-z'], cwd=ROOT).decode().split('\0'))
     proof = []
@@ -147,6 +151,31 @@ def self_check():
             checks.append('redirected-executed-file-refused')
         else:
             raise AssertionError('Redirected CI input accepted')
+    # Exercise real Git manifests in owned temporary directories. The opt-in
+    # working-tree mode must omit deleted files; ordinary CI must refuse them.
+    from unittest.mock import patch
+    with tempfile.TemporaryDirectory(prefix='merlin-ci-deleted-input-') as directory:
+        original = Path(directory) / 'original'
+        original.mkdir()
+        (original / '.gitignore').write_text('.env\n.venv\n')
+        (original / 'retained.py').write_text('VALUE = 1\n')
+        removed = original / 'personal-quiz.js'
+        removed.write_text('// Synthetic deleted fixture.\n')
+        subprocess.run(['git', 'init', '-q', str(original)], check=True, capture_output=True)
+        subprocess.run(['git', 'add', '-A'], cwd=original, check=True, capture_output=True)
+        removed.unlink()
+        for include in [False, True]:
+            copied = Path(directory) / str(include)
+            copied.mkdir()
+            with patch.dict(globals(), {'ROOT': original, 'IDENTITY_FILES': {}}):
+                try:
+                    proof = copy_inputs(copied, cluster, project, include_untracked=include)
+                except ValueError as error:
+                    assert not include and 'Source input must be a regular file' in str(error)
+                else:
+                    assert include and not (copied / removed.name).exists()
+                    assert 'retained.py' in {row['file'] for row in proof}
+            checks.append('deleted-working-input-omitted' if include else 'missing-hosted-input-refused')
     baseline = {'status': 'PASS', 'rebuilt_cases': ['synthetic-case'], 'rebuilt_case_count': 2,
                 'source_preserved': True, 'migration_sha256': {'migration': 'a' * 64},
                 'disposable_evidence': {'cleanup_passed': True, 'source_preserved': True},
@@ -293,8 +322,8 @@ def main():
                     if payload.get('status') != 'PASS':
                         raise RuntimeError('CI result validation failed: ' + name)
                     if name == 'complete-suite':
-                        expected = ['python-tests', 'quiz-tests', 'python-case-faults', 'database-case-faults',
-                                    'quiz-case-faults', 'browser-case-faults', 'database-lifecycle-faults',
+                        expected = ['python-tests', 'python-case-faults', 'database-case-faults',
+                                    'database-lifecycle-faults',
                                     'migration-undo-faults', 'documentation', 'whitespace']
                         rows = payload.get('stages', [])
                         if ([row.get('stage') for row in rows] != expected

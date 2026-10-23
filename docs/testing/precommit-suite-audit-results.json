@@ -1,0 +1,567 @@
+{
+  "purpose": "Precommit cumulative implementation and verification audit; unpublished inputs",
+  "date": "2026-10-23",
+  "source_commit": "235ee974a3a95628be7ae9cb5f84ae31463709b3",
+  "uncommitted_inputs": true,
+  "hosted_ci": "PENDING separate publication authorization",
+  "actual_effort_minutes": "unknown",
+  "source_sha256": {
+    "app/health_api.py": "85015c1e6b4302482523edf5b2360fd2cd0771e1d39d25635279115ced016159",
+    "app/health_server.py": "c893480c8ae0af9d240ae32b013a4071de92861b3e27a5c487020932d548d692",
+    "app/database_connectivity_probe.py": "db9d13ea7d624a8030b5555518b1fb82a3dca7f1165fbf50af5590d9ed439d7f",
+    "app/notes_maintenance.py": "dbbde39d5996296adc0244f74d1e4a606b5de08d0b05497a47373edbf207dffb",
+    "app/note_rules.py": "44c19fcd536d06c887e6e9a1600b63ca4f21074b32dee93ec7874810eae3b538",
+    "app/local_provider.py": "eb851a4ce033be2a60e58afd5dbc1976a8522a0b8834dea802ba83c7bc803309",
+    "tests/test_prd_lint.py": "ea5d16d419ed3c93a68e8ee3e3a211c4b0a6e7ae3efc262dfb62d3698815a995",
+    "tests/test_note_rules_and_maintenance.py": "0a3dcf4b2e7c9b07e93d9e33f25d444b3b4b309f7020d075840617c28a6fa4ef",
+    "tests/test_health_api.py": "3dc8727b03097a757a26b7f5981f3e678caf50a867e0ddc2ef8c08d2c71f0b9a",
+    "tests/test_local_provider.py": "fe78680b5ef16bf94579870023cd93440e11c6f95c5f87fee6e6479da06cc56a",
+    "tests/test_database_connectivity_probe.py": "ba296ed12baab295aea9b44c5915a88082fe163968ea9a2596ac82ca380a3063",
+    "tests/test_doctor_failure_cases.py": "6c8c06d6285fe2950912692838ae692763b5c28f4e9454f83af4b200a3c8df97",
+    "tests/test_users_notes_database.py": "94515aef520ccd6675f2a1352c200f85fab9ee6944fd971cd50cb44599e8d6a5",
+    "tools/audit_database_lifecycle.py": "39f40e53db77a2490a44d77441403b8cee06e2d632cfaca62939c2a6937c0380",
+    "tools/audit_python_cases.py": "28b65ad33548ab0a4d33c9fe975597af0a575b24b415d2b4c7bb0f70ecccbba1",
+    "tools/run_ci.py": "d40d12f09ec0387667be7ba2b3cd8ee0df872849a69262d8d575782be815db97",
+    "tools/write_test_audit.py": "eaceddefc9bc37aafe3a725ad63b140f8299da9cbe06c9228bfa026e2ec99dfe",
+    "tools/verify_suite_execution.py": "007b54e911d1afd7831d73bcc84ea9e954b2547b04f6dada690d1916af14197e",
+    "tools/native_psql.py": "38e31ee8838cab63446f472c861d1bc8ef7d40ab55ad09b16a34b81d2e467ed5",
+    "tools/verify_native_psql.py": "50a76e822c734c6e265647718d664ebe573033401d0f17156ae78419488baead",
+    "tools/run_sql_shards.py": "7ad207492f5c8bc99fb686aca6399040c10d3df0022c46d2f1ba68aa8e1c9691",
+    "tools/run_test_suite.py": "377f5dbd28181b2197ea906546fdbf2c163417956e4372f0ab281a498b50d1a3",
+    "tools/verify_migration_roundtrip.py": "4d6b0b315209b612dc6682e20a22b17fc8f2d023671993d7a30a3d65da20e23d",
+    "tools/doctor.py": "4cf276effb197aad39ce94f652e01a558ca39ad3bbebe8af5ce9ce4693fae26f",
+    "tools/setup_local.py": "7cbbe7a498c3089162bc03545ff82f9eca956e15463afb1882a06f74b9ba7d6b",
+    "tools/test_dependencies.py": "8aff11e3a15f3a2a6c813597cc67b32c1f3b2279f09783a7e80214545faa0bcc",
+    "tools/provider_faults.py": "977c4de759e63ea1f8077d9961c8af56bcfa6d1bcf19158ac84914b1cfce6360",
+    "tools/check_mutations.py": "bc27f20769efc386e9b085e43341c737cdedce2615f1fff08ea9d05a78a608b8",
+    "tools/audit_quiz_cases.py": "a3e1978b1775bfb462c3c28e4fb9934f702dcbb65bea212653c22379757a934f",
+    "tools/audit_migration_undo.py": "6c60e3b0e7e8763b30faaeb81272067bb9b103c7d580787acab3cf885a10715e",
+    "tools/prd_lint.py": "e2817ce78253d736fb8e6b74086f48dc1ee4686415fe3f7fb1678a51aaa8a0e8",
+    "tools/audit_database_cases.py": "936985fa1b8daf20a78deae1d392cd1c0fa681180273fe267b1651aff4c5d773",
+    "tools/database_sandboxes.py": "b82bf8c3c4562ac1b41b85ca41799b7499ae59ff5b61c3c8af1d99b4ba5687b7",
+    "tools/ci_database.py": "72c7abba5046a98c1e8dd553d871d88cd82fcbf45a843f5b1897107a0bd97d12",
+    "tools/isolated_python.py": "8397b64a33db84468664f807f6b6ccaa2a1298ab3611b07bedaf7a5f8138797e",
+    "tools/verify_database_sandboxes.py": "acfba186204f223b71f7e54d4c9ad12ce8611c28f23f40533a3a361d0128bea9",
+    "tools/verify_python_isolation.py": "ca7de4e131fdb57413c3c788727425ea3e6b82c30a831ba6fec6965d75196e64",
+    "tools/test_doctor.py": "25522e95c32b8ceea080984ee800b2b8a82c3a0c169cac52e9732c0fce3d44b7",
+    "tools/database_test_session.py": "07f6dd2923ff28f7de3b2e3ac7728937833a0c930ba8b8dd9ec0312f0a62adcd"
+  },
+  "additional_source_sha256": {
+    "tests/suite-inventory.json": "21b4001890916bee45337ec3f92adb7605b793add670b9d9432cb63cb1ad4973",
+    "tools/audit_quiz_browser.mjs": "68428d93682f28d10253169483bb507e14694722de3520db2d57d3b4cd3ead0e",
+    "tests/quiz.test.js": "afd757a1e90f3b9a2963e092025816733dbec4f20d95c96640c0df0e4d54a3e1",
+    "quizzes/sprint-0-quiz.html": "1f43c0e04def801c3edaf5b77bcb60c3da285712f91ed8a7290d7ec590cdd57d",
+    ".github/workflows/setup.yml": "036d95c29f023100ba8ff89f124180dd9a4735f5dd9b41a0e8a2ff49914941a6"
+  },
+  "counts": {
+    "provider_cases": 467,
+    "provider_faults": 47,
+    "python_case_subtest_ids": 816,
+    "canonical_python_faults": 297,
+    "aliases": 3,
+    "excluded_startup_diagnostics": 4,
+    "python_database_tests": 1196,
+    "python_subtests": 3,
+    "quiz_cases": 40,
+    "sql_cases_with_reconnect": 383,
+    "sql_fault_applications": 607,
+    "browser_cases": 16,
+    "lifecycle_cases": 5,
+    "migration_gates": 14,
+    "migration_repairs": 17,
+    "migration_concurrency_checks": 3,
+    "runner_controls": 149,
+    "python_isolation_controls": 5
+  },
+  "runs": {
+    "baseline": {
+      "status": "PASS",
+      "seconds": 57.536698,
+      "stages": [
+        {
+          "stage": "python-tests",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 11.873
+        },
+        {
+          "stage": "quiz-tests",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.101
+        },
+        {
+          "stage": "python-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 38.112
+        },
+        {
+          "stage": "database-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 13.962
+        },
+        {
+          "stage": "quiz-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 1.733
+        },
+        {
+          "stage": "browser-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 6.519
+        },
+        {
+          "stage": "database-lifecycle-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 10.332
+        },
+        {
+          "stage": "migration-undo-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 14.521
+        },
+        {
+          "stage": "documentation",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.285
+        },
+        {
+          "stage": "whitespace",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.014
+        }
+      ],
+      "cleanup_passed": true,
+      "source_preserved": true
+    },
+    "correctness": {
+      "status": "PASS",
+      "seconds": 56.504894,
+      "stages": [
+        {
+          "stage": "python-tests",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 11.116
+        },
+        {
+          "stage": "quiz-tests",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.083
+        },
+        {
+          "stage": "python-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 37.747
+        },
+        {
+          "stage": "database-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 12.764
+        },
+        {
+          "stage": "quiz-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 1.729
+        },
+        {
+          "stage": "browser-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 5.782
+        },
+        {
+          "stage": "database-lifecycle-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 9.61
+        },
+        {
+          "stage": "migration-undo-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 13.281
+        },
+        {
+          "stage": "documentation",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.178
+        },
+        {
+          "stage": "whitespace",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.01
+        }
+      ],
+      "cleanup_passed": true,
+      "source_preserved": true
+    },
+    "optimized": {
+      "status": "PASS",
+      "seconds": 60.218757,
+      "stages": [
+        {
+          "stage": "python-tests",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 11.563
+        },
+        {
+          "stage": "quiz-tests",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.09
+        },
+        {
+          "stage": "python-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 40.87
+        },
+        {
+          "stage": "database-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 12.757
+        },
+        {
+          "stage": "quiz-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 1.675
+        },
+        {
+          "stage": "browser-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 5.848
+        },
+        {
+          "stage": "database-lifecycle-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 9.77
+        },
+        {
+          "stage": "migration-undo-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 13.34
+        },
+        {
+          "stage": "documentation",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.183
+        },
+        {
+          "stage": "whitespace",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.011
+        }
+      ],
+      "cleanup_passed": true,
+      "source_preserved": true
+    },
+    "final": {
+      "status": "PASS",
+      "seconds": 57.519023,
+      "stages": [
+        {
+          "stage": "python-tests",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 11.748
+        },
+        {
+          "stage": "quiz-tests",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.082
+        },
+        {
+          "stage": "python-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 37.715
+        },
+        {
+          "stage": "database-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 12.821
+        },
+        {
+          "stage": "quiz-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 1.589
+        },
+        {
+          "stage": "browser-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 6.031
+        },
+        {
+          "stage": "database-lifecycle-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 9.86
+        },
+        {
+          "stage": "migration-undo-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 13.432
+        },
+        {
+          "stage": "documentation",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.181
+        },
+        {
+          "stage": "whitespace",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.012
+        }
+      ],
+      "cleanup_passed": true,
+      "source_preserved": true
+    },
+    "complete": {
+      "status": "PASS",
+      "seconds": 57.635109,
+      "stages": [
+        {
+          "stage": "python-tests",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 11.224
+        },
+        {
+          "stage": "quiz-tests",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.08
+        },
+        {
+          "stage": "python-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 38.473
+        },
+        {
+          "stage": "database-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 13.051
+        },
+        {
+          "stage": "quiz-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 1.644
+        },
+        {
+          "stage": "browser-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 5.652
+        },
+        {
+          "stage": "database-lifecycle-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 9.946
+        },
+        {
+          "stage": "migration-undo-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 13.561
+        },
+        {
+          "stage": "documentation",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.18
+        },
+        {
+          "stage": "whitespace",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.01
+        }
+      ],
+      "cleanup_passed": true,
+      "source_preserved": true
+    },
+    "verified": {
+      "status": "PASS",
+      "seconds": 57.370795,
+      "stages": [
+        {
+          "stage": "python-tests",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 11.163
+        },
+        {
+          "stage": "quiz-tests",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.081
+        },
+        {
+          "stage": "python-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 38.601
+        },
+        {
+          "stage": "database-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 13.171
+        },
+        {
+          "stage": "quiz-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 1.67
+        },
+        {
+          "stage": "browser-case-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 5.864
+        },
+        {
+          "stage": "database-lifecycle-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 9.904
+        },
+        {
+          "stage": "migration-undo-faults",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 13.7
+        },
+        {
+          "stage": "documentation",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.18
+        },
+        {
+          "stage": "whitespace",
+          "status": "PASS",
+          "exit": 0,
+          "seconds": 0.012
+        }
+      ],
+      "cleanup_passed": true,
+      "source_preserved": true
+    }
+  },
+  "performance": {
+    "same_outcomes_scopes_detection_matrix_before_after": true,
+    "indented_bytes": 18951459,
+    "compact_bytes": 15001380,
+    "serialization_samples_each": 5,
+    "indented_median_seconds": 0.5475,
+    "compact_median_seconds": 0.0974,
+    "global_fastest_claim": false,
+    "optimized_run_had_concurrent_microbenchmark": true
+  },
+  "fresh_ci_entry": {
+    "status": "PASS",
+    "seconds": 99.341,
+    "steps": [
+      {
+        "name": "original-python-sources",
+        "status": "PASS"
+      },
+      {
+        "name": "complete-suite",
+        "status": "PASS"
+      },
+      {
+        "name": "committed-migration-roundtrip",
+        "status": "PASS"
+      }
+    ],
+    "cleanup_passed": true,
+    "suite_status": "PASS",
+    "suite_seconds": 66.391484,
+    "suite_source_preserved": true,
+    "suite_cleanup_passed": true,
+    "original_source_fingerprints_match": true,
+    "hosted": false,
+    "inputs_include_uncommitted": true,
+    "committed_migration_status": "PASS",
+    "committed_migration_case_count": 383,
+    "committed_migration_source_preserved": true,
+    "committed_migration_cleanup_passed": true
+  },
+  "evidence": {
+    "file": "precommit-suite-audit-evidence.json.gz",
+    "sha256": "dff1df9379c0e733625b09bb624bdfd4f9d1d49704b08668abc7618361d1f4a3",
+    "expanded_bytes": 9030140
+  },
+  "initial_experiments": {
+    "socket_restricted_provider_audit": "INVALID baseline; PermissionError, not a product regression",
+    "first_provider_fault_audit": {
+      "detected": 43,
+      "survived": 3,
+      "invalid": 0,
+      "reason": "Attribution did not yet recognize pytest E assert lines; corrected classifier, original failures retained in temporary evidence"
+    },
+    "original_baseline_pass_did_not_prove_sound_fault_reporting": true
+  },
+  "privacy_review": {
+    "status": "PASS within finite review",
+    "changed_files": 32,
+    "expanded_compressed_artifacts": 2,
+    "high_confidence_credential_patterns_or_private_env_values": 0,
+    "relative_file_links_checked": 95,
+    "missing_relative_file_links": 0,
+    "documentation_errors": 0,
+    "existing_documentation_warnings": 1,
+    "existing_verify_items": 27,
+    "universal_confidentiality_or_security_claim": false
+  },
+  "retained_inventory_comparison": {
+    "original_python_case_ids": 808,
+    "added_python_case_ids": 8,
+    "original_python_fault_catalogue_entries": 291,
+    "added_python_fault_entries": 13,
+    "removed_cases_or_faults": 0,
+    "original_runner_controls": 120,
+    "added_runner_controls": 29,
+    "other_inventories_unchanged": true
+  },
+  "final_source_review": {
+    "provider_and_harness_reviews": "No blocking findings after repairs",
+    "application_test_and_fault_source_hashes_bound": true
+  }
+}
