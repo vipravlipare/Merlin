@@ -1,6 +1,6 @@
 # Sprint 1 — Jira checklist guide
 
-Updated October 23, 2026. **Use [MER-1](https://vipravlipare.atlassian.net/browse/MER-1) for Day 6.** Its 16 native Jira checkboxes are the single place to tick progress. The six old subtasks are redundant and are not additional work. The learner deleted MER-2–MER-7; October 7 live project read-back confirms they are absent and only the seven daily Stories remain. Use only the main checklist. Day 7, Day 9, and Day 10 now have detailed checklists in [Day 7](day-seven-jira-checklist.md), [Day 9](day-nine-jira-checklist.md), and [Day 10](day-ten-jira-checklist.md). Days 8, 11, and 12 remain short templates until their work is ready.
+Updated October 24, 2026. **Use [MER-1](https://vipravlipare.atlassian.net/browse/MER-1) for Day 6.** Its 16 native Jira checkboxes are the single place to tick progress. The six old subtasks are redundant and are not additional work. The learner deleted MER-2–MER-7; October 7 live project read-back confirms they are absent and only the seven daily Stories remain. Use only the main checklist. Day 7, Day 9, Day 10, and Day 11 now have detailed checklists in [Day 7](day-seven-jira-checklist.md), [Day 9](day-nine-jira-checklist.md), [Day 10](day-ten-jira-checklist.md), and [Day 11](day-eleven-jira-checklist.md). Day 8 and Day 12 remain short templates.
 
 ## Day 6 — users and notes
 
@@ -69,7 +69,7 @@ Optional reference: `docs/sprints/database-foundation-start.md` for commands; `d
 | 8 | [MER-9](https://vipravlipare.atlassian.net/browse/MER-9) | Local provider readiness | 360 min |
 | 9 | [MER-10](https://vipravlipare.atlassian.net/browse/MER-10) | [Small provider decoder checklist](day-nine-jira-checklist.md) | 240 min |
 | 10 | [MER-11](https://vipravlipare.atlassian.net/browse/MER-11) | [Owner-scoped notes checklist](day-ten-jira-checklist.md) | 300 min |
-| 11 | [MER-12](https://vipravlipare.atlassian.net/browse/MER-12) | Catch-up and verify the small working path | 300 min |
+| 11 | [MER-12](https://vipravlipare.atlassian.net/browse/MER-12) | [Catch up and verify one working path](day-eleven-jira-checklist.md) | 300 min |
 | 12 | [MER-13](https://vipravlipare.atlassian.net/browse/MER-13) | Sprint review and next plan | 240 min |
 
 MASTER_PROMPT D10 is Deliverable 10 (the Workflow Bible), not calendar Day 10; it remains a separate planning artifact. MER-11 continues the schedule’s Day 10 owner-scoped-notes focus. Day 7 has five timed sections and 16 native checkboxes; no subtasks were added. Reforecast carryover before expanding. The seven caps total 2,040 minutes (34 hours). AWS and DSA remain deferred. Future framework versions and AI measurement gates are resolved before implementation, not treated as installed/completed by these placeholders.

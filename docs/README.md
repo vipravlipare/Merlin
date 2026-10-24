@@ -11,14 +11,16 @@ Transport decision: [3.3 assessment](architecture/local-provider-transport-asses
 
 Verification: [application-only suite scope](testing/application-test-scope.md), [retained decoder map](testing/provider-decoder-baseline-review.md), and [integrated proof](testing/provider-decoder-suite-verification.md). All 38 decoder families mapped, 459 provider cases pass, and 34 provider faults are detected. The full local suite, fresh synthetic CI entry, and hosted cumulative run passed.
 
-Next planning: [Day 10 checklist](sprints/day-ten-jira-checklist.md) and [Day 10 handoff](planning/day-ten-handoff.md) for [Jira MER-11](https://vipravlipare.atlassian.net/browse/MER-11), based on its owner-scoped-notes focus and the completed database/provider work. MASTER_PROMPT D10 is the separate Workflow Bible deliverable, not calendar Day 10.
+Day 10 / [Jira MER-11](https://vipravlipare.atlassian.net/browse/MER-11) is Done. Hosted cumulative CI passed on exact commit `255ec47b4fd300efde3d84701bb2ab1202559880`, [run 40107329920](https://github.com/vipravlipare/Merlin/actions/runs/40107329920). All required jobs and the final evidence merge passed. The 60-second cap measures the longest required test-execution lane; full workflow setup time is reported separately. Read the [Day 10 checklist](sprints/day-ten-jira-checklist.md) and [handoff](planning/day-ten-handoff.md) for scope limits and learner follow-ups. MASTER_PROMPT D10 is the separate Workflow Bible deliverable, not calendar Day 10.
+
+Next: [Day 11 / Jira MER-12 catch-up checklist](sprints/day-eleven-jira-checklist.md). The planned calendar date was October 11; work resumes October 24 within the original 300-minute cap. Start by reconciling carryover, then choose one small path. Basic authentication remains unimplemented; do not expose protected notes routes or claim MVP-0 without its full acceptance evidence.
 
 Later notes scope: basic login is already planned under Day 11/C-05 but is not verified as built. The [Sprint 3 plan](sprints/part-20-sprint3.md) carries the protected owner-scoped list/detail API into the current sprint, gated on trusted authentication and a least-privilege database role. The [Sprint 4 plan](sprints/part-21-sprint4.md) records explicit note sharing as a conditional candidate requiring a 390-minute scope swap; it is not funded or committed.
 
 For a beginner explanation of the earlier application foundation, read [How Merlin works today](learning/current-app-setup-walkthrough.md); compare historical descriptions with the latest handoff.
 
-📚 Learn first: the Day 9 checklist's streaming resources and Day 8 evidence limits.
-↩ Return: review the Day 9 handoff and Day 10/MER-11 checklist and handoff. Before closing MER-11, run the combined working tree through the fresh CI-entry rehearsal, publish code and documents together, and verify hosted CI on that exact revision.
+📚 Learn first: [FastAPI authentication and JWT](https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/), the [OWASP Password Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html), and the Day 11 checklist's stop rules. Pages checked October 24, 2026.
+↩ Return: read the MER-12 checklist and record its starting SHA, one chosen outcome and actual time. The learner writes application code; CI and Jira evidence must match the exact revision being discussed.
 
 | Folder | What belongs here |
 |---|---|
