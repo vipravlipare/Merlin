@@ -137,7 +137,9 @@ def merge_reports(shards, inventory, source_root=ROOT):
         'executed_fault_ids': [fault for fault in expected_ids if fault in executable],
         'catalog_fault_ids': expected_ids,
         'matrix': matrix,
-        'fault_shards': {'count': count, 'parallel_wall_seconds': max(elapsed),
+        'fault_shards': {'count': count,
+                         'parallel_wall_seconds': (max(end for _, end in intervals)
+                                                   - min(start for start, _ in intervals)).total_seconds(),
                          'worker_seconds': elapsed,
                          'started_utc': min(start for start, _ in intervals).isoformat(),
                          'finished_utc': max(end for _, end in intervals).isoformat()},
