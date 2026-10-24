@@ -308,6 +308,8 @@ def main():
     parser.add_argument('--list', action='store_true', help='Print stages without running checks')
     parser.add_argument('--check', action='store_true', help='Verify prerequisites only; no fixtures or faults')
     parser.add_argument('--out-dir', type=Path, help='New or empty output directory; defaults to a unique /tmp folder')
+    parser.add_argument('--defer-python-faults', action='store_true',
+                        help='Run database lanes while Python fault shards execute on separate CI workers')
     args = parser.parse_args()
     if sys.flags.optimize:
         parser.error("Run without -O: result validation requires enabled assertions")
@@ -375,6 +377,14 @@ def main():
                 entry = entries[name]
                 started = time.monotonic()
                 process = None
+                if name == 'python-case-faults' and args.defer_python_faults:
+                    with guard:
+                        entry.update(status='EXTERNAL_PENDING', exit=None,
+                                      external='python-fault-shard-matrix')
+                        entry['seconds'] = 0.0
+                        print('\nSTAGE: python-case-faults deferred to guarded CI shard matrix', flush=True)
+                        save()
+                    return
                 with guard:
                     entry['status'] = 'RUNNING'
                     print('\nSTAGE: ' + name, flush=True)
@@ -521,22 +531,23 @@ def main():
                                 summary['execution']['database_isolation'] = prepared.evidence
                                 save()
             lane(['documentation', 'whitespace'])
-            if not all(entry['status'] == 'PASS' for entry in entries.values()):
+            allowed_statuses = {'PASS', 'EXTERNAL_PENDING'} if args.defer_python_faults else {'PASS'}
+            if not all(entry['status'] in allowed_statuses for entry in entries.values()):
                 raise RuntimeError(summary.get('failure', 'Not every planned stage completed'))
-            summary['status'] = 'PASS'
+            summary['status'] = 'PARTIAL' if args.defer_python_faults else 'PASS'
         except (Exception, KeyboardInterrupt) as error:
             summary.setdefault('failure', str(error) or ('Interrupted; verify disposable identity/empty rows before restarting' if isinstance(error, KeyboardInterrupt) else 'Result validation failed; inspect the last stage report'))
             print(summary['failure'], file=sys.stderr)
         finally:
             summary['runtime_seconds'] = round(time.monotonic() - suite_started, 3)
             summary['runtime_limit_seconds'] = MAX_SUITE_RUNTIME_SECONDS
-            if summary['status'] == 'PASS' and not runtime_within_limit(summary['runtime_seconds']):
+            if summary['status'] in {'PASS', 'PARTIAL'} and not runtime_within_limit(summary['runtime_seconds']):
                 summary['status'] = 'FAIL'
                 summary['failure'] = 'Full suite exceeded the 60-second runtime limit'
             summary['finished_utc'] = datetime.now(timezone.utc).isoformat()
             (directory / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n')
         print('FULL SUITE ' + summary['status'] + ': ' + str(directory / 'summary.json'), flush=True)
-        return int(summary['status'] != 'PASS')
+        return int(summary['status'] not in {'PASS', 'PARTIAL'})
 
 
 if __name__ == '__main__':

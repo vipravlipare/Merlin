@@ -119,15 +119,39 @@ def validate_complete_suite_summary(payload):
         raise ValueError('Cumulative suite isolation, preservation, or cleanup failed')
 
 
-def validate_suite_evidence_files(suite_dir):
+def validate_database_component_summary(payload):
+    """Validate database-runner stages while Python fault shards run in parallel."""
+    rows = payload.get('stages', [])
+    if [row.get('stage') for row in rows] != REQUIRED_SUITE_STAGES:
+        raise ValueError('Database component omitted or reordered a cumulative suite stage')
+    for row in rows:
+        if row['stage'] == 'python-case-faults':
+            if (row.get('status') != 'EXTERNAL_PENDING' or row.get('external') != 'python-fault-shard-matrix'
+                    or row.get('exit') is not None):
+                raise ValueError('Database component has an invalid Python fault-shard handoff')
+        elif row.get('status') != 'PASS' or row.get('exit') != 0:
+            raise ValueError('Database component has a failed or missing suite stage: ' + row['stage'])
+    runtime = payload.get('runtime_seconds')
+    if (isinstance(runtime, bool) or not isinstance(runtime, (int, float))
+            or not math.isfinite(runtime) or payload.get('runtime_limit_seconds') != MAX_CUMULATIVE_SUITE_SECONDS
+            or runtime > MAX_CUMULATIVE_SUITE_SECONDS):
+        raise ValueError('Database component exceeded or omitted its 60-second limit')
+    isolation = payload.get('execution', {}).get('database_isolation', {})
+    if (isolation.get('status') != 'PASS' or isolation.get('source_preserved') is not True
+            or isolation.get('cleanup_passed') is not True):
+        raise ValueError('Database component isolation, preservation, or cleanup failed')
+
+
+def validate_suite_evidence_files(suite_dir, *, require_python=True):
     """Require inspectable case/fault outcomes in the hosted artifact."""
     required = [
         'summary.json', 'database-isolation-controls.json',
-        'merlin-python-effectiveness-final.json',
         'merlin-sql-effectiveness-final.json', 'merlin-sql-shard-0.json',
         'merlin-sql-shard-1.json', 'merlin-lifecycle-effectiveness.json',
         'migration-undo-results.json',
     ]
+    if require_python:
+        required.append('merlin-python-effectiveness-final.json')
     missing = [name for name in required if not (suite_dir / name).is_file()]
     if missing:
         raise ValueError('Cumulative suite evidence missing: ' + ', '.join(missing))
@@ -222,6 +246,34 @@ def cumulative_scope_self_check():
         checks.append('invalid-suite-runtime-refused')
     else:
         raise AssertionError('CI accepted a non-finite suite runtime')
+
+    component = {
+        'stages': [
+            {'stage': name, 'status': 'EXTERNAL_PENDING', 'external': 'python-fault-shard-matrix', 'exit': None}
+            if name == 'python-case-faults' else {'stage': name, 'status': 'PASS', 'exit': 0}
+            for name in REQUIRED_SUITE_STAGES
+        ],
+        'runtime_seconds': 59.999,
+        'runtime_limit_seconds': MAX_CUMULATIVE_SUITE_SECONDS,
+        'execution': {'database_isolation': {
+            'status': 'PASS', 'source_preserved': True, 'cleanup_passed': True}},
+    }
+    validate_database_component_summary(component)
+    component['stages'][1]['external'] = 'untrusted-replacement'
+    try:
+        validate_database_component_summary(component)
+    except ValueError:
+        checks.append('unverified-external-fault-stage-refused')
+    else:
+        raise AssertionError('Database component accepted an unverified Python fault stage')
+    component['stages'][1]['external'] = 'python-fault-shard-matrix'
+    component['runtime_seconds'] = 60.001
+    try:
+        validate_database_component_summary(component)
+    except ValueError:
+        checks.append('over-limit-database-component-refused')
+    else:
+        raise AssertionError('Database component accepted an over-limit suite')
 
     with tempfile.TemporaryDirectory(prefix='merlin-ci-witness-hash-') as directory:
         destination = Path(directory)
@@ -332,6 +384,10 @@ def self_check():
         else:
             raise AssertionError('Unsafe CI identity adaptation accepted')
     checks.extend(row['scenario'] for row in check_database_guards())
+    from tools.merge_python_fault_shards import self_check as check_fault_shards
+    checks.extend(check_fault_shards())
+    from tools.finalize_parallel_ci import self_check as check_parallel_timing
+    checks.extend(check_parallel_timing())
     with tempfile.TemporaryDirectory(prefix='merlin-ci-integrity-') as directory:
         original, copied = Path(directory) / 'original', Path(directory) / 'copy'
         original.mkdir()
@@ -471,6 +527,8 @@ def main():
     parser.add_argument('--out', type=Path)
     parser.add_argument('--include-untracked', action='store_true', help='Explicit local pre-commit verification')
     parser.add_argument('--self-check', action='store_true')
+    parser.add_argument('--database-component', action='store_true',
+                        help='Run database, migration, and baseline gates while Python faults run in matrix workers')
     args = parser.parse_args()
     if sys.flags.optimize:
         parser.error('CI verification requires enabled assertions')
@@ -488,7 +546,8 @@ def main():
     output.mkdir(mode=0o700, parents=True, exist_ok=True)
     summary = {'status': 'FAIL', 'steps': [], 'source_commit': subprocess.check_output(
         ['git', 'rev-parse', 'HEAD'], cwd=ROOT).decode().strip(),
-        'includes_uncommitted_inputs': args.include_untracked}
+        'includes_uncommitted_inputs': args.include_untracked,
+        'component': 'database-and-baseline' if args.database_component else 'complete'}
     started = time.monotonic()
     database = CiDatabase(args.image)
     current_step = 'source-provisioning'
@@ -536,16 +595,23 @@ def main():
                     verify_inputs(proof, copied)
                     current_step = name
                     command = [python, script, '--out-dir' if name == 'complete-suite' else '--out', str(result)]
+                    if name == 'complete-suite' and args.database_component:
+                        command.append('--defer-python-faults')
                     execute(command, cwd=copied, env=env, timeout=600)
                     payload = json.loads((result / 'summary.json' if name == 'complete-suite' else result).read_text())
-                    if payload.get('status') != 'PASS':
+                    expected_status = 'PARTIAL' if name == 'complete-suite' and args.database_component else 'PASS'
+                    if payload.get('status') != expected_status:
                         raise RuntimeError('CI result validation failed: ' + name)
                     if name == 'complete-suite':
-                        validate_complete_suite_summary(payload)
-                        python_report = json.loads(
-                            (result / 'merlin-python-effectiveness-final.json').read_text())
-                        validate_mer11_fault_report(python_report)
-                        evidence_files = validate_suite_evidence_files(result)
+                        if args.database_component:
+                            validate_database_component_summary(payload)
+                            evidence_files = validate_suite_evidence_files(result, require_python=False)
+                        else:
+                            validate_complete_suite_summary(payload)
+                            python_report = json.loads(
+                                (result / 'merlin-python-effectiveness-final.json').read_text())
+                            validate_mer11_fault_report(python_report)
+                            evidence_files = validate_suite_evidence_files(result)
                         summary['suite_evidence_sha256'] = {
                             path: hashlib.sha256((result / path).read_bytes()).hexdigest()
                             for path in evidence_files
@@ -557,7 +623,7 @@ def main():
                         validate_roundtrip(payload, inventory['sql_cases'], hashes)
                     summary['steps'].append({'name': name, 'status': 'PASS'})
                 verify_inputs(proof, copied)
-            summary['status'] = 'PASS'
+            summary['status'] = 'PASS_COMPONENT' if args.database_component else 'PASS'
     except (Exception, KeyboardInterrupt) as error:
         summary['failure_type'] = type(error).__name__
         summary['first_failed_step'] = current_step
@@ -567,7 +633,8 @@ def main():
         summary['seconds'] = round(time.monotonic() - started, 3)
         summary['cleanup_passed'] = database.cleanup_passed
         (output / 'ci-summary.json').write_text(json.dumps(summary, indent=2) + '\n')
-    return int(summary['status'] != 'PASS' or not summary['cleanup_passed'])
+    allowed = {'PASS', 'PASS_COMPONENT'}
+    return int(summary['status'] not in allowed or not summary['cleanup_passed'])
 
 
 if __name__ == '__main__':

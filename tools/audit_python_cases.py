@@ -9,6 +9,7 @@ Timeouts, collection errors and unapplied mutations never count as detections.
 import argparse
 import ast
 from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime, timezone
 import hashlib
 import importlib.util
 import json
@@ -18,6 +19,7 @@ from pathlib import Path
 import subprocess
 import sys
 import tempfile
+import time
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -562,7 +564,21 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--only", help="Run matching fault names only")
+    parser.add_argument("--shard-index", type=int)
+    parser.add_argument("--shard-count", type=int)
+    parser.add_argument("--require-detected", action="store_true",
+                         help="Fail if any assigned executable fault lacks its intended detection")
     args = parser.parse_args()
+    if (args.shard_index is None) != (args.shard_count is None):
+        parser.error("--shard-index and --shard-count must be used together")
+    if args.shard_count is not None and not 1 <= args.shard_count <= 8:
+        parser.error("--shard-count must be between 1 and 8")
+    if args.shard_index is not None and not 0 <= args.shard_index < args.shard_count:
+        parser.error("--shard-index must be smaller than --shard-count")
+    if args.only and args.shard_count is not None:
+        parser.error("--only and sharding cannot be combined")
+    started = time.monotonic()
+    started_utc = datetime.now(timezone.utc).isoformat()
     fingerprints = source_manifest()
     with tempfile.TemporaryDirectory(prefix="merlin-python-audit-") as directory:
         baseline = execute("baseline", None, "", directory)
@@ -572,9 +588,22 @@ def main():
         from tools.test_dependencies import scopes
         selected = scopes(baseline) if os.environ.get('MERLIN_PYTHON_FAULT_SCOPE','dependent') != 'all' else {}
         full_catalog = faults()
-        all_prepared, _, _, _ = canonical_faults(full_catalog)
-        catalog = [row for row in full_catalog if not args.only or args.only in row[0]]
-        prepared, aliases, excluded, invalid = canonical_faults(catalog)
+        if args.shard_count is not None:
+            # Classify aliases before partitioning so each source mutation keeps
+            # the same identity even if its canonical equivalent is elsewhere.
+            all_prepared, all_aliases, all_excluded, all_invalid = canonical_faults(full_catalog)
+            ordered_ids = sorted(row[0] for row in full_catalog)
+            assigned = {fault for index, fault in enumerate(ordered_ids)
+                        if index % args.shard_count == args.shard_index}
+            catalog = [row for row in full_catalog if row[0] in assigned]
+            prepared = [row for row in all_prepared if row[0] in assigned]
+            aliases = [row for row in all_aliases if row['fault'] in assigned]
+            excluded = [row for row in all_excluded if row['fault'] in assigned]
+            invalid = [row for row in all_invalid if row['fault'] in assigned]
+        else:
+            all_prepared, _, _, _ = canonical_faults(full_catalog)
+            catalog = [row for row in full_catalog if not args.only or args.only in row[0]]
+            prepared, aliases, excluded, invalid = canonical_faults(catalog)
         witness_manifest = load_fault_witnesses()
         witnesses = witness_manifest["witnesses"]
         executable_ids = {name for name, _, _ in all_prepared}
@@ -627,12 +656,24 @@ def main():
         payload = {"source_sha256": fingerprints, "baseline": baseline, "faults": results + invalid + aliases + excluded, "fault_aliases": aliases,
                    "excluded_invalid_diagnostics": excluded,
                    "executed_fault_ids": [row[0] for row in prepared],
-                   "catalog_fault_ids": [row[0] for row in catalog], "matrix": matrix}
+                    "catalog_fault_ids": (sorted(assigned) if args.shard_count is not None
+                                          else [row[0] for row in catalog]), "matrix": matrix}
+        if args.shard_count is not None:
+            payload['shard'] = {'index': args.shard_index, 'count': args.shard_count,
+                                'elapsed_seconds': round(time.monotonic() - started, 3),
+                                'started_utc': started_utc,
+                                'finished_utc': datetime.now(timezone.utc).isoformat()}
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(json.dumps(payload, ensure_ascii=True, separators=(',', ':')) + "\n")
         counts = {status: sum(r["status"] == status for r in results + invalid)
                   for status in ["DETECTED", "SURVIVED", "INVALID", "TIMEOUT", "UNAPPLIED"]}
         print(json.dumps({"cases": len(matrix), "demonstrated": sum(bool(r["detects"]) for r in matrix), "faults": counts, "aliases": len(aliases), "excluded_invalid": len(excluded)}))
+        if args.require_detected:
+            expected = {row[0] for row in prepared}
+            observed = {row['fault'] for row in results
+                        if row.get('status') == 'DETECTED' and row.get('intended_detection') is True}
+            if expected != observed:
+                raise SystemExit('Assigned Python fault lacks its intended detection')
 
 
 if __name__ == "__main__":
