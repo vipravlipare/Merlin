@@ -198,6 +198,7 @@ def faults():
     l = "tools/prd_lint.py"
     n = "app/note_rules.py"
     m = "app/notes_maintenance.py"
+    r = "app/notes_repository.py"
     rows += [
         ("probe-only-operational-errors", p, "except psycopg.Error:", "except psycopg.OperationalError:"),
         ("probe-leaks-error", p, 'print("DB Probe Failed: Connection or query failed.", file=sys.stderr)',
@@ -217,6 +218,24 @@ def faults():
         ("text-drafts-all-delete", n, "not is_draft and title is None and not body.strip()", "is_draft or (title is None and not body.strip())"),
         ("text-all-emails-null", n, "return value.strip() or None", "return None"),
         ("text-whitespace-body-trimmed", n, 'body = "" if body is None else body', 'body = "" if body is None else body.strip()'),
+        ("weighted-prefix-limit-ignored", n, "if used + weight > limit:", "if False:"),
+        ("weighted-prefix-codepoint-split", n, "for part in _validated_graphemes(value):", "for part in value:"),
+        ("notes-preview-not-truncated", r, "truncate_weighted(body, MAX_TITLE_WEIGHTED_LENGTH)", "body"),
+        ("notes-stored-title-discarded", r,
+         "stored_title\n            if stored_title is not None",
+         "None\n            if stored_title is not None"),
+        ("notes-owner-filter-removed", r, "WHERE user_id = %s", "WHERE TRUE"),
+        ("notes-trash-view-bypassed", r, "FROM public.active_notes", "FROM public.notes"),
+        ("notes-ordering-reversed", r, "ORDER BY updated_at DESC, id ASC", "ORDER BY updated_at ASC, id ASC"),
+        ("notes-actor-setting-session-wide", r,
+         "SELECT set_config('merlin.actor_id', %s, true)",
+         "SELECT set_config('merlin.actor_id', %s, false)"),
+        ("notes-read-write-enabled", r, "SET TRANSACTION READ ONLY", "SET TRANSACTION READ WRITE"),
+        ("notes-missing-actor-accepted", r, "if not isinstance(actor_id, UUID):", "if False:"),
+        ("notes-malformed-actor-accepted", r, "if not isinstance(actor_id, UUID):", "if actor_id is None:"),
+        ("notes-owner-parameter-hardcoded", r, "(actor_id,),", "(UUID(int=0),),"),
+        ("notes-active-transaction-accepted", r,
+         "if conn.info.transaction_status is not TransactionStatus.IDLE:", "if False:"),
         ("doctor-command-timeout-unbounded", d, "timeout=30,", "timeout=None,"),
         ("doctor-command-raises-on-errors", d, "check=False,", "check=True,"),
         ("doctor-command-does-not-capture", d, "capture_output=True", "capture_output=False"),
@@ -407,6 +426,64 @@ def matches_intended_failure(row, assertion):
     return is_assertion and assertion in failure
 
 
+def load_fault_witnesses():
+    """Load the reviewed test/check that must catch each executable mutation."""
+    path = ROOT / "tests/python-fault-witnesses.json"
+    data = json.loads(path.read_text())
+    if not isinstance(data, dict) or data.get("schema_version") != 1:
+        raise RuntimeError("Unsupported Python fault witness manifest")
+    sources = data.get("source_sha256")
+    witnesses = data.get("witnesses")
+    if not isinstance(sources, dict) or not isinstance(witnesses, dict):
+        raise RuntimeError("Malformed Python fault witness manifest")
+    parsed_sources = {}
+    for source, digest in data.get("source_sha256", {}).items():
+        source_path = Path(source)
+        if (source_path.is_absolute() or ".." in source_path.parts
+                or not source.startswith(("tests/", "tools/test_")) or not source.endswith(".py")):
+            raise RuntimeError("Invalid Python fault witness source path")
+        if hashlib.sha256((ROOT / source).read_bytes()).hexdigest() != digest:
+            raise RuntimeError("Python fault witness source changed: " + source)
+        text = (ROOT / source).read_text()
+        parsed_sources[source] = (text, ast.parse(text))
+    for fault, witness in witnesses.items():
+        if (not isinstance(witness, dict) or not isinstance(witness.get("case"), str)
+                or not isinstance(witness.get("file"), str)
+                or not isinstance(witness.get("line"), int)
+                or not isinstance(witness.get("check"), str)):
+            raise RuntimeError("Malformed Python fault witness: " + str(fault))
+        source = witness["file"]
+        if (source not in parsed_sources or not witness["case"].startswith(source + "::")
+                or witness["line"] < 1):
+            raise RuntimeError("Invalid Python fault witness location: " + str(fault))
+        text, tree = parsed_sources[source]
+        lines = text.splitlines()
+        line = witness["line"]
+        statement = next((node for node in ast.walk(tree) if getattr(node, "lineno", None) == line), None)
+        if (line > len(lines) or lines[line - 1].strip() != witness["check"]
+                or not isinstance(statement, (ast.Assert, ast.With, ast.Expr, ast.Assign))):
+            raise RuntimeError("Python fault witness is not a current test check: " + str(fault))
+    return data
+
+
+def matches_fault_witness(row, witness, test_sources):
+    """Require the named test to fail at its pinned assertion or behavior check."""
+    if row.get("outcome") != "failed":
+        return False
+    path = witness["file"]
+    line = witness["line"]
+    if path not in test_sources:
+        return False
+    lines = test_sources[path].splitlines()
+    if line < 1 or line > len(lines) or lines[line - 1].strip() != witness["check"]:
+        return False
+    failure = row.get("failure", "")
+    # Pytest includes the exact failing source location. Require that location
+    # and the pinned source statement, so an unrelated failing test is not proof.
+    location = path + ":" + str(line) + ":"
+    return location in failure and witness["check"] in failure
+
+
 def outcome(job, code, stderr):
     name, file, output = job['name'], job['file'], job['output']
     if code is None:
@@ -422,6 +499,16 @@ def outcome(job, code, stderr):
     detected = [node for node, row in data["cases"].items() if row.get("outcome") == "failed"]
     result = {"fault": name, "file": file, "status": ("DETECTED" if detected else "SURVIVED") if valid else "INVALID",
               "detected_by": detected, "selected_test_files": job.get("tests"), "scope_manifest_matches": expected is None or actual == expected, **data}
+    witness = job.get("witness")
+    if witness:
+        node = witness["case"]
+        intended = valid and node in detected and matches_fault_witness(
+            data["cases"].get(node, {}), witness, job["test_sources"])
+        result.update(intended_detection=intended, expected_witness_case=node,
+                      expected_witness_check=witness["check"], expected_witness_file=witness["file"],
+                      expected_witness_line=witness["line"])
+        if valid and not intended:
+            result.update(status="SURVIVED", reason="Pinned test check did not detect fault")
     if name in HEALTH_API_DETECTIONS:
         test, assertion = HEALTH_API_DETECTIONS[name]
         node = "tests/test_health_api.py::" + test
@@ -443,8 +530,10 @@ def outcome(job, code, stderr):
     return result
 
 
-def execute(name, file, source, directory):
+def execute(name, file, source, directory, witness=None, test_sources=None):
     job = request(name, file, source, directory)
+    if witness:
+        job.update(witness=witness, test_sources=test_sources)
     try:
         result = subprocess.run([sys.executable, '-c', WORKER, *job['argv']],
                                 cwd=ROOT, stdin=subprocess.DEVNULL, start_new_session=True,
@@ -456,8 +545,12 @@ def execute(name, file, source, directory):
 
 def source_manifest():
     """Pin exactly the technical inputs whose case/fault evidence is reported."""
+    paths = [path for folder in ['app', 'tests', 'tools'] for path in (ROOT / folder).glob('*.py')]
+    witness_path = ROOT / 'tests/python-fault-witnesses.json'
+    if witness_path.exists():
+        paths.append(witness_path)
     return {str(path.relative_to(ROOT)): hashlib.sha256(path.read_bytes()).hexdigest()
-            for folder in ['app', 'tests', 'tools'] for path in (ROOT / folder).glob('*.py')}
+            for path in paths}
 
 
 def verify_manifest(expected):
@@ -478,26 +571,46 @@ def main():
             raise SystemExit("Baseline failed; mutation detections would be unreliable")
         from tools.test_dependencies import scopes
         selected = scopes(baseline) if os.environ.get('MERLIN_PYTHON_FAULT_SCOPE','dependent') != 'all' else {}
-        catalog = [row for row in faults() if not args.only or args.only in row[0]]
+        full_catalog = faults()
+        all_prepared, _, _, _ = canonical_faults(full_catalog)
+        catalog = [row for row in full_catalog if not args.only or args.only in row[0]]
         prepared, aliases, excluded, invalid = canonical_faults(catalog)
+        witness_manifest = load_fault_witnesses()
+        witnesses = witness_manifest["witnesses"]
+        executable_ids = {name for name, _, _ in all_prepared}
+        if set(witnesses) != executable_ids:
+            raise RuntimeError("Python fault witness inventory differs from executable fault inventory")
+        test_sources = {path: (ROOT / path).read_text()
+                        for path in witness_manifest["source_sha256"]}
         verify_manifest(fingerprints)
         results = []
         if os.environ.get('MERLIN_FAST_PYTHON_TESTS', '1') == '1':
             from tools.isolated_python import fork_jobs
-            jobs = [request(*row, directory, tests=selected.get(row[1])) for row in prepared]
+            jobs = []
+            for row in prepared:
+                job = request(*row, directory, tests=selected.get(row[1]))
+                witness = witnesses[row[0]]
+                if witness["case"] not in baseline["cases"]:
+                    raise RuntimeError("Witness test missing from baseline: " + witness["case"])
+                if job["tests"] is not None and not any(
+                        witness["case"].startswith(scope + "::") or witness["case"] == scope
+                        for scope in job["tests"]):
+                    raise RuntimeError("Dependent-test scope omits witness case: " + row[0])
+                job.update(witness=witness, test_sources=test_sources)
+                jobs.append(job)
             for job in jobs:
                 job['expected_cases'] = {node for node, row in baseline['cases'].items()
                                          if row.get('kind') != 'subtest' and
                                          (job['tests'] is None or row['file'] in job['tests'] or node in job['tests'])}
             stream = (outcome(job, code, stderr) for job, (code, stdout, stderr)
-                      in zip(jobs, fork_jobs(jobs, workers=min(8, max(1, int(os.environ.get("MERLIN_PYTHON_FAULT_WORKERS", "8"))), len(os.sched_getaffinity(0))))))
+                in zip(jobs, fork_jobs(jobs, workers=min(20, max(1, int(os.environ.get("MERLIN_PYTHON_FAULT_WORKERS", "20"))), len(os.sched_getaffinity(0))))))
             for result in stream:
                 results.append(result)
                 if len(results) % 20 == 0:
                     print(f"Executed {len(results)}/{len(prepared)} faults", flush=True)
         else:
-            with ThreadPoolExecutor(max_workers=min(8, max(1, int(os.environ.get("MERLIN_PYTHON_FAULT_WORKERS", "8"))), len(os.sched_getaffinity(0)))) as pool:
-                results = list(pool.map(lambda row: execute(*row, directory), prepared))
+            with ThreadPoolExecutor(max_workers=min(20, max(1, int(os.environ.get("MERLIN_PYTHON_FAULT_WORKERS", "20"))), len(os.sched_getaffinity(0)))) as pool:
+                results = list(pool.map(lambda row: execute(*row, directory, witnesses[row[0]], test_sources), prepared))
         # Build the reverse index once; preserve the fault catalogue order and
         # every underlying outcome while avoiding a case-by-fault rescan.
         detections = {}

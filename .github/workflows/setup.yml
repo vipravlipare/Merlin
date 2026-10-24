@@ -55,20 +55,27 @@ jobs:
         run: |
           docker build --iidfile "$RUNNER_TEMP/merlin-ci-image" -f .github/ci/postgres.Dockerfile .github/ci
           docker image inspect --format '{{.Id}}' "$(cat "$RUNNER_TEMP/merlin-ci-image")" > "$RUNNER_TEMP/merlin-ci-runtime-id"
-      - name: All prior application cases, faults and migration verification
+      - name: Cumulative MER-0–MER-11 automated suite and migration verification
         run: |
           uv run --locked python tools/run_ci.py --image "$(cat "$RUNNER_TEMP/merlin-ci-runtime-id")" --out "$RUNNER_TEMP/merlin-ci-results"
-      - name: Retain only CI-owned synthetic verification reports
+      - name: Retain case-level and fault-level verification evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: cumulative-verification
           retention-days: 7
-          if-no-files-found: warn
+          if-no-files-found: error
           path: |
             ${{ runner.temp }}/merlin-ci-results/ci-summary.json
             ${{ runner.temp }}/merlin-ci-results/source-inputs.json
             ${{ runner.temp }}/merlin-ci-results/suite/summary.json
+            ${{ runner.temp }}/merlin-ci-results/suite/database-isolation-controls.json
+            ${{ runner.temp }}/merlin-ci-results/suite/merlin-python-effectiveness-final.json
+            ${{ runner.temp }}/merlin-ci-results/suite/merlin-sql-effectiveness-final.json
+            ${{ runner.temp }}/merlin-ci-results/suite/merlin-sql-shard-0.json
+            ${{ runner.temp }}/merlin-ci-results/suite/merlin-sql-shard-1.json
+            ${{ runner.temp }}/merlin-ci-results/suite/merlin-lifecycle-effectiveness.json
+            ${{ runner.temp }}/merlin-ci-results/suite/migration-undo-results.json
             ${{ runner.temp }}/merlin-ci-results/migration.json
       - name: Remove only runner-owned disposable resources
         if: always()

@@ -2,18 +2,23 @@
 
 - [Parallel SQL performance: 36.83-second full verification and coverage proof](testing/test-suite-parallel-sql-performance.md)
 - [Final second review: every case/fault, repairs and observed results](testing/test-suite-second-review.md)
-Current work: [Day 9 handoff](planning/day-nine-handoff.md) and [checklist](sprints/day-nine-jira-checklist.md), tracked in [Jira MER-10](https://vipravlipare.atlassian.net/browse/MER-10). The bounded byte-only decoder, retained cases/faults and local full-suite/fresh synthetic CI-entry verification are complete. Live HTTP transport is deferred. The guided learner explanation/review is complete; exact hosted verification remains open; no commit or push has occurred.
+- [Current MER-0–MER-11 case-by-case and fault-by-fault review](testing/full-suite-case-fault-review.md) with [complete outcome matrix](testing/full-suite-case-fault-matrix.json)
+Completed: [Day 9 handoff](planning/day-nine-handoff.md) and [checklist](sprints/day-nine-jira-checklist.md), tracked in [Jira MER-10](https://vipravlipare.atlassian.net/browse/MER-10). The bounded decoder, retained cases/faults, and cumulative suite are complete for the explicitly scoped parser-only outcome. Hosted run [40009971455](https://github.com/vipravlipare/Merlin/actions/runs/40009971455) passed on final revision `5032c6e14090c45a7062ea81abd6fbfecf3a48fb`; Jira is Done. HTTP transport remains deferred; no connected provider is claimed.
 
-Learning and authorship: [decoder preparation, reviews and second-pass receipt](learning/provider-completion-preparation.md). Learner attempts and helper extraction are distinguished from explicitly authorized assistant implementation, test and harness work. The learner now confirms sections 1–4 complete from their side except publication; final 5.2 is separate.
+Learning and authorship: [decoder preparation, reviews and second-pass receipt](learning/provider-completion-preparation.md). Learner attempts and helper extraction are distinguished from explicitly authorized assistant implementation, test and harness work. Section 5.2 is recorded complete with guided corrections; independent perfect recall is not claimed.
 
 Transport decision: [3.3 assessment](architecture/local-provider-transport-assessment.md). Assessment complete; the unbuilt network connection and its full safety requirements need a separately budgeted slice.
 
-Verification: [retained decoder map](testing/provider-decoder-baseline-review.md) and [integrated proof](testing/provider-decoder-suite-verification.md). All 38 decoder families mapped, 459 provider cases pass and 34 provider faults are detected. Full local suite/fresh synthetic CI-entry proof passed; hosted proof remains pending publication.
+Verification: [application-only suite scope](testing/application-test-scope.md), [retained decoder map](testing/provider-decoder-baseline-review.md), and [integrated proof](testing/provider-decoder-suite-verification.md). All 38 decoder families mapped, 459 provider cases pass, and 34 provider faults are detected. The full local suite, fresh synthetic CI entry, and hosted cumulative run passed.
+
+Next planning: [Day 10 checklist](sprints/day-ten-jira-checklist.md) and [Day 10 handoff](planning/day-ten-handoff.md) for [Jira MER-11](https://vipravlipare.atlassian.net/browse/MER-11), based on its owner-scoped-notes focus and the completed database/provider work. MASTER_PROMPT D10 is the separate Workflow Bible deliverable, not calendar Day 10.
+
+Later notes scope: basic login is already planned under Day 11/C-05 but is not verified as built. The [Sprint 3 plan](sprints/part-20-sprint3.md) carries the protected owner-scoped list/detail API into the current sprint, gated on trusted authentication and a least-privilege database role. The [Sprint 4 plan](sprints/part-21-sprint4.md) records explicit note sharing as a conditional candidate requiring a 390-minute scope swap; it is not funded or committed.
 
 For a beginner explanation of the earlier application foundation, read [How Merlin works today](learning/current-app-setup-walkthrough.md); compare historical descriptions with the latest handoff.
 
 📚 Learn first: the Day 9 checklist's streaming resources and Day 8 evidence limits.
-↩ Return: review the Day 9 handoff and guided corrections, then separately authorize publication if ready. Observe exact hosted CI before closing 4.4 or starting Day 10.
+↩ Return: review the Day 9 handoff and Day 10/MER-11 checklist and handoff. Before closing MER-11, run the combined working tree through the fresh CI-entry rehearsal, publish code and documents together, and verify hosted CI on that exact revision.
 
 | Folder | What belongs here |
 |---|---|
@@ -63,7 +68,7 @@ Run all tests and injected faults: [test-suite terminal commands](testing/test-s
 
 Test-suite repair and speed: [failure investigation and measured performance](testing/test-suite-performance.md).
 
-Day 9 latest: [4.2–4.4 verification](testing/provider-decoder-suite-verification.md) — 34 provider faults detected, full guarded suite and fresh synthetic CI entry point PASS. Publication and exact hosted proof remain pending; learner explanation and section 5 remain open.
+Day 9 latest: [4.2–4.4 verification](testing/provider-decoder-suite-verification.md) — 34 provider faults detected; full guarded suite, fresh synthetic CI entry point, and exact hosted cumulative runs 40008698978/40009971455 PASS. MER-10 is Done for the parser-only outcome; HTTP transport remains deferred.
 
 - [Pre-commit cumulative suite audit](testing/precommit-suite-audit.md): repaired decoder and fault-reporting gaps, complete case/fault evidence, measured reporting costs and publication limits.
 

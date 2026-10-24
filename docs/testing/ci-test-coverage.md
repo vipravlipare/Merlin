@@ -1,6 +1,6 @@
 # What runs automatically in CI
 
-October 23 update: [application-only scope](application-test-scope.md) supersedes quiz-inclusive receipts. New source is verified locally; hosted proof remains pending publication.
+October 23 update: [application-only scope](application-test-scope.md) supersedes quiz-inclusive receipts. Current code and documents passed the fresh local CI-entry rehearsal; hosted exact-revision proof remains pending the combined commit/push.
 
 The cumulative verification workflow runs on every ordinary push to any branch and on pull requests, with no path or branch filters. Manual execution remains available. New pushes no longer cancel earlier runs through a workflow concurrency group. Each hosted job uses its own runner and independently owned synthetic database storage. GitHub capacity, service limits, explicit skip instructions or manual cancellation can still prevent completion; verify the run outcome rather than assuming every event passed.
 
@@ -20,16 +20,16 @@ Database checks remain integration or system tests. Replacing PostgreSQL with a 
 | Layer | Existing execution in CI | What it establishes |
 |---|---|---|
 | Locked setup and doctor unit regressions | Locked Python/Node environments, `tools/test_*.py`, setup and doctor static/runtime checks | Fresh-runner prerequisites, isolated services and fail-closed setup behavior. |
-| Python unit and regression tests | Original source tests before adaptation, then the complete suite baseline; 815 Python case/subtest inventory IDs, including 467 decoder cases | Actual application helpers, controlled connection failures, non-disclosure, maintenance guards and setup/documentation behavior. |
+| Python unit and regression tests | Original source tests before adaptation, then the complete suite baseline; 821 Python case/subtest inventory IDs, including 467 decoder cases and six MER-11 repository cases | Actual application helpers, controlled connection failures, non-disclosure, maintenance guards and setup/documentation behavior. |
 | PostgreSQL integration tests | 383 case IDs against real disposable PostgreSQL | Constraints, Python/SQL whitespace parity, ownership prerequisites, rollback, reconnect, timestamps and cleanup behavior. |
-| Python fault effectiveness | 297 canonical faults, including 47 provider faults, three proven aliases; four explicitly excluded invalid startup diagnostics | Every inventoried case has demonstrated relevant fault detection. Unexpected survivors, invalid experiments or timeouts fail the gate. Excluded diagnostics are not counted as successful detections. |
+| Python fault effectiveness | 321 Python catalogue entries: 314 executable faults with per-check witnesses, three proven aliases, and four explicitly excluded invalid startup diagnostics; includes 47 provider and 11 MER-11 note faults | Every inventoried case has demonstrated relevant fault detection. Unexpected survivors, invalid experiments or timeouts fail the gate. Excluded diagnostics are not counted as successful detections. |
 | SQL fault effectiveness | 607 reviewed case/fault pairs across 126 implementations | Tests reject deliberately broken constraints and database behavior on independently guarded storage. |
 | Lifecycle and migration audits | Five lifecycle checks/faults and 36 migration controls | Committed behavior, locking, preservation and guarded undo/reapplication audits. |
 | Independent committed migration roundtrip | Additional 383-case replay and ordered schema comparison | Real migration undo/reapplication and reconnect behavior, restricted to disposable storage. |
 | Harness, reporting and cleanup controls | Scheduling, transport, isolation, inventories, CI identity adaptation, artifact validation and cleanup controls | A missing case, contradictory PASS, failed required stage or unsafe target cannot silently become successful coverage. |
 | Documentation and whitespace | Link/planning validation and Git whitespace checks | Documentation portability and formatting checks remain required. |
 
-The seven-stage runner is `tools/run_test_suite.py`. Hosted CI invokes it through `tools/run_ci.py`, which also runs original Python sources and the separate committed migration roundtrip. `tests/suite-inventory.json` is the reviewed inventory: execution cannot regenerate it to accept missing cases. Future work must add its tests and applicable faults to the suite and inventory as part of implementation. CI cannot certify an API that has not been implemented or manual account/learning checks.
+The seven-stage runner is `tools/run_test_suite.py`. Hosted CI invokes it through `tools/run_ci.py`, which also runs original Python sources and the separate committed migration roundtrip. The outer hosted validator now enforces reviewed inventory floors, six required MER-11 test IDs, eleven named note-fault witnesses, all seven stage outcomes, the 60-second cap and cleanup/source preservation. It verifies that case/fault reports exist and hashes them into `ci-summary.json`; the workflow retains those reports for review. `tests/suite-inventory.json` remains the case/fault inventory. Future work must add tests/faults to it and update reviewed floors only with an explicit coverage review. CI certifies automated checks for implemented scope; it cannot certify a feature that does not exist or manual learner/account checks.
 
 ## Confidentiality boundary
 
@@ -47,7 +47,7 @@ For a focused Python unit/regression run without the live PostgreSQL module:
 .venv/bin/python -m pytest -q tests tools/test_doctor.py --ignore=tests/test_users_notes_database.py
 ```
 
-The focused command does not replace the full suite. See [all suite commands](test-suite-commands.md) for prerequisites and [observed CI results](cumulative-ci-verification.md) for actual hosted evidence.
+The current cumulative scope includes MER-1 and MER-8 through MER-11. “MER-0–MER-11” is a scope range, not a claim that every planned feature is complete. Local readiness, learner explain-back, authenticated note ownership, real repository pool behavior, sharing/fetch-by-ID and deferred MER-10 HTTP transport remain manual, unimplemented or separately scoped. The focused command does not replace the full suite. See [all suite commands](test-suite-commands.md) for prerequisites and [observed CI results](cumulative-ci-verification.md) for actual hosted evidence.
 
 ## Observed verification
 

@@ -1,0 +1,1899 @@
+{
+  "schema_version": 1,
+  "source_sha256": {
+    "tests/test_database_connectivity_probe.py": "ba296ed12baab295aea9b44c5915a88082fe163968ea9a2596ac82ca380a3063",
+    "tests/test_doctor_failure_cases.py": "6c8c06d6285fe2950912692838ae692763b5c28f4e9454f83af4b200a3c8df97",
+    "tests/test_health_api.py": "3dc8727b03097a757a26b7f5981f3e678caf50a867e0ddc2ef8c08d2c71f0b9a",
+    "tests/test_local_provider.py": "fe78680b5ef16bf94579870023cd93440e11c6f95c5f87fee6e6479da06cc56a",
+    "tests/test_note_rules_and_maintenance.py": "0a3dcf4b2e7c9b07e93d9e33f25d444b3b4b309f7020d075840617c28a6fa4ef",
+    "tests/test_notes_repository.py": "f9edec997747c8d6a8c20514bbe92dae5faf72ae71f8c9d82ef9c156e85bcbec",
+    "tests/test_prd_lint.py": "04a66d2ac906235b4bd727b6fb87ce475dd2f6ba51c5ba910b2c945996082344",
+    "tools/test_doctor.py": "25522e95c32b8ceea080984ee800b2b8a82c3a0c169cac52e9732c0fce3d44b7"
+  },
+  "witnesses": {
+    "emoji-weight-one": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_display_character_weights[1\\ufe0f\\u20e3-4]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 22,
+      "check": "assert weighted_length(text) == count"
+    },
+    "codepoint-instead-of-grapheme": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_display_character_weights[1\\ufe0f\\u20e3-4]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 22,
+      "check": "assert weighted_length(text) == count"
+    },
+    "title-bound-relaxed": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_over_limit_title_rejected_even_for_drafts[accented176]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 124,
+      "check": "with pytest.raises(ValueError, match=\"Title exceeds weighted length 175\"):"
+    },
+    "title-bound-too-strict": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_combining_characters_accepted_at_display_limit[title-175]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 287,
+      "check": "result = validate_note(text, \"\") if field == \"title\" else validate_note(None, text)"
+    },
+    "body-bound-relaxed": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_over_limit_body_rejected_even_for_drafts[mixed7001]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 130,
+      "check": "with pytest.raises(ValueError, match=\"Body exceeds weighted length 7000\"):"
+    },
+    "body-bound-too-strict": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_body_boundary",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 37,
+      "check": "result = validate_note(None, body)"
+    },
+    "body-stripped": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_blank_title_with_real_body[ \\t\\n]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 280,
+      "check": "assert (result.title, result.body, result.delete_on_save) == (None, \"  actual writing\\n \", False)"
+    },
+    "real-title-stripped": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_every_whitespace_class_normalizes_title_preserves_real_content_and_drafts[U+0009]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 478,
+      "check": "assert (real.title, real.body, real.delete_on_save) == (space + \"Title\" + space, space + \"Body\" + space, False)"
+    },
+    "email-lowercased": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_email_edge_whitespace[ \\tMixed@Example.COM\\n -Mixed@Example.COM]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 168,
+      "check": "assert normalize_email(raw) == expected"
+    },
+    "blank-title-stored-empty": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_blank_title_with_real_body[ \\t\\n]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 280,
+      "check": "assert (result.title, result.body, result.delete_on_save) == (None, \"  actual writing\\n \", False)"
+    },
+    "draft-delete-protection-removed": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_empty_note_decision[True- \\t\\n- \\r\\n]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 140,
+      "check": "assert result.delete_on_save is (not draft)"
+    },
+    "nul-check-removed": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_count_rejects_invalid_text[\\x00]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 152,
+      "check": "with pytest.raises(ValueError, match=f\"^{message}$\"):"
+    },
+    "target-check-skipped": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_allowed_batch_boundaries_and_fixed_target[1000]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 229,
+      "check": "assert run_once(\"synthetic-secret\", size) == (0, 0)"
+    },
+    "identity-or-changed-to-and": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_wrong_target_never_calls_cleanup[preserved-cluster]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 57,
+      "check": "with pytest.raises(RuntimeError, match=\"Refusing maintenance outside\"):"
+    },
+    "target-port-original-db": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_allowed_batch_boundaries_and_fixed_target[1000]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 230,
+      "check": "connect.assert_called_once_with("
+    },
+    "batch1001-allowed": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_invalid_batch_never_connects[1001]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 218,
+      "check": "run_once(\"synthetic-secret\", size)"
+    },
+    "lock-timeout-removed": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_allowed_batch_boundaries_and_fixed_target[1000]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 234,
+      "check": "assert cursor.execute.call_args_list == ["
+    },
+    "wrong-expiry-function": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_allowed_batch_boundaries_and_fixed_target[1000]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 234,
+      "check": "assert cursor.execute.call_args_list == ["
+    },
+    "once-flag-ignored": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_cli_once_runs_one_cycle_without_sleep",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 327,
+      "check": "worker.main()"
+    },
+    "custom-interval-ignored": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_cli_repeats_at_chosen_interval_and_stops_on_interrupt[args1-10]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 346,
+      "check": "assert sleep.call_args_list == [call(interval), call(interval)]"
+    },
+    "cli-error-secret-leaked": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_cli_error_hides_credentials_and_stops[connection]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 379,
+      "check": "assert secret not in str(error.value.code)"
+    },
+    "strict-batch-guard-removed": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_more_wrong_batch_types_rejected[none]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 308,
+      "check": "run_once(\"synthetic-secret\", size)"
+    },
+    "strict-draft-guard-removed": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_draft_flag_requires_boolean[integer]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 315,
+      "check": "with pytest.raises(ValueError, match=\"^is_draft must be a boolean$\"):"
+    },
+    "utf8-guard-removed": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_invalid_unicode_rejected_before_persistence[embedded-body]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 183,
+      "check": "with pytest.raises(ValueError, match=\"^Text must be valid UTF-8$\") as error:"
+    },
+    "unexpected-extra-sql": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_allowed_batch_boundaries_and_fixed_target[1000]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 234,
+      "check": "assert cursor.execute.call_args_list == ["
+    },
+    "email-padding-retained": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_email_edge_whitespace[ \\tMixed@Example.COM\\n -Mixed@Example.COM]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 168,
+      "check": "assert normalize_email(raw) == expected"
+    },
+    "optional-email-empty-string": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_email_edge_whitespace[None-None]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 168,
+      "check": "assert normalize_email(raw) == expected"
+    },
+    "empty-email-empty-string": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_email_edge_whitespace[-None]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 168,
+      "check": "assert normalize_email(raw) == expected"
+    },
+    "none-body-not-normalized": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_default_save_deletes_a_fully_blank_note",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 428,
+      "check": "result = validate_note(None, None)"
+    },
+    "draft-title-bypasses-limit": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_over_limit_title_rejected_even_for_drafts[accented176]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 124,
+      "check": "with pytest.raises(ValueError, match=\"Title exceeds weighted length 175\"):"
+    },
+    "draft-body-bypasses-limit": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_over_limit_body_rejected_even_for_drafts[family7004]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 130,
+      "check": "with pytest.raises(ValueError, match=\"Body exceeds weighted length 7000\"):"
+    },
+    "save-default-is-draft": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_default_save_deletes_a_fully_blank_note",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 429,
+      "check": "assert (result.title, result.body, result.delete_on_save) == (None, \"\", True)"
+    },
+    "text-type-guard-disabled": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_container_and_boolean_text_is_rejected[True-body]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 424,
+      "check": "validate_note(**values)"
+    },
+    "valid-unicode-rejected-ascii": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_display_character_weights[1\\ufe0f\\u20e3-4]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 22,
+      "check": "assert weighted_length(text) == count"
+    },
+    "nul-only-at-start": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_count_rejects_invalid_text[hello\\x00]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 152,
+      "check": "with pytest.raises(ValueError, match=f\"^{message}$\"):"
+    },
+    "valid-body-erased": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_blank_title_with_real_body[ \\t\\n]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 280,
+      "check": "assert (result.title, result.body, result.delete_on_save) == (None, \"  actual writing\\n \", False)"
+    },
+    "valid-title-erased": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_combining_characters_accepted_at_display_limit[title-175]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 288,
+      "check": "assert (result.title, result.body, result.delete_on_save) == ((text, \"\", False) if field == \"title\" else (None, text, False))"
+    },
+    "blank-save-never-deletes": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_default_save_deletes_a_fully_blank_note",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 429,
+      "check": "assert (result.title, result.body, result.delete_on_save) == (None, \"\", True)"
+    },
+    "target-host-public": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_allowed_batch_boundaries_and_fixed_target[1000]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 230,
+      "check": "connect.assert_called_once_with("
+    },
+    "target-database-original": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_allowed_batch_boundaries_and_fixed_target[1000]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 230,
+      "check": "connect.assert_called_once_with("
+    },
+    "target-user-original": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_allowed_batch_boundaries_and_fixed_target[1000]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 230,
+      "check": "connect.assert_called_once_with("
+    },
+    "connection-timeout-unbounded": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_allowed_batch_boundaries_and_fixed_target[1000]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 230,
+      "check": "connect.assert_called_once_with("
+    },
+    "batch-zero-allowed": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_invalid_batch_never_connects[0]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 218,
+      "check": "run_once(\"synthetic-secret\", size)"
+    },
+    "batch1000-rejected": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_allowed_batch_boundaries_and_fixed_target[1000]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 229,
+      "check": "assert run_once(\"synthetic-secret\", size) == (0, 0)"
+    },
+    "statement-timeout-removed": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_allowed_batch_boundaries_and_fixed_target[1000]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 234,
+      "check": "assert cursor.execute.call_args_list == ["
+    },
+    "purge-parameter-altered": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_allowed_batch_boundaries_and_fixed_target[1000]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 234,
+      "check": "assert cursor.execute.call_args_list == ["
+    },
+    "cleanup-counts-swapped": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_worker_cycle_verifies_then_uses_bounded_functions",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 74,
+      "check": "assert run_once(\"synthetic-secret\", 25) == (2, 3)"
+    },
+    "early-explicit-commit": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_cleanup_failure_leaves_transaction_as_error[purge]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 271,
+      "check": "conn.commit.assert_not_called()"
+    },
+    "default-interval-altered": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_cli_repeats_at_chosen_interval_and_stops_on_interrupt[args0-60]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 346,
+      "check": "assert sleep.call_args_list == [call(interval), call(interval)]"
+    },
+    "nine-second-interval-allowed": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_cli_rejects_bad_interval_before_password_or_work[9]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 359,
+      "check": "worker.main()"
+    },
+    "ten-second-interval-rejected": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_cli_repeats_at_chosen_interval_and_stops_on_interrupt[args1-10]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 344,
+      "check": "worker.main()"
+    },
+    "runtime-error-not-sanitized": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_cli_error_hides_credentials_and_stops[identity]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 377,
+      "check": "worker.main()"
+    },
+    "output-counts-swapped": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_cli_once_runs_one_cycle_without_sleep",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 332,
+      "check": "assert output == \"Expired title-only notes: 2; purged deleted notes: 3\\n\""
+    },
+    "interrupt-message-omitted": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_cli_repeats_at_chosen_interval_and_stops_on_interrupt[args0-60]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 347,
+      "check": "assert capsys.readouterr().out == (\"Expired title-only notes: 0; purged deleted notes: 1\\n\""
+    },
+    "nul-error-echoes-input": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_count_rejects_invalid_text[\\x00]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 152,
+      "check": "with pytest.raises(ValueError, match=f\"^{message}$\"):"
+    },
+    "probe-only-operational-errors": {
+      "case": "tests/test_database_connectivity_probe.py::test_database_errors_at_each_stage_are_sanitized[query-DataError]",
+      "file": "tests/test_database_connectivity_probe.py",
+      "line": 108,
+      "check": "probe.probe_database()"
+    },
+    "probe-leaks-error": {
+      "case": "tests/test_database_connectivity_probe.py::test_database_errors_at_each_stage_are_sanitized[cursor-OperationalError]",
+      "file": "tests/test_database_connectivity_probe.py",
+      "line": 113,
+      "check": "assert \"synthetic-private-password\" not in output.err"
+    },
+    "probe-wrong-failure-status": {
+      "case": "tests/test_database_connectivity_probe.py::test_database_errors_at_each_stage_are_sanitized[cursor-OperationalError]",
+      "file": "tests/test_database_connectivity_probe.py",
+      "line": 109,
+      "check": "assert result.value.code == 1"
+    },
+    "probe-wrong-success-status": {
+      "case": "tests/test_database_connectivity_probe.py::test_probe_is_read_only_before_its_only_query",
+      "file": "tests/test_database_connectivity_probe.py",
+      "line": 33,
+      "check": "assert result.value.code == 0"
+    },
+    "probe-not-read-only": {
+      "case": "tests/test_database_connectivity_probe.py::test_probe_is_read_only_before_its_only_query",
+      "file": "tests/test_database_connectivity_probe.py",
+      "line": 24,
+      "check": "assert conn.read_only is True"
+    },
+    "probe-wrong-port": {
+      "case": "tests/test_database_connectivity_probe.py::test_probe_is_read_only_before_its_only_query",
+      "file": "tests/test_database_connectivity_probe.py",
+      "line": 35,
+      "check": "connect.assert_called_once_with(host=\"127.0.0.1\", port=55432, dbname=\"merlin_d6\","
+    },
+    "probe-fetch-twice": {
+      "case": "tests/test_database_connectivity_probe.py::test_probe_is_read_only_before_its_only_query",
+      "file": "tests/test_database_connectivity_probe.py",
+      "line": 39,
+      "check": "cursor.fetchone.assert_called_once_with()"
+    },
+    "probe-mask-programming-bug": {
+      "case": "tests/test_database_connectivity_probe.py::test_unrelated_programming_bug_is_not_masked",
+      "file": "tests/test_database_connectivity_probe.py",
+      "line": 124,
+      "check": "probe.probe_database()"
+    },
+    "probe-extra-query": {
+      "case": "tests/test_database_connectivity_probe.py::test_probe_is_read_only_before_its_only_query",
+      "file": "tests/test_database_connectivity_probe.py",
+      "line": 25,
+      "check": "assert query == \"SELECT current_database(), current_user;\""
+    },
+    "probe-error-on-stdout": {
+      "case": "tests/test_database_connectivity_probe.py::test_database_errors_at_each_stage_are_sanitized[cursor-OperationalError]",
+      "file": "tests/test_database_connectivity_probe.py",
+      "line": 111,
+      "check": "assert output.out == \"\""
+    },
+    "worker-malformed-identity-not-sanitized": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_cli_malformed_identity_is_sanitized_and_never_runs_cleanup[None]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 504,
+      "check": "worker.main()"
+    },
+    "text-plain-weight-zero": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_display_character_weights[\\n-1]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 22,
+      "check": "assert weighted_length(text) == count"
+    },
+    "text-all-empty-rejected": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_email_edge_whitespace[-None]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 168,
+      "check": "assert normalize_email(raw) == expected"
+    },
+    "text-drafts-all-delete": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_empty_note_decision[True- \\t\\n- \\r\\n]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 140,
+      "check": "assert result.delete_on_save is (not draft)"
+    },
+    "text-all-emails-null": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_email_edge_whitespace[ \\tMixed@Example.COM\\n -Mixed@Example.COM]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 168,
+      "check": "assert normalize_email(raw) == expected"
+    },
+    "weighted-prefix-limit-ignored": {
+      "case": "tests/test_notes_repository.py::test_active_note_list_uses_body_prefix_when_title_is_missing",
+      "file": "tests/test_notes_repository.py",
+      "line": 59,
+      "check": "assert items == ["
+    },
+    "weighted-prefix-codepoint-split": {
+      "case": "tests/test_notes_repository.py::test_active_note_list_uses_body_prefix_when_title_is_missing",
+      "file": "tests/test_notes_repository.py",
+      "line": 59,
+      "check": "assert items == ["
+    },
+    "notes-preview-not-truncated": {
+      "case": "tests/test_notes_repository.py::test_active_note_list_uses_body_prefix_when_title_is_missing",
+      "file": "tests/test_notes_repository.py",
+      "line": 59,
+      "check": "assert items == ["
+    },
+    "notes-stored-title-discarded": {
+      "case": "tests/test_notes_repository.py::test_active_note_list_binds_each_actor_when_connection_is_reused",
+      "file": "tests/test_notes_repository.py",
+      "line": 131,
+      "check": "assert actor_a_items == [ActiveNoteListItem(NOTE_ID, \"Actor A note\", UPDATED_AT)]"
+    },
+    "notes-owner-filter-removed": {
+      "case": "tests/test_notes_repository.py::test_active_note_list_sets_owner_and_uses_read_only_active_query",
+      "file": "tests/test_notes_repository.py",
+      "line": 83,
+      "check": "assert query == ("
+    },
+    "notes-trash-view-bypassed": {
+      "case": "tests/test_notes_repository.py::test_active_note_list_sets_owner_and_uses_read_only_active_query",
+      "file": "tests/test_notes_repository.py",
+      "line": 83,
+      "check": "assert query == ("
+    },
+    "notes-ordering-reversed": {
+      "case": "tests/test_notes_repository.py::test_active_note_list_sets_owner_and_uses_read_only_active_query",
+      "file": "tests/test_notes_repository.py",
+      "line": 83,
+      "check": "assert query == ("
+    },
+    "notes-actor-setting-session-wide": {
+      "case": "tests/test_notes_repository.py::test_active_note_list_binds_each_actor_when_connection_is_reused",
+      "file": "tests/test_notes_repository.py",
+      "line": 134,
+      "check": "assert statements[1] == call("
+    },
+    "notes-read-write-enabled": {
+      "case": "tests/test_notes_repository.py::test_active_note_list_sets_owner_and_uses_read_only_active_query",
+      "file": "tests/test_notes_repository.py",
+      "line": 78,
+      "check": "assert statements[0] == call(\"SET TRANSACTION READ ONLY\")"
+    },
+    "notes-missing-actor-accepted": {
+      "case": "tests/test_notes_repository.py::test_active_note_list_rejects_missing_actor_and_busy_connection_before_query",
+      "file": "tests/test_notes_repository.py",
+      "line": 96,
+      "check": "with pytest.raises(ValueError, match=\"^A trusted actor UUID is required$\"):"
+    },
+    "notes-malformed-actor-accepted": {
+      "case": "tests/test_notes_repository.py::test_active_note_list_rejects_malformed_actor_before_query",
+      "file": "tests/test_notes_repository.py",
+      "line": 112,
+      "check": "with pytest.raises(ValueError, match=\"^A trusted actor UUID is required$\"):"
+    },
+    "notes-owner-parameter-hardcoded": {
+      "case": "tests/test_notes_repository.py::test_active_note_list_binds_each_actor_when_connection_is_reused",
+      "file": "tests/test_notes_repository.py",
+      "line": 137,
+      "check": "assert statements[2].args[1] == (ACTOR_ID,)"
+    },
+    "notes-active-transaction-accepted": {
+      "case": "tests/test_notes_repository.py::test_active_note_list_rejects_missing_actor_and_busy_connection_before_query",
+      "file": "tests/test_notes_repository.py",
+      "line": 102,
+      "check": "with pytest.raises(RuntimeError, match=\"^Notes listing requires an idle database connection$\"):"
+    },
+    "doctor-command-timeout-unbounded": {
+      "case": "tools/test_doctor.py::DoctorTests::test_command_errors_are_captured_and_not_relayed",
+      "file": "tools/test_doctor.py",
+      "line": 29,
+      "check": "self.assertEqual(called.call_args.kwargs['timeout'], 30)"
+    },
+    "doctor-command-raises-on-errors": {
+      "case": "tools/test_doctor.py::DoctorTests::test_command_errors_are_captured_and_not_relayed",
+      "file": "tools/test_doctor.py",
+      "line": 30,
+      "check": "self.assertFalse(called.call_args.kwargs['check'])"
+    },
+    "doctor-command-does-not-capture": {
+      "case": "tools/test_doctor.py::DoctorTests::test_command_errors_are_captured_and_not_relayed",
+      "file": "tools/test_doctor.py",
+      "line": 26,
+      "check": "self.assertTrue(called.call_args.kwargs['capture_output'])"
+    },
+    "doctor-command-ignores-cwd": {
+      "case": "tools/test_doctor.py::DoctorTests::test_command_errors_are_captured_and_not_relayed",
+      "file": "tools/test_doctor.py",
+      "line": 28,
+      "check": "self.assertEqual(called.call_args.kwargs['cwd'], Path(directory))"
+    },
+    "doctor-timeout-reports-success": {
+      "case": "tools/test_doctor.py::DoctorTests::test_timeout_does_not_print_partial_secret",
+      "file": "tools/test_doctor.py",
+      "line": 37,
+      "check": "self.assertNotEqual(result.returncode, 0)"
+    },
+    "doctor-negative-auth-accepts-any-error": {
+      "case": "tools/test_doctor.py::DoctorTests::test_host_auth_uses_env_and_rejects_generic_errors",
+      "file": "tools/test_doctor.py",
+      "line": 84,
+      "check": "self.assertIn('HOST-PG-NEGATIVE ' + status, output.getvalue())"
+    },
+    "doctor-negative-auth-accepts-success": {
+      "case": "tools/test_doctor.py::DoctorTests::test_wrong_password_requires_authentication_rejection",
+      "file": "tools/test_doctor.py",
+      "line": 50,
+      "check": "self.assertIn('PG-AUTH-NEGATIVE ' + ('PASS' if succeeds else 'FAIL'), output.getvalue())"
+    },
+    "doctor-nested-inspection-guard-disabled": {
+      "case": "tests/test_doctor_failure_cases.py::test_nested_malformed_inspection_is_rejected[binding-null]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 46,
+      "check": "assert instance.inspect(\"a\" * 64) is None"
+    },
+    "doctor-malformed-manifest-crashes": {
+      "case": "tests/test_doctor_failure_cases.py::test_malformed_manifest_is_reported_without_crashing[project=[]]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 142,
+      "check": "instance.static_checks()"
+    },
+    "doctor-missing-manifest-pin-crashes": {
+      "case": "tests/test_doctor_failure_cases.py::test_malformed_manifest_is_reported_without_crashing[[project]\\n]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 142,
+      "check": "instance.static_checks()"
+    },
+    "doctor-all-python-pins-accepted": {
+      "case": "tests/test_doctor_failure_cases.py::test_malformed_manifest_is_reported_without_crashing[[project]\\nrequires-python=[]]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 143,
+      "check": "assert \"PYTHON-PIN FAIL\" in capsys.readouterr().out"
+    },
+    "doctor-unicode-port-crash": {
+      "case": "tests/test_doctor_failure_cases.py::test_runtime_checker_rejects_each_bad_postgres_boundary[unicode-digit-port-PORT]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 189,
+      "check": "instance.runtime_checks()"
+    },
+    "worker-invalid-interval-falls-back": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_cli_rejects_bad_interval_before_password_or_work[-1]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 359,
+      "check": "worker.main()"
+    },
+    "worker-help-disabled": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_cli_help_and_bad_flags_do_not_prompt_or_work[args0-0]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 452,
+      "check": "assert result.value.code == code"
+    },
+    "worker-unknown-flags-ignored": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_cli_help_and_bad_flags_do_not_prompt_or_work[args1-2]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 451,
+      "check": "worker.main()"
+    },
+    "doctor-timeout-leaks-secret": {
+      "case": "tools/test_doctor.py::DoctorTests::test_timeout_does_not_print_partial_secret",
+      "file": "tools/test_doctor.py",
+      "line": 38,
+      "check": "self.assertEqual(output.getvalue(), '')"
+    },
+    "doctor-static-runs-runtime": {
+      "case": "tools/test_doctor.py::DoctorTests::test_static_never_invokes_runtime",
+      "file": "tools/test_doctor.py",
+      "line": 91,
+      "check": "runtime.assert_not_called()"
+    },
+    "doctor-all-reports-pass": {
+      "case": "tests/test_doctor_failure_cases.py::test_cluster_comparison_uses_the_expected_fingerprint[456-123-False]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 70,
+      "check": "assert \"PG-CLUSTER \" + (\"PASS\" if passes else \"FAIL\") in output"
+    },
+    "doctor-all-reports-fail": {
+      "case": "tests/test_doctor_failure_cases.py::test_auth_commands_use_tcp_and_different_passwords",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 89,
+      "check": "assert instance.failures == 0"
+    },
+    "doctor-no-failure-accounting": {
+      "case": "tests/test_doctor_failure_cases.py::test_cluster_comparison_uses_the_expected_fingerprint[456-123-False]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 71,
+      "check": "assert instance.failures == (0 if passes else 1)"
+    },
+    "doctor-inspect-always-refuses": {
+      "case": "tests/test_doctor_failure_cases.py::test_runtime_checker_rejects_each_bad_postgres_boundary[cpu-LIMITS]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 190,
+      "check": "assert [line.split()[0] for line in capsys.readouterr().out.splitlines() if \" FAIL:\" in line] == [\"POSTGRES-\"+expected,\"REDIS-RUNNING\"]"
+    },
+    "doctor-inspect-shape-guard-disabled": {
+      "case": "tests/test_doctor_failure_cases.py::test_typed_malformed_inspect_data_is_rejected[host-is-array]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 23,
+      "check": "assert instance.inspect(\"a\" * 64) is None"
+    },
+    "doctor-requests-secret-environment": {
+      "case": "tools/test_doctor.py::DoctorTests::test_inspect_never_requests_environment_and_rejects_malformed_data",
+      "file": "tools/test_doctor.py",
+      "line": 66,
+      "check": "self.assertNotIn('Config.Env', call.call_args.args[0][-2])"
+    },
+    "doctor-service-auth-wrong-query": {
+      "case": "tests/test_doctor_failure_cases.py::test_auth_commands_use_tcp_and_different_passwords",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 87,
+      "check": "assert positive.endswith(\"'SELECT 1'\") and negative.endswith(\"'SELECT 1'\")"
+    },
+    "doctor-service-password-not-negative": {
+      "case": "tests/test_doctor_failure_cases.py::test_auth_commands_use_tcp_and_different_passwords",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 86,
+      "check": "assert 'PGPASSWORD=\"${POSTGRES_PASSWORD}__doctor_wrong\"' in negative"
+    },
+    "doctor-host-password-not-negative": {
+      "case": "tools/test_doctor.py::DoctorTests::test_host_auth_uses_env_and_rejects_generic_errors",
+      "file": "tools/test_doctor.py",
+      "line": 83,
+      "check": "self.assertEqual(negative.args[2]['PGPASSWORD'], 'secret__doctor_wrong')"
+    },
+    "doctor-host-public-interface": {
+      "case": "tests/test_doctor_failure_cases.py::test_host_proof_requires_valid_credentials_clients_and_responses[healthy]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 207,
+      "check": "assert args[args.index(\"-h\")+1] == \"127.0.0.1\""
+    },
+    "doctor-host-password-in-command": {
+      "case": "tools/test_doctor.py::DoctorTests::test_host_auth_uses_env_and_rejects_generic_errors",
+      "file": "tools/test_doctor.py",
+      "line": 79,
+      "check": "self.assertNotIn('secret', str(positive.args[0]))"
+    },
+    "doctor-cluster-expected-ignored": {
+      "case": "tests/test_doctor_failure_cases.py::test_cluster_comparison_uses_the_expected_fingerprint[456-123-False]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 70,
+      "check": "assert \"PG-CLUSTER \" + (\"PASS\" if passes else \"FAIL\") in output"
+    },
+    "doctor-cluster-always-refuses": {
+      "case": "tests/test_doctor_failure_cases.py::test_auth_commands_use_tcp_and_different_passwords",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 89,
+      "check": "assert instance.failures == 0"
+    },
+    "doctor-cluster-assumes-original": {
+      "case": "tests/test_doctor_failure_cases.py::test_auth_commands_use_tcp_and_different_passwords",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 89,
+      "check": "assert instance.failures == 0"
+    },
+    "linter-empty-tree-passes": {
+      "case": "tests/test_prd_lint.py::test_empty_tree_is_not_a_successful_lint",
+      "file": "tests/test_prd_lint.py",
+      "line": 106,
+      "check": "assert result.returncode == 1"
+    },
+    "linter-legacy-folder-not-expanded": {
+      "case": "tests/test_prd_lint.py::test_legacy_folder_finds_topic_parts",
+      "file": "tests/test_prd_lint.py",
+      "line": 100,
+      "check": "assert result.returncode == 0, result.stdout"
+    },
+    "linter-link-check-disabled": {
+      "case": "tests/test_prd_lint.py::test_broken_guide_link_fails_whole_lint",
+      "file": "tests/test_prd_lint.py",
+      "line": 135,
+      "check": "assert result.returncode == 1"
+    },
+    "linter-existing-targets-rejected": {
+      "case": "tests/test_prd_lint.py::test_common_markdown_link_forms_are_valid[[Target](target.md 'A title')]",
+      "file": "tests/test_prd_lint.py",
+      "line": 182,
+      "check": "assert local_link_errors(path) == []"
+    },
+    "linter-percent-encoding-not-decoded": {
+      "case": "tests/test_prd_lint.py::test_valid_relative_encoded_external_and_anchor_links",
+      "file": "tests/test_prd_lint.py",
+      "line": 126,
+      "check": "assert local_link_errors(path) == []"
+    },
+    "linter-checks-code-examples": {
+      "case": "tests/test_prd_lint.py::test_incorrect_fence_closers_leave_examples_as_examples[``]",
+      "file": "tests/test_prd_lint.py",
+      "line": 83,
+      "check": "assert local_link_errors(path)==[]"
+    },
+    "linter-inline-examples-checked": {
+      "case": "tests/test_prd_lint.py::test_inline_code_example_is_ignored_but_real_link_still_checked",
+      "file": "tests/test_prd_lint.py",
+      "line": 204,
+      "check": "assert local_link_errors(path) == [f\"{path}:1 LINK: missing local target real-missing.md\"]"
+    },
+    "linter-code-limit-relaxed": {
+      "case": "tests/test_prd_lint.py::test_all_supported_markdown_fences_enforce_the_code_limit[```]",
+      "file": "tests/test_prd_lint.py",
+      "line": 191,
+      "check": "assert result.returncode == 1"
+    },
+    "linter-code-limit-too-strict": {
+      "case": "tests/test_prd_lint.py::test_exactly_fifteen_code_lines_are_allowed",
+      "file": "tests/test_prd_lint.py",
+      "line": 198,
+      "check": "assert result.returncode == 0, result.stdout"
+    },
+    "health-api-wrong-status": {
+      "case": "tests/test_health_api.py::test_handler_failure_is_generic_and_recovers_on_same_server",
+      "file": "tests/test_health_api.py",
+      "line": 111,
+      "check": "assert actual == status"
+    },
+    "health-api-wrong-body": {
+      "case": "tests/test_health_api.py::test_handler_failure_is_generic_and_recovers_on_same_server",
+      "file": "tests/test_health_api.py",
+      "line": 114,
+      "check": "assert json.loads(body.decode(\"utf-8\")) == expected"
+    },
+    "health-api-post-accepted": {
+      "case": "tests/test_health_api.py::test_unsupported_method_has_exact_error_and_allow[POST]",
+      "file": "tests/test_health_api.py",
+      "line": 111,
+      "check": "assert actual == status"
+    },
+    "health-api-file-disclosure": {
+      "case": "tests/test_health_api.py::test_sensitive_path_never_serves_a_file[GET]",
+      "file": "tests/test_health_api.py",
+      "line": 114,
+      "check": "assert json.loads(body.decode(\"utf-8\")) == expected"
+    },
+    "health-api-error-leak": {
+      "case": "tests/test_health_api.py::test_handler_failure_is_generic_and_recovers_on_same_server",
+      "file": "tests/test_health_api.py",
+      "line": 114,
+      "check": "assert json.loads(body.decode(\"utf-8\")) == expected"
+    },
+    "health-api-content-type": {
+      "case": "tests/test_health_api.py::test_handler_failure_is_generic_and_recovers_on_same_server",
+      "file": "tests/test_health_api.py",
+      "line": 112,
+      "check": "assert headers.get_all(\"Content-Type\") == [\"application/json\"]"
+    },
+    "health-api-unknown-healthy": {
+      "case": "tests/test_health_api.py::test_sensitive_path_never_serves_a_file[GET]",
+      "file": "tests/test_health_api.py",
+      "line": 111,
+      "check": "assert actual == status"
+    },
+    "health-api-put-accepted": {
+      "case": "tests/test_health_api.py::test_unsupported_method_has_exact_error_and_allow[PUT]",
+      "file": "tests/test_health_api.py",
+      "line": 111,
+      "check": "assert actual == status"
+    },
+    "health-api-wrong-allow": {
+      "case": "tests/test_health_api.py::test_unsupported_method_has_exact_error_and_allow[POST]",
+      "file": "tests/test_health_api.py",
+      "line": 116,
+      "check": "assert headers.get_all(\"Allow\") == [allow]"
+    },
+    "health-api-serialization-status": {
+      "case": "tests/test_health_api.py::test_unserializable_health_result_is_generic_500",
+      "file": "tests/test_health_api.py",
+      "line": 111,
+      "check": "assert actual == status"
+    },
+    "health-api-retry-written-response": {
+      "case": "tests/test_health_api.py::test_body_write_failure_does_not_send_a_second_response",
+      "file": "tests/test_health_api.py",
+      "line": 190,
+      "check": "handler.send_response.assert_called_once_with(200)"
+    },
+    "health-api-idle-timeout": {
+      "case": "tests/test_health_api.py::test_idle_connection_does_not_block_health_and_times_out",
+      "file": "tests/test_health_api.py",
+      "line": 196,
+      "check": "assert health_api.make_health_handler().timeout == 2"
+    },
+    "health-api-serial-server": {
+      "case": "tests/test_health_api.py::test_idle_connection_does_not_block_health_and_times_out",
+      "file": "tests/test_health_api.py",
+      "line": 203,
+      "check": "assert_json_response(request(api, timeout=1), 200, {\"status\": \"ok\"})"
+    },
+    "health-api-public-bind": {
+      "case": "tests/test_health_api.py::test_actual_entry_point_binds_loopback_and_always_closes[KeyboardInterrupt]",
+      "file": "tests/test_health_api.py",
+      "line": 241,
+      "check": "assert not keywords and arguments[0] == (\"127.0.0.1\", 8000)"
+    },
+    "health-api-no-close": {
+      "case": "tests/test_health_api.py::test_actual_entry_point_binds_loopback_and_always_closes[KeyboardInterrupt]",
+      "file": "tests/test_health_api.py",
+      "line": 246,
+      "check": "server.server_close.assert_called_once_with()"
+    },
+    "health-api-import-startup": {
+      "case": "tests/test_health_api.py::test_module_imports_have_no_server_side_effects",
+      "file": "tests/test_health_api.py",
+      "line": 260,
+      "check": "assert result.returncode == 0, \"Import unexpectedly attempted server startup\""
+    },
+    "health-api-fixture-no-shutdown": {
+      "case": "tests/test_health_api.py::test_loopback_cleanup_after_failure_and_real_restart",
+      "file": "tests/test_health_api.py",
+      "line": 213,
+      "check": "with pytest.raises(AssertionError, match=\"Synthetic failed assertion\"):"
+    },
+    "health-api-poisoned-recovery": {
+      "case": "tests/test_health_api.py::test_handler_failure_is_generic_and_recovers_on_same_server",
+      "file": "tests/test_health_api.py",
+      "line": 114,
+      "check": "assert json.loads(body.decode(\"utf-8\")) == expected"
+    },
+    "provider-accept-unvalidated-answer": {
+      "case": "tests/test_local_provider.py::test_caller_keeps_source_cleanup_ownership[False]",
+      "file": "tests/test_local_provider.py",
+      "line": 328,
+      "check": "assert decode_response(source, expected_model=MODEL) == \"Hi\""
+    },
+    "provider-wrong-fragment": {
+      "case": "tests/test_local_provider.py::test_caller_keeps_source_cleanup_ownership[False]",
+      "file": "tests/test_local_provider.py",
+      "line": 328,
+      "check": "assert decode_response(source, expected_model=MODEL) == \"Hi\""
+    },
+    "provider-model-validation": {
+      "case": "tests/test_local_provider.py::test_length_policy_respects_validation_precedence[updates1-invalid-response]",
+      "file": "tests/test_local_provider.py",
+      "line": 285,
+      "check": "assert error.value.category == category"
+    },
+    "provider-missing-model-default": {
+      "case": "tests/test_local_provider.py::test_required_nonterminal_fields_cannot_be_missing[model]",
+      "file": "tests/test_local_provider.py",
+      "line": 107,
+      "check": "assert error.value.category == \"invalid-response\""
+    },
+    "provider-missing-done-default": {
+      "case": "tests/test_local_provider.py::test_required_nonterminal_fields_cannot_be_missing[done]",
+      "file": "tests/test_local_provider.py",
+      "line": 107,
+      "check": "assert error.value.category == \"invalid-response\""
+    },
+    "provider-missing-response-default": {
+      "case": "tests/test_local_provider.py::test_required_nonterminal_fields_cannot_be_missing[response]",
+      "file": "tests/test_local_provider.py",
+      "line": 107,
+      "check": "assert error.value.category == \"invalid-response\""
+    },
+    "provider-ignore-invalid-chunk": {
+      "case": "tests/test_local_provider.py::test_invalid_chunk_type_has_safe_error[42]",
+      "file": "tests/test_local_provider.py",
+      "line": 127,
+      "check": "assert error.value.category == \"invalid-response\""
+    },
+    "provider-ignore-error-member": {
+      "case": "tests/test_local_provider.py::test_contract_bare_error_object[prefix0]",
+      "file": "tests/test_local_provider.py",
+      "line": 446,
+      "check": "assert error.value.category == \"provider-failure\""
+    },
+    "provider-accept-empty-source": {
+      "case": "tests/test_local_provider.py::test_missing_completion_or_empty_answer_is_incomplete[chunks0]",
+      "file": "tests/test_local_provider.py",
+      "line": 185,
+      "check": "with pytest.raises(ProviderError) as error:"
+    },
+    "provider-ignore-top-level-shape": {
+      "case": "tests/test_local_provider.py::test_contract_top_level_shapes[array]",
+      "file": "tests/test_local_provider.py",
+      "line": 412,
+      "check": "assert error.value.category == \"invalid-response\""
+    },
+    "provider-ignore-malformed-json": {
+      "case": "tests/test_local_provider.py::test_contract_corruption_after_partial_text[malformed-line]",
+      "file": "tests/test_local_provider.py",
+      "line": 423,
+      "check": "assert error.value.category == category"
+    },
+    "provider-provider-message-leak": {
+      "case": "tests/test_local_provider.py::test_any_error_member_overrides_success_fields_without_disclosure[False]",
+      "file": "tests/test_local_provider.py",
+      "line": 136,
+      "check": "assert str(error.value) == \"Local model request failed.\""
+    },
+    "provider-json-message-leak": {
+      "case": "tests/test_local_provider.py::test_contract_private_markers_absent_from_all_public_diagnostics[json]",
+      "file": "tests/test_local_provider.py",
+      "line": 515,
+      "check": "assert \"SYNTHETIC_PRIVATE_INPUT_SENTINEL\" not in \"\".join(traceback.format_exception(error.value))"
+    },
+    "provider-literal-prefix-hides-syntax": {
+      "case": "tests/test_local_provider.py::test_literal_prefix_does_not_hide_earlier_json_syntax_error[extra-data-literal-prefix]",
+      "file": "tests/test_local_provider.py",
+      "line": 404,
+      "check": "assert error.value.category == \"invalid-response\""
+    },
+    "provider-number-suffix-hides-syntax": {
+      "case": "tests/test_local_provider.py::test_number_suffix_does_not_hide_earlier_json_syntax_error[missing-comma-before-decimal]",
+      "file": "tests/test_local_provider.py",
+      "line": 553,
+      "check": "assert error.value.category == \"invalid-response\""
+    },
+    "provider-no-fragment": {
+      "case": "tests/test_local_provider.py::test_caller_keeps_source_cleanup_ownership[False]",
+      "file": "tests/test_local_provider.py",
+      "line": 328,
+      "check": "assert decode_response(source, expected_model=MODEL) == \"Hi\""
+    },
+    "provider-drop-split-tail": {
+      "case": "tests/test_local_provider.py::test_contract_each_multibyte_split[unicode-byte-38]",
+      "file": "tests/test_local_provider.py",
+      "line": 371,
+      "check": "assert decode_response([UNICODE_WIRE[:offset], UNICODE_WIRE[offset:]], expected_model=MODEL) == \"café🙂\""
+    },
+    "provider-utf8-replacement": {
+      "case": "tests/test_local_provider.py::test_malformed_records_do_not_expose_private_exception_chains[{\"response\":\"SYNTHETIC_PRIVATE_INPUT_SENTINEL\\xff\"}\\n]",
+      "file": "tests/test_local_provider.py",
+      "line": 152,
+      "check": "assert error.value.__suppress_context__ is True"
+    },
+    "provider-source-replay": {
+      "case": "tests/test_local_provider.py::test_source_failure_is_safe_and_never_replayed[prefix1]",
+      "file": "tests/test_local_provider.py",
+      "line": 248,
+      "check": "assert attempts == [\"iteration\"]"
+    },
+    "provider-record-cap": {
+      "case": "tests/test_local_provider.py::test_contract_complete_stream_record_byte_boundary[ascii-over]",
+      "file": "tests/test_local_provider.py",
+      "line": 459,
+      "check": "with pytest.raises(ProviderError) as error:"
+    },
+    "provider-total-cap": {
+      "case": "tests/test_local_provider.py::test_contract_blank_only_flood_cannot_bypass_aggregate_limit",
+      "file": "tests/test_local_provider.py",
+      "line": 491,
+      "check": "assert error.value.category == \"limit-exceeded\""
+    },
+    "provider-character-count": {
+      "case": "tests/test_local_provider.py::test_contract_each_multibyte_split[unicode-byte-38]",
+      "file": "tests/test_local_provider.py",
+      "line": 371,
+      "check": "assert decode_response([UNICODE_WIRE[:offset], UNICODE_WIRE[offset:]], expected_model=MODEL) == \"café🙂\""
+    },
+    "provider-duplicate-key": {
+      "case": "tests/test_local_provider.py::test_duplicate_keys_are_rejected_at_every_object_level[{\"model\":\"qwen3:0.6b\",\"response\":\"Hi\",\"done\":false,\"metadata\":{\"x\":1,\"x\":2}}\\n]",
+      "file": "tests/test_local_provider.py",
+      "line": 86,
+      "check": "assert error.value.category == \"invalid-response\""
+    },
+    "provider-nonfinite-constant": {
+      "case": "tests/test_local_provider.py::test_nonfinite_numbers_are_rejected_even_in_nested_metadata[-Infinity]",
+      "file": "tests/test_local_provider.py",
+      "line": 76,
+      "check": "assert error.value.category == \"invalid-response\""
+    },
+    "provider-overflow-float": {
+      "case": "tests/test_local_provider.py::test_nonfinite_numbers_are_rejected_even_in_nested_metadata[-1e999]",
+      "file": "tests/test_local_provider.py",
+      "line": 76,
+      "check": "assert error.value.category == \"invalid-response\""
+    },
+    "provider-error-truthiness": {
+      "case": "tests/test_local_provider.py::test_contract_decoder_has_zero_external_side_effects[provider-failure]",
+      "file": "tests/test_local_provider.py",
+      "line": 540,
+      "check": "assert error.value.category == outcome"
+    },
+    "provider-error-after-terminal": {
+      "case": "tests/test_local_provider.py::test_error_precedence_including_after_terminal[0-{\"model\":\"qwen3:0.6b\",\"response\":\"Hi\",\"done\":true}\\n]",
+      "file": "tests/test_local_provider.py",
+      "line": 206,
+      "check": "assert error.value.category == \"provider-failure\""
+    },
+    "provider-model-identity": {
+      "case": "tests/test_local_provider.py::test_length_policy_respects_validation_precedence[updates1-invalid-response]",
+      "file": "tests/test_local_provider.py",
+      "line": 285,
+      "check": "assert error.value.category == category"
+    },
+    "provider-done-type": {
+      "case": "tests/test_local_provider.py::test_schema_rejects_wrong_identity_types_and_token_metadata[updates5]",
+      "file": "tests/test_local_provider.py",
+      "line": 98,
+      "check": "assert error.value.category == \"invalid-response\""
+    },
+    "provider-token-type": {
+      "case": "tests/test_local_provider.py::test_length_policy_respects_validation_precedence[updates3-invalid-response]",
+      "file": "tests/test_local_provider.py",
+      "line": 285,
+      "check": "assert error.value.category == category"
+    },
+    "provider-token-cap": {
+      "case": "tests/test_local_provider.py::test_length_policy_respects_validation_precedence[updates4-limit-exceeded]",
+      "file": "tests/test_local_provider.py",
+      "line": 285,
+      "check": "assert error.value.category == category"
+    },
+    "provider-require-terminal-text": {
+      "case": "tests/test_local_provider.py::test_contract_blank_records_before_between_and_after_text",
+      "file": "tests/test_local_provider.py",
+      "line": 384,
+      "check": "assert decode_response([b\" \\t\\r\\n\", record(), b\"\\t\\n\", terminal_without_text(), b\" \\n\"], expected_model=MODEL) == \"Hi\""
+    },
+    "provider-terminal-response-type": {
+      "case": "tests/test_local_provider.py::test_contract_additional_state_and_schema_boundaries[object-response]",
+      "file": "tests/test_local_provider.py",
+      "line": 434,
+      "check": "assert error.value.category == category"
+    },
+    "provider-post-terminal": {
+      "case": "tests/test_local_provider.py::test_nonblank_data_after_completion_is_invalid[False-{\"model\":\"qwen3:0.6b\",\"response\":\"Hi\",\"done\":false}\\n]",
+      "file": "tests/test_local_provider.py",
+      "line": 198,
+      "check": "assert error.value.category == \"invalid-response\""
+    },
+    "provider-length-limit": {
+      "case": "tests/test_local_provider.py::test_length_policy_respects_validation_precedence[updates0-length-limited]",
+      "file": "tests/test_local_provider.py",
+      "line": 283,
+      "check": "with pytest.raises(ProviderError) as error:"
+    },
+    "provider-trust-eof": {
+      "case": "tests/test_local_provider.py::test_contract_additional_state_and_schema_boundaries[multiple-text-no-terminal]",
+      "file": "tests/test_local_provider.py",
+      "line": 432,
+      "check": "with pytest.raises(ProviderError) as error:"
+    },
+    "provider-empty-answer": {
+      "case": "tests/test_local_provider.py::test_missing_completion_or_empty_answer_is_incomplete[chunks3]",
+      "file": "tests/test_local_provider.py",
+      "line": 185,
+      "check": "with pytest.raises(ProviderError) as error:"
+    },
+    "provider-early-success": {
+      "case": "tests/test_local_provider.py::test_complete_stream_keeps_total_and_post_terminal_byte_limits",
+      "file": "tests/test_local_provider.py",
+      "line": 305,
+      "check": "with pytest.raises(ProviderError) as error:"
+    },
+    "provider-discard-tail": {
+      "case": "tests/test_local_provider.py::test_final_record_without_newline_accepts_every_split[metadata-terminal-byte-0]",
+      "file": "tests/test_local_provider.py",
+      "line": 179,
+      "check": "assert decode_response([wire[:offset], wire[offset:]], expected_model=MODEL) == \"Hi\""
+    },
+    "provider-all-tail-incomplete": {
+      "case": "tests/test_local_provider.py::test_literal_prefix_does_not_hide_earlier_json_syntax_error[extra-data-literal-prefix]",
+      "file": "tests/test_local_provider.py",
+      "line": 404,
+      "check": "assert error.value.category == \"invalid-response\""
+    },
+    "provider-all-tail-invalid": {
+      "case": "tests/test_local_provider.py::test_truncated_record_does_not_return_preceding_text",
+      "file": "tests/test_local_provider.py",
+      "line": 159,
+      "check": "assert error.value.category == \"incomplete-response\""
+    },
+    "provider-source-raw-error": {
+      "case": "tests/test_local_provider.py::test_source_acquisition_failure_is_safe",
+      "file": "tests/test_local_provider.py",
+      "line": 262,
+      "check": "decode_response(Source(), expected_model=MODEL)"
+    },
+    "provider-source-leak": {
+      "case": "tests/test_local_provider.py::test_source_acquisition_failure_is_safe",
+      "file": "tests/test_local_provider.py",
+      "line": 264,
+      "check": "assert \"SYNTHETIC_SOURCE_ERROR_SENTINEL\" not in \"\".join(traceback.format_exception(error.value))"
+    },
+    "provider-parser-leak": {
+      "case": "tests/test_local_provider.py::test_malformed_records_do_not_expose_private_exception_chains[{\"SYNTHETIC_PRIVATE_INPUT_SENTINEL\": broken}\\n]",
+      "file": "tests/test_local_provider.py",
+      "line": 152,
+      "check": "assert error.value.__suppress_context__ is True"
+    },
+    "provider-caller-close": {
+      "case": "tests/test_local_provider.py::test_caller_keeps_source_cleanup_ownership[False]",
+      "file": "tests/test_local_provider.py",
+      "line": 329,
+      "check": "assert source.closes == 0"
+    },
+    "provider-network-side-effect": {
+      "case": "tests/test_local_provider.py::test_contract_decoder_has_zero_external_side_effects[success]",
+      "file": "tests/test_local_provider.py",
+      "line": 542,
+      "check": "assert decode_response([record(done=True)], expected_model=MODEL) == \"Hi\""
+    },
+    "provider-process-side-effect": {
+      "case": "tests/test_local_provider.py::test_contract_decoder_has_zero_external_side_effects[success]",
+      "file": "tests/test_local_provider.py",
+      "line": 542,
+      "check": "assert decode_response([record(done=True)], expected_model=MODEL) == \"Hi\""
+    },
+    "ast-notes_maintenance-31-65": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_allowed_batch_boundaries_and_fixed_target[1000]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 229,
+      "check": "assert run_once(\"synthetic-secret\", size) == (0, 0)"
+    },
+    "ast-notes_maintenance-56-82": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_cli_error_hides_credentials_and_stops[connection]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 378,
+      "check": "assert \"Maintenance failed\" in str(error.value.code)"
+    },
+    "ast-notes_maintenance-25-111": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_allowed_batch_boundaries_and_fixed_target[1000]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 229,
+      "check": "assert run_once(\"synthetic-secret\", size) == (0, 0)"
+    },
+    "ast-notes_maintenance-25-112": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_allowed_batch_boundaries_and_fixed_target[1000]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 229,
+      "check": "assert run_once(\"synthetic-secret\", size) == (0, 0)"
+    },
+    "ast-note_rules-35-85": {
+      "case": "tests/test_notes_repository.py::test_weighted_prefix_keeps_complete_display_units",
+      "file": "tests/test_notes_repository.py",
+      "line": 42,
+      "check": "with pytest.raises(ValueError, match=\"^Text limit must be a nonnegative integer$\"):"
+    },
+    "ast-note_rules-51-102": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_email_edge_whitespace[ \\tMixed@Example.COM\\n -Mixed@Example.COM]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 168,
+      "check": "assert normalize_email(raw) == expected"
+    },
+    "ast-note_rules-55-105": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_email_edge_whitespace[ \\tMixed@Example.COM\\n -Mixed@Example.COM]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 168,
+      "check": "assert normalize_email(raw) == expected"
+    },
+    "ast-note_rules-72-124": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_blank_title_with_real_body[ \\t\\n]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 280,
+      "check": "assert (result.title, result.body, result.delete_on_save) == (None, \"  actual writing\\n \", False)"
+    },
+    "ast-note_rules-80-129": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_over_limit_body_rejected_even_for_drafts[family7004]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 130,
+      "check": "with pytest.raises(ValueError, match=\"Body exceeds weighted length 7000\"):"
+    },
+    "ast-note_rules-35-156": {
+      "case": "tests/test_notes_repository.py::test_weighted_prefix_keeps_complete_display_units",
+      "file": "tests/test_notes_repository.py",
+      "line": 35,
+      "check": "assert truncate_weighted(\"a😀b\", 5) == \"a😀\""
+    },
+    "ast-note_rules-35-157": {
+      "case": "tests/test_notes_repository.py::test_weighted_prefix_keeps_complete_display_units",
+      "file": "tests/test_notes_repository.py",
+      "line": 35,
+      "check": "assert truncate_weighted(\"a😀b\", 5) == \"a😀\""
+    },
+    "ast-note_rules-42-170": {
+      "case": "tests/test_notes_repository.py::test_active_note_list_uses_body_prefix_when_title_is_missing",
+      "file": "tests/test_notes_repository.py",
+      "line": 59,
+      "check": "assert items == ["
+    },
+    "ast-note_rules-79-214": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_blank_title_with_real_body[ \\t\\n]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 280,
+      "check": "assert (result.title, result.body, result.delete_on_save) == (None, \"  actual writing\\n \", False)"
+    },
+    "ast-note_rules-83-224": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_blank_title_with_real_body[ \\t\\n]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 280,
+      "check": "assert (result.title, result.body, result.delete_on_save) == (None, \"  actual writing\\n \", False)"
+    },
+    "ast-note_rules-76-303": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_container_and_boolean_text_is_rejected[True-body]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 418,
+      "check": "with pytest.raises(ValueError, match=\"^Text must be a string$\"):"
+    },
+    "ast-note_rules-83-319": {
+      "case": "tests/test_note_rules_and_maintenance.py::test_combining_characters_accepted_at_display_limit[title-175]",
+      "file": "tests/test_note_rules_and_maintenance.py",
+      "line": 288,
+      "check": "assert (result.title, result.body, result.delete_on_save) == ((text, \"\", False) if field == \"title\" else (None, text, False))"
+    },
+    "ast-doctor-87-236": {
+      "case": "tests/test_doctor_failure_cases.py::test_static_checker_rejects_each_bad_prerequisite[compose-invalid-COMPOSE-CONFIG]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 133,
+      "check": "assert [line.split()[0] for line in lines if \" FAIL:\" in line] == [expected]"
+    },
+    "ast-doctor-91-239": {
+      "case": "tests/test_doctor_failure_cases.py::test_static_checker_rejects_each_bad_prerequisite[compose-invalid-COMPOSE-CONFIG]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 131,
+      "check": "assert instance.static_checks() is True"
+    },
+    "ast-doctor-165-292": {
+      "case": "tests/test_doctor_failure_cases.py::test_host_proof_requires_valid_credentials_clients_and_responses[pg-client-missing]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 220,
+      "check": "assert \"HOST-PG-POSITIVE \"+(\"PASS\" if pg_ok else \"FAIL\") in lines"
+    },
+    "ast-doctor-201-311": {
+      "case": "tools/test_doctor.py::DoctorTests::test_wrong_password_requires_authentication_rejection",
+      "file": "tools/test_doctor.py",
+      "line": 50,
+      "check": "self.assertIn('PG-AUTH-NEGATIVE ' + ('PASS' if succeeds else 'FAIL'), output.getvalue())"
+    },
+    "ast-doctor-207-318": {
+      "case": "tests/test_doctor_failure_cases.py::test_cluster_comparison_uses_the_expected_fingerprint[not-a-cluster-None-False]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 70,
+      "check": "assert \"PG-CLUSTER \" + (\"PASS\" if passes else \"FAIL\") in output"
+    },
+    "ast-doctor-214-323": {
+      "case": "tools/test_doctor.py::DoctorTests::test_static_never_invokes_runtime",
+      "file": "tools/test_doctor.py",
+      "line": 91,
+      "check": "runtime.assert_not_called()"
+    },
+    "ast-doctor-35-399": {
+      "case": "tests/test_doctor_failure_cases.py::test_auth_commands_use_tcp_and_different_passwords",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 89,
+      "check": "assert instance.failures == 0"
+    },
+    "ast-doctor-77-479": {
+      "case": "tests/test_doctor_failure_cases.py::test_static_checker_rejects_each_bad_prerequisite[compose-invalid-COMPOSE-CONFIG]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 133,
+      "check": "assert [line.split()[0] for line in lines if \" FAIL:\" in line] == [expected]"
+    },
+    "ast-doctor-81-490": {
+      "case": "tests/test_doctor_failure_cases.py::test_static_checker_rejects_each_bad_prerequisite[env-tracked-TRACKED-SECRETS]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 133,
+      "check": "assert [line.split()[0] for line in lines if \" FAIL:\" in line] == [expected]"
+    },
+    "ast-doctor-84-498": {
+      "case": "tests/test_doctor_failure_cases.py::test_static_checker_rejects_each_bad_prerequisite[compose-invalid-COMPOSE-CONFIG]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 133,
+      "check": "assert [line.split()[0] for line in lines if \" FAIL:\" in line] == [expected]"
+    },
+    "ast-doctor-86-506": {
+      "case": "tests/test_doctor_failure_cases.py::test_static_checker_rejects_each_bad_prerequisite[compose-invalid-COMPOSE-CONFIG]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 133,
+      "check": "assert [line.split()[0] for line in lines if \" FAIL:\" in line] == [expected]"
+    },
+    "ast-doctor-108-535": {
+      "case": "tests/test_doctor_failure_cases.py::test_nested_malformed_inspection_is_rejected[log-array]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 46,
+      "check": "assert instance.inspect(\"a\" * 64) is None"
+    },
+    "ast-doctor-131-562": {
+      "case": "tests/test_doctor_failure_cases.py::test_redis_runtime_proof_rejects_bad_responses_and_configuration[appendonly]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 236,
+      "check": "instance.runtime_checks()"
+    },
+    "ast-doctor-135-568": {
+      "case": "tests/test_doctor_failure_cases.py::test_runtime_checker_rejects_each_bad_postgres_boundary[cpu-LIMITS]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 190,
+      "check": "assert [line.split()[0] for line in capsys.readouterr().out.splitlines() if \" FAIL:\" in line] == [\"POSTGRES-\"+expected,\"REDIS-RUNNING\"]"
+    },
+    "ast-doctor-136-570": {
+      "case": "tests/test_doctor_failure_cases.py::test_runtime_checker_rejects_each_bad_postgres_boundary[huge-port-PORT]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 190,
+      "check": "assert [line.split()[0] for line in capsys.readouterr().out.splitlines() if \" FAIL:\" in line] == [\"POSTGRES-\"+expected,\"REDIS-RUNNING\"]"
+    },
+    "ast-doctor-157-597": {
+      "case": "tests/test_doctor_failure_cases.py::test_redis_runtime_proof_rejects_bad_responses_and_configuration[ping-output]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 238,
+      "check": "assert [line.split()[0] for line in capsys.readouterr().out.splitlines() if \" FAIL:\" in line] == [\"POSTGRES-RUNNING\",\"REDIS-RUNNING\",expected]"
+    },
+    "ast-doctor-169-621": {
+      "case": "tests/test_doctor_failure_cases.py::test_host_proof_requires_valid_credentials_clients_and_responses[credential-empty]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 220,
+      "check": "assert \"HOST-PG-POSITIVE \"+(\"PASS\" if pg_ok else \"FAIL\") in lines"
+    },
+    "ast-doctor-188-638": {
+      "case": "tests/test_doctor_failure_cases.py::test_host_proof_requires_valid_credentials_clients_and_responses[redis-client-missing]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 221,
+      "check": "assert \"HOST-REDIS-PONG \"+(\"PASS\" if redis_ok else \"FAIL\") in lines"
+    },
+    "ast-doctor-189-643": {
+      "case": "tests/test_doctor_failure_cases.py::test_host_proof_requires_valid_credentials_clients_and_responses[redis-output]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 221,
+      "check": "assert \"HOST-REDIS-PONG \"+(\"PASS\" if redis_ok else \"FAIL\") in lines"
+    },
+    "ast-doctor-196-657": {
+      "case": "tests/test_doctor_failure_cases.py::test_negative_auth_cannot_pass_without_a_valid_positive[positive-output-is-wrong]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 57,
+      "check": "assert \"PG-AUTH-POSITIVE FAIL\" in output"
+    },
+    "ast-doctor-201-670": {
+      "case": "tests/test_doctor_failure_cases.py::test_auth_commands_use_tcp_and_different_passwords",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 89,
+      "check": "assert instance.failures == 0"
+    },
+    "ast-doctor-202-674": {
+      "case": "tests/test_doctor_failure_cases.py::test_negative_auth_cannot_pass_without_a_valid_positive[positive-connection-fails]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 58,
+      "check": "assert \"PG-AUTH-NEGATIVE FAIL\" in output"
+    },
+    "ast-doctor-207-689": {
+      "case": "tests/test_doctor_failure_cases.py::test_auth_commands_use_tcp_and_different_passwords",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 89,
+      "check": "assert instance.failures == 0"
+    },
+    "ast-doctor-208-693": {
+      "case": "tests/test_doctor_failure_cases.py::test_cluster_comparison_uses_the_expected_fingerprint[456-123-False]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 70,
+      "check": "assert \"PG-CLUSTER \" + (\"PASS\" if passes else \"FAIL\") in output"
+    },
+    "ast-doctor-59-844": {
+      "case": "tests/test_doctor_failure_cases.py::test_static_checker_rejects_each_bad_prerequisite[compose-invalid-COMPOSE-CONFIG]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 133,
+      "check": "assert [line.split()[0] for line in lines if \" FAIL:\" in line] == [expected]"
+    },
+    "ast-doctor-67-873": {
+      "case": "tests/test_doctor_failure_cases.py::test_static_checker_rejects_each_bad_prerequisite[node-version-NODE]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 133,
+      "check": "assert [line.split()[0] for line in lines if \" FAIL:\" in line] == [expected]"
+    },
+    "ast-doctor-75-893": {
+      "case": "tests/test_doctor_failure_cases.py::test_static_checker_rejects_each_bad_prerequisite[compose-invalid-COMPOSE-CONFIG]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 133,
+      "check": "assert [line.split()[0] for line in lines if \" FAIL:\" in line] == [expected]"
+    },
+    "ast-doctor-79-917": {
+      "case": "tests/test_doctor_failure_cases.py::test_static_checker_rejects_each_bad_prerequisite[env-tracked-TRACKED-SECRETS]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 133,
+      "check": "assert [line.split()[0] for line in lines if \" FAIL:\" in line] == [expected]"
+    },
+    "ast-doctor-81-921": {
+      "case": "tests/test_doctor_failure_cases.py::test_static_checker_rejects_each_bad_prerequisite[compose-invalid-COMPOSE-CONFIG]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 133,
+      "check": "assert [line.split()[0] for line in lines if \" FAIL:\" in line] == [expected]"
+    },
+    "ast-doctor-89-951": {
+      "case": "tests/test_doctor_failure_cases.py::test_static_checker_rejects_each_bad_prerequisite[compose-invalid-COMPOSE-CONFIG]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 133,
+      "check": "assert [line.split()[0] for line in lines if \" FAIL:\" in line] == [expected]"
+    },
+    "ast-doctor-102-975": {
+      "case": "tests/test_doctor_failure_cases.py::test_typed_malformed_inspect_data_is_rejected[host-is-array]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 23,
+      "check": "assert instance.inspect(\"a\" * 64) is None"
+    },
+    "ast-doctor-128-1029": {
+      "case": "tests/test_doctor_failure_cases.py::test_runtime_checker_rejects_each_bad_postgres_boundary[cpu-LIMITS]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 190,
+      "check": "assert [line.split()[0] for line in capsys.readouterr().out.splitlines() if \" FAIL:\" in line] == [\"POSTGRES-\"+expected,\"REDIS-RUNNING\"]"
+    },
+    "ast-doctor-130-1036": {
+      "case": "tests/test_doctor_failure_cases.py::test_redis_runtime_proof_rejects_bad_responses_and_configuration[appendonly]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 238,
+      "check": "assert [line.split()[0] for line in capsys.readouterr().out.splitlines() if \" FAIL:\" in line] == [\"POSTGRES-RUNNING\",\"REDIS-RUNNING\",expected]"
+    },
+    "ast-doctor-134-1050": {
+      "case": "tests/test_doctor_failure_cases.py::test_runtime_checker_rejects_each_bad_postgres_boundary[cpu-LIMITS]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 190,
+      "check": "assert [line.split()[0] for line in capsys.readouterr().out.splitlines() if \" FAIL:\" in line] == [\"POSTGRES-\"+expected,\"REDIS-RUNNING\"]"
+    },
+    "ast-doctor-136-1059": {
+      "case": "tests/test_doctor_failure_cases.py::test_runtime_checker_rejects_each_bad_postgres_boundary[cpu-LIMITS]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 190,
+      "check": "assert [line.split()[0] for line in capsys.readouterr().out.splitlines() if \" FAIL:\" in line] == [\"POSTGRES-\"+expected,\"REDIS-RUNNING\"]"
+    },
+    "ast-doctor-136-1060": {
+      "case": "tests/test_doctor_failure_cases.py::test_runtime_checker_rejects_each_bad_postgres_boundary[cpu-LIMITS]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 190,
+      "check": "assert [line.split()[0] for line in capsys.readouterr().out.splitlines() if \" FAIL:\" in line] == [\"POSTGRES-\"+expected,\"REDIS-RUNNING\"]"
+    },
+    "ast-doctor-141-1073": {
+      "case": "tests/test_doctor_failure_cases.py::test_runtime_checker_rejects_each_bad_postgres_boundary[cpu-LIMITS]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 190,
+      "check": "assert [line.split()[0] for line in capsys.readouterr().out.splitlines() if \" FAIL:\" in line] == [\"POSTGRES-\"+expected,\"REDIS-RUNNING\"]"
+    },
+    "ast-doctor-144-1082": {
+      "case": "tests/test_doctor_failure_cases.py::test_runtime_checker_rejects_each_bad_postgres_boundary[log-count-LOGS]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 190,
+      "check": "assert [line.split()[0] for line in capsys.readouterr().out.splitlines() if \" FAIL:\" in line] == [\"POSTGRES-\"+expected,\"REDIS-RUNNING\"]"
+    },
+    "ast-doctor-148-1094": {
+      "case": "tests/test_doctor_failure_cases.py::test_runtime_checker_rejects_each_bad_postgres_boundary[project-missing-VOLUME]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 190,
+      "check": "assert [line.split()[0] for line in capsys.readouterr().out.splitlines() if \" FAIL:\" in line] == [\"POSTGRES-\"+expected,\"REDIS-RUNNING\"]"
+    },
+    "ast-doctor-152-1107": {
+      "case": "tests/test_doctor_failure_cases.py::test_runtime_checker_rejects_each_bad_postgres_boundary[uid-root-UID]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 190,
+      "check": "assert [line.split()[0] for line in capsys.readouterr().out.splitlines() if \" FAIL:\" in line] == [\"POSTGRES-\"+expected,\"REDIS-RUNNING\"]"
+    },
+    "ast-doctor-157-1119": {
+      "case": "tests/test_doctor_failure_cases.py::test_redis_runtime_proof_rejects_bad_responses_and_configuration[appendonly]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 238,
+      "check": "assert [line.split()[0] for line in capsys.readouterr().out.splitlines() if \" FAIL:\" in line] == [\"POSTGRES-RUNNING\",\"REDIS-RUNNING\",expected]"
+    },
+    "ast-doctor-157-1120": {
+      "case": "tests/test_doctor_failure_cases.py::test_redis_runtime_proof_rejects_bad_responses_and_configuration[appendonly]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 238,
+      "check": "assert [line.split()[0] for line in capsys.readouterr().out.splitlines() if \" FAIL:\" in line] == [\"POSTGRES-RUNNING\",\"REDIS-RUNNING\",expected]"
+    },
+    "ast-doctor-160-1147": {
+      "case": "tests/test_doctor_failure_cases.py::test_redis_runtime_proof_rejects_bad_responses_and_configuration[appendonly]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 238,
+      "check": "assert [line.split()[0] for line in capsys.readouterr().out.splitlines() if \" FAIL:\" in line] == [\"POSTGRES-RUNNING\",\"REDIS-RUNNING\",expected]"
+    },
+    "ast-doctor-169-1167": {
+      "case": "tests/test_doctor_failure_cases.py::test_host_proof_requires_valid_credentials_clients_and_responses[credential-status]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 220,
+      "check": "assert \"HOST-PG-POSITIVE \"+(\"PASS\" if pg_ok else \"FAIL\") in lines"
+    },
+    "ast-doctor-169-1168": {
+      "case": "tests/test_doctor_failure_cases.py::test_host_proof_requires_valid_credentials_clients_and_responses[healthy]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 220,
+      "check": "assert \"HOST-PG-POSITIVE \"+(\"PASS\" if pg_ok else \"FAIL\") in lines"
+    },
+    "ast-doctor-177-1183": {
+      "case": "tests/test_doctor_failure_cases.py::test_host_proof_requires_valid_credentials_clients_and_responses[positive-output]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 220,
+      "check": "assert \"HOST-PG-POSITIVE \"+(\"PASS\" if pg_ok else \"FAIL\") in lines"
+    },
+    "ast-doctor-178-1185": {
+      "case": "tools/test_doctor.py::DoctorTests::test_host_auth_uses_env_and_rejects_generic_errors",
+      "file": "tools/test_doctor.py",
+      "line": 84,
+      "check": "self.assertIn('HOST-PG-NEGATIVE ' + status, output.getvalue())"
+    },
+    "ast-doctor-189-1205": {
+      "case": "tests/test_doctor_failure_cases.py::test_host_proof_requires_valid_credentials_clients_and_responses[credential-count]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 221,
+      "check": "assert \"HOST-REDIS-PONG \"+(\"PASS\" if redis_ok else \"FAIL\") in lines"
+    },
+    "ast-doctor-189-1206": {
+      "case": "tests/test_doctor_failure_cases.py::test_host_proof_requires_valid_credentials_clients_and_responses[credential-count]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 221,
+      "check": "assert \"HOST-REDIS-PONG \"+(\"PASS\" if redis_ok else \"FAIL\") in lines"
+    },
+    "ast-doctor-189-1207": {
+      "case": "tests/test_doctor_failure_cases.py::test_host_proof_requires_valid_credentials_clients_and_responses[credential-count]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 221,
+      "check": "assert \"HOST-REDIS-PONG \"+(\"PASS\" if redis_ok else \"FAIL\") in lines"
+    },
+    "ast-doctor-196-1216": {
+      "case": "tests/test_doctor_failure_cases.py::test_auth_commands_use_tcp_and_different_passwords",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 89,
+      "check": "assert instance.failures == 0"
+    },
+    "ast-doctor-196-1217": {
+      "case": "tests/test_doctor_failure_cases.py::test_auth_commands_use_tcp_and_different_passwords",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 89,
+      "check": "assert instance.failures == 0"
+    },
+    "ast-doctor-202-1232": {
+      "case": "tests/test_doctor_failure_cases.py::test_auth_commands_use_tcp_and_different_passwords",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 89,
+      "check": "assert instance.failures == 0"
+    },
+    "ast-doctor-202-1233": {
+      "case": "tests/test_doctor_failure_cases.py::test_auth_commands_use_tcp_and_different_passwords",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 89,
+      "check": "assert instance.failures == 0"
+    },
+    "ast-doctor-67-1382": {
+      "case": "tests/test_doctor_failure_cases.py::test_static_checker_rejects_each_bad_prerequisite[compose-invalid-COMPOSE-CONFIG]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 133,
+      "check": "assert [line.split()[0] for line in lines if \" FAIL:\" in line] == [expected]"
+    },
+    "ast-doctor-67-1384": {
+      "case": "tests/test_doctor_failure_cases.py::test_static_checker_rejects_each_bad_prerequisite[compose-invalid-COMPOSE-CONFIG]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 133,
+      "check": "assert [line.split()[0] for line in lines if \" FAIL:\" in line] == [expected]"
+    },
+    "ast-doctor-79-1422": {
+      "case": "tests/test_doctor_failure_cases.py::test_static_checker_rejects_each_bad_prerequisite[compose-invalid-COMPOSE-CONFIG]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 133,
+      "check": "assert [line.split()[0] for line in lines if \" FAIL:\" in line] == [expected]"
+    },
+    "ast-doctor-80-1423": {
+      "case": "tests/test_doctor_failure_cases.py::test_static_checker_rejects_each_bad_prerequisite[compose-invalid-COMPOSE-CONFIG]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 133,
+      "check": "assert [line.split()[0] for line in lines if \" FAIL:\" in line] == [expected]"
+    },
+    "ast-doctor-90-1448": {
+      "case": "tests/test_doctor_failure_cases.py::test_static_checker_rejects_each_bad_prerequisite[compose-invalid-static-COMPOSE-CONFIG]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 133,
+      "check": "assert [line.split()[0] for line in lines if \" FAIL:\" in line] == [expected]"
+    },
+    "ast-doctor-112-1479": {
+      "case": "tests/test_doctor_failure_cases.py::test_runtime_checker_rejects_each_bad_postgres_boundary[cpu-LIMITS]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 190,
+      "check": "assert [line.split()[0] for line in capsys.readouterr().out.splitlines() if \" FAIL:\" in line] == [\"POSTGRES-\"+expected,\"REDIS-RUNNING\"]"
+    },
+    "ast-doctor-128-1493": {
+      "case": "tests/test_doctor_failure_cases.py::test_runtime_checker_rejects_each_bad_postgres_boundary[cpu-LIMITS]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 190,
+      "check": "assert [line.split()[0] for line in capsys.readouterr().out.splitlines() if \" FAIL:\" in line] == [\"POSTGRES-\"+expected,\"REDIS-RUNNING\"]"
+    },
+    "ast-doctor-141-1553": {
+      "case": "tests/test_doctor_failure_cases.py::test_runtime_checker_rejects_each_bad_postgres_boundary[huge-port-PORT]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 190,
+      "check": "assert [line.split()[0] for line in capsys.readouterr().out.splitlines() if \" FAIL:\" in line] == [\"POSTGRES-\"+expected,\"REDIS-RUNNING\"]"
+    },
+    "ast-doctor-141-1554": {
+      "case": "tests/test_doctor_failure_cases.py::test_runtime_checker_rejects_each_bad_postgres_boundary[cpu-LIMITS]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 190,
+      "check": "assert [line.split()[0] for line in capsys.readouterr().out.splitlines() if \" FAIL:\" in line] == [\"POSTGRES-\"+expected,\"REDIS-RUNNING\"]"
+    },
+    "ast-doctor-144-1563": {
+      "case": "tests/test_doctor_failure_cases.py::test_runtime_checker_rejects_each_bad_postgres_boundary[cpu-LIMITS]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 190,
+      "check": "assert [line.split()[0] for line in capsys.readouterr().out.splitlines() if \" FAIL:\" in line] == [\"POSTGRES-\"+expected,\"REDIS-RUNNING\"]"
+    },
+    "ast-doctor-144-1564": {
+      "case": "tests/test_doctor_failure_cases.py::test_runtime_checker_rejects_each_bad_postgres_boundary[cpu-LIMITS]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 190,
+      "check": "assert [line.split()[0] for line in capsys.readouterr().out.splitlines() if \" FAIL:\" in line] == [\"POSTGRES-\"+expected,\"REDIS-RUNNING\"]"
+    },
+    "ast-doctor-145-1565": {
+      "case": "tests/test_doctor_failure_cases.py::test_runtime_checker_rejects_each_bad_postgres_boundary[cpu-LIMITS]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 190,
+      "check": "assert [line.split()[0] for line in capsys.readouterr().out.splitlines() if \" FAIL:\" in line] == [\"POSTGRES-\"+expected,\"REDIS-RUNNING\"]"
+    },
+    "ast-doctor-147-1571": {
+      "case": "tests/test_doctor_failure_cases.py::test_runtime_checker_rejects_each_bad_postgres_boundary[cpu-LIMITS]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 190,
+      "check": "assert [line.split()[0] for line in capsys.readouterr().out.splitlines() if \" FAIL:\" in line] == [\"POSTGRES-\"+expected,\"REDIS-RUNNING\"]"
+    },
+    "ast-doctor-148-1579": {
+      "case": "tests/test_doctor_failure_cases.py::test_runtime_checker_rejects_each_bad_postgres_boundary[cpu-LIMITS]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 190,
+      "check": "assert [line.split()[0] for line in capsys.readouterr().out.splitlines() if \" FAIL:\" in line] == [\"POSTGRES-\"+expected,\"REDIS-RUNNING\"]"
+    },
+    "ast-doctor-148-1580": {
+      "case": "tests/test_doctor_failure_cases.py::test_runtime_checker_rejects_each_bad_postgres_boundary[cpu-LIMITS]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 190,
+      "check": "assert [line.split()[0] for line in capsys.readouterr().out.splitlines() if \" FAIL:\" in line] == [\"POSTGRES-\"+expected,\"REDIS-RUNNING\"]"
+    },
+    "ast-doctor-149-1581": {
+      "case": "tests/test_doctor_failure_cases.py::test_runtime_checker_rejects_each_bad_postgres_boundary[cpu-LIMITS]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 190,
+      "check": "assert [line.split()[0] for line in capsys.readouterr().out.splitlines() if \" FAIL:\" in line] == [\"POSTGRES-\"+expected,\"REDIS-RUNNING\"]"
+    },
+    "ast-doctor-152-1591": {
+      "case": "tests/test_doctor_failure_cases.py::test_runtime_checker_rejects_each_bad_postgres_boundary[cpu-LIMITS]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 190,
+      "check": "assert [line.split()[0] for line in capsys.readouterr().out.splitlines() if \" FAIL:\" in line] == [\"POSTGRES-\"+expected,\"REDIS-RUNNING\"]"
+    },
+    "ast-doctor-152-1592": {
+      "case": "tests/test_doctor_failure_cases.py::test_runtime_checker_rejects_each_bad_postgres_boundary[cpu-LIMITS]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 190,
+      "check": "assert [line.split()[0] for line in capsys.readouterr().out.splitlines() if \" FAIL:\" in line] == [\"POSTGRES-\"+expected,\"REDIS-RUNNING\"]"
+    },
+    "ast-doctor-160-1612": {
+      "case": "tests/test_doctor_failure_cases.py::test_redis_runtime_proof_rejects_bad_responses_and_configuration[appendonly]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 238,
+      "check": "assert [line.split()[0] for line in capsys.readouterr().out.splitlines() if \" FAIL:\" in line] == [\"POSTGRES-RUNNING\",\"REDIS-RUNNING\",expected]"
+    },
+    "ast-doctor-160-1613": {
+      "case": "tests/test_doctor_failure_cases.py::test_redis_runtime_proof_rejects_bad_responses_and_configuration[appendonly]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 238,
+      "check": "assert [line.split()[0] for line in capsys.readouterr().out.splitlines() if \" FAIL:\" in line] == [\"POSTGRES-RUNNING\",\"REDIS-RUNNING\",expected]"
+    },
+    "ast-doctor-177-1671": {
+      "case": "tests/test_doctor_failure_cases.py::test_host_proof_requires_valid_credentials_clients_and_responses[healthy]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 220,
+      "check": "assert \"HOST-PG-POSITIVE \"+(\"PASS\" if pg_ok else \"FAIL\") in lines"
+    },
+    "ast-doctor-177-1672": {
+      "case": "tests/test_doctor_failure_cases.py::test_host_proof_requires_valid_credentials_clients_and_responses[healthy]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 220,
+      "check": "assert \"HOST-PG-POSITIVE \"+(\"PASS\" if pg_ok else \"FAIL\") in lines"
+    },
+    "ast-doctor-178-1675": {
+      "case": "tools/test_doctor.py::DoctorTests::test_host_auth_uses_env_and_rejects_generic_errors",
+      "file": "tools/test_doctor.py",
+      "line": 84,
+      "check": "self.assertIn('HOST-PG-NEGATIVE ' + status, output.getvalue())"
+    },
+    "ast-doctor-180-1684": {
+      "case": "tools/test_doctor.py::DoctorTests::test_host_auth_uses_env_and_rejects_generic_errors",
+      "file": "tools/test_doctor.py",
+      "line": 84,
+      "check": "self.assertIn('HOST-PG-NEGATIVE ' + status, output.getvalue())"
+    },
+    "ast-doctor-208-1760": {
+      "case": "tests/test_doctor_failure_cases.py::test_auth_commands_use_tcp_and_different_passwords",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 89,
+      "check": "assert instance.failures == 0"
+    },
+    "ast-doctor-208-1761": {
+      "case": "tests/test_doctor_failure_cases.py::test_cluster_comparison_uses_the_expected_fingerprint[456-123-False]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 70,
+      "check": "assert \"PG-CLUSTER \" + (\"PASS\" if passes else \"FAIL\") in output"
+    },
+    "ast-doctor-80-1859": {
+      "case": "tests/test_doctor_failure_cases.py::test_static_checker_rejects_each_bad_prerequisite[compose-invalid-COMPOSE-CONFIG]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 133,
+      "check": "assert [line.split()[0] for line in lines if \" FAIL:\" in line] == [expected]"
+    },
+    "ast-doctor-112-1907": {
+      "case": "tests/test_doctor_failure_cases.py::test_nested_malformed_inspection_is_rejected[binding-null]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 46,
+      "check": "assert instance.inspect(\"a\" * 64) is None"
+    },
+    "ast-doctor-113-1908": {
+      "case": "tests/test_doctor_failure_cases.py::test_nested_malformed_inspection_is_rejected[binding-null]",
+      "file": "tests/test_doctor_failure_cases.py",
+      "line": 46,
+      "check": "assert instance.inspect(\"a\" * 64) is None"
+    },
+    "ast-prd_lint-36-136": {
+      "case": "tests/test_prd_lint.py::test_docs_subfolder_is_not_mistaken_for_legacy_planning_root",
+      "file": "tests/test_prd_lint.py",
+      "line": 21,
+      "check": "assert result.returncode == 0 and \"Checked 1 file(s).\" in result.stdout"
+    },
+    "ast-prd_lint-148-212": {
+      "case": "tests/test_prd_lint.py::test_document_root_audits_external_entrypoints[AGENTS.md]",
+      "file": "tests/test_prd_lint.py",
+      "line": 33,
+      "check": "assert result.returncode == 1 and str(entry) in result.stdout"
+    },
+    "ast-prd_lint-36-267": {
+      "case": "tests/test_prd_lint.py::test_docs_subfolder_is_not_mistaken_for_legacy_planning_root",
+      "file": "tests/test_prd_lint.py",
+      "line": 21,
+      "check": "assert result.returncode == 0 and \"Checked 1 file(s).\" in result.stdout"
+    },
+    "ast-prd_lint-36-268": {
+      "case": "tests/test_prd_lint.py::test_legacy_folder_finds_topic_parts",
+      "file": "tests/test_prd_lint.py",
+      "line": 100,
+      "check": "assert result.returncode == 0, result.stdout"
+    },
+    "ast-prd_lint-53-285": {
+      "case": "tests/test_prd_lint.py::test_broken_guide_link_fails_whole_lint",
+      "file": "tests/test_prd_lint.py",
+      "line": 135,
+      "check": "assert result.returncode == 1"
+    },
+    "ast-prd_lint-55-287": {
+      "case": "tests/test_prd_lint.py::test_inline_code_example_is_ignored_but_real_link_still_checked",
+      "file": "tests/test_prd_lint.py",
+      "line": 204,
+      "check": "assert local_link_errors(path) == [f\"{path}:1 LINK: missing local target real-missing.md\"]"
+    },
+    "ast-prd_lint-154-421": {
+      "case": "tests/test_prd_lint.py::test_duplicate_story_definitions_still_fail",
+      "file": "tests/test_prd_lint.py",
+      "line": 150,
+      "check": "assert result.returncode == 1"
+    },
+    "ast-prd_lint-157-427": {
+      "case": "tests/test_prd_lint.py::test_skill_heading_warnings_are_precise[# SK-01\\n\\U0001f4da Learn first\\n\\u21a9 Return\\n# SK-01\\n\\U0001f4da Learn first\\n\\u21a9 Return\\n-True]",
+      "file": "tests/test_prd_lint.py",
+      "line": 45,
+      "check": "assert (\"skill SK-01 appears\" in result.stdout) is warning"
+    },
+    "ast-prd_lint-162-434": {
+      "case": "tests/test_prd_lint.py::test_missing_schedule_warning_requires_a_substantial_incomplete_schedule[1-False]",
+      "file": "tests/test_prd_lint.py",
+      "line": 53,
+      "check": "assert (\"missing DAY\" in result.stdout) is warning"
+    },
+    "ast-prd_lint-46-487": {
+      "case": "tests/test_prd_lint.py::test_incorrect_fence_closers_leave_examples_as_examples[``]",
+      "file": "tests/test_prd_lint.py",
+      "line": 83,
+      "check": "assert local_link_errors(path)==[]"
+    },
+    "ast-prd_lint-48-491": {
+      "case": "tests/test_prd_lint.py::test_all_supported_markdown_fences_enforce_the_code_limit[```]",
+      "file": "tests/test_prd_lint.py",
+      "line": 192,
+      "check": "assert \"R3: 16-line\" in result.stdout"
+    },
+    "ast-prd_lint-65-520": {
+      "case": "tests/test_prd_lint.py::test_valid_relative_encoded_external_and_anchor_links",
+      "file": "tests/test_prd_lint.py",
+      "line": 126,
+      "check": "assert local_link_errors(path) == []"
+    },
+    "ast-prd_lint-94-546": {
+      "case": "tests/test_prd_lint.py::test_fenced_day_examples_in_other_parts_do_not_become_schedule_entries",
+      "file": "tests/test_prd_lint.py",
+      "line": 59,
+      "check": "assert result.returncode == 0 and \"DAY 1 appears\" not in result.stdout"
+    },
+    "ast-prd_lint-108-564": {
+      "case": "tests/test_prd_lint.py::test_skill_heading_warnings_are_precise[# Skills overview\\n-False]",
+      "file": "tests/test_prd_lint.py",
+      "line": 44,
+      "check": "assert result.returncode == 0"
+    },
+    "ast-prd_lint-120-589": {
+      "case": "tests/test_prd_lint.py::test_peer_section_links_cannot_satisfy_a_missing_learn_return_block",
+      "file": "tests/test_prd_lint.py",
+      "line": 66,
+      "check": "assert \"no 📚 Learn-first block under 'C-01'\" in result.stdout"
+    },
+    "ast-prd_lint-162-683": {
+      "case": "tests/test_prd_lint.py::test_missing_schedule_warning_requires_a_substantial_incomplete_schedule[1-False]",
+      "file": "tests/test_prd_lint.py",
+      "line": 53,
+      "check": "assert (\"missing DAY\" in result.stdout) is warning"
+    },
+    "ast-prd_lint-50-745": {
+      "case": "tests/test_prd_lint.py::test_incorrect_fence_closers_leave_examples_as_examples[```text]",
+      "file": "tests/test_prd_lint.py",
+      "line": 83,
+      "check": "assert local_link_errors(path)==[]"
+    },
+    "ast-prd_lint-85-794": {
+      "case": "tests/test_prd_lint.py::test_incorrect_fence_closers_leave_examples_as_examples[```text]",
+      "file": "tests/test_prd_lint.py",
+      "line": 86,
+      "check": "assert result.returncode==1 and \"R3: 16-line\" in result.stdout"
+    },
+    "ast-prd_lint-111-827": {
+      "case": "tests/test_prd_lint.py::test_day_references_and_checklists_are_not_duplicate_schedule_entries",
+      "file": "tests/test_prd_lint.py",
+      "line": 160,
+      "check": "assert result.returncode == 0, result.stdout"
+    },
+    "ast-prd_lint-161-917": {
+      "case": "tests/test_prd_lint.py::test_day_references_and_checklists_are_not_duplicate_schedule_entries",
+      "file": "tests/test_prd_lint.py",
+      "line": 160,
+      "check": "assert result.returncode == 0, result.stdout"
+    },
+    "ast-prd_lint-50-969": {
+      "case": "tests/test_prd_lint.py::test_incorrect_fence_closers_leave_examples_as_examples[~~~]",
+      "file": "tests/test_prd_lint.py",
+      "line": 83,
+      "check": "assert local_link_errors(path)==[]"
+    },
+    "ast-prd_lint-50-970": {
+      "case": "tests/test_prd_lint.py::test_links_after_a_closed_fence_are_audited[```]",
+      "file": "tests/test_prd_lint.py",
+      "line": 76,
+      "check": "assert len(errors)==1 and \":4 LINK: missing local target missing.md\" in errors[0]"
+    },
+    "ast-prd_lint-85-1017": {
+      "case": "tests/test_prd_lint.py::test_all_supported_markdown_fences_enforce_the_code_limit[```]",
+      "file": "tests/test_prd_lint.py",
+      "line": 191,
+      "check": "assert result.returncode == 1"
+    },
+    "ast-prd_lint-85-1018": {
+      "case": "tests/test_prd_lint.py::test_all_supported_markdown_fences_enforce_the_code_limit[```]",
+      "file": "tests/test_prd_lint.py",
+      "line": 191,
+      "check": "assert result.returncode == 1"
+    },
+    "ast-prd_lint-87-1022": {
+      "case": "tests/test_prd_lint.py::test_exactly_fifteen_code_lines_are_allowed",
+      "file": "tests/test_prd_lint.py",
+      "line": 198,
+      "check": "assert result.returncode == 0, result.stdout"
+    },
+    "ast-prd_lint-111-1069": {
+      "case": "tests/test_prd_lint.py::test_duplicate_primary_schedule_days_still_fail",
+      "file": "tests/test_prd_lint.py",
+      "line": 169,
+      "check": "assert result.returncode == 1"
+    },
+    "ast-prd_lint-87-1248": {
+      "case": "tests/test_prd_lint.py::test_all_supported_markdown_fences_enforce_the_code_limit[```]",
+      "file": "tests/test_prd_lint.py",
+      "line": 191,
+      "check": "assert result.returncode == 1"
+    }
+  }
+}

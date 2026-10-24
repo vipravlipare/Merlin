@@ -313,41 +313,53 @@ class DatabaseSandboxes:
         self.runtime_hash=result.stdout.strip()
         if result.returncode or not re.fullmatch(r'[0-9a-f]{64}',self.runtime_hash):
             raise RuntimeError('Runtime content verification failed')
-        tag='merlin-test-runtime:'+self.source[:16]+'-'+self.runtime_hash
-        cached=subprocess.run(['docker','image','inspect',tag],capture_output=True,text=True,timeout=10)
-        self.evidence['runtime_cache_hit']=cached.returncode==0
-        if cached.returncode==0:
-            info=json.loads(cached.stdout)[0];self.image=info['Id'];labels=info['Config']['Labels']
-            if labels.get('merlin.audit.runtime')!=self.runtime_hash or labels.get('merlin.audit.source')!=self.source:
-                raise RuntimeError('Runtime cache provenance differs')
+        if not entries:
+            # With no persistent runtime changes, the immutable source image is
+            # already the exact runtime. Avoid committing the unchanged
+            # container; this saves work without caching or changing storage.
+            source_info=json.loads(self.docker(['container','inspect',self.source]))[0]
+            self.image=source_info['Image']
+            if not re.fullmatch(r'sha256:[0-9a-f]{64}',self.image):
+                raise RuntimeError('Source image identity is invalid')
+            info=json.loads(self.docker(['image','inspect',self.image]))[0]
+            self.evidence.update(runtime_cache_hit=False,
+                                 runtime_reuse='verified-unchanged-source-image')
         else:
-            # Capture overlaps native transport checks on the live source.
-            # Never pause it; Docker renamed this option between CLI versions.
-            help_text=self.docker(['commit','--help'])
-            if re.search(r'(?m)^\s+--no-pause\b',help_text):
-                pause_option='--no-pause'
-            elif re.search(r'(?m)^\s+(?:-p,\s+)?--pause\b',help_text):
-                pause_option='--pause=false'
+            tag='merlin-test-runtime:'+self.source[:16]+'-'+self.runtime_hash
+            cached=subprocess.run(['docker','image','inspect',tag],capture_output=True,text=True,timeout=10)
+            self.evidence['runtime_cache_hit']=cached.returncode==0
+            if cached.returncode==0:
+                info=json.loads(cached.stdout)[0];self.image=info['Id'];labels=info['Config']['Labels']
+                if labels.get('merlin.audit.runtime')!=self.runtime_hash or labels.get('merlin.audit.source')!=self.source:
+                    raise RuntimeError('Runtime cache provenance differs')
             else:
-                raise RuntimeError('Docker commit has no supported non-pausing option')
-            commit=self.docker(['commit',pause_option,
-                               '--change','ENV POSTGRES_PASSWORD=unused_for_existing_copy',
-                               '--change','LABEL com.docker.compose.project=merlin-audit-runtime',
-                               '--change','LABEL com.docker.compose.service=postgres-sandbox',
-                               '--change','LABEL merlin.audit.runtime='+self.runtime_hash,
-                               '--change','LABEL merlin.audit.source='+self.source,self.source,tag],timeout=45)
-            matches=re.findall(r'sha256:[0-9a-f]{64}',commit)
-            if len(matches)!=1:raise RuntimeError('Invalid captured runtime identity')
-            self.image=matches[0]
+                # Capture overlaps native transport checks on the live source.
+                # Never pause it; Docker renamed this option between CLI versions.
+                help_text=self.docker(['commit','--help'])
+                if re.search(r'(?m)^\s+--no-pause\b',help_text):
+                    pause_option='--no-pause'
+                elif re.search(r'(?m)^\s+(?:-p,\s+)?--pause\b',help_text):
+                    pause_option='--pause=false'
+                else:
+                    raise RuntimeError('Docker commit has no supported non-pausing option')
+                commit=self.docker(['commit',pause_option,
+                                   '--change','ENV POSTGRES_PASSWORD=unused_for_existing_copy',
+                                   '--change','LABEL com.docker.compose.project=merlin-audit-runtime',
+                                   '--change','LABEL com.docker.compose.service=postgres-sandbox',
+                                   '--change','LABEL merlin.audit.runtime='+self.runtime_hash,
+                                   '--change','LABEL merlin.audit.source='+self.source,self.source,tag],timeout=45)
+                matches=re.findall(r'sha256:[0-9a-f]{64}',commit)
+                if len(matches)!=1:raise RuntimeError('Invalid captured runtime identity')
+                self.image=matches[0]
+                info=json.loads(self.docker(['image','inspect',self.image]))[0]
         self.evidence.update(runtime_image=self.image,runtime_digest=self.runtime_hash)
         # A committed Desktop container inherits its WSL port-forwarding labels.
         # They describe the original service, not these unpublished Unix-socket
         # copies. Desktop otherwise waits about three seconds on every inspect
         # and exec while resolving the stale forwarding metadata.
         # A cache hit already inspected this exact immutable image ID.
-        if cached.returncode != 0:
-            info=json.loads(self.docker(['image','inspect',self.image]))[0]
-        self.desktop_labels=tuple(key for key in info['Config']['Labels'] if key.startswith('desktop.docker.io/'))
+        labels=info['Config'].get('Labels') or {}
+        self.desktop_labels=tuple(key for key in labels if key.startswith('desktop.docker.io/'))
         self.temporary=tempfile.TemporaryDirectory(prefix='merlin-db-transfer-')
         (Path(self.temporary.name)/'runtime-entries.json').write_text(json.dumps(entries))
 

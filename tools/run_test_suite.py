@@ -31,6 +31,12 @@ KNOWN_INVALID_IMPORT_FAULTS = {
     'ast-database_connectivity_probe-30-11', 'ast-notes_maintenance-76-42',
     'ast-doctor-229-52', 'ast-prd_lint-181-88',
 }
+MAX_SUITE_RUNTIME_SECONDS = 60.0
+
+
+def runtime_within_limit(seconds):
+    """Keep a green suite result within the requested wall-clock budget."""
+    return seconds <= MAX_SUITE_RUNTIME_SECONDS
 
 
 def environment():
@@ -118,6 +124,15 @@ def validate(stage, directory):
         assert all(r['outcome'] == 'passed' for r in data['baseline']['cases'].values()), 'Python baseline outcomes contradict success'
         complete(data['faults'], 'fault', inventory['python_faults'])
         current_hashes(data['source_sha256'], [str(p.relative_to(ROOT)) for folder in ['app', 'tests', 'tools'] for p in (ROOT / folder).glob('*.py')])
+        witness_path = ROOT / 'tests/python-fault-witnesses.json'
+        assert hashlib.sha256(witness_path.read_bytes()).hexdigest() == data['source_sha256'].get('tests/python-fault-witnesses.json'), 'Python fault witness manifest is not pinned'
+        from tools.audit_python_cases import load_fault_witnesses
+        witness_manifest = load_fault_witnesses()
+        witnesses = witness_manifest['witnesses']
+        witness_sources = {path: (ROOT / path).read_text()
+                           for path in witness_manifest['source_sha256']}
+        executable_faults = set(inventory['python_faults']) - set(inventory['python_aliases']) - KNOWN_INVALID_IMPORT_FAULTS
+        assert set(witnesses) == executable_faults, 'Python witness inventory differs from executable fault inventory'
         assert data['baseline']['exit'] == 0 and not data['baseline']['errors']
         assert data['matrix'] and all(r['outcome'] == 'passed' and r['detects'] for r in data['matrix']), 'Python case lacks fault detection'
         exclusions = []
@@ -141,6 +156,16 @@ def validate(stage, directory):
                 assert actual_selected == expected_selected, 'Selected Python execution is incomplete'
                 assert row.get('exit') == 1 and not row.get('errors'), 'Python fault did not finish its selected calls'
                 assert all(case.get('outcome') in {'passed', 'failed'} for case in row['cases'].values()), 'Python selected case skipped or unexecuted'
+                witness = witnesses[row['fault']]
+                from tools.audit_python_cases import matches_fault_witness
+                witness_case = witness['case']
+                assert row.get('intended_detection') is True, 'Pinned Python check did not detect fault'
+                assert row.get('expected_witness_case') == witness_case, 'Python witness case attribution changed'
+                assert row.get('expected_witness_check') == witness['check']
+                assert row.get('expected_witness_file') == witness['file']
+                assert row.get('expected_witness_line') == witness['line']
+                assert witness_case in row['detected_by'] and matches_fault_witness(
+                    row['cases'].get(witness_case, {}), witness, witness_sources), 'Pinned Python check did not fail'
                 from tools.audit_python_cases import HEALTH_API_DETECTIONS, matches_intended_failure
                 if row['fault'] in HEALTH_API_DETECTIONS:
                     test, assertion = HEALTH_API_DETECTIONS[row['fault']]
@@ -312,9 +337,10 @@ def main():
             print('Output directory must be new or empty.', file=sys.stderr)
             return 1
         directory.mkdir(parents=True, exist_ok=True)
+        suite_started = time.monotonic()
         summary = {'started_utc': datetime.now(timezone.utc).isoformat(), 'stages': [], 'status': 'FAIL',
                    'execution': {'database_transport': 'guarded reusable libpq session',
-                                 'python_fault_workers': min(8, max(1, int(env.get('MERLIN_PYTHON_FAULT_WORKERS','8'))), len(os.sched_getaffinity(0))),
+                                 'python_fault_workers': min(20, max(1, int(env.get('MERLIN_PYTHON_FAULT_WORKERS','20'))), len(os.sched_getaffinity(0))),
                                  'schedule': 'independent Python and isolated database lanes' if env.get('MERLIN_DB_ISOLATION','1')=='1' else 'independent Python and serial database lanes',
                                  'python_fault_scope': env.get('MERLIN_PYTHON_FAULT_SCOPE','dependent'),
                                  'sql_shards': 2 if env.get('MERLIN_DB_ISOLATION','1')=='1' and env.get('MERLIN_SQL_SHARDS','2')=='2' else 1}}
@@ -502,6 +528,11 @@ def main():
             summary.setdefault('failure', str(error) or ('Interrupted; verify disposable identity/empty rows before restarting' if isinstance(error, KeyboardInterrupt) else 'Result validation failed; inspect the last stage report'))
             print(summary['failure'], file=sys.stderr)
         finally:
+            summary['runtime_seconds'] = round(time.monotonic() - suite_started, 3)
+            summary['runtime_limit_seconds'] = MAX_SUITE_RUNTIME_SECONDS
+            if summary['status'] == 'PASS' and not runtime_within_limit(summary['runtime_seconds']):
+                summary['status'] = 'FAIL'
+                summary['failure'] = 'Full suite exceeded the 60-second runtime limit'
             summary['finished_utc'] = datetime.now(timezone.utc).isoformat()
             (directory / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n')
         print('FULL SUITE ' + summary['status'] + ': ' + str(directory / 'summary.json'), flush=True)

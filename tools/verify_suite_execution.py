@@ -216,6 +216,15 @@ def check_retained_scope():
     return [{'scenario': 'retained-application-scope-without-quiz-tooling', 'passed': True}]
 
 
+def check_suite_runtime_limit():
+    """A result may pass at 60 seconds, but never after the hard cap."""
+    from tools import run_test_suite as suite
+    assert suite.runtime_within_limit(59.999)
+    assert suite.runtime_within_limit(60.0)
+    assert not suite.runtime_within_limit(60.001)
+    return [{'scenario':'suite-runtime-60-second-boundary','passed':True}]
+
+
 def check_result_validation():
     """Counterfactuals for the real result gates, independent of job exit codes."""
     sys.path.insert(0, str(ROOT))
@@ -223,14 +232,32 @@ def check_result_validation():
     inventory = json.loads((ROOT/'tests/suite-inventory.json').read_text())
     hashes = {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
               for folder in ['app','tests','tools'] for p in (ROOT/folder).glob('*.py')}
+    witness_manifest = json.loads((ROOT/'tests/python-fault-witnesses.json').read_text())
+    hashes['tests/python-fault-witnesses.json'] = hashlib.sha256((ROOT/'tests/python-fault-witnesses.json').read_bytes()).hexdigest()
+    witnesses = witness_manifest['witnesses']
     python_cases = inventory['python_cases']
     valid_python_faults = [name for name in inventory['python_faults'] if name not in suite.KNOWN_INVALID_IMPORT_FAULTS and name not in inventory['python_aliases']]
     python_faults = [{'fault':name, 'status':'EXCLUDED_INVALID'} if name in suite.KNOWN_INVALID_IMPORT_FAULTS else
                     {'fault':name, 'status':'ALIAS','canonical_fault':inventory['python_aliases'][name]} if name in inventory['python_aliases'] else
                      {'fault':name,'status':'DETECTED','scope_manifest_matches':True,
-                      'detected_by':python_cases if name==valid_python_faults[0] else python_cases[:1],
-                      'cases':{case:{'outcome':'failed'} for case in (python_cases if name==valid_python_faults[0] else python_cases[:1])}}
+                      'intended_detection':True,
+                      'expected_witness_case':witnesses[name]['case'],
+                      'expected_witness_check':witnesses[name]['check'],
+                      'expected_witness_file':witnesses[name]['file'],
+                      'expected_witness_line':witnesses[name]['line'],
+                      'detected_by':[witnesses[name]['case']],
+                      'cases':{witnesses[name]['case']:{'outcome':'failed','failure':
+                          f"{witnesses[name]['file']}:{witnesses[name]['line']}: in synthetic_check\\n    {witnesses[name]['check']}\\nE AssertionError: Synthetic assertion failed"}}}
                      for name in inventory['python_faults']]
+    coverage_fault = next(row for row in python_faults if row['status']=='DETECTED')
+    for case in python_cases:
+        coverage_fault['cases'].setdefault(case, {'outcome':'failed', 'failure':'E AssertionError: synthetic coverage control'})
+        if case not in coverage_fault['detected_by']:
+            coverage_fault['detected_by'].append(case)
+    coverage_witness = witnesses[coverage_fault['fault']]
+    coverage_fault['cases'][coverage_witness['case']]['failure'] = (
+        f"{coverage_witness['file']}:{coverage_witness['line']}: in synthetic_check\n"
+        f"    {coverage_witness['check']}\nE AssertionError: Synthetic assertion failed")
     from tools.audit_python_cases import HEALTH_API_DETECTIONS
     for row in python_faults:
         if row['fault'] in HEALTH_API_DETECTIONS:
@@ -250,6 +277,14 @@ def check_result_validation():
             if node not in row['detected_by']:
                 row['detected_by'].append(node)
             row['cases'][node] = {'outcome':'failed', 'failure':synthetic_failure(assertion)}
+    for row in python_faults:
+        if row['status'] != 'DETECTED':
+            continue
+        witness = witnesses[row['fault']]
+        case = row['cases'][witness['case']]
+        case['failure'] = (case.get('failure', '') +
+                           f"\n{witness['file']}:{witness['line']}: in synthetic_check\n"
+                           f"    {witness['check']}\nE AssertionError: Synthetic pinned check failed")
     # Model a complete selected execution in the positive control. Select exact
     # nodes here so fixture size does not grow to every case for every fault.
     for row in python_faults:
@@ -360,6 +395,18 @@ def check_result_validation():
                     variants['missing-api-'+field]=faulty
                 faulty=json.loads(json.dumps(report));faulty['matrix'][0]['detects']=['invented-fault']
                 variants['invented-detection']=faulty
+                for mode in ['missing-witness', 'wrong-witness-case', 'wrong-witness-check', 'wrong-witness-line', 'unrelated-failure', 'witness-setup-error']:
+                    faulty=json.loads(json.dumps(report))
+                    fault=next(row for row in faulty['faults'] if row['status']=='DETECTED')
+                    if mode=='missing-witness':fault.pop('intended_detection')
+                    elif mode=='wrong-witness-case':fault['expected_witness_case']=python_cases[-1]
+                    elif mode=='wrong-witness-check':fault['expected_witness_check']+=' # altered'
+                    elif mode=='wrong-witness-line':fault['expected_witness_line']+=1
+                    elif mode=='unrelated-failure':
+                        witness=witnesses[fault['fault']]
+                        fault['cases'][witness['case']]['failure']='tests/unrelated.py:1: in unrelated\\nE AssertionError: unrelated failure'
+                    else:fault['errors']=[{'stage':'setup','failure':'Synthetic setup-only failure'}]
+                    variants['python-'+mode]=faulty
                 for field in ['intended_detection', 'expected_detection', 'expected_assertion', 'intended_cases', 'exit']:
                     faulty=json.loads(json.dumps(report))
                     provider=next(row for row in faulty['faults'] if row['fault'] in PROVIDER_DETECTIONS)
@@ -396,6 +443,47 @@ def check_result_validation():
                 except (AssertionError,KeyError):pass
                 else:raise AssertionError('Invalid evidence accepted: '+stage+'-'+mode)
                 rows.append({'scenario':stage+'-'+mode,'passed':True})
+    return rows
+
+
+def check_python_witness_manifest():
+    """A pinned witness must point at a real test check and current source."""
+    from copy import deepcopy
+    from tools import audit_python_cases as audit
+
+    original = audit.load_fault_witnesses()
+    fault, witness = next(iter(original['witnesses'].items()))
+    source_text = (ROOT / witness['file']).read_text()
+    digest = hashlib.sha256(source_text.encode()).hexdigest()
+    rows = []
+    with tempfile.TemporaryDirectory(prefix='merlin-witness-manifest-control-') as directory:
+        root = Path(directory)
+        source = root / witness['file']
+        source.parent.mkdir(parents=True)
+        source.write_text(source_text)
+        manifest_path = root / 'tests/python-fault-witnesses.json'
+
+        def write(candidate):
+            manifest_path.write_text(json.dumps(candidate))
+
+        good = {'schema_version':1, 'source_sha256':{witness['file']:digest},
+                'witnesses':{fault:deepcopy(witness)}}
+        with patch.object(audit, 'ROOT', root):
+            write(good)
+            assert audit.load_fault_witnesses()['witnesses'][fault] == witness
+            rows.append({'scenario':'python-witness-manifest-valid-check','passed':True})
+            for mode in ['wrong-check-line', 'wrong-case-file', 'stale-test-source']:
+                candidate=deepcopy(good)
+                if mode=='wrong-check-line':candidate['witnesses'][fault]['line'] += 1
+                elif mode=='wrong-case-file':candidate['witnesses'][fault]['case']='tests/other_test.py::test_unrelated'
+                else:
+                    source.write_text(source_text+'\n# changed')
+                write(candidate)
+                try:audit.load_fault_witnesses()
+                except (RuntimeError, StopIteration):pass
+                else:raise AssertionError('Invalid Python witness manifest accepted: '+mode)
+                source.write_text(source_text)
+                rows.append({'scenario':'python-witness-manifest-'+mode,'passed':True})
     return rows
 
 
@@ -585,7 +673,37 @@ def check_compressor_privacy():
 
 def check_runtime_commit_compatibility():
     from tools.database_sandboxes import DatabaseSandboxes
+    import hashlib
     rows = []
+    sandbox = DatabaseSandboxes('/unused-control-output')
+    sandbox.source = 'a' * 64
+    base_image = 'sha256:' + 'd' * 64
+    empty_digest = hashlib.sha256(b'').hexdigest()
+    calls = []
+    def inspect_unchanged(arguments, timeout=20):
+        calls.append(arguments)
+        if arguments == ['diff', sandbox.source]:
+            return ''
+        if arguments == ['container', 'inspect', sandbox.source]:
+            return json.dumps([{'Image': base_image}])
+        if arguments == ['image', 'inspect', base_image]:
+            return json.dumps([{'Config': {}}])
+        raise AssertionError('Unexpected Docker call for unchanged runtime: ' + str(arguments))
+    def digest_unchanged(command, **kwargs):
+        assert command[:3] == ['docker', 'exec', '-i']
+        return subprocess.CompletedProcess(command, 0, empty_digest, '')
+    try:
+        with patch.object(sandbox, 'docker', side_effect=inspect_unchanged), \
+                patch('subprocess.run', side_effect=digest_unchanged):
+            sandbox.prepare_runtime()
+    finally:
+        if sandbox.temporary is not None:
+            sandbox.temporary.cleanup()
+    assert sandbox.image == base_image
+    assert sandbox.evidence['runtime_reuse'] == 'verified-unchanged-source-image'
+    assert not any(call[0] == 'commit' for call in calls)
+    rows.append({'scenario': 'unchanged-runtime-reuses-immutable-base-image', 'passed': True})
+
     for help_text, expected in [('  -p, --pause bool   Pause container during commit', '--pause=false'),
                                 ('      --no-pause   Disable pausing container during commit', '--no-pause'),
                                 ('Usage: docker commit', None)]:
@@ -597,7 +715,7 @@ def check_runtime_commit_compatibility():
             if arguments == ['commit', '--help']:
                 return help_text
             if arguments[0] == 'diff':
-                return ''
+                return 'C /etc/synthetic-runtime-change'
             if arguments[0] == 'commit':
                 # Model each real CLI: reject the other version's spelling and
                 # default pausing, which races concurrent source verification.
@@ -804,7 +922,9 @@ def main():
                                ['pass','serial','failure','setup-failure','interrupt','baseline-failure','interrupt-setup','prerequisite-failure']))
     rows.extend(check_preflight())
     rows.extend(check_retained_scope())
+    rows.extend(check_suite_runtime_limit())
     rows.extend(check_result_validation())
+    rows.extend(check_python_witness_manifest())
     rows.extend(check_sql_shards())
     rows.extend(check_migration_schema_normalization())
     rows.extend(check_compressor_privacy())

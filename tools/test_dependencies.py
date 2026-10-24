@@ -14,10 +14,12 @@ REVIEWED_TESTS = {'tests/test_note_rules_and_maintenance.py': '0a3dcf4b2e7c9b07e
 # Reviewed API subprocess imports only the two explicitly imported API modules.
 REVIEWED_TESTS['tests/test_health_api.py'] = '3dc8727b03097a757a26b7f5981f3e678caf50a867e0ddc2ef8c08d2c71f0b9a'
 REVIEWED_TESTS['tests/test_local_provider.py'] = 'fe78680b5ef16bf94579870023cd93440e11c6f95c5f87fee6e6479da06cc56a'
+REVIEWED_TESTS['tests/test_notes_repository.py'] = 'f9edec997747c8d6a8c20514bbe92dae5faf72ae71f8c9d82ef9c156e85bcbec'
 # Reviewed doctor launches setup clients only; changing it restores full scope.
 REVIEWED_DOCTOR = '4cf276effb197aad39ce94f652e01a558ca39ad3bbebe8af5ce9ce4693fae26f'
 TARGETS = {'app/local_provider.py', 'app/health_api.py', 'app/health_server.py', 'tests/test_health_api.py',
            'app/note_rules.py', 'app/notes_maintenance.py',
+           'app/notes_repository.py',
            'app/database_connectivity_probe.py', 'tools/doctor.py', 'tools/prd_lint.py'}
 
 

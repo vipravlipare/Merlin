@@ -7,6 +7,7 @@ import argparse
 from copy import deepcopy
 import hashlib
 import json
+import math
 import os
 from pathlib import Path
 import re
@@ -37,6 +38,214 @@ IDENTITY_FILES = {
     'migrations/002_whitespace_parity.down.sql': (1, 0),
     'migrations/002_whitespace_parity.up.sql': (1, 0),
 }
+
+# This floor keeps the hosted workflow cumulative. Removing an old automated
+# category now requires an explicit review of this contract and the inventory.
+MINIMUM_CUMULATIVE_INVENTORY = {
+    'python_cases': 821,
+    'python_faults': 321,
+    'sql_cases': 383,
+    'sql_pairs': 607,
+    'lifecycle_cases': 5,
+    'migration_gates': 14,
+    'migration_repairs': 17,
+}
+MER11_REQUIRED_FAULT_WITNESSES = {
+    'notes-preview-not-truncated': 'tests/test_notes_repository.py::test_active_note_list_uses_body_prefix_when_title_is_missing',
+    'notes-stored-title-discarded': 'tests/test_notes_repository.py::test_active_note_list_binds_each_actor_when_connection_is_reused',
+    'notes-owner-filter-removed': 'tests/test_notes_repository.py::test_active_note_list_sets_owner_and_uses_read_only_active_query',
+    'notes-trash-view-bypassed': 'tests/test_notes_repository.py::test_active_note_list_sets_owner_and_uses_read_only_active_query',
+    'notes-ordering-reversed': 'tests/test_notes_repository.py::test_active_note_list_sets_owner_and_uses_read_only_active_query',
+    'notes-actor-setting-session-wide': 'tests/test_notes_repository.py::test_active_note_list_binds_each_actor_when_connection_is_reused',
+    'notes-read-write-enabled': 'tests/test_notes_repository.py::test_active_note_list_sets_owner_and_uses_read_only_active_query',
+    'notes-missing-actor-accepted': 'tests/test_notes_repository.py::test_active_note_list_rejects_missing_actor_and_busy_connection_before_query',
+    'notes-malformed-actor-accepted': 'tests/test_notes_repository.py::test_active_note_list_rejects_malformed_actor_before_query',
+    'notes-owner-parameter-hardcoded': 'tests/test_notes_repository.py::test_active_note_list_binds_each_actor_when_connection_is_reused',
+    'notes-active-transaction-accepted': 'tests/test_notes_repository.py::test_active_note_list_rejects_missing_actor_and_busy_connection_before_query',
+}
+MER11_REQUIRED_CASES = {
+    'tests/test_notes_repository.py::test_weighted_prefix_keeps_complete_display_units',
+    'tests/test_notes_repository.py::test_active_note_list_uses_body_prefix_when_title_is_missing',
+    'tests/test_notes_repository.py::test_active_note_list_sets_owner_and_uses_read_only_active_query',
+    'tests/test_notes_repository.py::test_active_note_list_rejects_missing_actor_and_busy_connection_before_query',
+    'tests/test_notes_repository.py::test_active_note_list_rejects_malformed_actor_before_query',
+    'tests/test_notes_repository.py::test_active_note_list_binds_each_actor_when_connection_is_reused',
+}
+REQUIRED_SUITE_STAGES = [
+    'python-tests', 'python-case-faults', 'database-case-faults',
+    'database-lifecycle-faults', 'migration-undo-faults', 'documentation',
+    'whitespace',
+]
+MAX_CUMULATIVE_SUITE_SECONDS = 60.0
+
+
+def validate_cumulative_inventory(inventory):
+    """Refuse a hosted run that silently drops a retained test category."""
+    for name, minimum in MINIMUM_CUMULATIVE_INVENTORY.items():
+        if len(inventory.get(name, [])) < minimum:
+            raise ValueError('Cumulative CI inventory below reviewed floor: ' + name)
+    if not MER11_REQUIRED_CASES <= set(inventory.get('python_cases', [])):
+        raise ValueError('MER-11 repository cases missing from cumulative CI inventory')
+    if not set(MER11_REQUIRED_FAULT_WITNESSES) <= set(inventory.get('python_faults', [])):
+        raise ValueError('MER-11 faults missing from cumulative CI inventory')
+
+
+def validate_mer11_fault_report(report):
+    """Require each Day 10 fault to fail at its named repository assertion."""
+    rows = {row.get('fault'): row for row in report.get('faults', [])}
+    for fault, expected_case in MER11_REQUIRED_FAULT_WITNESSES.items():
+        row = rows.get(fault, {})
+        if (row.get('status') != 'DETECTED' or row.get('intended_detection') is not True
+                or row.get('expected_witness_case') != expected_case
+                or expected_case not in row.get('detected_by', [])):
+            raise ValueError('MER-11 fault lacks its intended test witness: ' + fault)
+
+
+def validate_complete_suite_summary(payload):
+    """Check every required stage, cleanup gate, and the full-suite time cap."""
+    rows = payload.get('stages', [])
+    if ([row.get('stage') for row in rows] != REQUIRED_SUITE_STAGES
+            or not all(row.get('status') == 'PASS' and row.get('exit') == 0 for row in rows)):
+        raise ValueError('Incomplete or failed cumulative suite stages')
+    runtime = payload.get('runtime_seconds')
+    limit = payload.get('runtime_limit_seconds')
+    if (isinstance(runtime, bool) or not isinstance(runtime, (int, float))
+            or not math.isfinite(runtime) or limit != MAX_CUMULATIVE_SUITE_SECONDS
+            or runtime > MAX_CUMULATIVE_SUITE_SECONDS):
+        raise ValueError('Cumulative suite exceeded or omitted its 60-second limit')
+    isolation = payload.get('execution', {}).get('database_isolation', {})
+    if (isolation.get('status') != 'PASS' or isolation.get('source_preserved') is not True
+            or isolation.get('cleanup_passed') is not True):
+        raise ValueError('Cumulative suite isolation, preservation, or cleanup failed')
+
+
+def validate_suite_evidence_files(suite_dir):
+    """Require inspectable case/fault outcomes in the hosted artifact."""
+    required = [
+        'summary.json', 'database-isolation-controls.json',
+        'merlin-python-effectiveness-final.json',
+        'merlin-sql-effectiveness-final.json', 'merlin-sql-shard-0.json',
+        'merlin-sql-shard-1.json', 'merlin-lifecycle-effectiveness.json',
+        'migration-undo-results.json',
+    ]
+    missing = [name for name in required if not (suite_dir / name).is_file()]
+    if missing:
+        raise ValueError('Cumulative suite evidence missing: ' + ', '.join(missing))
+    return required
+
+
+def refresh_adapted_witness_hashes(destination, proof):
+    """Re-pin only CI-adapted sources inside the copied witness manifest."""
+    manifest_path = destination / 'tests/python-fault-witnesses.json'
+    if not manifest_path.is_file():
+        return
+    manifest = json.loads(manifest_path.read_text())
+    adapted_sources = []
+    for source in sorted(set(IDENTITY_FILES) & set(manifest.get('source_sha256', {}))):
+        source_path = destination / source
+        if not source_path.is_file():
+            raise ValueError('Adapted witness source missing from CI copy: ' + source)
+        digest = hashlib.sha256(source_path.read_bytes()).hexdigest()
+        if manifest['source_sha256'][source] != digest:
+            manifest['source_sha256'][source] = digest
+            adapted_sources.append(source)
+    if not adapted_sources:
+        return
+    manifest_path.write_text(json.dumps(manifest, indent=2) + '\n')
+    manifest_row = next((row for row in proof
+                         if row['file'] == 'tests/python-fault-witnesses.json'), None)
+    if manifest_row is None:
+        raise ValueError('Adapted witness manifest missing from CI source proof')
+    manifest_row['executed_sha256'] = hashlib.sha256(manifest_path.read_bytes()).hexdigest()
+    manifest_row['identity_adapted'] = True
+    manifest_row['adapted_witness_sources'] = adapted_sources
+
+
+def cumulative_scope_self_check():
+    """Prove CI rejects removed MER-11 coverage and over-limit suite results."""
+    checks = []
+    inventory = json.loads((ROOT / 'tests/suite-inventory.json').read_text())
+    validate_cumulative_inventory(inventory)
+    reduced = deepcopy(inventory)
+    reduced['python_cases'].remove(next(iter(MER11_REQUIRED_CASES)))
+    try:
+        validate_cumulative_inventory(reduced)
+    except ValueError:
+        checks.append('removed-MER11-case-refused')
+    else:
+        raise AssertionError('CI accepted an omitted MER-11 case')
+
+    valid_faults = {
+        fault: {'fault': fault, 'status': 'DETECTED', 'intended_detection': True,
+                'expected_witness_case': case, 'detected_by': [case]}
+        for fault, case in MER11_REQUIRED_FAULT_WITNESSES.items()
+    }
+    validate_mer11_fault_report({'faults': list(valid_faults.values())})
+    changed_faults = deepcopy(valid_faults)
+    changed_faults['notes-owner-filter-removed']['status'] = 'SURVIVED'
+    try:
+        validate_mer11_fault_report({'faults': list(changed_faults.values())})
+    except ValueError:
+        checks.append('surviving-MER11-fault-refused')
+    else:
+        raise AssertionError('CI accepted a surviving MER-11 fault')
+    changed_faults = deepcopy(valid_faults)
+    changed_faults['notes-owner-filter-removed']['expected_witness_case'] = (
+        'tests/test_notes_repository.py::test_weighted_prefix_keeps_complete_display_units')
+    try:
+        validate_mer11_fault_report({'faults': list(changed_faults.values())})
+    except ValueError:
+        checks.append('wrong-MER11-witness-refused')
+    else:
+        raise AssertionError('CI accepted an unrelated MER-11 witness')
+
+    summary = {
+        'stages': [{'stage': name, 'status': 'PASS', 'exit': 0}
+                   for name in REQUIRED_SUITE_STAGES],
+        'runtime_seconds': 60.0,
+        'runtime_limit_seconds': 60.0,
+        'execution': {'database_isolation': {
+            'status': 'PASS', 'source_preserved': True, 'cleanup_passed': True}},
+    }
+    validate_complete_suite_summary(summary)
+    summary['runtime_seconds'] = 60.001
+    try:
+        validate_complete_suite_summary(summary)
+    except ValueError:
+        checks.append('over-60-second-suite-refused')
+    else:
+        raise AssertionError('CI accepted a suite over the 60-second limit')
+    summary['runtime_seconds'] = float('nan')
+    try:
+        validate_complete_suite_summary(summary)
+    except ValueError:
+        checks.append('invalid-suite-runtime-refused')
+    else:
+        raise AssertionError('CI accepted a non-finite suite runtime')
+
+    with tempfile.TemporaryDirectory(prefix='merlin-ci-witness-hash-') as directory:
+        destination = Path(directory)
+        test_source = 'tests/test_note_rules_and_maintenance.py'
+        test_path = destination / test_source
+        test_path.parent.mkdir(parents=True)
+        test_path.write_text('ADAPTED_ID = 8888888888888888888\n')
+        old_manifest = json.dumps({'schema_version': 1,
+                                   'source_sha256': {test_source: '0' * 64},
+                                   'witnesses': {}}, indent=2) + '\n'
+        manifest_path = destination / 'tests/python-fault-witnesses.json'
+        manifest_path.write_text(old_manifest)
+        proof = [{'file': 'tests/python-fault-witnesses.json',
+                  'source_sha256': hashlib.sha256(old_manifest.encode()).hexdigest(),
+                  'executed_sha256': hashlib.sha256(old_manifest.encode()).hexdigest(),
+                  'identity_adapted': False}]
+        refresh_adapted_witness_hashes(destination, proof)
+        refreshed = json.loads(manifest_path.read_text())
+        expected_hash = hashlib.sha256(test_path.read_bytes()).hexdigest()
+        assert refreshed['source_sha256'][test_source] == expected_hash
+        assert proof[0]['adapted_witness_sources'] == [test_source]
+        assert proof[0]['executed_sha256'] == hashlib.sha256(manifest_path.read_bytes()).hexdigest()
+        checks.append('adapted-witness-hash-repinned-and-recorded')
+    return checks
 
 
 def instantiate_identity(name, raw, cluster, project):
@@ -87,6 +296,7 @@ def copy_inputs(destination, cluster, project, *, include_untracked=False):
                       'identity_adapted': raw != adapted})
     if set(IDENTITY_FILES) != {row['file'] for row in proof if row['identity_adapted']}:
         raise ValueError('Required identity source missing from CI input')
+    refresh_adapted_witness_hashes(destination, proof)
     (destination / '.venv').symlink_to(ROOT / '.venv', target_is_directory=True)
     # Compose reads this while resolving -p/project labels. It never supplies an
     # actual password or publishes the separately created Unix-only CI database.
@@ -194,6 +404,7 @@ def self_check():
             checks.append('roundtrip-refuses-' + field)
         else:
             raise AssertionError('Contradictory migration PASS accepted: ' + field)
+    checks.extend(cumulative_scope_self_check())
     print('CI identity adaptation, isolation and refusal controls PASS', flush=True)
     return checks
 
@@ -293,6 +504,11 @@ def main():
                 proof = copy_inputs(copied, database.cluster, database.project,
                                     include_untracked=args.include_untracked)
                 (output / 'source-inputs.json').write_text(json.dumps(proof, indent=2) + '\n')
+                inventory = json.loads((copied / 'tests/suite-inventory.json').read_text())
+                validate_cumulative_inventory(inventory)
+                summary['reviewed_inventory_counts'] = {
+                    name: len(inventory[name]) for name in MINIMUM_CUMULATIVE_INVENTORY
+                }
                 current_step = 'migration-bootstrap'
                 database.bootstrap(copied)
                 summary['target'] = {'container': database.source, 'cluster': database.cluster,
@@ -300,7 +516,10 @@ def main():
                 env = dict(os.environ, PYTHONPATH=str(copied))
                 for key in ['MERLIN_DB_SANDBOX', 'MERLIN_DB_SQL_SECOND', 'PYTEST_ADDOPTS', 'PGPASSWORD']:
                     env.pop(key, None)
-                env.update(MERLIN_FAST_DB_TESTS='1', MERLIN_RUN_DB_TESTS='1', PYTHONOPTIMIZE='')
+                env.update(MERLIN_FAST_DB_TESTS='1', MERLIN_RUN_DB_TESTS='1',
+                           MERLIN_DB_ISOLATION='1', MERLIN_SQL_SHARDS='2',
+                           MERLIN_PYTHON_FAULT_SCOPE='dependent',
+                           MERLIN_PYTHON_FAULT_WORKERS='20', PYTHONOPTIMIZE='')
                 python = str(ROOT / '.venv/bin/python')
                 # First exercise the original Python sources, then all database
                 # and fault cases in the verifiably identity-instantiated copy.
@@ -322,15 +541,15 @@ def main():
                     if payload.get('status') != 'PASS':
                         raise RuntimeError('CI result validation failed: ' + name)
                     if name == 'complete-suite':
-                        expected = ['python-tests', 'python-case-faults', 'database-case-faults',
-                                    'database-lifecycle-faults',
-                                    'migration-undo-faults', 'documentation', 'whitespace']
-                        rows = payload.get('stages', [])
-                        if ([row.get('stage') for row in rows] != expected
-                                or not all(row.get('status') == 'PASS' and row.get('exit') == 0 for row in rows)
-                                or payload['execution']['database_isolation'].get('source_preserved') is not True
-                                or payload['execution']['database_isolation'].get('cleanup_passed') is not True):
-                            raise ValueError('Incomplete or contradictory complete-suite evidence')
+                        validate_complete_suite_summary(payload)
+                        python_report = json.loads(
+                            (result / 'merlin-python-effectiveness-final.json').read_text())
+                        validate_mer11_fault_report(python_report)
+                        evidence_files = validate_suite_evidence_files(result)
+                        summary['suite_evidence_sha256'] = {
+                            path: hashlib.sha256((result / path).read_bytes()).hexdigest()
+                            for path in evidence_files
+                        }
                     else:
                         inventory = json.loads((copied / 'tests/suite-inventory.json').read_text())
                         hashes = {path.name: hashlib.sha256(path.read_bytes()).hexdigest()
