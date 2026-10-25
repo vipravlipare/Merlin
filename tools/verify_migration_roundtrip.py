@@ -52,7 +52,7 @@ def main():
         module,setup=audit.load_cases()
         original=audit.preservation(module)
         result['source_fingerprint']=original
-        files={name:(ROOT/'migrations'/name).read_text() for name in ['001_users_notes.up.sql','001_users_notes.down.sql','002_whitespace_parity.up.sql','002_whitespace_parity.down.sql']}
+        files={name:(ROOT/'migrations'/name).read_text() for name in ['001_users_notes.up.sql','001_users_notes.down.sql','002_whitespace_parity.up.sql','002_whitespace_parity.down.sql','003_auth_foundation.up.sql','003_auth_foundation.down.sql']}
         result['migration_sha256']={name:hashlib.sha256(source.encode()).hexdigest() for name,source in files.items()}
         args.out.parent.mkdir(parents=True,exist_ok=True)
         copies=DatabaseSandboxes(args.out.parent/('migration-roundtrip-targets-'+uuid.uuid4().hex))
@@ -74,12 +74,14 @@ def main():
                 # This command can only address the already-verified private copy.
                 # Ordinary DROP refuses active clients; no FORCE or CASCADE used.
                 query('DROP DATABASE merlin_d6;','postgres')
-                query('DROP ROLE merlin_d6_app,merlin_d6_maintenance,merlin_d6_owner;','postgres')
+                # Roles are cluster-wide; include the auth-only lookup role
+                # left behind after dropping the disposable database.
+                query('DROP ROLE IF EXISTS merlin_api,merlin_d6_app,merlin_d6_maintenance,merlin_d6_owner,merlin_d6_auth_lookup;','postgres')
                 query('CREATE DATABASE merlin_d6 OWNER merlin_d6 TEMPLATE template0;','postgres')
                 query('CREATE EXTENSION plpython3u; CREATE TABLE public.roundtrip_sentinel(id integer PRIMARY KEY); INSERT INTO public.roundtrip_sentinel VALUES(73);')
                 passed('fresh-database-and-external-prerequisite')
                 def snapshot():
-                    roles=json.loads(query("SELECT json_object_agg(oid::text,rolname)::text FROM pg_roles WHERE rolname LIKE 'merlin_d6%';"))
+                    roles=json.loads(query("SELECT json_object_agg(oid::text,rolname)::text FROM pg_roles WHERE rolname LIKE 'merlin_d6%' OR rolname='merlin_api';"))
                     sql=audit.FINGERPRINT.replace('SELECT md5(jsonb_agg(row_data ORDER BY row_data::text)::text)','SELECT jsonb_agg(row_data ORDER BY row_data::text)::text')
                     # Baseline/undone states intentionally lack app relations
                     # and roles. Resolve absent names to NULL rather than error.
@@ -93,21 +95,25 @@ def main():
                 result['captured_pre_001_baseline']={'public_create':public_create=='t','source':'Actual query of fresh template0 database before first migration 001 application in this private container','schema_snapshot':baseline}
                 query('BEGIN;\n'+files['001_users_notes.up.sql']+'\nCOMMIT;')
                 query(files['002_whitespace_parity.up.sql'])
+                query(files['003_auth_foundation.up.sql'])
                 installed=snapshot()
-                passed('initial-up-001-and-002-committed')
+                passed('initial-up-001-through-003-committed')
+                query(files['003_auth_foundation.down.sql'])
+                passed('down-003-auth-empty-state-committed')
                 query(files['002_whitespace_parity.down.sql'])
                 passed('down-002-committed')
                 recorded="CREATE TEMP TABLE merlin_001_undo_baseline(public_create_before boolean,baseline_source text);INSERT INTO merlin_001_undo_baseline VALUES("+str(public_create=='t').lower()+",'actual fresh baseline recorded before first up; see roundtrip report');\n"
                 query('\\set AUTOCOMMIT off\nBEGIN;\n'+recorded+files['001_users_notes.down.sql']+'\nCOMMIT;')
                 assert snapshot()==baseline,'Committed undo failed to restore actual pre-001 state'
-                assert query("SELECT count(*) FROM pg_roles WHERE rolname IN ('merlin_d6_app','merlin_d6_maintenance','merlin_d6_owner');")=='0'
+                assert query("SELECT count(*) FROM pg_roles WHERE rolname IN ('merlin_d6_app','merlin_d6_maintenance','merlin_d6_owner','merlin_d6_auth_lookup','merlin_api');")=='0'
                 assert query("SELECT to_regclass('public.users') IS NULL AND to_regclass('public.notes') IS NULL AND to_regclass('public.active_notes') IS NULL;")=='t'
                 assert query('SELECT id FROM public.roundtrip_sentinel;')=='73'
                 passed('down-001-committed-and-verified-after-reconnect')
                 query('BEGIN;\n'+files['001_users_notes.up.sql']+'\nCOMMIT;')
                 query(files['002_whitespace_parity.up.sql'])
+                query(files['003_auth_foundation.up.sql'])
                 assert snapshot()==installed,'Reapplied schema/permissions differ from initial installation'
-                passed('up-001-and-002-committed-semantic-equivalence')
+                passed('up-001-through-003-committed-semantic-equivalence')
                 checks=[]
                 for case in module.CASES:
                     values={key:str(uuid.uuid4()) for key in ['a','b','n','other','extra','missing']}

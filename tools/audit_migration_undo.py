@@ -29,7 +29,7 @@ def roundtrips():
      assert len(re.findall(r'^BEGIN;|^COMMIT;',s,re.M))==2
      return re.sub(r'^COMMIT;\s*\Z','',re.sub(r'^BEGIN;\n','',s,count=1,flags=re.M),count=1,flags=re.M)
     fingerprint=audit.FINGERPRINT.replace('SELECT md5(jsonb_agg(row_data ORDER BY row_data::text)::text)',"SELECT 'SCHEMA:' || jsonb_agg(row_data ORDER BY row_data::text)::text")
-    roles="SELECT 'ROLES:' || json_object_agg(oid::text,rolname)::text FROM pg_roles WHERE rolname LIKE 'merlin_d6%';\n"
+    roles="SELECT 'ROLES:' || json_object_agg(oid::text,rolname)::text FROM pg_roles WHERE rolname LIKE 'merlin_d6%' OR rolname='merlin_api';\n"
     checks=[]
     for case in m.CASES:
      vals={k:str(uuid.uuid4()) for k in ['a','b','n','other','extra','missing']}
@@ -39,7 +39,8 @@ def roundtrips():
      checks.append('SAVEPOINT case_check;\n'+fixture.format(**vals)+case.sql.format(**vals)+f"\nSELECT 'CASE:{case.id}';\nROLLBACK TO SAVEPOINT case_check; RELEASE SAVEPOINT case_check;\n")
     source_paths = [Path('migrations') / name for name in [
         '001_users_notes.up.sql', '001_users_notes.down.sql',
-        '002_whitespace_parity.up.sql', '002_whitespace_parity.down.sql']]
+        '002_whitespace_parity.up.sql', '002_whitespace_parity.down.sql',
+        '003_auth_foundation.up.sql', '003_auth_foundation.down.sql']]
     source_paths.extend([Path('tests/test_users_notes_database.py'),
                          Path('tools/audit_database_cases.py'),
                          Path('tools/audit_migration_undo.py')])
@@ -74,7 +75,7 @@ def roundtrips():
      IF to_regclass('public.review_sentinel') IS NULL THEN RAISE EXCEPTION 'Unrelated object removed'; END IF;
      END $check$;
     """
-     script='\\set AUTOCOMMIT off\nBEGIN;\n'+roles+fingerprint+runtime+"CREATE TABLE public.review_sentinel(id integer);\n"+body('migrations/002_whitespace_parity.down.sql')+base+down+post+"SELECT 'DOWN_COMPLETE';\n"+Path('migrations/001_users_notes.up.sql').read_text()+body('migrations/002_whitespace_parity.up.sql')+roles+fingerprint+runtime+(''.join(checks) if not value else '')+"DROP TABLE public.review_sentinel;\nROLLBACK;\nSELECT 'ROUNDTRIP_COMPLETE';\nROLLBACK;\n"
+     script='\\set AUTOCOMMIT off\nBEGIN;\n'+roles+fingerprint+runtime+"CREATE TABLE public.review_sentinel(id integer);\n"+body('migrations/003_auth_foundation.down.sql')+body('migrations/002_whitespace_parity.down.sql')+base+down+post+"SELECT 'DOWN_COMPLETE';\n"+Path('migrations/001_users_notes.up.sql').read_text()+body('migrations/002_whitespace_parity.up.sql')+body('migrations/003_auth_foundation.up.sql')+roles+fingerprint+runtime+(''.join(checks) if not value else '')+"DROP TABLE public.review_sentinel;\nROLLBACK;\nSELECT 'ROUNDTRIP_COMPLETE';\nROLLBACK;\n"
      r=native_run(m.COMMAND,input=script,text=True,capture_output=True,timeout=45)
      row={'baseline_public_create':value,'exit':r.returncode,'stderr':r.stderr,'case_count':len([x for x in r.stdout.splitlines() if x.startswith('CASE:')]),'down_completed':'DOWN_COMPLETE' in r.stdout,'roundtrip_completed':'ROUNDTRIP_COMPLETE' in r.stdout}
      schemas=[json.loads(x[7:]) for x in r.stdout.splitlines() if x.startswith('SCHEMA:')]
@@ -94,7 +95,8 @@ def roundtrips():
      row['semantic_schema_match']=len(schemas)==2 and len(mappings)==2 and canonical_schema(schemas[0],mappings[0])==canonical_schema(schemas[1],mappings[1])
      row['preserved']=audit.preservation(m)==original
      assert source_hashes() == expected_sources, 'Roundtrip sources changed during execution'
-     assert len(schemas)==2 and len(mappings)==2 and len(runtimes)==2, 'Missing schema or runtime equivalence evidence'
+     assert len(schemas)==2 and len(mappings)==2 and len(runtimes)==2, ('Missing schema or runtime equivalence evidence: '
+          + r.stderr[-4000:])
      rebuilt = canonical_schema(schemas[1],mappings[1])
      same_runtime = runtimes[0]==runtimes[1] and runtimes[1]['empty'] and runtimes[1]['pinned_unicode_probe']
      schema_digest = hashlib.sha256(json.dumps(rebuilt,sort_keys=True).encode()).hexdigest()
@@ -136,11 +138,16 @@ def gate_checks():
     assert len(re.findall(r'^BEGIN;|^COMMIT;',down2,re.M))==2
     down2=re.sub(r'^BEGIN;\n','',down2,count=1,flags=re.M)
     down2=re.sub(r'^COMMIT;\s*\Z','',down2,count=1,flags=re.M)
+    down3=Path('migrations/003_auth_foundation.down.sql').read_text()
+    assert len(re.findall(r'^BEGIN;|^COMMIT;',down3,re.M))==2
+    down3=re.sub(r'^BEGIN;\n','',down3,count=1,flags=re.M)
+    down3=re.sub(r'^COMMIT;\s*\Z','',down3,count=1,flags=re.M)
+    down2=down3+down2
     base="CREATE TEMP TABLE merlin_001_undo_baseline(public_create_before boolean,baseline_source text); INSERT INTO merlin_001_undo_baseline VALUES(false,'synthetic rollback-only gate test; not original baseline');\n"
     rows=[]
     cases=[
      ('autocommit-refused','',source,'AUTOCOMMIT must be off',True),
-     ('migration002-present','',source,'undo migration 002 first',False),
+     ('migration002-present',down3,source,'undo migration 002 first',False),
      ('missing-baseline',down2,source,'recorded pre-001 permission baseline required',False),
      ('valid-gate',down2+base,source,None,False),
      ('wrong-cluster',down2+base,source.replace('7694311451826794534','0'),'unexpected database or cluster',False),
@@ -178,6 +185,9 @@ def concurrency_checks():
     d=Path('migrations/002_whitespace_parity.down.sql').read_text()
     assert len(re.findall(r'^BEGIN;|^COMMIT;',d,re.M))==2
     d=re.sub(r'^BEGIN;\n','',d,count=1,flags=re.M);d=re.sub(r'^COMMIT;\s*\Z','',d,count=1,flags=re.M)
+    # Migration 003 rollback and data-refusal behavior is covered above by its
+    # own roundtrip and gate checks. Keep these legacy lock/client probes on
+    # their original 001/002 path so they do not repeat auth teardown.
     b="CREATE TEMP TABLE merlin_001_undo_baseline(public_create_before boolean,baseline_source text); INSERT INTO merlin_001_undo_baseline VALUES(false,'synthetic rollback-only test');\n"
     def start(text):
      p=subprocess.Popen(m.COMMAND,stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True)
@@ -208,7 +218,7 @@ def concurrency_checks():
      print('other-client-refused PASS',flush=True)
     finally: close(other)
     assert audit.preservation(m)==original
-    holder=start('\\set AUTOCOMMIT off\nBEGIN;\n'+d+b+s)
+    holder=start('\\set AUTOCOMMIT off\nBEGIN; LOCK TABLE public.users IN ACCESS EXCLUSIVE MODE;')
     try:
      r=native_run(m.COMMAND,input="\\set VERBOSITY verbose\nBEGIN;SET LOCAL lock_timeout='200ms';INSERT INTO public.users(username) VALUES('concurrent_gate');ROLLBACK;\n",text=True,capture_output=True,timeout=15)
      assert r.returncode!=0 and '55P03' in r.stderr,r.stderr
@@ -233,6 +243,14 @@ def repair_checks():
     s=Path('migrations/001_users_notes.down.sql').read_text();d=Path('migrations/002_whitespace_parity.down.sql').read_text()
     assert len(re.findall(r'^BEGIN;|^COMMIT;',d,re.M))==2
     d=re.sub(r'^BEGIN;\n','',d,count=1,flags=re.M);d=re.sub(r'^COMMIT;\s*\Z','',d,count=1,flags=re.M)
+    d3=Path('migrations/003_auth_foundation.down.sql').read_text()
+    assert len(re.findall(r'^BEGIN;|^COMMIT;',d3,re.M))==2
+    # Remove both transaction wrappers from one copy. Concatenating two
+    # separately transformed copies leaves a COMMIT in the first copy, which
+    # commits the injected repair test before its expected refusal/rollback.
+    d3=re.sub(r'^BEGIN;\n','',d3,count=1,flags=re.M)
+    d3=re.sub(r'^COMMIT;\s*\Z','',d3,count=1,flags=re.M)
+    d=d3+d
     b="CREATE TEMP TABLE merlin_001_undo_baseline(public_create_before boolean,baseline_source text);INSERT INTO merlin_001_undo_baseline VALUES(false,'synthetic rollback-only repair test');\n"
     changes=[
      ('extra-index','CREATE INDEX review_unexpected_idx ON public.notes(body);'),
@@ -264,6 +282,19 @@ def repair_checks():
      ('lost-extension','DROP EXTENSION plpython3u;','PL/Python prerequisite changed'),
      ('changed-login','ALTER ROLE merlin_d6 NOLOGIN;','connection login changed'),
     ]:execute(name,'',s.replace(anchor,change+'\n'+anchor,1),error)
+    auth_down=Path('migrations/003_auth_foundation.down.sql').read_text()
+    auth_user='au_'+__import__('uuid').uuid4().hex[:12]
+    refusal=native_run(m.COMMAND,input=(
+        "\\set ON_ERROR_STOP on\nBEGIN;\n"
+        "INSERT INTO public.users(username) VALUES ('"+auth_user+"') RETURNING id \\gset\n"
+        "INSERT INTO public.auth_credentials(user_id,password_hash) VALUES (:'id','$argon2id$'||repeat('x',40));\n"
+        + auth_down + "\n"),text=True,capture_output=True,timeout=20)
+    refused=refusal.returncode!=0 and 'Cannot remove authentication data' in refusal.stderr
+    preserved=audit.preservation(m)==original
+    rows.append({'case':'auth-data-rollback-refused','passed':refused and preserved,
+                 'exit':refusal.returncode,'stderr':refusal.stderr.strip(),'preserved':preserved})
+    print('auth-data-rollback-refused','PASS' if refused and preserved else 'FAIL',flush=True)
+    assert refused and preserved
     # The original bad expectation must still fail if the new inventory gate is disabled.
     fault=s.replace('IF EXISTS (\n        WITH expected','IF FALSE AND EXISTS (\n        WITH expected',1)
     r=native_run(m.COMMAND,input='\\set AUTOCOMMIT off\nBEGIN;\n'+d+b+changes[0][1]+'\n'+fault+"\nSELECT 'DOWN_FINISHED';ROLLBACK;\n",text=True,capture_output=True,timeout=20)

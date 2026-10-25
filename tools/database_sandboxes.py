@@ -15,6 +15,8 @@ import tempfile
 import time
 import uuid
 
+from tools.database_test_session import CLUSTER, ROOT
+
 LANES=('sql','lifecycle','migration','sql-second')
 
 RUNTIME_FUNCTION = r'''
@@ -163,6 +165,90 @@ class DatabaseSandboxes:
         if result.returncode or len(lines) != 4 or lines[:3] != ['merlin_d6|7694311451826794534', '0|0','0']:
             raise RuntimeError('Source preservation gate failed')
         return lines[3]
+
+    def bootstrap_auth_test_schema(self):
+        """Install migration 003 only on verified disposable SQL copies.
+
+        Local Day 6 storage predates authentication. The SQL test lanes need the
+        current auth schema, while their preserved source must remain untouched.
+        A complete existing auth schema is accepted; a partial one is refused.
+        """
+        from tools.audit_database_cases import FINGERPRINT
+
+        state_query = """
+            SELECT (to_regclass('public.auth_credentials') IS NOT NULL)::text || '|'
+                || (to_regclass('public.auth_refresh_families') IS NOT NULL)::text || '|'
+                || (to_regclass('public.auth_refresh_tokens') IS NOT NULL)::text || '|'
+                || (to_regprocedure('public.lookup_auth_credential(text)') IS NOT NULL)::text || '|'
+                || EXISTS (SELECT 1 FROM pg_roles WHERE rolname='merlin_d6_auth_lookup')::text || '|'
+                || EXISTS (SELECT 1 FROM pg_roles WHERE rolname='merlin_api')::text
+        """
+        def prepare_copy(name):
+            manifest_path = Path(self.manifests[name])
+            manifest = json.loads(manifest_path.read_text())
+            command = [
+                'docker', 'exec', '-i', manifest['container'], 'psql', '-X', '-qAt',
+                '-h', manifest['socket'], '-U', 'merlin_d6', '-d', 'merlin_d6',
+                '-v', 'ON_ERROR_STOP=1',
+            ]
+
+            def query(sql):
+                result = subprocess.run(command, input=sql, text=True, capture_output=True, timeout=30)
+                if result.returncode:
+                    raise RuntimeError('Disposable auth schema query failed')
+                return result.stdout.strip()
+
+            identity = query(
+                "SELECT current_database(),system_identifier FROM pg_control_system();"
+                "SELECT (SELECT count(*) FROM public.users),(SELECT count(*) FROM public.notes);"
+            )
+            if identity.splitlines() != [
+                'merlin_d6|' + CLUSTER,
+                '0|0',
+            ]:
+                raise RuntimeError('Refusing auth migration on an unexpected or nonempty copy')
+
+            schema_state = query(state_query)
+            if schema_state == 'false|false|false|false|false|false':
+                migration = (ROOT / 'migrations/003_auth_foundation.up.sql').read_text()
+                result = subprocess.run(command, input=migration, text=True,
+                                        capture_output=True, timeout=45)
+                if result.returncode:
+                    raise RuntimeError('Disposable auth migration failed')
+            elif schema_state != 'true|true|true|true|true|true':
+                raise RuntimeError('Disposable auth schema is partial (' + schema_state + '); refusing repair')
+
+            role_state = query("""
+                SELECT rolcanlogin AND NOT rolinherit AND NOT rolsuper AND NOT rolcreatedb
+                    AND NOT rolcreaterole AND NOT rolreplication AND NOT rolbypassrls
+                    AND NOT pg_has_role('merlin_api','merlin_d6_app','MEMBER')
+                FROM pg_roles WHERE rolname='merlin_api'
+            """)
+            row_counts = query(
+                'SELECT (SELECT count(*) FROM public.auth_credentials),'
+                '(SELECT count(*) FROM public.auth_refresh_families),'
+                '(SELECT count(*) FROM public.auth_refresh_tokens);'
+            )
+            if role_state != 't' or row_counts != '0|0|0':
+                raise RuntimeError('Disposable auth role or empty-table check failed')
+
+            fingerprint = query(FINGERPRINT)
+            if not re.fullmatch(r'[0-9a-f]{32}', fingerprint):
+                raise RuntimeError('Disposable auth schema fingerprint is invalid')
+            manifest['fingerprint'] = fingerprint
+            descriptor = os.open(manifest_path, os.O_WRONLY | os.O_TRUNC | os.O_NOFOLLOW)
+            with os.fdopen(descriptor, 'w') as destination:
+                metadata = os.fstat(destination.fileno())
+                if metadata.st_uid != os.getuid() or metadata.st_mode & 0o777 != 0o600:
+                    raise RuntimeError('Disposable auth manifest permissions changed')
+                json.dump(manifest, destination)
+
+        # The copies have independent clusters and storage, so prepare them
+        # concurrently. This overlaps setup work without parallel writes to a
+        # database or any contact with the persistent source.
+        with ThreadPoolExecutor(max_workers=3) as pool:
+            list(pool.map(prepare_copy, ('sql', 'sql-second', 'migration')))
+        return True
 
     def __enter__(self):
         from tools.database_test_session import disposable_container

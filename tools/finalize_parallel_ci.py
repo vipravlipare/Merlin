@@ -75,11 +75,15 @@ def finalize(database_dir, python_shard_dir, output_dir):
         MAX_CUMULATIVE_SUITE_SECONDS,
         MER11_REQUIRED_CASES,
         MER11_REQUIRED_FAULT_WITNESSES,
+        MER12_REQUIRED_CASES,
+        MER12_REQUIRED_RUNTIME_CASES,
+        MER12_REQUIRED_FAULT_WITNESSES,
         REQUIRED_SUITE_STAGES,
         validate_complete_suite_summary,
         validate_cumulative_inventory,
         validate_database_component_summary,
         validate_mer11_fault_report,
+        validate_mer12_fault_report,
         validate_suite_evidence_files,
     )
 
@@ -121,9 +125,12 @@ def finalize(database_dir, python_shard_dir, output_dir):
         inventory,
     )
     validate_mer11_fault_report(python_report)
+    validate_mer12_fault_report(python_report)
     reported_cases = {row.get('case') for row in python_report.get('matrix', [])}
     if not MER11_REQUIRED_CASES <= reported_cases:
         raise ValueError('Merged Python report omitted a required MER-11 case')
+    if not (MER12_REQUIRED_CASES | MER12_REQUIRED_RUNTIME_CASES) <= reported_cases:
+        raise ValueError('Merged Python report omitted a required MER-12 auth case')
 
     fault_times = python_report['fault_shards']
     database_suite_seconds = float(suite['runtime_seconds'])
@@ -176,7 +183,7 @@ def finalize(database_dir, python_shard_dir, output_dir):
                          for path in sorted(python_shard_dir.glob('python-fault-shard-*/report.json'))
                      },
                      suite_evidence_sha256=hashes)
-    component['steps'].append({'name': 'python-fault-shard-merge-and-MER-11-validation',
+    component['steps'].append({'name': 'python-fault-shard-merge-and-MER-11-12-validation',
                                'status': 'PASS', 'faults': len(python_report['faults']),
                                'cases': len(python_report['matrix'])})
     component['steps'] = [
@@ -193,6 +200,7 @@ def finalize(database_dir, python_shard_dir, output_dir):
             'python_faults': len(python_report['faults']),
             'python_cases': len(python_report['matrix']),
             'mer11_witness_faults': len(MER11_REQUIRED_FAULT_WITNESSES),
+            'mer12_auth_route_and_runtime_witness_faults': len(MER12_REQUIRED_FAULT_WITNESSES),
             'database_cleanup_passed': component['cleanup_passed']}
 
 

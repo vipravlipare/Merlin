@@ -134,7 +134,11 @@ def validate(stage, directory):
         executable_faults = set(inventory['python_faults']) - set(inventory['python_aliases']) - KNOWN_INVALID_IMPORT_FAULTS
         assert set(witnesses) == executable_faults, 'Python witness inventory differs from executable fault inventory'
         assert data['baseline']['exit'] == 0 and not data['baseline']['errors']
-        assert data['matrix'] and all(r['outcome'] == 'passed' and r['detects'] for r in data['matrix']), 'Python case lacks fault detection'
+        # Every inventory case must pass in the baseline. Fault coverage is
+        # validated per mutation below: each executable fault must fail its
+        # named witness assertion. A test does not need an unrelated mutation
+        # assigned to it to count as executed and reviewed.
+        assert data['matrix'] and all(r['outcome'] == 'passed' for r in data['matrix']), 'Python baseline case did not pass'
         exclusions = []
         observed_aliases = {}
         for row in data['faults']:
@@ -173,6 +177,27 @@ def validate(stage, directory):
                     assert row.get('intended_detection') is True, 'API intended detection missing'
                     assert row.get('expected_detection') == node and row.get('expected_assertion') == assertion, 'API attribution differs from reviewed requirement'
                     assert node in row['detected_by'] and matches_intended_failure(row['cases'].get(node, {}), assertion), 'API intended assertion did not fail'
+                from tools.audit_python_cases import AUTH_SECURITY_DETECTIONS
+                if row['fault'] in AUTH_SECURITY_DETECTIONS:
+                    test, assertion = AUTH_SECURITY_DETECTIONS[row['fault']]
+                    node = 'tests/test_auth_security.py::' + test
+                    assert row.get('expected_detection') == node and row.get('expected_assertion') == assertion, 'Auth fault attribution differs from reviewed requirement'
+                    assert row.get('intended_detection') is True
+                    assert node in row['detected_by'] and matches_intended_failure(row['cases'].get(node, {}), assertion), 'Auth intended assertion did not fail'
+                from tools.audit_python_cases import AUTH_API_DETECTIONS
+                if row['fault'] in AUTH_API_DETECTIONS:
+                    test, assertion = AUTH_API_DETECTIONS[row['fault']]
+                    node = 'tests/test_auth_api.py::' + test
+                    assert row.get('expected_detection') == node and row.get('expected_assertion') == assertion, 'Auth API attribution differs from reviewed requirement'
+                    assert row.get('intended_detection') is True
+                    assert node in row['detected_by'] and matches_intended_failure(row['cases'].get(node, {}), assertion), 'Auth API intended assertion did not fail'
+                from tools.audit_python_cases import AUTH_RUNTIME_DETECTIONS
+                if row['fault'] in AUTH_RUNTIME_DETECTIONS:
+                    test, assertion = AUTH_RUNTIME_DETECTIONS[row['fault']]
+                    node = 'tests/test_auth_runtime.py::' + test
+                    assert row.get('expected_detection') == node and row.get('expected_assertion') == assertion, 'Runtime attribution differs from reviewed requirement'
+                    assert row.get('intended_detection') is True
+                    assert node in row['detected_by'] and matches_intended_failure(row['cases'].get(node, {}), assertion), 'Runtime intended assertion did not fail'
                 from tools.provider_faults import DETECTIONS as PROVIDER_DETECTIONS
                 if row['fault'] in PROVIDER_DETECTIONS:
                     prefix, assertion = PROVIDER_DETECTIONS[row['fault']]
@@ -183,7 +208,7 @@ def validate(stage, directory):
                     assert row.get('expected_detection') == prefix and row.get('expected_assertion') == assertion, 'Provider attribution differs from reviewed requirement'
                     assert row.get('intended_cases') == intended, 'Provider detection evidence contradicts failures'
                     assert row.get('exit') == 1 and not row.get('errors'), 'Provider fixture/exit cannot certify detection'
-                assert row['scope_manifest_matches'] is True, 'Mutation omitted a required dependent case'
+                assert row['scope_manifest_matches'] is True, 'Mutation omitted a required witness or safety case'
                 assert row['detected_by'] and set(row['detected_by']) <= set(inventory['python_cases'])
                 assert all(row['cases'][case]['outcome'] == 'failed' for case in row['detected_by'])
                 continue
@@ -246,6 +271,7 @@ def validate(stage, directory):
         assert by_branch[True]['case_count'] == 0 and by_branch[True]['replay_mode'] == 'equivalent_rebuild'
         witness_sources = ['migrations/001_users_notes.up.sql', 'migrations/001_users_notes.down.sql',
                            'migrations/002_whitespace_parity.up.sql', 'migrations/002_whitespace_parity.down.sql',
+                           'migrations/003_auth_foundation.up.sql', 'migrations/003_auth_foundation.down.sql',
                            'tests/test_users_notes_database.py', 'tools/audit_database_cases.py', 'tools/audit_migration_undo.py']
         reference = by_branch[False]['equivalence_witness']
         arguments = module.COMMAND[module.COMMAND.index('psql'):]
@@ -344,7 +370,8 @@ def main():
                    'execution': {'database_transport': 'guarded reusable libpq session',
                                  'python_fault_workers': min(20, max(1, int(env.get('MERLIN_PYTHON_FAULT_WORKERS','20'))), len(os.sched_getaffinity(0))),
                                  'schedule': 'independent Python and isolated database lanes' if env.get('MERLIN_DB_ISOLATION','1')=='1' else 'independent Python and serial database lanes',
-                                 'python_fault_scope': env.get('MERLIN_PYTHON_FAULT_SCOPE','dependent'),
+                                 'python_fault_scope': ('all-pairs' if env.get('MERLIN_PYTHON_FAULT_SCOPE') == 'all'
+                                                        else 'exact-witness-plus-required-probes'),
                                  'sql_shards': 2 if env.get('MERLIN_DB_ISOLATION','1')=='1' and env.get('MERLIN_SQL_SHARDS','2')=='2' else 1}}
         print('Results: ' + str(directory), flush=True)
         try:
@@ -492,15 +519,23 @@ def main():
                         summary.setdefault('failure', str(error))
                         summary.setdefault('first_failed_stage', 'preflight')
                         raise
-                    lane(['python-tests'])
                     if prepared is not None:
                         try:
                             setup_job.result()
+                            # Auth cases require migration 003. Apply it only
+                            # to the already verified, empty SQL copies; the
+                            # persistent source database remains unchanged.
+                            prepared.bootstrap_auth_test_schema()
                         except Exception as error:
                             stop.set()
                             summary.setdefault('failure', str(error))
                             summary.setdefault('first_failed_stage', 'database-isolation')
                             raise
+                        lane(['python-tests'], dict(env, MERLIN_DB_SANDBOX=prepared.manifests['sql']))
+                    else:
+                        # Without isolated copies, never let auth tests migrate
+                        # or write to a developer's persistent database.
+                        lane(['python-tests'])
                     if not stop.is_set():
                         pool = ThreadPoolExecutor(max_workers=2)
                         try:

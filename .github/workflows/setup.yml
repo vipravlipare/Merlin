@@ -62,6 +62,18 @@ jobs:
     needs: prepare
     runs-on: ubuntu-24.04
     timeout-minutes: 25
+    env:
+      MERLIN_REDIS_TEST_URL: redis://127.0.0.1:6379/15
+    services:
+      redis:
+        image: redis:8.10.2-trixie@sha256:7ef5b5cec96495a04ca7feff88a9492efeab8053fb284d24bdd73344c9245a48
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 2s
+          --health-timeout 1s
+          --health-retries 10
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
@@ -109,6 +121,18 @@ jobs:
     needs: prepare
     runs-on: ubuntu-24.04
     timeout-minutes: 15
+    env:
+      MERLIN_REDIS_TEST_URL: redis://127.0.0.1:6379/15
+    services:
+      redis:
+        image: redis:8.10.2-trixie@sha256:7ef5b5cec96495a04ca7feff88a9492efeab8053fb284d24bdd73344c9245a48
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 2s
+          --health-timeout 1s
+          --health-retries 10
     strategy:
       fail-fast: false
       max-parallel: 2

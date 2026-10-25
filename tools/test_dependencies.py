@@ -15,12 +15,19 @@ REVIEWED_TESTS = {'tests/test_note_rules_and_maintenance.py': '0a3dcf4b2e7c9b07e
 REVIEWED_TESTS['tests/test_health_api.py'] = '3dc8727b03097a757a26b7f5981f3e678caf50a867e0ddc2ef8c08d2c71f0b9a'
 REVIEWED_TESTS['tests/test_local_provider.py'] = 'fe78680b5ef16bf94579870023cd93440e11c6f95c5f87fee6e6479da06cc56a'
 REVIEWED_TESTS['tests/test_notes_repository.py'] = 'f9edec997747c8d6a8c20514bbe92dae5faf72ae71f8c9d82ef9c156e85bcbec'
+REVIEWED_TESTS['tests/test_auth_security.py'] = '7280335a097a0b47d637dfd4d4c3c144d7829be92011b633f19584a3c67e0bc8'
+REVIEWED_TESTS['tests/test_auth_redis_integration.py'] = 'ec808eebd2f1be8e56fc9038cbbd928eeb93d920713a77f887e1748ea1ec48bc'
+REVIEWED_TESTS['tests/test_auth_api.py'] = '432076dac2162f6c9f58b98c88fc7065ca9bbda0f2a4f353a2348598319cc5a4'
+REVIEWED_TESTS['tests/test_auth_runtime.py'] = '72ed3875ad3d1b5ef70a973859a6e1bd371f007764993f6b0daf7c0e5a696df7'
+REVIEWED_TESTS['tests/test_auth_migration_contract.py'] = '0b1a960f6db9744cfa94b23d8735abfeebdb672fea2c93e5814711bd9a1819c8'
 # Reviewed doctor launches setup clients only; changing it restores full scope.
 REVIEWED_DOCTOR = '4cf276effb197aad39ce94f652e01a558ca39ad3bbebe8af5ce9ce4693fae26f'
 TARGETS = {'app/local_provider.py', 'app/health_api.py', 'app/health_server.py', 'tests/test_health_api.py',
            'app/note_rules.py', 'app/notes_maintenance.py',
            'app/notes_repository.py',
-           'app/database_connectivity_probe.py', 'tools/doctor.py', 'tools/prd_lint.py'}
+           'app/database_connectivity_probe.py', 'app/auth_security.py',
+           'app/auth_api.py', 'app/api_server.py', 'app/runtime.py',
+           'tools/doctor.py', 'tools/prd_lint.py'}
 
 
 def resolve(name):
@@ -44,11 +51,27 @@ def dependencies(file, visited=None):
     imports = set()
     aliases = {}
     subprocess_calls = []
+    parents = {child: parent for parent in ast.walk(tree) for child in ast.iter_child_nodes(parent)}
+
+    def is_main_guarded(node):
+        current = node
+        while current in parents:
+            current = parents[current]
+            if isinstance(current, ast.If) and ast.unparse(current.test) in {
+                "__name__ == '__main__'", "'__main__' == __name__"
+            }:
+                return True
+        return False
+
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
+            if is_main_guarded(node):
+                continue
             imports.update(alias.name for alias in node.names)
             aliases.update({alias.asname or alias.name.split('.')[0]: alias.name for alias in node.names})
         elif isinstance(node, ast.ImportFrom):
+            if is_main_guarded(node):
+                continue
             if node.level:
                 if node.level > len(package):
                     uncertain = True

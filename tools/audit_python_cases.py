@@ -121,6 +121,69 @@ HEALTH_API_DETECTIONS.update({
     "health-api-poisoned-recovery": ("test_handler_failure_is_generic_and_recovers_on_same_server", "assert json.loads(body.decode"),
 })
 
+AUTH_SECURITY_DETECTIONS = {
+    "auth-password-hash-downgrade": ("test_argon2id_hash_is_salted_and_verifies_only_matching_password", 'assert first.startswith("$argon2id$")'),
+    "auth-access-token-lifetime": ("test_access_token_round_trips_with_fixed_ed_dsa_and_expiry", "assert expires_at == now + 15 * 60"),
+    "auth-access-token-algorithm": ("test_access_token_round_trips_with_fixed_ed_dsa_and_expiry", "assert validate_access_token(token, public, now=now) == actor"),
+    "auth-refresh-token-weak-digest": ("test_refresh_tokens_are_opaque_random_and_only_digest_is_stored", "assert len(first_digest) == 32"),
+    "auth-username-failure-limit-raised": ("test_rate_limiter_uses_hmac_keys_atomic_window_and_fixed_limits", "assert (window_ms, username_limit, ip_limit, ttl) == (15 * 60 * 1000, 5, 20, 15 * 60)"),
+    "auth-rate-limit-key-not-secret": ("test_rate_limit_keys_depend_on_secret_and_never_contain_identifiers", "assert first.calls[0][2] != second.calls[0][2]"),
+    "auth-rate-limit-expiry-removed": ("test_rate_limiter_uses_hmac_keys_atomic_window_and_fixed_limits", 'assert script.count("redis.call(\'EXPIRE\'") == 2'),
+    "auth-redis-failure-allows-login": ("test_rate_limiter_fails_closed_and_does_not_expose_redis_error", "with pytest.raises(RateLimiterUnavailable, match=\"^Login rate limiter unavailable$\") as error:"),
+}
+
+AUTH_API_DETECTIONS = {
+    "auth-api-limit-skipped": ("test_asgi_http_rate_limit_uses_peer_address_and_stops_lookup", "assert status == 429"),
+    "auth-api-forwarded-peer-trusted": ("test_api_server_entrypoint_uses_injected_dependencies_and_loopback", 'assert observed["proxy_headers"] is False'),
+    "auth-api-unknown-user-enumerated": ("test_unknown_username_and_wrong_password_have_same_public_error", "assert unknown_status == wrong_status == 401"),
+    "auth-api-dummy-hash-skipped": ("test_unknown_account_still_verifies_the_configured_dummy_hash", "assert observed == [(PASSWORD, dummy_hash)]"),
+    "auth-api-retry-after-ignored": ("test_asgi_http_rate_limit_uses_peer_address_and_stops_lookup", 'assert headers.get("retry-after") == "45"'),
+    "auth-api-refresh-token-stored-raw": ("test_successful_login_signs_access_token_and_stores_only_refresh_digest", 'assert stored_digest == refresh_token_digest(response["refresh_token"])'),
+    "auth-api-session-write-failure-accepted": ("test_login_does_not_return_success_when_refresh_session_cannot_be_saved", "assert status == 503"),
+    "auth-api-me-trusts-request-user-id": ("test_asgi_http_login_current_user_identity_and_health_are_wired", 'assert current_status == 200 and current == {"user_id": str(actor)}'),
+    "auth-api-me-skips-token-validation": ("test_asgi_http_login_current_user_identity_and_health_are_wired", 'assert current_status == 200 and current == {"user_id": str(actor)}'),
+    "auth-api-health-payload-changed": ("test_asgi_http_login_current_user_identity_and_health_are_wired", 'assert health_status == 200 and health == {"status": "ok"}'),
+}
+
+AUTH_RUNTIME_DETECTIONS = {
+    "auth-runtime-remote-host-accepted": (
+        "test_runtime_rejects_non_loopback_database_address",
+        "with pytest.raises(runtime.RuntimeBootstrapError):",
+    ),
+    "auth-runtime-hostaddr-remote-accepted": (
+        "test_runtime_rejects_remote_database_hostaddr",
+        "with pytest.raises(runtime.RuntimeBootstrapError):",
+    ),
+    "auth-runtime-unsafe-role-accepted": (
+        "test_runtime_factory_refuses_database_with_bypass_privilege",
+        "with pytest.raises(runtime.RuntimeBootstrapError):",
+    ),
+    "auth-runtime-notes-role-accepted": (
+        "test_runtime_database_gate_rejects_notes_role_membership",
+        'assert connection.query.count("NOT pg_has_role(") == 1',
+    ),
+    "auth-runtime-lookup-missing-accepted": (
+        "test_runtime_database_gate_rejects_missing_credential_lookup",
+        "with pytest.raises(runtime.RuntimeBootstrapError, match=\"^Authentication database role is not ready$\"):"
+    ),
+    "auth-runtime-refresh-schema-missing-accepted": (
+        "test_runtime_database_gate_rejects_missing_refresh_schema",
+        "with pytest.raises(runtime.RuntimeBootstrapError, match=\"^Authentication database role is not ready$\"):"
+    ),
+    "auth-runtime-db-timeout-unbounded": (
+        "test_runtime_factory_uses_bounded_connections_and_injected_dependencies",
+        'assert observed["connect_options"] == {"connect_timeout": 3, "application_name": "merlin-auth-api"}',
+    ),
+    "auth-runtime-proxy-trusted": (
+        "test_regular_server_bootstrap_uses_loopback_and_disables_proxy_trust",
+        'assert called["proxy_headers"] is False',
+    ),
+    "auth-runtime-startup-cause-exposed": (
+        "test_regular_server_startup_error_is_fixed_and_suppresses_cause",
+        "assert error.value.__suppress_context__ is True",
+    ),
+}
+
 
 def health_api_faults():
     """Mutate only an isolated module; file disclosure uses owned pytest files."""
@@ -195,6 +258,79 @@ def faults():
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     rows = [(name, file, old, new) for name, file, old, new in module.cases]
+    auth = "app/auth_security.py"
+    auth_api = "app/auth_api.py"
+    api_server = "app/api_server.py"
+    runtime_module = "app/runtime.py"
+    rows += [
+        ("auth-password-hash-downgrade", auth, "type=Type.ID", "type=Type.D"),
+        ("auth-access-token-lifetime", auth, "ACCESS_TOKEN_SECONDS = 15 * 60", "ACCESS_TOKEN_SECONDS = 16 * 60"),
+        ("auth-access-token-algorithm", auth, 'algorithms=["EdDSA"]', 'algorithms=["HS256"]'),
+        ("auth-refresh-token-weak-digest", auth, 'hashlib.sha256(token.encode("ascii")).digest()', 'hashlib.sha1(token.encode("ascii")).digest()'),
+        ("auth-username-failure-limit-raised", auth, "USERNAME_FAILURE_LIMIT = 5", "USERNAME_FAILURE_LIMIT = 6"),
+        ("auth-rate-limit-key-not-secret", auth, 'hmac.new(self._key_secret, value.encode("utf-8"), hashlib.sha256).hexdigest()', 'hashlib.sha256(value.encode("utf-8")).hexdigest()'),
+        ("auth-rate-limit-expiry-removed", auth, "redis.call('EXPIRE', KEYS[1], tonumber(ARGV[5]))", "redis.call('PERSIST', KEYS[1])"),
+        ("auth-redis-failure-allows-login", auth, 'raise RateLimiterUnavailable("Login rate limiter unavailable") from None', 'return RateLimitDecision(True, 0)'),
+    ]
+    rows += [
+        ("auth-runtime-remote-host-accepted", runtime_module,
+         'if (not isinstance(database_host, str) or "," in database_host\n                or database_host not in {"127.0.0.1", "::1"}):',
+         'if False:'),
+        ("auth-runtime-hostaddr-remote-accepted", runtime_module,
+         'if (database_hostaddr is not None\n                and ("," in database_hostaddr or database_hostaddr not in {"127.0.0.1", "::1"})):',
+         'if False:'),
+        ("auth-runtime-unsafe-role-accepted", runtime_module,
+         "if observed != (True, True, False, False, False, False, False, False, True, True, True):",
+         "if False:"),
+        ("auth-runtime-notes-role-accepted", runtime_module,
+         "NOT pg_has_role(current_user, 'merlin_d6_app', 'MEMBER')",
+         "pg_has_role(current_user, 'merlin_d6_app', 'MEMBER')"),
+        ("auth-runtime-lookup-missing-accepted", runtime_module,
+         "if observed != (True, True, False, False, False, False, False, False, True, True, True):",
+         "if observed != (True, True, False, False, False, False, False, False, True, False, True):"),
+        ("auth-runtime-refresh-schema-missing-accepted", runtime_module,
+         "if observed != (True, True, False, False, False, False, False, False, True, True, True):",
+         "if observed != (True, True, False, False, False, False, False, False, True, True, False):"),
+        ("auth-runtime-db-timeout-unbounded", runtime_module,
+         'connect_timeout=3,', 'connect_timeout=300,'),
+        ("auth-runtime-proxy-trusted", runtime_module,
+         "proxy_headers=False)", "proxy_headers=True)"),
+        ("auth-runtime-startup-cause-exposed", runtime_module,
+         'raise SystemExit("Authentication runtime could not start") from None',
+         'raise SystemExit("Authentication runtime could not start")'),
+    ]
+    rows += [
+        ("auth-api-limit-skipped", auth_api, "if not decision.allowed:",
+         "if False and not decision.allowed:"),
+        ("auth-api-unknown-user-enumerated", auth_api,
+         "if credential is None or not valid_password:", "if credential is None:"),
+        ("auth-api-dummy-hash-skipped", auth_api,
+         "credential.password_hash if credential is not None else dummy_password_hash",
+         "credential.password_hash if credential is not None else ''"),
+        ("auth-api-retry-after-ignored", auth_api,
+         "str(max(1, decision.retry_after))", "str(1)"),
+        ("auth-api-refresh-token-stored-raw", auth_api,
+         "refresh_token, token_digest = create_refresh_token()",
+         "refresh_token, token_digest = create_refresh_token(); token_digest = refresh_token.encode('ascii')"),
+        ("auth-api-session-write-failure-accepted", auth_api,
+         '''        except AuthStoreUnavailable:
+            # Never return an access token when the agreed device session was not stored.
+            return _error(503, "service_unavailable", "Authentication service unavailable")''',
+         '''        except AuthStoreUnavailable:
+            # Fault: return a success even though the session was not stored.
+            return JSONResponse(status_code=200, content={"error": "session_failed"})'''),
+        ("auth-api-me-trusts-request-user-id", auth_api,
+         'content={"user_id": str(actor_id)}',
+         'content={"user_id": request.query_params.get("user_id", str(actor_id))}'),
+        ("auth-api-me-skips-token-validation", auth_api,
+         "actor_id = validate_access_token(parts[1], verification_key)",
+         "actor_id = UUID(parts[1])"),
+        ("auth-api-health-payload-changed", api_server,
+         'body = json.dumps(health_check()).encode("utf-8")',
+         'body = json.dumps({"status": "broken"}).encode("utf-8")'),
+        ("auth-api-forwarded-peer-trusted", api_server,
+         "proxy_headers=False", "proxy_headers=True"),
+    ]
     p = "app/database_connectivity_probe.py"
     d = "tools/doctor.py"
     l = "tools/prd_lint.py"
@@ -397,6 +533,12 @@ def request(name, file, source, directory, tests=None):
         # This mutates the fixture itself; test its cleanup assertion directly,
         # rather than leak one deliberately faulty fixture for every API case.
         tests = ["tests/test_health_api.py::" + HEALTH_API_DETECTIONS[name][0]]
+    if name in AUTH_SECURITY_DETECTIONS:
+        tests = ["tests/test_auth_security.py::" + AUTH_SECURITY_DETECTIONS[name][0]]
+    if name in AUTH_API_DETECTIONS:
+        tests = ["tests/test_auth_api.py::" + AUTH_API_DETECTIONS[name][0]]
+    if name in AUTH_RUNTIME_DETECTIONS:
+        tests = ["tests/test_auth_runtime.py::" + AUTH_RUNTIME_DETECTIONS[name][0]]
     if name in GUARDED_FAULTS:
         # Potential external-call mutations execute only inside tests that trap
         # socket/process entry points before invoking the mutated decoder.
@@ -411,7 +553,48 @@ def request(name, file, source, directory, tests=None):
     request.write_text(json.dumps(payload))
     return {'name': name, 'file': file, 'output': output,
             'argv': [str(ROOT), str(request)], 'code': WORKER,
-            'stdout': work / 'stdout.log', 'stderr': work / 'stderr.log', 'tests': tests}
+            'stdout': work / 'stdout.log', 'stderr': work / 'stderr.log',
+            'request': request, 'tests': tests}
+
+
+def exact_fault_tests(name, witness_case, requested_tests, dependency_scope):
+    """Keep only direct witnesses plus fault-specific safety probes."""
+    tests = [] if requested_tests == dependency_scope else list(requested_tests or [])
+    tests.append(witness_case)
+    if name in HEALTH_API_DETECTIONS:
+        test, _assertion = HEALTH_API_DETECTIONS[name]
+        tests.append('tests/test_health_api.py::' + test)
+    if name in AUTH_SECURITY_DETECTIONS:
+        test, _assertion = AUTH_SECURITY_DETECTIONS[name]
+        tests.append('tests/test_auth_security.py::' + test)
+    if name in AUTH_API_DETECTIONS:
+        test, _assertion = AUTH_API_DETECTIONS[name]
+        tests.append('tests/test_auth_api.py::' + test)
+    if name in AUTH_RUNTIME_DETECTIONS:
+        test, _assertion = AUTH_RUNTIME_DETECTIONS[name]
+        tests.append('tests/test_auth_runtime.py::' + test)
+    if name in PROVIDER_DETECTIONS:
+        tests.append(PROVIDER_DETECTIONS[name][0])
+    return sorted(set(tests))
+
+
+def set_fault_test_selection(job, dependency_scope, witness_case, *, full_scope=False):
+    """Update both the audited manifest and the actual isolated worker input."""
+    if full_scope:
+        # Keep external-call and shared-fixture mutations inside their
+        # dedicated tests; every other mutation runs the complete collection.
+        if job['name'] in GUARDED_FAULTS or job['name'] == 'health-api-fixture-no-shutdown':
+            return
+        job['tests'] = None
+        worker_request = json.loads(job['request'].read_text())
+        worker_request.pop('tests', None)
+        job['request'].write_text(json.dumps(worker_request))
+        return
+    job['tests'] = exact_fault_tests(
+        job['name'], witness_case, job['tests'], dependency_scope)
+    worker_request = json.loads(job['request'].read_text())
+    worker_request['tests'] = job['tests']
+    job['request'].write_text(json.dumps(worker_request))
 
 
 def matches_intended_failure(row, assertion):
@@ -420,8 +603,13 @@ def matches_intended_failure(row, assertion):
         return False
     failure = row.get('failure', '')
     error_lines = '\n'.join(line for line in failure.splitlines() if line.startswith('E '))
-    if assertion in {'ProviderError', 'OSError', 'TimeoutError'}:
+    if assertion in {'ProviderError', 'OSError', 'TimeoutError', 'ValueError'}:
         return bool(re.search(r'^E\s+(?:[A-Za-z_]\w*\.)*' + assertion + r'(?::|\s*$)', error_lines, re.M))
+    # A valid token rejected inside this assertion raises ValueError before
+    # Python can produce an AssertionError. Require both the exact check and
+    # the exception type in the collected failure evidence.
+    if assertion == 'assert validate_access_token(token, public, now=now) == actor':
+        return assertion in failure and bool(re.search(r'^E\s+ValueError:', error_lines, re.M))
     is_assertion = bool(re.search(
         r'^E\s+(?:(?:[A-Za-z_]\w*\.)*(?:AssertionError|Failed):|assert\b)',
         error_lines, re.M))
@@ -520,6 +708,33 @@ def outcome(job, code, stderr):
                       intended_detection=intended)
         if valid and not intended:
             result.update(status="SURVIVED", reason="Required API assertion did not detect fault")
+    if name in AUTH_SECURITY_DETECTIONS:
+        test, assertion = AUTH_SECURITY_DETECTIONS[name]
+        node = "tests/test_auth_security.py::" + test
+        row = data["cases"].get(node, {})
+        intended = valid and node in detected and matches_intended_failure(row, assertion)
+        result.update(expected_detection=node, expected_assertion=assertion,
+                      intended_detection=intended)
+        if valid and not intended:
+            result.update(status="SURVIVED", reason="Required auth assertion did not detect fault")
+    if name in AUTH_API_DETECTIONS:
+        test, assertion = AUTH_API_DETECTIONS[name]
+        node = "tests/test_auth_api.py::" + test
+        row = data["cases"].get(node, {})
+        intended = valid and node in detected and matches_intended_failure(row, assertion)
+        result.update(expected_detection=node, expected_assertion=assertion,
+                      intended_detection=intended)
+        if valid and not intended:
+            result.update(status="SURVIVED", reason="Required auth API assertion did not detect fault")
+    if name in AUTH_RUNTIME_DETECTIONS:
+        test, assertion = AUTH_RUNTIME_DETECTIONS[name]
+        node = "tests/test_auth_runtime.py::" + test
+        row = data["cases"].get(node, {})
+        intended = valid and node in detected and matches_intended_failure(row, assertion)
+        result.update(expected_detection=node, expected_assertion=assertion,
+                      intended_detection=intended)
+        if valid and not intended:
+            result.update(status="SURVIVED", reason="Required runtime assertion did not detect fault")
     if name in PROVIDER_DETECTIONS:
         prefix, assertion = PROVIDER_DETECTIONS[name]
         intended_nodes = [node for node in detected if node.startswith(prefix)
@@ -617,14 +832,19 @@ def main():
             from tools.isolated_python import fork_jobs
             jobs = []
             for row in prepared:
-                job = request(*row, directory, tests=selected.get(row[1]))
+                dependency_scope = selected.get(row[1])
+                job = request(*row, directory, tests=dependency_scope)
                 witness = witnesses[row[0]]
                 if witness["case"] not in baseline["cases"]:
                     raise RuntimeError("Witness test missing from baseline: " + witness["case"])
-                if job["tests"] is not None and not any(
-                        witness["case"].startswith(scope + "::") or witness["case"] == scope
-                        for scope in job["tests"]):
-                    raise RuntimeError("Dependent-test scope omits witness case: " + row[0])
+                # The complete baseline executes every retained case. Each
+                # mutation runs its pinned witness and any separate mandatory
+                # assertion or multi-case side-effect probe.
+                # request() writes the worker input before the audited scope is
+                # narrowed, so update its serialized request and validator map.
+                set_fault_test_selection(
+                    job, dependency_scope, witness['case'],
+                    full_scope=os.environ.get('MERLIN_PYTHON_FAULT_SCOPE', 'dependent') == 'all')
                 job.update(witness=witness, test_sources=test_sources)
                 jobs.append(job)
             for job in jobs:

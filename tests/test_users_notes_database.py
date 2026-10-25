@@ -81,6 +81,62 @@ def add(id, rule, sql):
     CASES.append(Case(id, rule, sql))
 
 
+# MER-12 authentication schema checks. These cases run only in the project's
+# guarded disposable PostgreSQL target. They verify least privilege and expiry
+# enforcement in PostgreSQL, rather than trusting Python helpers alone.
+_auth_seed = "INSERT INTO public.auth_credentials(user_id,password_hash) VALUES " \
+             "('{a}','$argon2id$'||repeat('a',40)),('{b}','$argon2id$'||repeat('b',40));"
+add("auth-lookup-exact-name", "Login lookup returns one matching account hash",
+    _auth_seed + "SET LOCAL ROLE merlin_api; "
+    "DO $auth$ DECLARE found RECORD; BEGIN "
+    "SELECT * INTO found FROM public.lookup_auth_credential('{name_b}'); "
+    + require("found.user_id = '{b}'::uuid AND found.password_hash = '$argon2id$'||repeat('b',40)",
+              "Login lookup returned the wrong credential") + " END $auth$; RESET ROLE;")
+add("auth-lookup-unknown-user-empty", "Unknown login names return no credential",
+    _auth_seed + "SET LOCAL ROLE merlin_api; "
+    "DO $auth$ BEGIN "
+    + require("NOT EXISTS(SELECT 1 FROM public.lookup_auth_credential('no_such_user'))",
+              "Unknown login name returned a credential") + " END $auth$; RESET ROLE;")
+add("auth-credentials-not-directly-readable", "Runtime role cannot scan password hashes",
+    _auth_seed + "SET LOCAL ROLE merlin_api; "
+    + reject("SELECT password_hash FROM public.auth_credentials WHERE user_id='{a}'",
+             "42501") + " RESET ROLE;")
+add("runtime-role-cannot-read-notes", "Authentication runtime role has no note-table access",
+    "SET LOCAL ROLE merlin_api; SELECT set_config('merlin.actor_id','{a}',true); "
+    + reject("SELECT body FROM public.notes WHERE user_id='{a}'", "42501") + " RESET ROLE;")
+add("auth-refresh-family-owner-filter", "Refresh families remain isolated by trusted actor policy",
+    "INSERT INTO public.auth_refresh_families(id,user_id,idle_expires_at,absolute_expires_at) VALUES "
+    "('{n}','{a}',statement_timestamp()+interval '30 days',statement_timestamp()+interval '90 days'),"
+    "('{extra}','{b}',statement_timestamp()+interval '30 days',statement_timestamp()+interval '90 days'); "
+    "SET LOCAL ROLE merlin_api; SELECT set_config('merlin.actor_id','{a}',true); "
+    + check("NOT EXISTS(SELECT 1 FROM public.auth_refresh_families WHERE id='{extra}')") + " RESET ROLE;")
+add("auth-refresh-idle-expiry-cap", "Idle refresh expiry never exceeds 30 days from now",
+    reject("INSERT INTO public.auth_refresh_families(id,user_id,idle_expires_at,absolute_expires_at) "
+           "VALUES ('{n}','{a}',statement_timestamp()+interval '31 days',statement_timestamp()+interval '90 days')",
+           "23514", message="Invalid authentication session expiry"))
+add("auth-refresh-absolute-expiry-cap", "Absolute refresh expiry never exceeds 90 days from creation",
+    reject("INSERT INTO public.auth_refresh_families(id,user_id,idle_expires_at,absolute_expires_at) "
+           "VALUES ('{n}','{a}',statement_timestamp()+interval '30 days',statement_timestamp()+interval '91 days')",
+           "23514", message="Invalid authentication session expiry"))
+add("auth-refresh-token-expiry-bound", "Refresh token cannot outlive its device family",
+    "INSERT INTO public.auth_refresh_families(id,user_id,idle_expires_at,absolute_expires_at) "
+    "VALUES ('{extra}','{a}',statement_timestamp()+interval '15 days',statement_timestamp()+interval '90 days'); "
+    + reject("INSERT INTO public.auth_refresh_tokens(token_hash,family_id,expires_at) "
+             "VALUES (decode(repeat('ab',32),'hex'),'{extra}',statement_timestamp()+interval '16 days')",
+             "23514", message="Invalid authentication refresh token"))
+add("auth-refresh-token-consumed-once", "Consumed refresh tokens cannot be rotated twice",
+    "INSERT INTO public.auth_refresh_families(id,user_id,idle_expires_at,absolute_expires_at) "
+    "VALUES ('{extra}','{a}',statement_timestamp()+interval '30 days',statement_timestamp()+interval '90 days'); "
+    "INSERT INTO public.auth_refresh_tokens(token_hash,family_id,created_at,expires_at) VALUES "
+    "(decode(repeat('01',32),'hex'),'{extra}',statement_timestamp()-interval '1 hour',statement_timestamp()+interval '10 days'), "
+    "(decode(repeat('02',32),'hex'),'{extra}',statement_timestamp(),statement_timestamp()+interval '10 days'); "
+    "UPDATE public.auth_refresh_tokens SET consumed_at=statement_timestamp(), "
+    "replaced_by_hash=decode(repeat('02',32),'hex') WHERE token_hash=decode(repeat('01',32),'hex'); "
+    + reject("UPDATE public.auth_refresh_tokens SET consumed_at=statement_timestamp() "
+             "WHERE token_hash=decode(repeat('01',32),'hex')",
+             "23514", message="Invalid refresh-token rotation"))
+
+
 # Unicode counts use independent expected answers, not the Python helper's output.
 for name, text, weight in [("plain", "abc", 3), ("emoji", "😀", 4), ("family", "👨‍👩‍👧‍👦", 4),
                            ("skin", "👍🏽", 4), ("flag", "🇺🇸", 4), ("keycap", "1️⃣", 4),
@@ -281,7 +337,7 @@ for field, placeholder in [("body", "'new body'"), ("device_created_at", "'2026-
         statement = note_insert().replace(placeholder, "NULL")
     add("required-" + field, "Required note data cannot be NULL", reject(statement, "23502", column=field))
 add("permission-groups", "All permission groups lack administrative or login powers",
-    check("(SELECT count(*)=3 AND bool_and(NOT rolcanlogin AND NOT rolsuper AND NOT rolcreatedb AND NOT rolcreaterole AND NOT rolreplication AND NOT rolbypassrls) FROM pg_roles WHERE rolname IN ('merlin_d6_owner','merlin_d6_app','merlin_d6_maintenance'))"))
+    check("(SELECT count(*)=3 AND bool_and(NOT rolcanlogin AND NOT rolsuper AND NOT rolcreatedb AND NOT rolcreaterole AND NOT rolreplication AND NOT rolbypassrls) FROM pg_roles WHERE rolname IN ('merlin_d6_owner','merlin_d6_app','merlin_d6_maintenance')) AND (SELECT rolcanlogin AND NOT rolinherit AND NOT rolsuper AND NOT rolcreatedb AND NOT rolcreaterole AND NOT rolreplication AND NOT rolbypassrls AND NOT pg_has_role('merlin_api','merlin_d6_app','MEMBER') FROM pg_roles WHERE rolname='merlin_api')"))
 add("rls-forced", "Both tables have forced row policies",
     check("(SELECT count(*)=2 AND bool_and(relrowsecurity AND relforcerowsecurity) FROM pg_class WHERE oid IN ('public.users'::regclass,'public.notes'::regclass))"))
 add("app-no-cleanup-grant", "App cannot execute maintenance functions", APP + reject("PERFORM public.cleanup_expired_blank_notes(100)", "42501"))

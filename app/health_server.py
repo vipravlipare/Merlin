@@ -17,4 +17,7 @@ def run():
 
 
 if __name__ == "__main__":
-    run()
+    # Keep the established command while loading the composed auth runtime.
+    from app.runtime import main
+
+    main()

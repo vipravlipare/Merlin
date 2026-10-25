@@ -45,6 +45,8 @@ class Copies:
   return self
  def __exit__(self,*unused):
   (folder/'copies-cleaned').write_text('yes');self.evidence['cleanup_passed']=True
+ def bootstrap_auth_test_schema(self):
+  (folder/'auth-schema-ready').write_text('yes')
 suite.DatabaseSandboxes=Copies
 if mode=='serial':os.environ['MERLIN_DB_ISOLATION']='0'
 else:os.environ['MERLIN_DB_ISOLATION']='1'
@@ -109,6 +111,10 @@ def check(mode, root):
     if mode in {'pass','serial'}:
         assert result['status']=='PASS' and len(stages)==7 and all(row['status']=='PASS' for row in stages.values())
         baseline_end=intervals['python-tests']['end']
+        if mode=='pass':
+            baseline_events=[row for row in events if row['stage']=='python-tests']
+            assert baseline_events and all(row['target']=='sql' for row in baseline_events)
+            assert (folder/'auth-schema-ready').exists()
         assert all(value['start']>=baseline_end for name,value in intervals.items() if name!='python-tests')
         if mode=='serial':
             database=['migration-undo-faults','database-lifecycle-faults','database-case-faults']
@@ -267,6 +273,42 @@ def check_result_validation():
             if node not in row['detected_by']:
                 row['detected_by'].append(node)
             row['cases'][node] = {'outcome': 'failed', 'failure': synthetic_failure(assertion)}
+    from tools.audit_python_cases import AUTH_SECURITY_DETECTIONS
+    for row in python_faults:
+        if row['fault'] in AUTH_SECURITY_DETECTIONS:
+            test, assertion = AUTH_SECURITY_DETECTIONS[row['fault']]
+            node = 'tests/test_auth_security.py::' + test
+            row.update(intended_detection=True, expected_detection=node,
+                       expected_assertion=assertion)
+            if node not in row['detected_by']:
+                row['detected_by'].append(node)
+            error = ('ValueError: Synthetic valid-token rejection'
+                     if row['fault'] == 'auth-access-token-algorithm'
+                     else 'AssertionError: Synthetic assertion failed')
+            row['cases'][node] = {'outcome': 'failed', 'failure':
+                f"tests/test_auth_security.py:1: in synthetic_check\n    {assertion}\nE {error}"}
+    from tools.audit_python_cases import AUTH_API_DETECTIONS
+    for row in python_faults:
+        if row['fault'] in AUTH_API_DETECTIONS:
+            test, assertion = AUTH_API_DETECTIONS[row['fault']]
+            node = 'tests/test_auth_api.py::' + test
+            row.update(intended_detection=True, expected_detection=node,
+                       expected_assertion=assertion)
+            if node not in row['detected_by']:
+                row['detected_by'].append(node)
+            row['cases'][node] = {'outcome': 'failed', 'failure':
+                f"tests/test_auth_api.py:1: in synthetic_check\n    {assertion}\nE AssertionError: Synthetic assertion failed"}
+    from tools.audit_python_cases import AUTH_RUNTIME_DETECTIONS
+    for row in python_faults:
+        if row['fault'] in AUTH_RUNTIME_DETECTIONS:
+            test, assertion = AUTH_RUNTIME_DETECTIONS[row['fault']]
+            node = 'tests/test_auth_runtime.py::' + test
+            row.update(intended_detection=True, expected_detection=node,
+                       expected_assertion=assertion)
+            if node not in row['detected_by']:
+                row['detected_by'].append(node)
+            row['cases'][node] = {'outcome': 'failed', 'failure':
+                f"tests/test_auth_runtime.py:1: in synthetic_check\n    {assertion}\nE AssertionError: Synthetic assertion failed"}
     from tools.provider_faults import DETECTIONS as PROVIDER_DETECTIONS
     for row in python_faults:
         if row['fault'] in PROVIDER_DETECTIONS:
@@ -321,6 +363,7 @@ def check_result_validation():
         target_command = ['docker','exec','-i',target['container'],'psql','-h',target['socket'],*arguments[1:]]
         source_paths = ['migrations/001_users_notes.up.sql','migrations/001_users_notes.down.sql',
                         'migrations/002_whitespace_parity.up.sql','migrations/002_whitespace_parity.down.sql',
+                        'migrations/003_auth_foundation.up.sql','migrations/003_auth_foundation.down.sql',
                         'tests/test_users_notes_database.py','tools/audit_database_cases.py','tools/audit_migration_undo.py']
         witness = {'validated':True,'same_rebuilt_schema':True,'same_runtime':True,'same_source_sha256':True,
                    'reference_baseline_public_create':False,'reference_case_count':len(module.CASES),
@@ -353,6 +396,10 @@ def check_result_validation():
             faulty=json.loads(json.dumps(migration_report))
             for row in faulty['phases']['roundtrips']:change(row['equivalence_witness'])
             variants[name]=faulty
+        faulty=json.loads(json.dumps(migration_report))
+        for row in faulty['phases']['roundtrips']:
+            row['equivalence_witness']['source_sha256'].pop('migrations/003_auth_foundation.down.sql')
+        variants['missing-auth-migration-source']=faulty
         for name,key,value in [('wrong-replay-count','case_count',len(module.CASES)),
                                ('wrong-replay-mode','replay_mode','executed')]:
             faulty=json.loads(json.dumps(migration_report));faulty['phases']['roundtrips'][1][key]=value
@@ -393,6 +440,14 @@ def check_result_validation():
                     api=next(row for row in faulty['faults'] if row['fault'] in HEALTH_API_DETECTIONS)
                     api.pop(field)
                     variants['missing-api-'+field]=faulty
+                    faulty=json.loads(json.dumps(report))
+                    api=next(row for row in faulty['faults'] if row['fault'] in AUTH_API_DETECTIONS)
+                    api.pop(field)
+                    variants['missing-auth-api-'+field]=faulty
+                    faulty=json.loads(json.dumps(report))
+                    api=next(row for row in faulty['faults'] if row['fault'] in AUTH_RUNTIME_DETECTIONS)
+                    api.pop(field)
+                    variants['missing-auth-runtime-'+field]=faulty
                 faulty=json.loads(json.dumps(report));faulty['matrix'][0]['detects']=['invented-fault']
                 variants['invented-detection']=faulty
                 for mode in ['missing-witness', 'wrong-witness-case', 'wrong-witness-check', 'wrong-witness-line', 'unrelated-failure', 'witness-setup-error']:
@@ -877,6 +932,58 @@ def check_provider_controls():
     return rows
 
 
+def check_exact_fault_test_scope():
+    """Only run pinned witnesses plus separately required focused probes."""
+    from tools import audit_python_cases as audit
+    rows = []
+    dependency_scope = ['tests/test_health_api.py']
+    witness = 'tests/test_health_api.py::synthetic_witness'
+    assert audit.exact_fault_tests('synthetic-fault', witness, dependency_scope,
+                                   dependency_scope) == [witness]
+    rows.append({'scenario': 'generic-fault-runs-pinned-witness-only', 'passed': True})
+
+    health_witness = 'tests/test_health_api.py::different_health_case'
+    selected = audit.exact_fault_tests('health-api-wrong-status', health_witness,
+                                       dependency_scope, dependency_scope)
+    assert selected == sorted({health_witness,
+                               'tests/test_health_api.py::test_health_endpoint_success'})
+    rows.append({'scenario': 'health-fault-keeps-witness-and-required-assertion', 'passed': True})
+
+    provider_witness = 'tests/test_local_provider.py::test_contract_decoder_has_zero_external_side_effects[success]'
+    provider_guards = [
+        'tests/test_local_provider.py::test_contract_decoder_has_zero_external_side_effects[success]',
+        'tests/test_local_provider.py::test_contract_decoder_has_zero_external_side_effects[provider-failure]',
+        'tests/test_local_provider.py::test_contract_decoder_has_zero_external_side_effects[invalid-response]',
+    ]
+    provider_check = audit.exact_fault_tests(
+        'provider-network-side-effect', provider_witness, provider_guards,
+        ['tests/test_local_provider.py'])
+    assert provider_check == sorted(set(provider_guards))
+    rows.append({'scenario': 'provider-side-effect-guards-remain-in-fault-scope', 'passed': True})
+
+    with tempfile.TemporaryDirectory(prefix='merlin-fault-scope-') as directory:
+        job = audit.request('synthetic-fault', 'app/local_provider.py', 'synthetic source',
+                            directory, tests=dependency_scope)
+        audit.set_fault_test_selection(job, dependency_scope, witness)
+        request = json.loads(job['request'].read_text())
+        assert request['tests'] == job['tests'] == [witness]
+        all_job = audit.request('all-scope-fault', 'app/local_provider.py',
+                                'synthetic source', directory)
+        audit.set_fault_test_selection(all_job, None, witness, full_scope=True)
+        assert all_job['tests'] is None and 'tests' not in json.loads(
+            all_job['request'].read_text())
+        guarded = audit.request(
+            'provider-network-side-effect', 'app/local_provider.py',
+            'synthetic source', directory, tests=['tests/test_local_provider.py'])
+        audit.set_fault_test_selection(guarded, ['tests/test_local_provider.py'],
+                                       provider_witness, full_scope=True)
+        assert len(guarded['tests']) == 3
+        assert json.loads(guarded['request'].read_text())['tests'] == guarded['tests']
+    rows.append({'scenario': 'worker-request-matches-validated-case-manifest', 'passed': True})
+    rows.append({'scenario': 'all-pairs-mode-and-side-effect-guards-preserved', 'passed': True})
+    return rows
+
+
 def check_audit_failure_boundaries():
     """Infrastructure errors cannot stand in for completed case assertions."""
     from tools import audit_python_cases as python
@@ -931,6 +1038,7 @@ def main():
     rows.extend(check_runtime_commit_compatibility())
     rows.extend(check_api_fault_attribution())
     rows.extend(check_api_dependency_scopes())
+    rows.extend(check_exact_fault_test_scope())
     rows.extend(check_provider_controls())
     rows.extend(check_audit_failure_boundaries())
     if args.out:args.out.write_text(json.dumps({'checks':rows},indent=2)+'\n')

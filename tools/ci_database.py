@@ -120,7 +120,11 @@ class CiDatabase:
         self.query((directory / 'migrations/001_users_notes.up.sql').read_text(),
                    single_transaction=True)
         self.query((directory / 'migrations/002_whitespace_parity.up.sql').read_text())
-        if self.query('SELECT (SELECT count(*) FROM public.users),(SELECT count(*) FROM public.notes);') != '0|0':
+        self.query((directory / 'migrations/003_auth_foundation.up.sql').read_text())
+        if self.query('SELECT (SELECT count(*) FROM public.users),(SELECT count(*) FROM public.notes),'
+                      '(SELECT count(*) FROM public.auth_credentials),'
+                      '(SELECT count(*) FROM public.auth_refresh_families),'
+                      '(SELECT count(*) FROM public.auth_refresh_tokens);') != '0|0|0|0|0':
             raise RuntimeError('CI bootstrap did not leave empty application tables')
 
     def __enter__(self):

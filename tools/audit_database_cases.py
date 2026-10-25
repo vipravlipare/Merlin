@@ -57,6 +57,47 @@ def recipes(case):
     rows = []
     def add(name, fault, before_seed=False):
         rows.append({"name": name, "sql": fault, "before_seed": before_seed})
+    if ident == "auth-lookup-exact-name":
+        add("auth-lookup-ignores-name", edit_function(
+            "lookup_auth_credential(text)",
+            "WHERE u.username_canonical = lower(p_username)",
+            "WHERE u.username_canonical <> lower(p_username)"))
+    if ident == "auth-lookup-unknown-user-empty":
+        add("auth-lookup-leaks-unknown-user", edit_function(
+            "lookup_auth_credential(text)",
+            "WHERE u.username_canonical = lower(p_username)",
+            "WHERE true"))
+    if ident == "auth-credentials-not-directly-readable":
+        add("auth-password-hash-direct-grant",
+            "GRANT SELECT ON public.auth_credentials TO merlin_api;")
+    if ident == "runtime-role-cannot-read-notes":
+        add("runtime-role-note-read-granted",
+            "GRANT SELECT ON public.notes TO merlin_api;")
+    if ident == "auth-refresh-family-owner-filter":
+        add("auth-refresh-owner-policy-removed",
+            "DROP POLICY auth_refresh_families_owner ON public.auth_refresh_families; "
+            "CREATE POLICY auth_refresh_families_owner ON public.auth_refresh_families "
+            "FOR ALL TO merlin_api USING (true) WITH CHECK (true);")
+    if ident == "auth-refresh-idle-expiry-cap":
+        add("auth-idle-window-unbounded", edit_function(
+            "validate_auth_refresh_family()",
+            "NEW.idle_expires_at > statement_timestamp() + INTERVAL '30 days'",
+            "FALSE"))
+    if ident == "auth-refresh-absolute-expiry-cap":
+        add("auth-absolute-window-unbounded", edit_function(
+            "validate_auth_refresh_family()",
+            "NEW.absolute_expires_at > NEW.created_at + INTERVAL '90 days'",
+            "FALSE"))
+    if ident == "auth-refresh-token-expiry-bound":
+        add("auth-refresh-token-outlives-family", edit_function(
+            "validate_auth_refresh_token()",
+            "NEW.expires_at > family.idle_expires_at",
+            "FALSE"))
+    if ident == "auth-refresh-token-consumed-once":
+        add("auth-refresh-token-reuse-accepted", edit_function(
+            "validate_auth_refresh_token()",
+            "OLD.consumed_at IS NOT NULL OR NEW.consumed_at IS NULL",
+            "FALSE"))
     blank_false = replace_function("note_text_is_blank", "return value is None", "plpython3u", "BOOLEAN", "value TEXT")
     blank_true = replace_function("note_text_is_blank", "return True", "plpython3u", "BOOLEAN", "value TEXT")
     content_pass = replace_function("manage_note_content", "BEGIN RETURN NEW; END")
@@ -216,6 +257,11 @@ def recipes(case):
             add("permission-role-incorrect-" + power.lower(), "ALTER ROLE merlin_d6_app " + power + ";")
         for role in ["merlin_d6_owner", "merlin_d6_maintenance"]:
             add("permission-group-can-login-" + role, "ALTER ROLE " + role + " LOGIN;")
+        add("runtime-role-no-login", "ALTER ROLE merlin_api NOLOGIN;")
+        add("runtime-role-inherit-enabled", "ALTER ROLE merlin_api INHERIT;")
+        for power in ["SUPERUSER", "CREATEDB", "CREATEROLE", "REPLICATION", "BYPASSRLS"]:
+            add("runtime-role-incorrect-" + power.lower(), "ALTER ROLE merlin_api " + power + ";")
+        add("runtime-role-inherits-notes-permissions", "GRANT merlin_d6_app TO merlin_api;")
     if ident == "rls-forced":
         add("owner-not-subject-to-rls", "ALTER TABLE public.notes NO FORCE ROW LEVEL SECURITY;")
         add("user-owner-not-subject-to-rls", "ALTER TABLE public.users NO FORCE ROW LEVEL SECURITY;")
@@ -235,20 +281,20 @@ def recipes(case):
 
 FINGERPRINT = """SELECT md5(jsonb_agg(row_data ORDER BY row_data::text)::text) FROM (
  SELECT jsonb_build_object('function',oid::regprocedure::text,'def',pg_get_functiondef(oid),'owner',proowner,'acl',proacl::text,'config',proconfig,'strict',proisstrict,'volatility',provolatile,'parallel',proparallel,'security_definer',prosecdef,'leakproof',proleakproof) AS row_data
- FROM pg_proc WHERE pronamespace='public'::regnamespace AND proname IN ('note_weighted_length','note_text_is_blank','note_email_is_clean','manage_note_content','manage_note_deletion','manage_users_notes_timestamps','cleanup_expired_blank_notes','purge_deleted_notes')
- UNION ALL SELECT jsonb_build_object('constraint',conname,'def',pg_get_constraintdef(oid),'validated',convalidated,'deferrable',condeferrable,'deferred',condeferred) FROM pg_constraint WHERE conrelid IN ('public.users'::regclass,'public.notes'::regclass)
- UNION ALL SELECT jsonb_build_object('policy',polname,'command',polcmd,'permissive',polpermissive,'roles',polroles::text,'using',pg_get_expr(polqual,polrelid),'check',pg_get_expr(polwithcheck,polrelid)) FROM pg_policy WHERE polrelid IN ('public.users'::regclass,'public.notes'::regclass)
- UNION ALL SELECT jsonb_build_object('table',relname,'owner',relowner,'acl',relacl::text,'rls',relrowsecurity,'force',relforcerowsecurity,'kind',relkind,'persistence',relpersistence,'options',reloptions,'access_method',(SELECT amname FROM pg_am WHERE oid=relam),'replica_identity',relreplident,'tablespace',(SELECT spcname FROM pg_tablespace WHERE oid=reltablespace)) FROM pg_class WHERE oid IN ('public.users'::regclass,'public.notes'::regclass,'public.active_notes'::regclass)
- UNION ALL SELECT jsonb_build_object('index',indexname,'def',indexdef) FROM pg_indexes WHERE schemaname='public' AND tablename IN ('users','notes')
- UNION ALL SELECT jsonb_build_object('role',rolname,'login',rolcanlogin,'super',rolsuper,'bypass',rolbypassrls,'createdb',rolcreatedb,'createrole',rolcreaterole,'replication',rolreplication,'config',rolconfig,'inherit',rolinherit,'connection_limit',rolconnlimit,'valid_until',rolvaliduntil) FROM pg_roles WHERE rolname LIKE 'merlin_d6%'
- UNION ALL SELECT jsonb_build_object('membership',roleid,'member',member,'grantor',grantor,'admin',admin_option,'inherit',inherit_option,'set',set_option) FROM pg_auth_members WHERE member IN ('merlin_d6_app'::regrole,'merlin_d6_maintenance'::regrole,'merlin_d6_owner'::regrole)
- UNION ALL SELECT jsonb_build_object('column',attrelid::regclass::text||'.'||attname,'acl',attacl::text,'notnull',attnotnull,'generated',attgenerated,'number',attnum,'type',format_type(atttypid,atttypmod),'type_modifier',atttypmod,'collation',attcollation::regcollation::text,'dimensions',attndims,'identity',attidentity,'storage',attstorage,'compression',attcompression,'options',attoptions,'has_missing',atthasmissing,'missing_value',attmissingval::text) FROM pg_attribute WHERE attrelid IN ('public.users'::regclass,'public.notes'::regclass,'public.active_notes'::regclass) AND attnum>0 AND NOT attisdropped
+ FROM pg_proc WHERE pronamespace='public'::regnamespace AND proname IN ('note_weighted_length','note_text_is_blank','note_email_is_clean','manage_note_content','manage_note_deletion','manage_users_notes_timestamps','cleanup_expired_blank_notes','purge_deleted_notes','lookup_auth_credential','validate_auth_refresh_family','validate_auth_refresh_token')
+ UNION ALL SELECT jsonb_build_object('constraint',conname,'def',pg_get_constraintdef(oid),'validated',convalidated,'deferrable',condeferrable,'deferred',condeferred) FROM pg_constraint WHERE conrelid IN ('public.users'::regclass,'public.notes'::regclass,to_regclass('public.auth_credentials'),to_regclass('public.auth_refresh_families'),to_regclass('public.auth_refresh_tokens'))
+ UNION ALL SELECT jsonb_build_object('policy',polname,'command',polcmd,'permissive',polpermissive,'roles',polroles::text,'using',pg_get_expr(polqual,polrelid),'check',pg_get_expr(polwithcheck,polrelid)) FROM pg_policy WHERE polrelid IN ('public.users'::regclass,'public.notes'::regclass,to_regclass('public.auth_credentials'),to_regclass('public.auth_refresh_families'),to_regclass('public.auth_refresh_tokens'))
+ UNION ALL SELECT jsonb_build_object('table',relname,'owner',relowner,'acl',relacl::text,'rls',relrowsecurity,'force',relforcerowsecurity,'kind',relkind,'persistence',relpersistence,'options',reloptions,'access_method',(SELECT amname FROM pg_am WHERE oid=relam),'replica_identity',relreplident,'tablespace',(SELECT spcname FROM pg_tablespace WHERE oid=reltablespace)) FROM pg_class WHERE oid IN ('public.users'::regclass,'public.notes'::regclass,'public.active_notes'::regclass,to_regclass('public.auth_credentials'),to_regclass('public.auth_refresh_families'),to_regclass('public.auth_refresh_tokens'))
+ UNION ALL SELECT jsonb_build_object('index',indexname,'def',indexdef) FROM pg_indexes WHERE schemaname='public' AND tablename IN ('users','notes','auth_credentials','auth_refresh_families','auth_refresh_tokens')
+ UNION ALL SELECT jsonb_build_object('role',rolname,'login',rolcanlogin,'super',rolsuper,'bypass',rolbypassrls,'createdb',rolcreatedb,'createrole',rolcreaterole,'replication',rolreplication,'config',rolconfig,'inherit',rolinherit,'connection_limit',rolconnlimit,'valid_until',rolvaliduntil) FROM pg_roles WHERE rolname LIKE 'merlin_d6%' OR rolname='merlin_api'
+ UNION ALL SELECT jsonb_build_object('membership',roleid,'member',member,'grantor',grantor,'admin',admin_option,'inherit',inherit_option,'set',set_option) FROM pg_auth_members WHERE member IN ('merlin_d6_app'::regrole,'merlin_d6_maintenance'::regrole,'merlin_d6_owner'::regrole,to_regrole('merlin_api'))
+ UNION ALL SELECT jsonb_build_object('column',attrelid::regclass::text||'.'||attname,'acl',attacl::text,'notnull',attnotnull,'generated',attgenerated,'number',attnum,'type',format_type(atttypid,atttypmod),'type_modifier',atttypmod,'collation',attcollation::regcollation::text,'dimensions',attndims,'identity',attidentity,'storage',attstorage,'compression',attcompression,'options',attoptions,'has_missing',atthasmissing,'missing_value',attmissingval::text) FROM pg_attribute WHERE attrelid IN ('public.users'::regclass,'public.notes'::regclass,'public.active_notes'::regclass,to_regclass('public.auth_credentials'),to_regclass('public.auth_refresh_families'),to_regclass('public.auth_refresh_tokens')) AND attnum>0 AND NOT attisdropped
  UNION ALL SELECT jsonb_build_object('schema',nspname,'owner',nspowner,'acl',nspacl::text) FROM pg_namespace WHERE nspname='public'
- UNION ALL SELECT jsonb_build_object('default',adrelid::regclass::text||'.'||adnum,'expr',pg_get_expr(adbin,adrelid)) FROM pg_attrdef WHERE adrelid IN ('public.users'::regclass,'public.notes'::regclass)
- UNION ALL SELECT jsonb_build_object('trigger',tgname,'enabled',tgenabled,'def',pg_get_triggerdef(oid)) FROM pg_trigger WHERE tgrelid IN ('public.users'::regclass,'public.notes'::regclass)
+ UNION ALL SELECT jsonb_build_object('default',adrelid::regclass::text||'.'||adnum,'expr',pg_get_expr(adbin,adrelid)) FROM pg_attrdef WHERE adrelid IN ('public.users'::regclass,'public.notes'::regclass,to_regclass('public.auth_credentials'),to_regclass('public.auth_refresh_families'),to_regclass('public.auth_refresh_tokens'))
+ UNION ALL SELECT jsonb_build_object('trigger',tgname,'enabled',tgenabled,'def',pg_get_triggerdef(oid)) FROM pg_trigger WHERE tgrelid IN ('public.users'::regclass,'public.notes'::regclass,to_regclass('public.auth_refresh_families'),to_regclass('public.auth_refresh_tokens'))
  UNION ALL SELECT jsonb_build_object('view','active_notes','def',pg_get_viewdef('public.active_notes'::regclass))
- UNION ALL SELECT jsonb_build_object('index_state',i.indexrelid::regclass::text,'valid',i.indisvalid,'ready',i.indisready,'live',i.indislive,'unique',i.indisunique,'primary',i.indisprimary,'nulls_not_distinct',i.indnullsnotdistinct,'key_count',i.indnkeyatts,'attribute_count',i.indnatts,'options',c.reloptions,'method',a.amname) FROM pg_index i JOIN pg_class c ON c.oid=i.indexrelid JOIN pg_am a ON a.oid=c.relam WHERE i.indrelid IN ('public.users'::regclass,'public.notes'::regclass)
- UNION ALL SELECT jsonb_build_object('role_setting',CASE WHEN d.setrole=0 THEN 'all roles' ELSE r.rolname::text END,'database',CASE WHEN d.setdatabase=0 THEN 'all databases' ELSE b.datname::text END,'config',d.setconfig) FROM pg_db_role_setting d LEFT JOIN pg_roles r ON r.oid=d.setrole LEFT JOIN pg_database b ON b.oid=d.setdatabase WHERE (d.setdatabase=0 OR b.datname=current_database()) AND (d.setrole=0 OR r.rolname LIKE 'merlin_d6%')
+ UNION ALL SELECT jsonb_build_object('index_state',i.indexrelid::regclass::text,'valid',i.indisvalid,'ready',i.indisready,'live',i.indislive,'unique',i.indisunique,'primary',i.indisprimary,'nulls_not_distinct',i.indnullsnotdistinct,'key_count',i.indnkeyatts,'attribute_count',i.indnatts,'options',c.reloptions,'method',a.amname) FROM pg_index i JOIN pg_class c ON c.oid=i.indexrelid JOIN pg_am a ON a.oid=c.relam WHERE i.indrelid IN ('public.users'::regclass,'public.notes'::regclass,to_regclass('public.auth_credentials'),to_regclass('public.auth_refresh_families'),to_regclass('public.auth_refresh_tokens'))
+ UNION ALL SELECT jsonb_build_object('role_setting',CASE WHEN d.setrole=0 THEN 'all roles' ELSE r.rolname::text END,'database',CASE WHEN d.setdatabase=0 THEN 'all databases' ELSE b.datname::text END,'config',d.setconfig) FROM pg_db_role_setting d LEFT JOIN pg_roles r ON r.oid=d.setrole LEFT JOIN pg_database b ON b.oid=d.setdatabase WHERE (d.setdatabase=0 OR b.datname=current_database()) AND (d.setrole=0 OR r.rolname LIKE 'merlin_d6%' OR r.rolname='merlin_api')
  UNION ALL SELECT jsonb_build_object('rule',r.rulename,'table',r.ev_class::regclass::text,'enabled',r.ev_enabled,'definition',pg_get_ruledef(r.oid)) FROM pg_rewrite r WHERE r.ev_class IN ('public.users'::regclass,'public.notes'::regclass,'public.active_notes'::regclass)
  UNION ALL SELECT jsonb_build_object('inheritance',inhrelid::regclass::text,'parent',inhparent::regclass::text,'sequence',inhseqno) FROM pg_inherits WHERE inhrelid IN ('public.users'::regclass,'public.notes'::regclass) OR inhparent IN ('public.users'::regclass,'public.notes'::regclass)
 

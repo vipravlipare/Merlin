@@ -37,18 +37,20 @@ IDENTITY_FILES = {
     'migrations/001_users_notes.down.sql': (1, 0),
     'migrations/002_whitespace_parity.down.sql': (1, 0),
     'migrations/002_whitespace_parity.up.sql': (1, 0),
+    'migrations/003_auth_foundation.down.sql': (1, 0),
+    'migrations/003_auth_foundation.up.sql': (1, 0),
 }
 
 # This floor keeps the hosted workflow cumulative. Removing an old automated
 # category now requires an explicit review of this contract and the inventory.
 MINIMUM_CUMULATIVE_INVENTORY = {
-    'python_cases': 821,
-    'python_faults': 321,
-    'sql_cases': 383,
-    'sql_pairs': 607,
+    'python_cases': 899,
+    'python_faults': 348,
+    'sql_cases': 392,
+    'sql_pairs': 624,
     'lifecycle_cases': 5,
     'migration_gates': 14,
-    'migration_repairs': 17,
+    'migration_repairs': 18,
 }
 MER11_REQUIRED_FAULT_WITNESSES = {
     'notes-preview-not-truncated': 'tests/test_notes_repository.py::test_active_note_list_uses_body_prefix_when_title_is_missing',
@@ -71,6 +73,82 @@ MER11_REQUIRED_CASES = {
     'tests/test_notes_repository.py::test_active_note_list_rejects_malformed_actor_before_query',
     'tests/test_notes_repository.py::test_active_note_list_binds_each_actor_when_connection_is_reused',
 }
+MER12_REQUIRED_CASES = {
+    'tests/test_auth_api.py::test_successful_login_signs_access_token_and_stores_only_refresh_digest',
+    'tests/test_auth_api.py::test_unknown_username_and_wrong_password_have_same_public_error',
+    'tests/test_auth_api.py::test_rate_limit_returns_retry_after_without_looking_up_account',
+    'tests/test_auth_api.py::test_rate_limiter_and_database_errors_are_generic',
+    'tests/test_auth_api.py::test_database_connection_failure_uses_generic_login_error',
+    'tests/test_auth_api.py::test_login_does_not_return_success_when_refresh_session_cannot_be_saved',
+    'tests/test_auth_api.py::test_invalid_login_shape_uses_generic_error_and_does_not_touch_dependencies',
+    'tests/test_auth_api.py::test_unknown_account_still_verifies_the_configured_dummy_hash',
+    'tests/test_auth_api.py::test_asgi_http_login_current_user_identity_and_health_are_wired',
+    'tests/test_auth_api.py::test_asgi_http_me_rejects_missing_malformed_expired_and_wrong_key',
+    'tests/test_auth_api.py::test_asgi_http_validation_and_unknown_notes_route_are_safe',
+    'tests/test_auth_api.py::test_asgi_http_rate_limit_uses_peer_address_and_stops_lookup',
+    'tests/test_auth_api.py::test_api_server_entrypoint_uses_injected_dependencies_and_loopback',
+    'tests/test_auth_api.py::test_postgres_store_uses_narrow_bound_lookup_and_local_refresh_owner',
+}
+MER12_REQUIRED_RUNTIME_CASES = {
+    'tests/test_auth_migration_contract.py::test_runtime_login_is_narrow_and_cannot_inherit_notes_role',
+    'tests/test_auth_migration_contract.py::test_runtime_auth_role_is_only_granted_refresh_table_permissions',
+    'tests/test_auth_migration_contract.py::test_database_fingerprint_supports_pre_and_post_auth_migration_states',
+    'tests/test_auth_runtime.py::test_runtime_accepts_matching_local_keys_and_fixed_loopback_services',
+    'tests/test_auth_runtime.py::test_runtime_requires_each_setting_without_echoing_values[MERLIN_DATABASE_DSN]',
+    'tests/test_auth_runtime.py::test_runtime_requires_each_setting_without_echoing_values[MERLIN_REDIS_URL]',
+    'tests/test_auth_runtime.py::test_runtime_requires_each_setting_without_echoing_values[MERLIN_AUTH_SIGNING_KEY_B64]',
+    'tests/test_auth_runtime.py::test_runtime_requires_each_setting_without_echoing_values[MERLIN_AUTH_VERIFICATION_KEY_B64]',
+    'tests/test_auth_runtime.py::test_runtime_requires_each_setting_without_echoing_values[MERLIN_RATE_LIMIT_KEY_B64]',
+    'tests/test_auth_runtime.py::test_runtime_rejects_remote_services_and_mismatched_signing_pair[environment0]',
+    'tests/test_auth_runtime.py::test_runtime_rejects_remote_services_and_mismatched_signing_pair[environment1]',
+    'tests/test_auth_runtime.py::test_runtime_rejects_remote_services_and_mismatched_signing_pair[environment2]',
+    'tests/test_auth_runtime.py::test_runtime_rejects_remote_services_and_mismatched_signing_pair[environment3]',
+    'tests/test_auth_runtime.py::test_runtime_rejects_remote_services_and_mismatched_signing_pair[environment4]',
+    'tests/test_auth_runtime.py::test_runtime_rejects_non_loopback_database_address',
+    'tests/test_auth_runtime.py::test_runtime_rejects_remote_database_hostaddr',
+    'tests/test_auth_runtime.py::test_runtime_rejects_short_rate_limit_key_and_malformed_key_without_leak',
+    'tests/test_auth_runtime.py::test_runtime_database_gate_rejects_wrong_identity_or_privilege[row0]',
+    'tests/test_auth_runtime.py::test_runtime_database_gate_rejects_wrong_identity_or_privilege[row1]',
+    'tests/test_auth_runtime.py::test_runtime_database_gate_rejects_wrong_identity_or_privilege[row2]',
+    'tests/test_auth_runtime.py::test_runtime_database_gate_rejects_wrong_identity_or_privilege[row3]',
+    'tests/test_auth_runtime.py::test_runtime_database_gate_rejects_wrong_identity_or_privilege[row4]',
+    'tests/test_auth_runtime.py::test_runtime_database_gate_accepts_only_restricted_auth_login',
+    'tests/test_auth_runtime.py::test_runtime_database_gate_rejects_missing_credential_lookup',
+    'tests/test_auth_runtime.py::test_runtime_database_gate_rejects_missing_refresh_schema',
+    'tests/test_auth_runtime.py::test_runtime_database_gate_rejects_notes_role_membership',
+    'tests/test_auth_runtime.py::test_runtime_database_failure_suppresses_private_driver_detail',
+    'tests/test_auth_runtime.py::test_runtime_factory_uses_bounded_connections_and_injected_dependencies',
+    'tests/test_auth_runtime.py::test_runtime_factory_refuses_database_with_bypass_privilege',
+    'tests/test_auth_runtime.py::test_regular_server_bootstrap_uses_loopback_and_disables_proxy_trust',
+    'tests/test_auth_runtime.py::test_regular_server_startup_error_is_fixed_and_suppresses_cause',
+    'tests/test_auth_runtime.py::test_health_server_module_entrypoint_dispatches_to_runtime',
+}
+MER12_REQUIRED_FAULT_WITNESSES = {
+    'auth-api-limit-skipped': 'tests/test_auth_api.py::test_asgi_http_rate_limit_uses_peer_address_and_stops_lookup',
+    'auth-api-forwarded-peer-trusted': 'tests/test_auth_api.py::test_api_server_entrypoint_uses_injected_dependencies_and_loopback',
+    'auth-api-unknown-user-enumerated': 'tests/test_auth_api.py::test_unknown_username_and_wrong_password_have_same_public_error',
+    'auth-api-dummy-hash-skipped': 'tests/test_auth_api.py::test_unknown_account_still_verifies_the_configured_dummy_hash',
+    'auth-api-retry-after-ignored': 'tests/test_auth_api.py::test_asgi_http_rate_limit_uses_peer_address_and_stops_lookup',
+    'auth-api-refresh-token-stored-raw': 'tests/test_auth_api.py::test_successful_login_signs_access_token_and_stores_only_refresh_digest',
+    'auth-api-session-write-failure-accepted': 'tests/test_auth_api.py::test_login_does_not_return_success_when_refresh_session_cannot_be_saved',
+    'auth-api-me-trusts-request-user-id': 'tests/test_auth_api.py::test_asgi_http_login_current_user_identity_and_health_are_wired',
+    'auth-api-me-skips-token-validation': 'tests/test_auth_api.py::test_asgi_http_login_current_user_identity_and_health_are_wired',
+    'auth-api-health-payload-changed': 'tests/test_auth_api.py::test_asgi_http_login_current_user_identity_and_health_are_wired',
+    'auth-runtime-remote-host-accepted': 'tests/test_auth_runtime.py::test_runtime_rejects_non_loopback_database_address',
+    'auth-runtime-lookup-missing-accepted': 'tests/test_auth_runtime.py::test_runtime_database_gate_rejects_missing_credential_lookup',
+    'auth-runtime-refresh-schema-missing-accepted': 'tests/test_auth_runtime.py::test_runtime_database_gate_rejects_missing_refresh_schema',
+    'auth-runtime-hostaddr-remote-accepted': 'tests/test_auth_runtime.py::test_runtime_rejects_remote_database_hostaddr',
+    'auth-runtime-unsafe-role-accepted': 'tests/test_auth_runtime.py::test_runtime_factory_refuses_database_with_bypass_privilege',
+    'auth-runtime-db-timeout-unbounded': 'tests/test_auth_runtime.py::test_runtime_factory_uses_bounded_connections_and_injected_dependencies',
+    'auth-runtime-proxy-trusted': 'tests/test_auth_runtime.py::test_regular_server_bootstrap_uses_loopback_and_disables_proxy_trust',
+    'auth-runtime-startup-cause-exposed': 'tests/test_auth_runtime.py::test_regular_server_startup_error_is_fixed_and_suppresses_cause',
+    'auth-runtime-notes-role-accepted': 'tests/test_auth_runtime.py::test_runtime_database_gate_rejects_notes_role_membership',
+}
+MER12_REQUIRED_SQL_CASES = {'runtime-role-cannot-read-notes'}
+MER12_REQUIRED_SQL_PAIRS = {
+    ('runtime-role-cannot-read-notes', 'runtime-role-note-read-granted'),
+    ('permission-groups', 'runtime-role-inherits-notes-permissions'),
+}
 REQUIRED_SUITE_STAGES = [
     'python-tests', 'python-case-faults', 'database-case-faults',
     'database-lifecycle-faults', 'migration-undo-faults', 'documentation',
@@ -86,8 +164,19 @@ def validate_cumulative_inventory(inventory):
             raise ValueError('Cumulative CI inventory below reviewed floor: ' + name)
     if not MER11_REQUIRED_CASES <= set(inventory.get('python_cases', [])):
         raise ValueError('MER-11 repository cases missing from cumulative CI inventory')
+    if not MER12_REQUIRED_CASES <= set(inventory.get('python_cases', [])):
+        raise ValueError('MER-12 auth API cases missing from cumulative CI inventory')
+    if not MER12_REQUIRED_RUNTIME_CASES <= set(inventory.get('python_cases', [])):
+        raise ValueError('MER-12 runtime bootstrap cases missing from cumulative CI inventory')
+    if not MER12_REQUIRED_SQL_CASES <= set(inventory.get('sql_cases', [])):
+        raise ValueError('MER-12 auth database cases missing from cumulative CI inventory')
+    sql_pairs = {(row[0], row[1]) for row in inventory.get('sql_pairs', []) if len(row) >= 2}
+    if not MER12_REQUIRED_SQL_PAIRS <= sql_pairs:
+        raise ValueError('MER-12 auth database faults missing from cumulative CI inventory')
     if not set(MER11_REQUIRED_FAULT_WITNESSES) <= set(inventory.get('python_faults', [])):
         raise ValueError('MER-11 faults missing from cumulative CI inventory')
+    if not set(MER12_REQUIRED_FAULT_WITNESSES) <= set(inventory.get('python_faults', [])):
+        raise ValueError('MER-12 auth API faults missing from cumulative CI inventory')
 
 
 def validate_mer11_fault_report(report):
@@ -99,6 +188,17 @@ def validate_mer11_fault_report(report):
                 or row.get('expected_witness_case') != expected_case
                 or expected_case not in row.get('detected_by', [])):
             raise ValueError('MER-11 fault lacks its intended test witness: ' + fault)
+
+
+def validate_mer12_fault_report(report):
+    """Require each auth-route/bootstrap mutation to fail at its named test."""
+    rows = {row.get('fault'): row for row in report.get('faults', [])}
+    for fault, expected_case in MER12_REQUIRED_FAULT_WITNESSES.items():
+        row = rows.get(fault, {})
+        if (row.get('status') != 'DETECTED' or row.get('intended_detection') is not True
+                or row.get('expected_witness_case') != expected_case
+                or expected_case not in row.get('detected_by', [])):
+            raise ValueError('MER-12 fault lacks its intended test witness: ' + fault)
 
 
 def validate_complete_suite_summary(payload):
@@ -199,6 +299,15 @@ def cumulative_scope_self_check():
     else:
         raise AssertionError('CI accepted an omitted MER-11 case')
 
+    reduced = deepcopy(inventory)
+    reduced['python_cases'].remove(next(iter(MER12_REQUIRED_CASES)))
+    try:
+        validate_cumulative_inventory(reduced)
+    except ValueError:
+        checks.append('removed-MER12-auth-case-refused')
+    else:
+        raise AssertionError('CI accepted an omitted MER-12 auth case')
+
     valid_faults = {
         fault: {'fault': fault, 'status': 'DETECTED', 'intended_detection': True,
                 'expected_witness_case': case, 'detected_by': [case]}
@@ -213,6 +322,23 @@ def cumulative_scope_self_check():
         checks.append('surviving-MER11-fault-refused')
     else:
         raise AssertionError('CI accepted a surviving MER-11 fault')
+    valid_auth_faults = {
+        fault: {'fault': fault, 'status': 'DETECTED', 'intended_detection': True,
+                'expected_witness_case': case, 'detected_by': [case]}
+        for fault, case in MER12_REQUIRED_FAULT_WITNESSES.items()
+    }
+    validate_mer12_fault_report({'faults': list(valid_auth_faults.values())})
+    changed_auth_faults = deepcopy(valid_auth_faults)
+    wrong_auth_case = next(iter(
+        MER12_REQUIRED_CASES - {MER12_REQUIRED_FAULT_WITNESSES['auth-api-limit-skipped']}
+    ))
+    changed_auth_faults['auth-api-limit-skipped']['expected_witness_case'] = wrong_auth_case
+    try:
+        validate_mer12_fault_report({'faults': list(changed_auth_faults.values())})
+    except ValueError:
+        checks.append('wrong-MER12-auth-witness-refused')
+    else:
+        raise AssertionError('CI accepted a misattributed MER-12 fault')
     changed_faults = deepcopy(valid_faults)
     changed_faults['notes-owner-filter-removed']['expected_witness_case'] = (
         'tests/test_notes_repository.py::test_weighted_prefix_keeps_complete_display_units')
@@ -449,6 +575,10 @@ def self_check():
                 'checks': [{'case': name, 'passed': True} for name in migration_checks(1)]}
     validate_roundtrip(baseline, ['synthetic-case', RECONNECT], {'migration': 'a' * 64})
     checks.append('committed-roundtrip-evidence-positive')
+    reordered = deepcopy(baseline)
+    reordered['rebuilt_cases'] = list(reversed(reordered['rebuilt_cases']))
+    validate_roundtrip(reordered, ['synthetic-case', RECONNECT], {'migration': 'a' * 64})
+    checks.append('committed-roundtrip-case-order-independent')
     for field, value in [('rebuilt_cases', []), ('rebuilt_case_count', 1),
                          ('source_preserved', False), ('migration_sha256', {}),
                          ('checks', []), ('disposable_evidence', {'cleanup_passed': False})]:
@@ -460,6 +590,14 @@ def self_check():
             checks.append('roundtrip-refuses-' + field)
         else:
             raise AssertionError('Contradictory migration PASS accepted: ' + field)
+    duplicate = deepcopy(baseline)
+    duplicate['rebuilt_cases'] = ['synthetic-case', 'synthetic-case']
+    try:
+        validate_roundtrip(duplicate, ['synthetic-case', RECONNECT], {'migration': 'a' * 64})
+    except ValueError:
+        checks.append('roundtrip-refuses-duplicate-case')
+    else:
+        raise AssertionError('Duplicate rebuilt database case accepted')
     checks.extend(cumulative_scope_self_check())
     print('CI identity adaptation, isolation and refusal controls PASS', flush=True)
     return checks
@@ -469,19 +607,22 @@ RECONNECT = 'test_failed_second_write_rolls_back_first_write_after_reconnect'
 
 
 def migration_checks(count):
-    return ['fresh-database-and-external-prerequisite', 'initial-up-001-and-002-committed',
-            'down-002-committed', 'down-001-committed-and-verified-after-reconnect',
-            'up-001-and-002-committed-semantic-equivalence', 'all-rebuilt-database-cases-' + str(count),
+    return ['fresh-database-and-external-prerequisite', 'initial-up-001-through-003-committed',
+            'down-003-auth-empty-state-committed', 'down-002-committed',
+            'down-001-committed-and-verified-after-reconnect',
+            'up-001-through-003-committed-semantic-equivalence', 'all-rebuilt-database-cases-' + str(count),
             'rebuilt-failed-write-and-real-reconnect', 'reconnected-empty-tables-and-unrelated-data-preserved',
             'source-preservation-and-disposable-cleanup']
 
 
 def validate_roundtrip(payload, cases, hashes):
     ordinary = [case for case in cases if case != RECONNECT]
+    rebuilt = payload.get('rebuilt_cases', [])
     rows = payload.get('checks', [])
     evidence = payload.get('disposable_evidence', {})
     baseline = payload.get('captured_pre_001_baseline', {})
-    if (payload.get('status') != 'PASS' or payload.get('rebuilt_cases') != ordinary
+    if (payload.get('status') != 'PASS' or len(rebuilt) != len(set(rebuilt))
+            or set(rebuilt) != set(ordinary)
             or payload.get('rebuilt_case_count') != len(cases) or RECONNECT not in cases
             or payload.get('source_preserved') is not True
             or evidence.get('cleanup_passed') is not True or evidence.get('source_preserved') is not True
@@ -611,6 +752,7 @@ def main():
                             python_report = json.loads(
                                 (result / 'merlin-python-effectiveness-final.json').read_text())
                             validate_mer11_fault_report(python_report)
+                            validate_mer12_fault_report(python_report)
                             evidence_files = validate_suite_evidence_files(result)
                         summary['suite_evidence_sha256'] = {
                             path: hashlib.sha256((result / path).read_bytes()).hexdigest()
