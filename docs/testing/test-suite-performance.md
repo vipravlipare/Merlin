@@ -2,6 +2,8 @@
 
 Latest MER-12 local run: all seven stages PASS in **57.397 seconds** (60-second limit), with 1,288 Python tests +3 subtests, all 341 executable Python faults, 392 SQL cases, 624 SQL case/fault pairs, SQL/lifecycle/migration gates, source-preservation and cleanup checks. The run used temporary loopback Redis; service startup and teardown were outside the runner's elapsed timer. One runpy warning remains. Runtime varies with host load; this result clears the cap by 2.603 seconds. Earlier performance measurements below are historical.
 
+Hosted cumulative CI also passed for code and documentation commit `430193fb1103b96edbd09768b4553370a93ed3a0`: [run 40161140540](https://github.com/vipravlipare/Merlin/actions/runs/40161140540). All five required jobs passed: `prepare`, `database`, both Python fault shards and final `setup`. CI service startup and queue time are outside the 60-second test-lane limit.
+
 ## October 25, 2026: MER-12 auth additions and full run
 
 The final seven-stage run completed in **57.397 seconds**. Python baseline: **1,288 passed plus 3 subtests**, no skipped cases. Python mutation audit: **899 inventoried cases** and **341/341 executable faults detected** at required assertions; zero survived, invalid, timed out or unapplied. SQL audit: **392 cases** and **624 case/fault pairs** validated. Lifecycle, migration rollback/refusal/repair, source preservation and disposable cleanup passed. The suite report is `/tmp/merlin-test-suite-_uss_gpu/summary.json`; the summary status is `PASS`, and its seven stage records all pass.
